@@ -85,6 +85,13 @@ function getPostTemplate() {
 <meta property="og:description" content="{{DESCRIPTION}}">
 <meta property="og:url" content="https://apodcastgeek.com/blog/{{SLUG}}.html">
 <meta property="og:type" content="article">
+<meta property="og:image" content="https://apodcastgeek.com/logo.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{{TITLE}} | APodcastGeek Blog">
+<meta name="twitter:description" content="{{DESCRIPTION}}">
+<meta name="twitter:image" content="https://apodcastgeek.com/logo.png">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../favicon.png">
 <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"{{TITLE}}","description":"{{DESCRIPTION}}","author":{"@type":"Organization","name":"APodcastGeek"},"publisher":{"@type":"Organization","name":"APodcastGeek","url":"https://apodcastgeek.com"},"datePublished":"{{DATE}}","mainEntityOfPage":"https://apodcastgeek.com/blog/{{SLUG}}.html"}</script>
 <style>
@@ -116,7 +123,7 @@ function getPostTemplate() {
 </style>
 </head>
 <body>
-<nav class="nav" role="navigation">
+<nav class="nav" role="navigation" aria-label="Main navigation">
   <a href="/"><img src="../logo.png" class="nav-logo" alt="APodcastGeek" width="160" height="38"></a>
   <div class="nav-links">
     <a href="/#process-heading">How It Works</a>
