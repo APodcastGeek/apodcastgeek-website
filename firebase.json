@@ -7,7 +7,7 @@
   "hosting": {
     "site": "apodcastgeek-website",
     "public": ".",
-    "ignore": ["firebase.json", ".firebase"],
+    "ignore": ["firebase.json", ".firebase", "functions/**", "node_modules/**", ".git/**", ".github/**", "scripts/**", ".gitignore", ".firebaserc"],
     "headers": [
       {
         "source": "**/*.html",

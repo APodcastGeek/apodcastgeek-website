@@ -2,13 +2,15 @@ name: Generate Blog Draft
 
 on:
   schedule:
-    - cron: '0 9 * * 1'  # Every Monday at 9am UTC (10am Dublin in summer, 9am in winter)
+    - cron: '0 9 * * 1'  # Every Monday at 9am UTC
   workflow_dispatch: {}   # Allow manual trigger
 
 jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: Generate blog draft
         uses: actions/github-script@v7
         env:
@@ -17,30 +19,12 @@ jobs:
           NOTION_DB_ID: '33388a120cc88069aba2fff072cc8b3d'
         with:
           script: |
-            const BLOG_PROMPT = `You are a B2B podcast production expert writing for APodcastGeek, Ireland's award-winning B2B podcast production agency. Write a blog post optimised for SEO.
+            const fs = require('fs');
 
-            Requirements:
-            - Pick ONE topic relevant to B2B founders who use podcasts for lead generation, authority building, and revenue. Vary topics each week.
-            - Length: 800-1200 words
-            - Tone: Professional, direct, authoritative. No fluff. No em dashes. No exclamation marks.
-            - Structure: H1 title, 3-5 H2 sections, actionable takeaways
-            - Include a meta description (150-160 characters)
-            - Include a suggested slug (url-friendly, lowercase, hyphens)
-            - Include a tag from: B2B Strategy, Podcast Production, Guest Recruitment, Monetisation, Industry Insights
-            - End with a CTA mentioning APodcastGeek's done-for-you Brand Builder service
-            - Write from "we" perspective as APodcastGeek
-            - Reference that APG is based in Dublin, Ireland and serves B2B founders worldwide
-            - Reference the Irish Podcast Awards where relevant
+            // Load content calendar
+            const calendar = JSON.parse(fs.readFileSync('scripts/content-calendar.json', 'utf-8'));
 
-            Format your response EXACTLY as:
-            TITLE: [title]
-            SLUG: [slug]
-            DESCRIPTION: [meta description]
-            TAG: [tag]
-            ---
-            [full article content in HTML using h2, h3, p, ul, li, blockquote tags. Do NOT include h1 - that is added by the template]`;
-
-            // Get existing titles from Notion to avoid duplicates
+            // Get existing posts from Notion to find next unwritten brief
             const notionRes = await fetch(`https://api.notion.com/v1/databases/${process.env.NOTION_DB_ID}/query`, {
               method: 'POST',
               headers: {
@@ -48,19 +32,66 @@ jobs:
                 'Notion-Version': '2022-06-28',
                 'Content-Type': 'application/json'
               },
-              body: JSON.stringify({ page_size: 50 })
+              body: JSON.stringify({ page_size: 100 })
             });
             const notionData = await notionRes.json();
             const existingTitles = (notionData.results || [])
               .map(p => p.properties?.Name?.title?.[0]?.plain_text || '')
-              .filter(Boolean);
+              .filter(Boolean)
+              .map(t => t.toLowerCase());
 
-            let avoidList = '';
-            if (existingTitles.length > 0) {
-              avoidList = `\n\nDo NOT write about these topics as they already exist:\n${existingTitles.map(t => '- ' + t).join('\n')}`;
+            // Find next unwritten brief from calendar
+            let brief = null;
+            for (const item of calendar) {
+              const titleLower = item.title_suggestion.toLowerCase();
+              const alreadyExists = existingTitles.some(t =>
+                t.includes(item.keyword) || t === titleLower || titleLower.includes(t)
+              );
+              if (!alreadyExists) {
+                brief = item;
+                break;
+              }
             }
 
-            // Generate article with Claude
+            if (!brief) {
+              console.log('All calendar briefs have been written. Add more to content-calendar.json.');
+              return;
+            }
+
+            // Build the prompt with the specific brief
+            const prompt = `You are writing a blog post for APodcastGeek (apodcastgeek.com), Ireland's award-winning B2B podcast production agency based in Dublin. The agency offers done-for-you podcast production under "The APG Brand Builder" service.
+
+BRIEF:
+${brief.brief}
+
+ORIGINAL DATA POINTS TO INCLUDE:
+${brief.data_points.map(d => '- ' + d).join('\n')}
+
+INTERNAL PAGES TO LINK TO:
+${brief.internal_links.map(l => '- https://apodcastgeek.com' + l).join('\n')}
+
+${brief.embed_videos.length > 0 ? 'EMBED THESE WISTIA VIDEOS (use this exact HTML):\n' + brief.embed_videos.map(id => `<div style="margin:2rem 0"><div class="wistia_embed wistia_async_${id} videoFoam=true" style="width:100%;max-width:640px;aspect-ratio:16/9;margin:0 auto"></div></div>`).join('\n') : ''}
+
+WRITING RULES:
+- No em dashes ever
+- No exclamation marks
+- No filler words or fluff
+- Direct, authoritative, professional tone
+- Write from "we" perspective as APodcastGeek
+- Use data and specifics, not vague claims
+- Every section should be actionable
+- Include external links to authoritative sources (HBR, Forbes, industry reports) where relevant
+- End with a CTA to book a strategy call at https://calendly.com/apodcastgeek_dave/apg-podcast-accelerator-discovery-call
+
+FORMAT YOUR RESPONSE EXACTLY AS:
+TITLE: [title]
+SLUG: [slug]
+DESCRIPTION: [meta description, 150-160 characters]
+TAG: [${brief.tag}]
+---
+[full article content in HTML using h2, h3, p, ul, li, blockquote, a tags. Do NOT include h1. Include the Wistia embed HTML where contextually relevant. Include internal links as <a href="url">anchor text</a>.]`;
+
+            // Generate with Claude
             const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
               method: 'POST',
               headers: {
@@ -69,9 +100,9 @@ jobs:
                 'content-type': 'application/json'
               },
               body: JSON.stringify({
-                model: 'claude-haiku-4-5-20251001',
-                max_tokens: 2000,
-                messages: [{ role: 'user', content: BLOG_PROMPT + avoidList }]
+                model: 'claude-sonnet-4-6-20250514',
+                max_tokens: 4000,
+                messages: [{ role: 'user', content: prompt }]
               })
             });
             const claudeData = await claudeRes.json();
@@ -93,9 +124,24 @@ jobs:
             const title = titleMatch[1].trim();
             const slug = slugMatch[1].trim();
             const description = descMatch ? descMatch[1].trim() : '';
-            const tag = tagMatch ? tagMatch[1].trim() : 'B2B Strategy';
+            const tag = tagMatch ? tagMatch[1].trim() : brief.tag;
+            const today = new Date().toISOString().split('T')[0];
 
-            // Create Notion page
+            // Create Notion page with content in blocks
+            // Split content into chunks for Notion's 2000 char block limit
+            const chunks = [];
+            let remaining = content;
+            while (remaining.length > 0) {
+              chunks.push(remaining.substring(0, 1900));
+              remaining = remaining.substring(1900);
+            }
+
+            const children = chunks.map(chunk => ({
+              object: 'block',
+              type: 'paragraph',
+              paragraph: { rich_text: [{ type: 'text', text: { content: chunk } }] }
+            }));
+
             const createRes = await fetch('https://api.notion.com/v1/pages', {
               method: 'POST',
               headers: {
@@ -112,18 +158,14 @@ jobs:
                   Tag: { rich_text: [{ text: { content: tag } }] },
                   Status: { select: { name: 'Draft' } },
                   Author: { select: { name: 'APodcastGeek' } },
-                  'Publish Date': { rich_text: [{ text: { content: new Date().toISOString().split('T')[0] } }] }
+                  'Publish Date': { rich_text: [{ text: { content: today } }] }
                 },
-                children: [{
-                  object: 'block',
-                  type: 'paragraph',
-                  paragraph: { rich_text: [{ type: 'text', text: { content: content.substring(0, 2000) } }] }
-                }]
+                children: children
               })
             });
 
             if (createRes.ok) {
-              console.log(`Draft created: ${title}`);
+              console.log(`Draft created: ${title} (Week ${brief.week}, keyword: ${brief.keyword})`);
             } else {
               const err = await createRes.json();
               core.setFailed(`Notion error: ${JSON.stringify(err)}`);
