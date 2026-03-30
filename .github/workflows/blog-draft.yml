@@ -3,7 +3,7 @@ name: Generate Blog Draft
 on:
   schedule:
     - cron: '0 9 * * 1'  # Every Monday at 9am UTC
-  workflow_dispatch: {}   # Allow manual trigger
+  workflow_dispatch:
 
 jobs:
   generate:
