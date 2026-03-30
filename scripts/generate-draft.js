@@ -169,6 +169,9 @@ async function main() {
   });
 
   if (createRes.ok) {
+    var pageData = await createRes.json();
+    var pageId = pageData.id.replace(/-/g, '');
+    var notionUrl = 'https://www.notion.so/' + pageId;
     console.log('Draft created: ' + title + ' (Week ' + brief.week + ', keyword: ' + brief.keyword + ')');
 
     // Notify via Slack
@@ -176,7 +179,7 @@ async function main() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        text: '*New Blog Draft Ready for Review*\n\n*Title:* ' + title + '\n*Keyword:* ' + brief.keyword + '\n*Tag:* ' + tag + '\n\nReview it in Notion, edit if needed, set Status to Published and add a Publish Date. It will go live automatically at 6am on that date.'
+        text: '*New Blog Draft Ready for Review*\n\n*Title:* ' + title + '\n*Keyword:* ' + brief.keyword + '\n*Tag:* ' + tag + '\n\n<' + notionUrl + '|Open in Notion>\n\nReview it, edit if needed, set Status to Published and add a Publish Date. It will go live automatically at 6am on that date.'
       })
     });
   } else {
