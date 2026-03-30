@@ -170,6 +170,15 @@ async function main() {
 
   if (createRes.ok) {
     console.log('Draft created: ' + title + ' (Week ' + brief.week + ', keyword: ' + brief.keyword + ')');
+
+    // Notify via Slack
+    await fetch(process.env.SLACK_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        text: '*New Blog Draft Ready for Review*\n\n*Title:* ' + title + '\n*Keyword:* ' + brief.keyword + '\n*Tag:* ' + tag + '\n\nReview it in Notion, edit if needed, set Status to Published and add a Publish Date. It will go live automatically at 6am on that date.'
+      })
+    });
   } else {
     var err = await createRes.json();
     console.error('Notion error:', JSON.stringify(err));
