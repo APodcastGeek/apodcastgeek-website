@@ -52,7 +52,7 @@ jobs:
             });
             const notionData = await notionRes.json();
             const existingTitles = (notionData.results || [])
-              .map(p => p.properties?.Title?.title?.[0]?.plain_text || '')
+              .map(p => p.properties?.Name?.title?.[0]?.plain_text || '')
               .filter(Boolean);
 
             let avoidList = '';
@@ -106,12 +106,13 @@ jobs:
               body: JSON.stringify({
                 parent: { database_id: process.env.NOTION_DB_ID },
                 properties: {
-                  Title: { title: [{ text: { content: title } }] },
+                  Name: { title: [{ text: { content: title } }] },
                   Slug: { rich_text: [{ text: { content: slug } }] },
                   Description: { rich_text: [{ text: { content: description } }] },
-                  Tag: { select: { name: tag } },
+                  Tag: { rich_text: [{ text: { content: tag } }] },
                   Status: { select: { name: 'Draft' } },
-                  Author: { rich_text: [{ text: { content: 'APodcastGeek' } }] }
+                  Author: { select: { name: 'APodcastGeek' } },
+                  'Publish Date': { rich_text: [{ text: { content: new Date().toISOString().split('T')[0] } }] }
                 },
                 children: [{
                   object: 'block',

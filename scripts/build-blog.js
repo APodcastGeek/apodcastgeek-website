@@ -165,11 +165,11 @@ async function main() {
 
   for (const page of results) {
     const props = page.properties;
-    const title = props.Title?.title?.[0]?.plain_text || '';
+    const title = props.Name?.title?.[0]?.plain_text || '';
     const slug = props.Slug?.rich_text?.[0]?.plain_text || '';
     const description = props.Description?.rich_text?.[0]?.plain_text || '';
-    const tag = props.Tag?.select?.name || 'B2B Strategy';
-    const publishDate = props['Publish Date']?.date?.start || new Date().toISOString().split('T')[0];
+    const tag = props.Tag?.rich_text?.[0]?.plain_text || 'B2B Strategy';
+    const publishDate = props['Publish Date']?.rich_text?.[0]?.plain_text || new Date().toISOString().split('T')[0];
 
     if (!title || !slug) continue;
 
