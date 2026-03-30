@@ -1,0 +1,129 @@
+name: Generate Blog Draft
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday at 9am UTC (10am Dublin in summer, 9am in winter)
+  workflow_dispatch: {}   # Allow manual trigger
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate blog draft
+        uses: actions/github-script@v7
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NOTION_DB_ID: '33388a120cc88069aba2fff072cc8b3d'
+        with:
+          script: |
+            const BLOG_PROMPT = `You are a B2B podcast production expert writing for APodcastGeek, Ireland's award-winning B2B podcast production agency. Write a blog post optimised for SEO.
+
+            Requirements:
+            - Pick ONE topic relevant to B2B founders who use podcasts for lead generation, authority building, and revenue. Vary topics each week.
+            - Length: 800-1200 words
+            - Tone: Professional, direct, authoritative. No fluff. No em dashes. No exclamation marks.
+            - Structure: H1 title, 3-5 H2 sections, actionable takeaways
+            - Include a meta description (150-160 characters)
+            - Include a suggested slug (url-friendly, lowercase, hyphens)
+            - Include a tag from: B2B Strategy, Podcast Production, Guest Recruitment, Monetisation, Industry Insights
+            - End with a CTA mentioning APodcastGeek's done-for-you Brand Builder service
+            - Write from "we" perspective as APodcastGeek
+            - Reference that APG is based in Dublin, Ireland and serves B2B founders worldwide
+            - Reference the Irish Podcast Awards where relevant
+
+            Format your response EXACTLY as:
+            TITLE: [title]
+            SLUG: [slug]
+            DESCRIPTION: [meta description]
+            TAG: [tag]
+            ---
+            [full article content in HTML using h2, h3, p, ul, li, blockquote tags. Do NOT include h1 - that is added by the template]`;
+
+            // Get existing titles from Notion to avoid duplicates
+            const notionRes = await fetch(`https://api.notion.com/v1/databases/${process.env.NOTION_DB_ID}/query`, {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${process.env.NOTION_API_KEY}`,
+                'Notion-Version': '2022-06-28',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ page_size: 50 })
+            });
+            const notionData = await notionRes.json();
+            const existingTitles = (notionData.results || [])
+              .map(p => p.properties?.Title?.title?.[0]?.plain_text || '')
+              .filter(Boolean);
+
+            let avoidList = '';
+            if (existingTitles.length > 0) {
+              avoidList = `\n\nDo NOT write about these topics as they already exist:\n${existingTitles.map(t => '- ' + t).join('\n')}`;
+            }
+
+            // Generate article with Claude
+            const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
+              method: 'POST',
+              headers: {
+                'x-api-key': process.env.ANTHROPIC_API_KEY,
+                'anthropic-version': '2023-06-01',
+                'content-type': 'application/json'
+              },
+              body: JSON.stringify({
+                model: 'claude-haiku-4-5-20251001',
+                max_tokens: 2000,
+                messages: [{ role: 'user', content: BLOG_PROMPT + avoidList }]
+              })
+            });
+            const claudeData = await claudeRes.json();
+            const response = claudeData.content[0].text;
+
+            // Parse response
+            const titleMatch = response.match(/TITLE:\s*(.+)/);
+            const slugMatch = response.match(/SLUG:\s*(.+)/);
+            const descMatch = response.match(/DESCRIPTION:\s*(.+)/);
+            const tagMatch = response.match(/TAG:\s*(.+)/);
+            const contentParts = response.split('---\n');
+            const content = contentParts.length > 1 ? contentParts.slice(1).join('---\n').trim() : '';
+
+            if (!titleMatch || !slugMatch || !content) {
+              core.setFailed('Failed to parse AI response');
+              return;
+            }
+
+            const title = titleMatch[1].trim();
+            const slug = slugMatch[1].trim();
+            const description = descMatch ? descMatch[1].trim() : '';
+            const tag = tagMatch ? tagMatch[1].trim() : 'B2B Strategy';
+
+            // Create Notion page
+            const createRes = await fetch('https://api.notion.com/v1/pages', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${process.env.NOTION_API_KEY}`,
+                'Notion-Version': '2022-06-28',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                parent: { database_id: process.env.NOTION_DB_ID },
+                properties: {
+                  Title: { title: [{ text: { content: title } }] },
+                  Slug: { rich_text: [{ text: { content: slug } }] },
+                  Description: { rich_text: [{ text: { content: description } }] },
+                  Tag: { select: { name: tag } },
+                  Status: { select: { name: 'Draft' } },
+                  Author: { rich_text: [{ text: { content: 'APodcastGeek' } }] }
+                },
+                children: [{
+                  object: 'block',
+                  type: 'paragraph',
+                  paragraph: { rich_text: [{ type: 'text', text: { content: content.substring(0, 2000) } }] }
+                }]
+              })
+            });
+
+            if (createRes.ok) {
+              console.log(`Draft created: ${title}`);
+            } else {
+              const err = await createRes.json();
+              core.setFailed(`Notion error: ${JSON.stringify(err)}`);
+            }

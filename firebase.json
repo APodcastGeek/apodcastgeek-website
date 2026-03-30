@@ -1,0 +1,22 @@
+{
+  "functions": {
+    "source": "functions",
+    "codebase": "default",
+    "ignore": ["node_modules", ".git"]
+  },
+  "hosting": {
+    "site": "apodcastgeek-website",
+    "public": ".",
+    "ignore": ["firebase.json", ".firebase"],
+    "headers": [
+      {
+        "source": "**/*.html",
+        "headers": [{"key": "Cache-Control", "value": "no-cache"}]
+      },
+      {
+        "source": "**/*.png",
+        "headers": [{"key": "Cache-Control", "value": "max-age=31536000"}]
+      }
+    ]
+  }
+}

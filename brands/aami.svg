@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg id="svg355683" height="174.17885" viewBox="0 0 374.99996 130.63413" width="499.99994" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <symbol id="glyph0-1" overflow="visible">
+      <path id="path222764" d=""/>
+   </symbol>
+   <symbol id="glyph3-4" overflow="visible">
+      <path id="path222983" d=""/>
+   </symbol>
+   <symbol id="glyph4-1" overflow="visible">
+      <path id="path223046" d=""/>
+   </symbol>
+   <symbol id="glyph6-9" overflow="visible">
+      <path id="path223217" d=""/>
+   </symbol>
+   <g id="surface512832" transform="translate(-685.43534 -624.93437)">
+      <use id="use339080" fill="#172e68" height="100%" transform="matrix(3.2980622 0 0 3.2980622 -2006.0597 -1586.2408)" width="100%" x="734.43738" xlink:href="#glyph0-1" y="291.25659"/>
+      <use id="use339140" fill="#172e68" height="100%" transform="matrix(3.2980622 0 0 3.2980622 -2006.0597 -1586.2408)" width="100%" x="814.69843" xlink:href="#glyph0-1" y="291.25659"/>
+      <use id="use339200" fill="#172e68" height="100%" transform="matrix(3.2980622 0 0 3.2980622 -2006.0597 -1586.2408)" width="100%" x="813.14642" xlink:href="#glyph0-1" y="371.94659"/>
+      <use id="use339272" fill="#172e68" height="100%" transform="matrix(3.2980622 0 0 3.2980622 -2006.0597 -1586.2408)" width="100%" x="817.51343" xlink:href="#glyph0-1" y="458.5466"/>
+      <use id="use343452" fill="#eb6147" height="100%" transform="matrix(3.2980622 0 0 3.2980622 -2006.0597 -1586.2408)" width="100%" x="1067.0068" xlink:href="#glyph0-1" y="384.8627"/>
+      <use id="use343524" fill="#eb6147" height="100%" transform="matrix(3.2980622 0 0 3.2980622 -2006.0597 -1586.2408)" width="100%" x="1074.0538" xlink:href="#glyph0-1" y="489.97269"/>
+      <use id="use347654" fill="#eb6147" height="100%" transform="matrix(3.2980622 0 0 3.2980622 -2006.0597 -1586.2408)" width="100%" x="990.9729" xlink:href="#glyph0-1" y="291.25659"/>
+      <use id="use347714" fill="#eb6147" height="100%" transform="matrix(3.2980622 0 0 3.2980622 -2006.0597 -1586.2408)" width="100%" x="1071.2339" xlink:href="#glyph0-1" y="291.25659"/>
+      <use id="use352368" fill="#172e68" height="100%" transform="matrix(3.2980622 0 0 3.2980622 -2006.0597 -1586.2408)" width="100%" x="996.33588" xlink:href="#glyph3-4" y="801.05548"/>
+      <path id="path352404" d="m1040.3379 753.66183h20.0974v-124.08959h-20.0974zm0 0" fill="#e1000a"/>
+      <path id="path352406" d="m830.96236 702.54187l15.71738-35.5572 15.35657 35.5572zm-101.15776 0l15.71737-35.5572 15.35657 35.5572zm231.792 13.75912l-44.00852-90.64513-23.60176 101.77609-44.00852-95.953-2.8858-6.54458-2.98887 6.4931-48.28571 102.6006-46.99739-102.54915-2.8858-6.54455-2.98887 6.4931-55.50019 118.00875-2.00983 4.27719h21.69508l.82451-1.85522 13.70767-31.1254h47.15187l13.34686 31.1254.82452 1.85522h25.3023l.82452-1.85522 13.70757-31.1254h47.152l13.39841 31.1254.82452 1.85522h21.79808-.0528.3087l16.59347-76.01004 38.9583 77.86514 38.90688-78.89572 16.5933 77.04062h19.1185l-30.5071-128.0061zm0 0" fill="#e1000a"/>
+      <use id="use354698" fill="#fff" height="100%" transform="matrix(3.2980622 0 0 3.2980622 -2006.0597 -1586.2408)" width="100%" x="45.738602" xlink:href="#glyph4-1" y="124.5554"/>
+      <use id="use354702" fill="#172e68" height="100%" transform="matrix(3.2980622 0 0 3.2980622 -2006.0597 -1586.2408)" width="100%" x="46.9776" xlink:href="#glyph4-1" y="124.5554"/>
+      <use id="use354706" fill="#172e68" height="100%" transform="matrix(3.2980622 0 0 3.2980622 -2006.0597 -1586.2408)" width="100%" x="48.216599" xlink:href="#glyph4-1" y="124.5554"/>
+      <use id="use355598" fill="#171714" height="100%" transform="matrix(3.2980622 0 0 3.2980622 -2006.0597 -1586.2408)" width="100%" x="1067.3878" xlink:href="#glyph6-9" y="66.892303"/>
+      <use id="use355630" fill="#171714" height="100%" transform="matrix(3.2980622 0 0 3.2980622 -2006.0597 -1586.2408)" width="100%" x="1115.2712" xlink:href="#glyph6-9" y="66.892303"/>
+   </g>
+</svg>
