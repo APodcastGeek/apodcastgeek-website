@@ -85,6 +85,7 @@ function getPostTemplate() {
 <meta property="og:description" content="{{DESCRIPTION}}">
 <meta property="og:url" content="https://apodcastgeek.com/blog/{{SLUG}}.html">
 <meta property="og:type" content="article">
+<script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"{{TITLE}}","description":"{{DESCRIPTION}}","author":{"@type":"Organization","name":"APodcastGeek"},"publisher":{"@type":"Organization","name":"APodcastGeek","url":"https://apodcastgeek.com"},"datePublished":"{{DATE}}","mainEntityOfPage":"https://apodcastgeek.com/blog/{{SLUG}}.html"}</script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#060810;color:#c8d4e0;line-height:1.8}

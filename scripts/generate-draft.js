@@ -127,8 +127,14 @@ async function main() {
   var chunks = [];
   var remaining = content;
   while (remaining.length > 0) {
-    chunks.push(remaining.substring(0, 1900));
-    remaining = remaining.substring(1900);
+    if (remaining.length <= 1900) {
+      chunks.push(remaining);
+      break;
+    }
+    var cutPoint = remaining.lastIndexOf(' ', 1900);
+    if (cutPoint === -1) cutPoint = 1900;
+    chunks.push(remaining.substring(0, cutPoint));
+    remaining = remaining.substring(cutPoint + 1);
   }
 
   var children = chunks.map(function(chunk) {
