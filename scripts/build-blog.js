@@ -86,7 +86,7 @@ function getPostTemplate() {
 <meta property="og:url" content="https://apodcastgeek.com/blog/{{SLUG}}.html">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://apodcastgeek.com/logo.png">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{TITLE}} | APodcastGeek Blog">
 <meta name="twitter:description" content="{{DESCRIPTION}}">
 <meta name="twitter:image" content="https://apodcastgeek.com/logo.png">
@@ -97,7 +97,9 @@ function getPostTemplate() {
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#060810;color:#c8d4e0;line-height:1.8}
 .nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:#0a0e1a;border-bottom:0.5px solid rgba(55,138,221,0.2);position:sticky;top:0;z-index:100}
-.nav-logo{height:38px;width:auto;filter:drop-shadow(0 0 1px rgba(255,255,255,0.8)) drop-shadow(0 0 1px rgba(255,255,255,0.8))}.nav-links{display:flex;gap:2rem}.nav-links a{color:#8899aa;text-decoration:none;font-size:14px}.nav-links a:hover{color:#fff}
+.nav-logo{height:48px;width:auto;filter:drop-shadow(0 0 1px rgba(255,255,255,0.8)) drop-shadow(0 0 1px rgba(255,255,255,0.8))}.nav-links{display:flex;gap:2rem}.nav-links a{color:#8899aa;text-decoration:none;font-size:14px}.nav-links a:hover{color:#fff}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:.5rem;order:3;margin-left:auto}.hamburger svg{display:block}
+.nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:#0a0e1a;padding:1.5rem 2rem;border-bottom:0.5px solid rgba(55,138,221,0.2);gap:1.25rem}
 .nav-cta{background:#378ADD;color:#fff;border:none;padding:.65rem 1.6rem;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;display:inline-block}.nav-cta:hover{background:#185FA5}
 .post{max-width:780px;margin:0 auto;padding:4rem 2rem 5rem}
 .post-back{display:inline-block;color:#378ADD;text-decoration:none;font-size:14px;margin-bottom:2rem}.post-back:hover{color:#85B7EB}
@@ -119,12 +121,13 @@ function getPostTemplate() {
 .footer-simple{background:#040608;border-top:0.5px solid rgba(55,138,221,0.1);padding:2rem 5rem;text-align:center}
 .footer-simple p{font-size:13px;color:#334455}
 .footer-simple a{color:#445566;text-decoration:none}.footer-simple a:hover{color:#85B7EB}
-@media(max-width:1024px){.nav{padding:1rem 2rem}.nav-links{display:none}.footer-simple{padding:2rem}}
+@media(max-width:1024px){.nav{padding:1rem 2rem;position:relative}.nav-links{display:none}.hamburger{display:block}.nav-logo{height:34px}.nav-cta{display:none}.footer-simple{padding:2rem}}
 </style>
 </head>
 <body>
 <nav class="nav" role="navigation" aria-label="Main navigation">
-  <a href="/"><img src="../logo.png" class="nav-logo" alt="APodcastGeek" width="160" height="38"></a>
+  <a href="/"><img src="../logo.png" class="nav-logo" alt="APodcastGeek" width="160" height="48"></a>
+  <button class="hamburger" aria-label="Open menu" onclick="document.querySelector('.nav-links').classList.toggle('open')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8899aa" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
   <div class="nav-links">
     <a href="/#process-heading">How It Works</a>
     <a href="/#testimonials-heading">Results</a>
@@ -132,7 +135,7 @@ function getPostTemplate() {
     <a href="../blog.html">Blog</a>
     <a href="https://clients.apodcastgeek.com/">Client Login</a>
   </div>
-  <a href="https://calendly.com/apodcastgeek_dave/apg-podcast-accelerator-discovery-call" class="nav-cta">Book a Strategy Call</a>
+  <a href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-podcast-design-call" class="nav-cta">Book a Strategy Call</a>
 </nav>
 <article class="post">
   <a href="../blog.html" class="post-back">&larr; Back to Blog</a>
@@ -143,7 +146,7 @@ function getPostTemplate() {
   <div class="post-cta">
     <h3>Ready to turn your podcast into a revenue engine?</h3>
     <p>Book a strategy call and we will show you how the APG Brand Builder works for your business.</p>
-    <a href="https://calendly.com/apodcastgeek_dave/apg-podcast-accelerator-discovery-call">Book a Strategy Call</a>
+    <a href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-podcast-design-call">Book a Strategy Call</a>
   </div>
 </article>
 <footer class="footer-simple">
