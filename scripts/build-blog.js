@@ -184,6 +184,13 @@ async function main() {
 
     if (!title || !slug) continue;
 
+    // Only publish posts where the publish date is today or in the past
+    const today = new Date().toISOString().split('T')[0];
+    if (publishDate > today) {
+      console.log('Skipping (future date): ' + title + ' (scheduled for ' + publishDate + ')');
+      continue;
+    }
+
     // Get page content blocks
     const blocks = await getBlocks(page.id);
     const content = blocksToHtml(blocks);
