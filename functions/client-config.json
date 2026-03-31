@@ -1,0 +1,186 @@
+{
+  "hovercodeWorkspaceId": "233beef2-ef58-448c-be8f-0a14f388dfbd",
+  "clients": [
+    {
+      "name": "High Stakes with Alex Nwaka",
+      "slug": "high-stakes",
+      "buzzsproutPodcastId": "2515486",
+      "youtubeChannelId": "UCAwNK3_PRr1G6O_yYVnW6mg",
+      "hovercodeQrIds": [
+        "27fde7e9-5db0-45d3-b145-c985e16821fd",
+        "88bcb997-76b5-4636-aa12-0bbb25820a04",
+        "94379171-6c11-4c1e-9b57-27a6b63c8df8",
+        "6b1b95d6-9c51-4494-96d8-89b240d9bfc2",
+        "4651576b-0c55-44e1-861a-d86a02871531"
+      ],
+      "active": true
+    },
+    {
+      "name": "The Den",
+      "slug": "the-den",
+      "buzzsproutPodcastId": "2520627",
+      "youtubeChannelId": "UC0jC6Y8AXyf59oUMPE1D0wg",
+      "hovercodeQrIds": [
+        "c84bac4d-79ec-4a9c-8767-37cc766f79e9",
+        "207a8537-cfbc-44c9-9d70-c651f0dec31e",
+        "0cf2ebf1-7484-40d7-8129-326016f58515",
+        "b37d2373-7855-4ddd-8114-f89236aca2ac"
+      ],
+      "active": true
+    },
+    {
+      "name": "Transformational Educators",
+      "slug": "transformational-educators",
+      "buzzsproutPodcastId": "2526325",
+      "youtubeChannelId": "UCx_jAyKaBTL-Htqnk_otIsw",
+      "hovercodeQrIds": [
+        "a17b96bc-9031-4c29-b5b8-e102a48b3b4e",
+        "e017a766-9992-4efa-b8a7-4ff90bc192cc",
+        "4c179139-1e7c-4c4c-8cd7-53074ac944cb",
+        "1ab4ffab-8482-461e-8d7d-8e48521d4242",
+        "4841473d-c7f4-45b8-9e3b-eb91c4e0df9d"
+      ],
+      "active": true
+    },
+    {
+      "name": "The Surveying Shift",
+      "slug": "the-surveying-shift",
+      "buzzsproutPodcastId": "2526206",
+      "youtubeChannelId": "UCCa1_POSYvXmHGwIVNHSspw",
+      "hovercodeQrIds": [
+        "b581cdce-4fc3-473e-8fa9-4315adce62df",
+        "11102e18-d4f9-4a2f-9780-79d0458dcae0",
+        "058acbf6-41c0-4e10-8603-b0c4a89e8da7",
+        "45240366-737a-4432-983b-3aeb3484ed74",
+        "18aa5a62-7713-4ea2-9bef-4db1cdbf6281"
+      ],
+      "active": true
+    },
+    {
+      "name": "Workspace Design Lab",
+      "slug": "workspace-design-lab",
+      "buzzsproutPodcastId": "2531676",
+      "youtubeChannelId": "UCx4-4VNno81Uta9QMCu2olg",
+      "hovercodeQrIds": [
+        "bfb8248f-58e5-4149-8853-50a7c7a3d9ca",
+        "18e76d96-f818-44e6-903e-48523d8fa694",
+        "72597baa-f6f7-4ce6-8650-42d8198a63ea",
+        "4f13db76-78f0-43a5-8c21-8de07192704e"
+      ],
+      "active": true
+    },
+    {
+      "name": "Bobby Owsinski's Inner Circle",
+      "slug": "bobby-owsinski",
+      "buzzsproutPodcastId": "2538325",
+      "youtubeChannelId": "UCwC1wIiEFWhFW4joP_Ricaw",
+      "hovercodeQrIds": [
+        "6319dad5-b9ca-4c18-8883-76f8153e62d2",
+        "1ec0cddd-3b1a-4dab-8d38-0567078f1955",
+        "003c5a5d-1920-452d-b13f-4109d8a96fd1",
+        "02368728-2470-40bc-93b7-0d4ea3621355",
+        "a25b568f-776a-4ea8-868c-b3f1ec45ae81",
+        "4ad8fc83-37fd-4c62-a7b3-0726c5237746",
+        "d54cf5df-ac81-49a9-a2b4-3aecfa39744a",
+        "fecb6a4d-72a7-4f97-ad2e-9b0c78a6e67a",
+        "e2ba7593-e530-48de-9e68-4b3800b43d93",
+        "eac369e8-afc0-4591-863d-e713875d0ee7",
+        "89e62805-216d-4035-b3d6-d9af6075404a"
+      ],
+      "active": true
+    },
+    {
+      "name": "The Scalable Law Blueprint",
+      "slug": "scalable-law",
+      "buzzsproutPodcastId": "2545428",
+      "youtubeChannelId": "UCRs64EXp9_nCaN9MQnPYl6w",
+      "hovercodeQrIds": [
+        "2e5a21b2-1a5a-42f4-8c38-eaeaba459405",
+        "b33e72b8-9764-4512-bbca-7385eaadc2cd",
+        "680aa59e-adcd-4a91-8aa1-028dd263be71",
+        "362e4a12-ec55-4587-b1f0-c51914abb2e3",
+        "89792e8d-ad8a-49db-a8b1-c5ae116d1ee2",
+        "32ed9b36-7964-4263-adb2-c979fc0662ad"
+      ],
+      "active": true
+    },
+    {
+      "name": "Soliverse",
+      "slug": "soliverse",
+      "buzzsproutPodcastId": "2549232",
+      "youtubeChannelId": "UC2KWVY4IsQNLRVt-G93dswQ",
+      "hovercodeQrIds": [
+        "588b94c5-7a46-462b-b59d-acf231a032d6",
+        "56a0eaa3-559e-4f90-8ee5-52546d50b251",
+        "e63fa2b2-5589-4b7c-ba3f-79063b06e706",
+        "77196686-e8bf-495f-9e58-35a4c16be852",
+        "f3600065-e2ba-4d23-96a6-22d56f307a33",
+        "377cbba6-529b-4099-aa69-a6705becf2f1",
+        "c63a2901-58f6-4f07-a69f-df9febb55487",
+        "006d8c67-0276-4e8a-b919-4e9f07fb1762",
+        "cbe502bf-daa8-446d-9554-58980bf947d1",
+        "ae32c282-48ac-4176-a4cd-15980ebcf5db"
+      ],
+      "active": true
+    },
+    {
+      "name": "Trial Lawyer View",
+      "slug": "trial-lawyer-view",
+      "buzzsproutPodcastId": "2572995",
+      "youtubeChannelId": "UCU4YBBefFSu2PNB1BSrTseA",
+      "hovercodeQrIds": [
+        "53d3f82b-8395-4e47-ba51-d3aaaa31c57b",
+        "7af8c77d-2814-4ff8-8781-fa5bb4651916",
+        "69a1e85c-928b-41e2-9910-9665d6aaea8d"
+      ],
+      "active": true
+    },
+    {
+      "name": "The Goodmother Series",
+      "slug": "the-goodmother-series",
+      "buzzsproutPodcastId": "2573103",
+      "youtubeChannelId": "UCeNplyeDA_lQN7aLAHThVxQ",
+      "hovercodeQrIds": [
+        "6268da2a-a84e-4953-932a-e204c621fffe",
+        "0082b754-d7ae-4b84-b237-b79eb947e4ae",
+        "e6ec34c0-546e-4197-8388-644dc716b6a9",
+        "a73a1fbd-26ab-42d2-836d-cc920a100872",
+        "3761b2b9-6bac-4328-87f6-1e76d93816a4",
+        "72638ba7-ada9-4ea1-a8f1-d5eb86c2470f",
+        "6cd59eee-e5f3-4fd7-86c2-00a5dbd28d3b"
+      ],
+      "active": true,
+      "activeUntil": "2026-07-01"
+    },
+    {
+      "name": "Support Your Local Tattooer",
+      "slug": "sylt",
+      "buzzsproutPodcastId": "2361049",
+      "youtubeChannelId": "UCqazPG3jF4g4LCfzcd3mSIQ",
+      "hovercodeQrIds": [
+        "9c49480a-7af6-4b13-9347-13e48cde9ff8",
+        "b1d9bf87-e43b-47c4-ab1f-6cff88495a62",
+        "f3b83415-8a33-4178-a956-345d4429b0a5",
+        "9d95779d-7b20-4231-988e-8a35e71aa4e5",
+        "1f428dae-8b6a-432f-993a-beb8c60bb99e",
+        "cd869899-f8e9-498a-9507-baae826470df",
+        "b79262a1-9164-4ce2-b2f2-15381228fb1f",
+        "1564374c-60f1-4b1a-b897-92b12a4aebf4",
+        "7c6e147f-71d5-4a63-b17c-155b7524e09c",
+        "f07ccc70-aa6d-4ee7-892c-ff37f068a904",
+        "af0537ef-e67f-49f6-bc8f-48acb17f51b6",
+        "13cd685f-4897-4149-a907-4bc5756f422b"
+      ],
+      "active": true
+    },
+    {
+      "name": "The Socially Awkward Podcast",
+      "slug": "socially-awkward",
+      "buzzsproutPodcastId": "2605894",
+      "youtubeChannelId": "UCr43D1tF_EZcmeuU1pSSIMQ",
+      "hovercodeQrIds": [],
+      "active": true,
+      "activeFrom": "2026-05-01"
+    }
+  ]
+}

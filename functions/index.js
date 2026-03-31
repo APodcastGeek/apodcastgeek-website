@@ -1,4 +1,5 @@
 const { onSchedule } = require("firebase-functions/v2/scheduler");
+const { onRequest } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
 const { Client: NotionClient } = require("@notionhq/client");
 const Anthropic = require("@anthropic-ai/sdk").default;
@@ -13,6 +14,12 @@ admin.initializeApp();
 const NOTION_API_KEY = defineSecret("NOTION_API_KEY");
 const ANTHROPIC_API_KEY = defineSecret("ANTHROPIC_API_KEY");
 const NOTION_DB_ID = "33388a120cc88069aba2fff072cc8b3d";
+
+// Client report secrets
+const BUZZSPROUT_API_TOKEN = defineSecret("BUZZSPROUT_API_TOKEN");
+const HOVERCODE_API_TOKEN = defineSecret("HOVERCODE_API_TOKEN");
+const SLACK_WEBHOOK_URL = defineSecret("SLACK_WEBHOOK_URL");
+const clientConfig = require("./client-config.json");
 
 const BLOG_PROMPT = `You are a B2B podcast production expert writing for APodcastGeek, Ireland's award-winning B2B podcast production agency. Write a blog post optimised for SEO.
 
@@ -244,6 +251,585 @@ exports.publishBlogPosts = onSchedule(
     console.log(`Published ${posts.length} blog posts`);
   }
 );
+
+// ============================================
+// CLIENT REPORT FUNCTIONS
+// ============================================
+
+function getReportMonth() {
+  const now = new Date();
+  now.setMonth(now.getMonth() - 1);
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+}
+
+function getReportMonthName() {
+  const now = new Date();
+  now.setMonth(now.getMonth() - 1);
+  return now.toLocaleString("en-US", { month: "long", year: "numeric" });
+}
+
+function getReportMonthRange() {
+  const now = new Date();
+  const firstDay = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const lastDay = new Date(now.getFullYear(), now.getMonth(), 0);
+  return { start: firstDay, end: lastDay };
+}
+
+async function fetchBuzzsproutEpisodes(podcastId, apiToken) {
+  const res = await fetch(
+    `https://www.buzzsprout.com/api/${podcastId}/episodes.json`,
+    { headers: { Authorization: `Token token=${apiToken}` } }
+  );
+  if (!res.ok) throw new Error(`Buzzsprout API error: ${res.status}`);
+  return res.json();
+}
+
+function processBuzzsproutData(episodes) {
+  const { start, end } = getReportMonthRange();
+
+  const totalPlays = episodes.reduce((sum, ep) => sum + (ep.total_plays || 0), 0);
+
+  const monthlyEpisodes = episodes.filter((ep) => {
+    if (!ep.published_at) return false;
+    const d = new Date(ep.published_at);
+    return d >= start && d <= end;
+  });
+
+  const topEpisode = episodes.reduce(
+    (top, ep) => ((ep.total_plays || 0) > (top.total_plays || 0) ? ep : top),
+    episodes[0]
+  );
+
+  return {
+    totalPlays,
+    totalEpisodes: episodes.length,
+    monthlyEpisodesCount: monthlyEpisodes.length,
+    monthlyPlays: monthlyEpisodes.reduce((sum, ep) => sum + (ep.total_plays || 0), 0),
+    topEpisode: topEpisode
+      ? { title: topEpisode.title, plays: topEpisode.total_plays }
+      : null,
+    recentEpisodes: episodes.slice(0, 10).map((ep) => ({
+      title: ep.title,
+      plays: ep.total_plays,
+      publishedAt: ep.published_at,
+      duration: ep.duration,
+    })),
+  };
+}
+
+async function fetchAllHovercodes(workspaceId, apiToken) {
+  const allCodes = [];
+  let url = `https://hovercode.com/api/v2/workspace/${workspaceId}/hovercodes/?page_size=100`;
+  while (url) {
+    const res = await fetch(url, {
+      headers: { Authorization: `Token ${apiToken}` },
+    });
+    if (!res.ok) break;
+    const data = await res.json();
+    allCodes.push(...data.results);
+    url = data.next;
+  }
+  return allCodes;
+}
+
+function matchHovercodesToClient(allCodes, clientName) {
+  return allCodes.filter(
+    (code) => code.display_name && code.display_name.startsWith(clientName)
+  );
+}
+
+async function fetchHovercodeData(clientCodes, apiToken) {
+  const results = [];
+  for (const code of clientCodes) {
+    const res = await fetch(
+      `https://hovercode.com/api/v2/hovercode/${code.id}/activity/`,
+      { headers: { Authorization: `Token ${apiToken}` } }
+    );
+    if (res.ok) {
+      const data = await res.json();
+      results.push({
+        id: code.id,
+        name: code.display_name,
+        shortlink: code.shortlink_url,
+        destination: code.qr_data,
+        scans: data.total_scans || data.results?.length || 0,
+      });
+    }
+  }
+  const totalScans = results.reduce((sum, r) => sum + r.scans, 0);
+  return { totalScans, links: results };
+}
+
+function parseCsv(csvString) {
+  const lines = csvString.trim().split("\n");
+  if (lines.length < 2) return [];
+  const headers = lines[0].split(",").map((h) => h.trim().replace(/"/g, ""));
+  return lines.slice(1).map((line) => {
+    const values = line.split(",").map((v) => v.trim().replace(/"/g, ""));
+    const obj = {};
+    headers.forEach((h, i) => {
+      obj[h] = values[i] || "";
+    });
+    return obj;
+  });
+}
+
+async function readCsvFromStorage(bucket, filePath) {
+  try {
+    const file = bucket.file(filePath);
+    const [exists] = await file.exists();
+    if (!exists) return null;
+    const [content] = await file.download();
+    return parseCsv(content.toString("utf-8"));
+  } catch {
+    return null;
+  }
+}
+
+async function generateOptimizationNotes(reportData, clientName, apiKey) {
+  const anthropic = new Anthropic({ apiKey });
+  const dataStr = JSON.stringify(reportData, null, 2);
+
+  const message = await anthropic.messages.create({
+    model: "claude-haiku-4-5-20251001",
+    max_tokens: 500,
+    messages: [
+      {
+        role: "user",
+        content: `You are a podcast growth strategist at APodcastGeek. Based on this month's performance data for "${clientName}", write 3-4 concise, actionable optimization recommendations. Be specific and reference actual numbers. No fluff. No em dashes. No exclamation marks.\n\nData:\n${dataStr}\n\nFormat as bullet points starting with -.`,
+      },
+    ],
+  });
+
+  return message.content[0].text;
+}
+
+function buildGammaInputText(client, reportData, monthName) {
+  const buzz = reportData.buzzsprout || {};
+  const hover = reportData.hovercode || {};
+  const ytCsv = reportData.youtube;
+  const buzzAudience = reportData.buzzsproutAudience;
+  const buzzAds = reportData.buzzsproutAds;
+  const optimization = reportData.optimization || "";
+
+  let text = `# ${client.name}\n## ${monthName} Podcast Report\nPrepared by APodcastGeek\n\n`;
+
+  // Slide 2: All-time stats
+  text += `## Podcast Episode Results (All Time)\n`;
+  text += `- Total Downloads / Plays: ${buzz.totalPlays?.toLocaleString() || "N/A"}\n`;
+  text += `- Total Episodes: ${buzz.totalEpisodes || "N/A"}\n`;
+  if (buzz.topEpisode) {
+    text += `- Top Episode (All-time): ${buzz.topEpisode.title} (${buzz.topEpisode.plays?.toLocaleString()} plays)\n`;
+  }
+  text += `\n`;
+
+  // Slide 7/9: Monthly overview
+  text += `## Monthly Performance\n`;
+  text += `### Audio (Buzzsprout)\n`;
+  text += `- Episodes Published: ${buzz.monthlyEpisodesCount || 0}\n`;
+  text += `- Monthly Downloads: ${buzz.monthlyPlays?.toLocaleString() || "N/A"}\n\n`;
+
+  // YouTube data from CSV
+  if (ytCsv && ytCsv.length > 0) {
+    text += `### Video (YouTube)\n`;
+    text += `YouTube analytics data available from uploaded CSV.\n`;
+    const ytSummary = ytCsv.slice(0, 5);
+    for (const row of ytSummary) {
+      const vals = Object.entries(row)
+        .map(([k, v]) => `${k}: ${v}`)
+        .join(", ");
+      text += `- ${vals}\n`;
+    }
+    text += `\n`;
+  }
+
+  // Ad performance
+  if (hover.totalScans > 0 || buzzAds) {
+    text += `## Ad Performance\n`;
+    if (buzzAds && buzzAds.length > 0) {
+      text += `### Dynamic Ad Insertion (Buzzsprout)\n`;
+      for (const row of buzzAds.slice(0, 5)) {
+        const vals = Object.entries(row)
+          .map(([k, v]) => `${k}: ${v}`)
+          .join(", ");
+        text += `- ${vals}\n`;
+      }
+    }
+    text += `- Total QR / Link Clicks (Hovercode): ${hover.totalScans?.toLocaleString() || "0"}\n\n`;
+  }
+
+  // Audience data from CSV
+  if (buzzAudience && buzzAudience.length > 0) {
+    text += `## Podcast Audience\n`;
+    for (const row of buzzAudience.slice(0, 10)) {
+      const vals = Object.entries(row)
+        .map(([k, v]) => `${k}: ${v}`)
+        .join(", ");
+      text += `- ${vals}\n`;
+    }
+    text += `\n`;
+  }
+
+  // Optimization
+  text += `## Optimization Recommendations\n`;
+  text += optimization + "\n";
+
+  return text;
+}
+
+async function sendSlackReport(client, reportData, monthName, webhookUrl, firestoreDocId) {
+  const buzz = reportData.buzzsprout || {};
+  const hover = reportData.hovercode || {};
+
+  const blocks = [
+    {
+      type: "header",
+      text: {
+        type: "plain_text",
+        text: `${client.name} - ${monthName} Report`,
+        emoji: true,
+      },
+    },
+    { type: "divider" },
+    {
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text:
+          `*Audio (Buzzsprout)*\n` +
+          `• Total Downloads (All-time): ${buzz.totalPlays?.toLocaleString() || "N/A"}\n` +
+          `• Episodes This Month: ${buzz.monthlyEpisodesCount || 0}\n` +
+          `• Monthly Downloads: ${buzz.monthlyPlays?.toLocaleString() || "N/A"}\n` +
+          `• Top Episode: ${buzz.topEpisode?.title || "N/A"} (${buzz.topEpisode?.plays?.toLocaleString() || 0} plays)`,
+      },
+    },
+  ];
+
+  if (reportData.youtube) {
+    blocks.push({
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: `*Video (YouTube)*\nCSV data loaded - included in full report.`,
+      },
+    });
+  }
+
+  if (hover.totalScans > 0) {
+    blocks.push({
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: `*Ad Performance (Hovercode)*\n• QR Scans / Link Clicks: ${hover.totalScans?.toLocaleString()}`,
+      },
+    });
+  }
+
+  if (reportData.optimization) {
+    blocks.push(
+      { type: "divider" },
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `*Optimization Recommendations*\n${reportData.optimization}`,
+        },
+      }
+    );
+  }
+
+  blocks.push(
+    { type: "divider" },
+    {
+      type: "context",
+      elements: [
+        {
+          type: "mrkdwn",
+          text: `Report ID: \`${firestoreDocId}\` | Data stored in Firestore. Ready for presentation generation.`,
+        },
+      ],
+    }
+  );
+
+  await fetch(webhookUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ blocks }),
+  });
+}
+
+// ============================================
+// FUNCTION 3: Generate monthly client reports
+// Runs 1st of every month at 10am Dublin time
+// (Claude computer use exports CSVs at 6am, giving 4 hours buffer)
+// ============================================
+exports.generateClientReports = onSchedule(
+  {
+    schedule: "0 10 1 * *",
+    timeZone: "Europe/Dublin",
+    secrets: [BUZZSPROUT_API_TOKEN, HOVERCODE_API_TOKEN, SLACK_WEBHOOK_URL, ANTHROPIC_API_KEY],
+    region: "europe-west1",
+    timeoutSeconds: 540,
+    memory: "512MiB",
+  },
+  async () => {
+    const monthName = getReportMonthName();
+    const reportMonth = getReportMonth();
+    const bucket = admin.storage().bucket();
+    const db = admin.firestore();
+
+    // Fetch all hovercodes once, then match per client
+    const allHovercodes = await fetchAllHovercodes(
+      clientConfig.hovercodeWorkspaceId,
+      HOVERCODE_API_TOKEN.value()
+    );
+
+    for (const client of clientConfig.clients) {
+      // Skip inactive clients based on date range
+      const now = new Date();
+      if (client.activeFrom && new Date(client.activeFrom) > now) continue;
+      if (client.activeUntil && new Date(client.activeUntil) <= now) continue;
+      if (client.active === false) continue;
+
+      try {
+        const reportData = {};
+
+        // 1. Buzzsprout API — episode plays
+        if (client.buzzsproutPodcastId) {
+          const episodes = await fetchBuzzsproutEpisodes(
+            client.buzzsproutPodcastId,
+            BUZZSPROUT_API_TOKEN.value()
+          );
+          reportData.buzzsprout = processBuzzsproutData(episodes);
+        }
+
+        // 2. Hovercode API — match QR codes/links by client name
+        const clientCodes = matchHovercodesToClient(allHovercodes, client.name);
+        if (clientCodes.length > 0) {
+          reportData.hovercode = await fetchHovercodeData(
+            clientCodes,
+            HOVERCODE_API_TOKEN.value()
+          );
+        }
+
+        // 3. YouTube CSV from Cloud Storage (uploaded by computer use)
+        reportData.youtube = await readCsvFromStorage(
+          bucket,
+          `reports/raw/${client.slug}/youtube-${reportMonth}.csv`
+        );
+
+        // 4. Buzzsprout audience CSV from Cloud Storage
+        reportData.buzzsproutAudience = await readCsvFromStorage(
+          bucket,
+          `reports/raw/${client.slug}/buzzsprout-audience-${reportMonth}.csv`
+        );
+
+        // 5. Buzzsprout ad stats CSV from Cloud Storage
+        reportData.buzzsproutAds = await readCsvFromStorage(
+          bucket,
+          `reports/raw/${client.slug}/buzzsprout-ads-${reportMonth}.csv`
+        );
+
+        // 6. AI-generated optimization notes
+        if (reportData.buzzsprout || reportData.youtube) {
+          reportData.optimization = await generateOptimizationNotes(
+            reportData,
+            client.name,
+            ANTHROPIC_API_KEY.value()
+          );
+        }
+
+        // 7. Build Gamma-ready input text
+        reportData.gammaInput = buildGammaInputText(client, reportData, monthName);
+
+        // 8. Store report as JSON in Cloud Storage
+        const docId = `${client.slug}-${reportMonth}`;
+        const reportFile = bucket.file(`reports/generated/${docId}.json`);
+        await reportFile.save(JSON.stringify({
+          client: client.name,
+          slug: client.slug,
+          month: reportMonth,
+          monthName,
+          data: reportData,
+          status: "pending_review",
+          createdAt: new Date().toISOString(),
+        }), { contentType: "application/json" });
+
+        // 9. Send Slack notification
+        await sendSlackReport(
+          client,
+          reportData,
+          monthName,
+          SLACK_WEBHOOK_URL.value(),
+          docId
+        );
+
+        console.log(`Report generated for ${client.name} (${reportMonth})`);
+      } catch (err) {
+        console.error(`Error generating report for ${client.name}:`, err);
+      }
+    }
+  }
+);
+
+// ============================================
+// FUNCTION 4: Manual trigger for client reports
+// For testing — hit this endpoint to generate reports now
+// ============================================
+exports.triggerClientReports = onRequest(
+  {
+    secrets: [BUZZSPROUT_API_TOKEN, HOVERCODE_API_TOKEN, SLACK_WEBHOOK_URL, ANTHROPIC_API_KEY],
+    region: "europe-west1",
+    timeoutSeconds: 540,
+    memory: "512MiB",
+  },
+  async (req, res) => {
+    const monthName = getReportMonthName();
+    const reportMonth = getReportMonth();
+    const bucket = admin.storage().bucket();
+    const db = admin.firestore();
+
+    // Allow filtering to a single client via query param
+    const targetSlug = req.query.client;
+    const clients = targetSlug
+      ? clientConfig.clients.filter((c) => c.slug === targetSlug)
+      : clientConfig.clients;
+
+    if (clients.length === 0) {
+      res.status(404).json({ error: `Client "${targetSlug}" not found` });
+      return;
+    }
+
+    // Fetch all hovercodes once, then match per client
+    const allHovercodes = await fetchAllHovercodes(
+      clientConfig.hovercodeWorkspaceId,
+      HOVERCODE_API_TOKEN.value()
+    );
+
+    const results = [];
+
+    for (const client of clients) {
+      const now = new Date();
+      if (!targetSlug) {
+        if (client.activeFrom && new Date(client.activeFrom) > now) continue;
+        if (client.activeUntil && new Date(client.activeUntil) <= now) continue;
+        if (client.active === false) continue;
+      }
+
+      try {
+        const reportData = {};
+
+        if (client.buzzsproutPodcastId) {
+          const episodes = await fetchBuzzsproutEpisodes(
+            client.buzzsproutPodcastId,
+            BUZZSPROUT_API_TOKEN.value()
+          );
+          reportData.buzzsprout = processBuzzsproutData(episodes);
+        }
+
+        const clientCodes = matchHovercodesToClient(allHovercodes, client.name);
+        if (clientCodes.length > 0) {
+          reportData.hovercode = await fetchHovercodeData(
+            clientCodes,
+            HOVERCODE_API_TOKEN.value()
+          );
+        }
+
+        reportData.youtube = await readCsvFromStorage(
+          bucket,
+          `reports/raw/${client.slug}/youtube-${reportMonth}.csv`
+        );
+        reportData.buzzsproutAudience = await readCsvFromStorage(
+          bucket,
+          `reports/raw/${client.slug}/buzzsprout-audience-${reportMonth}.csv`
+        );
+        reportData.buzzsproutAds = await readCsvFromStorage(
+          bucket,
+          `reports/raw/${client.slug}/buzzsprout-ads-${reportMonth}.csv`
+        );
+
+        if (reportData.buzzsprout || reportData.youtube) {
+          reportData.optimization = await generateOptimizationNotes(
+            reportData,
+            client.name,
+            ANTHROPIC_API_KEY.value()
+          );
+        }
+
+        reportData.gammaInput = buildGammaInputText(client, reportData, monthName);
+
+        const docId = `${client.slug}-${reportMonth}`;
+        await db.collection("client-reports").doc(docId).set({
+          client: client.name,
+          slug: client.slug,
+          month: reportMonth,
+          monthName,
+          data: reportData,
+          status: "pending_review",
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+
+        await sendSlackReport(
+          client,
+          reportData,
+          monthName,
+          SLACK_WEBHOOK_URL.value(),
+          docId
+        );
+
+        results.push({ client: client.name, status: "success" });
+      } catch (err) {
+        console.error(`Error for ${client.name}:`, err);
+        results.push({ client: client.name, status: "error", message: err.message });
+      }
+    }
+
+    res.json({ month: reportMonth, results });
+  }
+);
+
+// ============================================
+// FUNCTION 5: CSV upload endpoint
+// Claude computer use uploads CSVs here
+// ============================================
+exports.uploadReportCsv = onRequest(
+  {
+    region: "europe-west1",
+    memory: "256MiB",
+  },
+  async (req, res) => {
+    if (req.method !== "POST") {
+      res.status(405).json({ error: "POST only" });
+      return;
+    }
+
+    const { clientSlug, fileType, month, csvData } = req.body;
+
+    if (!clientSlug || !fileType || !csvData) {
+      res.status(400).json({ error: "Missing clientSlug, fileType, or csvData" });
+      return;
+    }
+
+    const reportMonth = month || getReportMonth();
+    const validTypes = ["youtube", "buzzsprout-audience", "buzzsprout-ads"];
+    if (!validTypes.includes(fileType)) {
+      res.status(400).json({ error: `fileType must be one of: ${validTypes.join(", ")}` });
+      return;
+    }
+
+    const bucket = admin.storage().bucket();
+    const filePath = `reports/raw/${clientSlug}/${fileType}-${reportMonth}.csv`;
+    const file = bucket.file(filePath);
+
+    await file.save(csvData, { contentType: "text/csv" });
+
+    res.json({ success: true, path: filePath });
+  }
+);
+
+// ============================================
+// BLOG FUNCTIONS
+// ============================================
 
 function getPostTemplate() {
   return `<!DOCTYPE html>
