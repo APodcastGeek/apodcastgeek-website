@@ -44,7 +44,14 @@ function blocksToHtml(blocks) {
     switch (block.type) {
       case 'paragraph':
         const pText = richTextToStr(block.paragraph.rich_text);
-        if (pText) html += `<p>${pText}</p>\n`;
+        if (pText) {
+          // If content already contains HTML tags, output raw (from AI-generated posts)
+          if (pText.includes('<h2>') || pText.includes('<p>') || pText.includes('<ul>')) {
+            html += pText + '\n';
+          } else {
+            html += `<p>${pText}</p>\n`;
+          }
+        }
         break;
       case 'heading_2':
         html += `<h2>${richTextToStr(block.heading_2.rich_text)}</h2>\n`;
