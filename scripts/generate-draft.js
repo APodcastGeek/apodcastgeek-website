@@ -145,7 +145,7 @@ async function main() {
     };
   });
 
-  // Create Notion page
+  // Create Notion page (without content first)
   var createRes = await fetch('https://api.notion.com/v1/pages', {
     method: 'POST',
     headers: {
@@ -163,30 +163,49 @@ async function main() {
         Status: { select: { name: 'Draft' } },
         Author: { select: { name: 'APodcastGeek' } },
         'Publish Date': { rich_text: [{ text: { content: today } }] }
-      },
-      children: children
+      }
     })
   });
 
-  if (createRes.ok) {
-    var pageData = await createRes.json();
-    var pageId = pageData.id.replace(/-/g, '');
-    var notionUrl = 'https://www.notion.so/' + pageId;
-    console.log('Draft created: ' + title + ' (Week ' + brief.week + ', keyword: ' + brief.keyword + ')');
-
-    // Notify via Slack
-    await fetch(process.env.SLACK_WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        text: '*New Blog Draft Ready for Review*\n\n*Title:* ' + title + '\n*Keyword:* ' + brief.keyword + '\n*Tag:* ' + tag + '\n\n<' + notionUrl + '|Open in Notion>\n\nReview it, edit if needed, set Status to Published and add a Publish Date. It will go live automatically at 6am on that date.'
-      })
-    });
-  } else {
+  if (!createRes.ok) {
     var err = await createRes.json();
-    console.error('Notion error:', JSON.stringify(err));
+    console.error('Notion page creation error:', JSON.stringify(err));
     process.exit(1);
   }
+
+  var pageData = await createRes.json();
+  var pageId = pageData.id;
+
+  // Append content blocks in batches (Notion allows max 100 blocks per append)
+  for (var i = 0; i < children.length; i += 50) {
+    var batch = children.slice(i, i + 50);
+    var appendRes = await fetch('https://api.notion.com/v1/blocks/' + pageId + '/children', {
+      method: 'PATCH',
+      headers: {
+        'Authorization': 'Bearer ' + NOTION_API_KEY,
+        'Notion-Version': '2022-06-28',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ children: batch })
+    });
+    if (!appendRes.ok) {
+      var appendErr = await appendRes.json();
+      console.error('Notion append error (batch ' + i + '):', JSON.stringify(appendErr));
+    }
+  }
+
+  var notionUrl = 'https://www.notion.so/' + pageId.replace(/-/g, '');
+  console.log('Draft created: ' + title + ' (Week ' + brief.week + ', keyword: ' + brief.keyword + ')');
+  console.log('Content: ' + children.length + ' blocks, ' + content.length + ' chars total');
+
+  // Notify via Slack
+  await fetch(process.env.SLACK_WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      text: '*New Blog Draft Ready for Review*\n\n*Title:* ' + title + '\n*Keyword:* ' + brief.keyword + '\n*Tag:* ' + tag + '\n\n<' + notionUrl + '|Open in Notion>\n\nReview it, edit if needed, set Status to Published and add a Publish Date. It will go live automatically at 6am on that date.'
+    })
+  });
 }
 
 main().catch(function(err) {
