@@ -94,11 +94,11 @@ function getPostTemplate() {
 <meta property="og:description" content="{{DESCRIPTION}}">
 <meta property="og:url" content="https://apodcastgeek.com/blog/{{SLUG}}.html">
 <meta property="og:type" content="article">
-<meta property="og:image" content="https://apodcastgeek.com/logo.png">
+<meta property="og:image" content="https://apodcastgeek.com/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{TITLE}} | APodcastGeek Blog">
 <meta name="twitter:description" content="{{DESCRIPTION}}">
-<meta name="twitter:image" content="https://apodcastgeek.com/logo.png">
+<meta name="twitter:image" content="https://apodcastgeek.com/og-image.png">
 <link rel="icon" type="image/png" href="../favicon.png">
 <link rel="apple-touch-icon" href="../favicon.png">
 <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
@@ -293,6 +293,11 @@ async function main() {
     <loc>https://apodcastgeek.com/</loc>
     <lastmod>${today}</lastmod>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://apodcastgeek.com/services.html</loc>
+    <lastmod>${today}</lastmod>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://apodcastgeek.com/blog.html</loc>
