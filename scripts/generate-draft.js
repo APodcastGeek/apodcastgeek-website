@@ -4,6 +4,63 @@ const NOTION_API_KEY = process.env.NOTION_API_KEY;
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 const NOTION_DB_ID = process.env.NOTION_DB_ID || '33388a120cc88069aba2fff072cc8b3d';
 
+async function generateNewBrief(existingTitles, previousBriefs) {
+  var existingKeywords = previousBriefs.map(function(b) { return b.keyword; });
+  var existingTopics = existingTitles.concat(previousBriefs.map(function(b) { return b.title_suggestion; }));
+
+  var briefPrompt = 'You are an SEO strategist for APodcastGeek, a B2B podcast production agency in Dublin, Ireland. They offer done-for-you podcast production under "The APG Brand Builder".\n\n' +
+    'Generate ONE new blog post brief that has NOT been covered yet.\n\n' +
+    'ALREADY COVERED (do NOT repeat these topics or keywords):\n' +
+    existingTopics.map(function(t) { return '- ' + t; }).join('\n') + '\n\n' +
+    'ALREADY USED KEYWORDS:\n' +
+    existingKeywords.map(function(k) { return '- ' + k; }).join('\n') + '\n\n' +
+    'THE BRIEF MUST:\n' +
+    '- Target a specific long-tail SEO keyword relevant to B2B podcast production\n' +
+    '- Be a topic that B2B founders would search for\n' +
+    '- Include APG\'s original data points where relevant (10% guest-to-client conversion rate, Irish Podcast Award winners, done-for-you production including video, audio, 6 clips, 3 thumbnails, trailer, show notes, SEO article per episode)\n' +
+    '- Specify a tag from: B2B Strategy, Podcast Production, Guest Recruitment, Monetisation, Industry Insights\n' +
+    '- Be 1800-2500 words when written\n\n' +
+    'RESPOND IN EXACTLY THIS JSON FORMAT (no markdown, no code blocks, just raw JSON):\n' +
+    '{"keyword":"target keyword","title_suggestion":"suggested title","tag":"tag name","brief":"detailed writing brief including what to cover, data points to include, and internal links to use","data_points":["point 1","point 2"],"internal_links":["/#section-id"],"embed_videos":[]}';
+
+  var res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'x-api-key': ANTHROPIC_API_KEY,
+      'anthropic-version': '2023-06-01',
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 1000,
+      messages: [{ role: 'user', content: briefPrompt }]
+    })
+  });
+
+  var data = await res.json();
+  if (!data.content || !data.content[0]) {
+    console.error('Failed to generate new brief:', JSON.stringify(data));
+    return null;
+  }
+
+  var responseText = data.content[0].text.trim();
+  // Strip markdown code blocks if present
+  responseText = responseText.replace(/^```json?\n?/, '').replace(/\n?```$/, '');
+
+  try {
+    var newBrief = JSON.parse(responseText);
+    newBrief.week = previousBriefs.length + 1;
+    if (!newBrief.embed_videos) newBrief.embed_videos = [];
+    if (!newBrief.internal_links) newBrief.internal_links = ['/#process-heading'];
+    if (!newBrief.data_points) newBrief.data_points = [];
+    console.log('Auto-generated new brief: ' + newBrief.keyword);
+    return newBrief;
+  } catch (e) {
+    console.error('Failed to parse new brief JSON:', responseText);
+    return null;
+  }
+}
+
 async function main() {
   // Load content calendar
   const calendar = JSON.parse(fs.readFileSync('scripts/content-calendar.json', 'utf-8'));
@@ -39,8 +96,12 @@ async function main() {
   }
 
   if (!brief) {
-    console.log('All calendar briefs have been written. Add more to content-calendar.json.');
-    return;
+    console.log('All calendar briefs used. Auto-generating new briefs...');
+    brief = await generateNewBrief(existingTitles, calendar);
+    if (!brief) {
+      console.log('Failed to generate new brief.');
+      return;
+    }
   }
 
   console.log('Generating draft for week ' + brief.week + ': ' + brief.keyword);
