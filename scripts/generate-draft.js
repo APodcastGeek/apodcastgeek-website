@@ -62,6 +62,8 @@ async function generateNewBrief(existingTitles, previousBriefs) {
 }
 
 async function main() {
+  var DRAFTS_PER_BATCH = 5;
+
   // Load content calendar
   const calendar = JSON.parse(fs.readFileSync('scripts/content-calendar.json', 'utf-8'));
 
@@ -80,6 +82,10 @@ async function main() {
     .map(function(p) { return (p.properties && p.properties.Name && p.properties.Name.title && p.properties.Name.title[0] && p.properties.Name.title[0].plain_text) || ''; })
     .filter(Boolean)
     .map(function(t) { return t.toLowerCase(); });
+
+  var draftsCreated = 0;
+
+  for (var batchNum = 0; batchNum < DRAFTS_PER_BATCH; batchNum++) {
 
   // Find next unwritten brief
   var brief = null;
@@ -256,17 +262,25 @@ async function main() {
   }
 
   var notionUrl = 'https://www.notion.so/' + pageId.replace(/-/g, '');
-  console.log('Draft created: ' + title + ' (Week ' + brief.week + ', keyword: ' + brief.keyword + ')');
+  console.log('Draft ' + (batchNum + 1) + '/' + DRAFTS_PER_BATCH + ' created: ' + title);
   console.log('Content: ' + children.length + ' blocks, ' + content.length + ' chars total');
+
+  // Add to existing titles so next iteration doesn't pick same topic
+  existingTitles.push(title.toLowerCase());
+  draftsCreated++;
 
   // Notify via Slack
   await fetch(process.env.SLACK_WEBHOOK_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      text: '*New Blog Draft Ready for Review*\n\n*Title:* ' + title + '\n*Keyword:* ' + brief.keyword + '\n*Tag:* ' + tag + '\n\n<' + notionUrl + '|Open in Notion>\n\nReview it, edit if needed, set Status to Published and add a Publish Date. It will go live automatically at 6am on that date.'
+      text: '*New Blog Draft ' + draftsCreated + '/' + DRAFTS_PER_BATCH + ' Ready for Review*\n\n*Title:* ' + title + '\n*Keyword:* ' + brief.keyword + '\n*Tag:* ' + tag + '\n\n<' + notionUrl + '|Open in Notion>\n\nReview it, edit if needed, set Status to Published and add a Publish Date. It will go live automatically at 6am on that date.'
     })
   });
+
+  } // end batch loop
+
+  console.log('Batch complete: ' + draftsCreated + ' drafts created');
 }
 
 main().catch(function(err) {
