@@ -270,8 +270,8 @@ async function main() {
   ).join('\n  ');
 
   blogHtml = blogHtml.replace(
-    /(<div class="blog-grid" id="blog-posts">)[\s\S]*?(<\/div>)/,
-    `$1\n  ${cardsHtml}\n$2`
+    /(<div class="blog-grid" id="blog-posts">)[\s\S]*?(<\/div>\s*<div class="blog-empty")/,
+    `$1\n  ${cardsHtml}\n</div>\n\n<div class="blog-empty"`
   );
 
   if (cards.length > 0) {
