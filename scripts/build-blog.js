@@ -150,6 +150,7 @@ function getPostTemplate() {
   <h1>{{TITLE}}</h1>
   <p class="post-meta">{{DATE}} &middot; APodcastGeek</p>
   {{CONTENT}}
+  {{RELATED_POSTS}}
   <div class="post-cta">
     <h3>Ready to turn your podcast into a revenue engine?</h3>
     <p>Book a strategy call and we will show you how the APG Brand Builder works for your business.</p>
@@ -202,23 +203,40 @@ async function main() {
     const blocks = await getBlocks(page.id);
     const content = blocksToHtml(blocks);
 
-    // Build HTML
-    const html = template
-      .replace(/\{\{TITLE\}\}/g, title)
-      .replace(/\{\{SLUG\}\}/g, slug)
-      .replace(/\{\{DESCRIPTION\}\}/g, description)
-      .replace(/\{\{TAG\}\}/g, tag)
-      .replace(/\{\{DATE\}\}/g, publishDate)
-      .replace(/\{\{CONTENT\}\}/g, content);
-
-    fs.writeFileSync(path.join(blogDir, `${slug}.html`), html);
-    console.log(`Built: ${slug}.html`);
-
-    cards.push({ title, slug, description, tag, publishDate });
+    cards.push({ title, slug, description, tag, publishDate, content });
   }
 
   // Sort by date descending
   cards.sort((a, b) => b.publishDate.localeCompare(a.publishDate));
+
+  // Build HTML files with related posts
+  for (const post of cards) {
+    // Get up to 3 related posts (exclude current post)
+    const related = cards.filter(p => p.slug !== post.slug).slice(0, 3);
+    let relatedHtml = '';
+    if (related.length > 0) {
+      relatedHtml = '<div style="margin-top:3rem;padding-top:2rem;border-top:0.5px solid rgba(55,138,221,0.12)">' +
+        '<h3 style="font-size:1rem;font-weight:600;color:#fff;margin-bottom:1.25rem">Related Articles</h3>';
+      for (const r of related) {
+        relatedHtml += '<a href="' + r.slug + '.html" style="display:block;text-decoration:none;padding:.75rem 0;border-bottom:0.5px solid rgba(55,138,221,0.08)">' +
+          '<span style="font-size:.875rem;color:#378ADD;font-weight:500">' + r.title + '</span>' +
+          '<span style="display:block;font-size:.75rem;color:#556677;margin-top:.25rem">' + r.tag + ' &middot; ' + r.publishDate + '</span></a>';
+      }
+      relatedHtml += '</div>';
+    }
+
+    const html = template
+      .replace(/\{\{TITLE\}\}/g, post.title)
+      .replace(/\{\{SLUG\}\}/g, post.slug)
+      .replace(/\{\{DESCRIPTION\}\}/g, post.description)
+      .replace(/\{\{TAG\}\}/g, post.tag)
+      .replace(/\{\{DATE\}\}/g, post.publishDate)
+      .replace(/\{\{CONTENT\}\}/g, post.content)
+      .replace(/\{\{RELATED_POSTS\}\}/g, relatedHtml);
+
+    fs.writeFileSync(path.join(blogDir, `${post.slug}.html`), html);
+    console.log(`Built: ${post.slug}.html`);
+  }
 
   // Update blog.html
   const blogHtmlPath = path.join(__dirname, '..', 'blog.html');
@@ -248,6 +266,49 @@ async function main() {
 
   fs.writeFileSync(blogHtmlPath, blogHtml);
   console.log(`Updated blog.html with ${cards.length} posts`);
+
+  // Update sitemap.xml with blog posts
+  const sitemapPath = path.join(__dirname, '..', 'sitemap.xml');
+  const today = new Date().toISOString().split('T')[0];
+  let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://apodcastgeek.com/</loc>
+    <lastmod>${today}</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://apodcastgeek.com/blog.html</loc>
+    <lastmod>${today}</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://apodcastgeek.com/checklist.html</loc>
+    <lastmod>2026-03-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+`;
+  for (const post of cards) {
+    sitemap += `  <url>
+    <loc>https://apodcastgeek.com/blog/${post.slug}.html</loc>
+    <lastmod>${post.publishDate}</lastmod>
+    <priority>0.7</priority>
+  </url>
+`;
+  }
+  sitemap += `  <url>
+    <loc>https://apodcastgeek.com/privacy.html</loc>
+    <lastmod>2026-03-30</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://apodcastgeek.com/terms.html</loc>
+    <lastmod>2026-03-30</lastmod>
+    <priority>0.3</priority>
+  </url>
+</urlset>`;
+  fs.writeFileSync(sitemapPath, sitemap);
+  console.log(`Updated sitemap.xml with ${cards.length} blog posts`);
 
   // Signal to workflow that we have posts
   const { appendFileSync } = require('fs');
