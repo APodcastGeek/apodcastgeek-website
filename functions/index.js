@@ -391,12 +391,41 @@ async function generateOptimizationNotes(reportData, clientName, apiKey) {
   const dataStr = JSON.stringify(reportData, null, 2);
 
   const message = await anthropic.messages.create({
-    model: "claude-haiku-4-5-20251001",
-    max_tokens: 500,
+    model: "claude-sonnet-4-6",
+    max_tokens: 800,
     messages: [
       {
         role: "user",
-        content: `You are a podcast growth strategist at APodcastGeek. Based on this month's performance data for "${clientName}", write 3-4 concise, actionable optimization recommendations. Be specific and reference actual numbers. No fluff. No em dashes. No exclamation marks.\n\nData:\n${dataStr}\n\nFormat as bullet points starting with -.`,
+        content: `You are a senior podcast growth strategist at APodcastGeek (APG), a done-for-you podcast production agency serving B2B founders in high-trust industries. APG measures ROI in qualified leads, not vanity metrics like downloads.
+
+Your knowledge base includes:
+
+FRAMEWORKS:
+- Kev Michael's 7 Deadly Sins of Podcasting: (1) Clarity Problem, (2) Straight Line Problem (no strategic funnel), (3) Retention Problem (poor hooks/structure), (4) Integration Problem (podcast not tied to business goals), (5) Authority Problem, (6) Repurposing Problem (content not leveraged across platforms), (7) Discovery Problem (no strategy for new listeners).
+- Kev Michael's 4 Rules of Episode Titles (from 5,463 episodes analyzed): Promise, Framing, Guest Names, Numbers. Up to 715% more views when applied.
+- Pipeline Podcast Blueprint: every guest is a potential customer. Target 10% guest-to-customer conversion. Pre-qualify during episodes, pivot to discovery calls.
+- Hala Taha's 3 systems: Production, Promotion, Monetization.
+
+KEY METRICS TO DIAGNOSE:
+- YouTube: impressions vs views (CTR = title/thumbnail effectiveness), watch time vs views (retention = content quality), traffic sources, subscriber trend
+- Audio: download trend month-over-month, consumption hours, platform distribution, geographic spread
+- Ads/QR: dynamic content plays trend, QR/shortlink scan rate, back-catalog value
+
+RULES:
+- Reference specific numbers from the data. Never give generic advice.
+- Frame recommendations around lead generation and business outcomes.
+- Identify which of the 7 Deadly Sins the data reveals and name it.
+- If YouTube CTR is low, suggest title/thumbnail improvements using the 4 Rules.
+- If watch time is disproportionately low vs views, flag a retention problem.
+- No fluff. No em dashes. No exclamation marks. Direct language only.
+- Write exactly 4-5 bullet points, each actionable and specific to this client.
+
+Based on this month's performance data for "${clientName}", write your optimization recommendations.
+
+Data:
+${dataStr}
+
+Format as bullet points starting with -.`,
       },
     ],
   });
@@ -561,11 +590,11 @@ async function sendSlackReport(client, reportData, monthName, webhookUrl, firest
 // ============================================
 // FUNCTION 3: Generate monthly client reports
 // Runs 1st of every month at 10am Dublin time
-// (Claude computer use exports CSVs at 6am, giving 4 hours buffer)
+// (Claude computer use exports CSVs at 6am, giving 3 hours buffer)
 // ============================================
 exports.generateClientReports = onSchedule(
   {
-    schedule: "0 10 1 * *",
+    schedule: "0 9 1 * *",
     timeZone: "Europe/Dublin",
     secrets: [BUZZSPROUT_API_TOKEN, HOVERCODE_API_TOKEN, SLACK_WEBHOOK_URL, ANTHROPIC_API_KEY],
     region: "europe-west1",
