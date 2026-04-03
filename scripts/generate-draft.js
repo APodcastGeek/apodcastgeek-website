@@ -84,19 +84,35 @@ async function main() {
     .map(function(t) { return t.toLowerCase(); });
 
   var draftsCreated = 0;
+  var usedWeeks = [];
 
   for (var batchNum = 0; batchNum < DRAFTS_PER_BATCH; batchNum++) {
+
+  // Rate limit: wait 65 seconds between drafts to stay under 4000 tokens/minute
+  if (batchNum > 0) {
+    console.log('Waiting 65 seconds for rate limit...');
+    await new Promise(function(r) { setTimeout(r, 65000); });
+  }
 
   // Find next unwritten brief
   var brief = null;
   for (var i = 0; i < calendar.length; i++) {
     var item = calendar[i];
     var titleLower = item.title_suggestion.toLowerCase();
+    // Extract core words from keyword (drop short modifiers like B2B, UK, US, EU)
+    var keywordWords = item.keyword.toLowerCase().split(/\s+/).filter(function(w) { return w.length > 3; });
     var alreadyExists = existingTitles.some(function(t) {
-      return t.indexOf(item.keyword) !== -1 || t === titleLower || titleLower.indexOf(t) !== -1;
+      // Check if most core keyword words appear in an existing title
+      var matchCount = keywordWords.filter(function(w) { return t.indexOf(w) !== -1; }).length;
+      return matchCount >= Math.max(2, Math.ceil(keywordWords.length * 0.6)) || t === titleLower || titleLower.indexOf(t) !== -1;
     });
+    // Also check if this calendar week was already used in this batch
+    if (!alreadyExists && usedWeeks.indexOf(item.week) !== -1) {
+      alreadyExists = true;
+    }
     if (!alreadyExists) {
       brief = item;
+      usedWeeks.push(item.week);
       break;
     }
   }
@@ -147,24 +163,37 @@ async function main() {
     '---\n' +
     '[full article content in HTML using h2, h3, p, ul, li, blockquote, a tags. Do NOT include h1. Include the Wistia embed HTML where contextually relevant. Include internal links as <a href="url">anchor text</a>.]';
 
-  // Generate with Claude
-  var claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'x-api-key': ANTHROPIC_API_KEY,
-      'anthropic-version': '2023-06-01',
-      'content-type': 'application/json'
-    },
-    body: JSON.stringify({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 4000,
-      messages: [{ role: 'user', content: prompt }]
-    })
-  });
-  var claudeData = await claudeRes.json();
+  // Generate with Claude (with retry on rate limit)
+  var claudeData = null;
+  for (var attempt = 0; attempt < 3; attempt++) {
+    var claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'x-api-key': ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01',
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 4000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    claudeData = await claudeRes.json();
+
+    if (claudeData.content && claudeData.content[0]) break;
+
+    if (claudeData.error && claudeData.error.type === 'rate_limit_error') {
+      console.log('Rate limited, waiting 90 seconds before retry ' + (attempt + 2) + '/3...');
+      await new Promise(function(r) { setTimeout(r, 90000); });
+    } else {
+      console.error('Claude API error:', JSON.stringify(claudeData));
+      process.exit(1);
+    }
+  }
 
   if (!claudeData.content || !claudeData.content[0]) {
-    console.error('Claude API error:', JSON.stringify(claudeData));
+    console.error('Claude API failed after 3 retries:', JSON.stringify(claudeData));
     process.exit(1);
   }
 
