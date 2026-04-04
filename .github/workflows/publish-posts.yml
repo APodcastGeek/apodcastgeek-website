@@ -1,8 +1,9 @@
 name: Publish Blog Posts
 
 on:
-  schedule:
-    - cron: '0 6 * * *'
+  # DISABLED — Replaced by n8n workflow "APG Blog - Daily Publisher" (April 2026)
+  # schedule:
+  #   - cron: '0 6 * * *'
   workflow_dispatch:
 
 permissions:

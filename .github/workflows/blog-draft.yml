@@ -1,8 +1,9 @@
 name: Generate Blog Draft
 
 on:
-  schedule:
-    - cron: '0 9 * * 1'  # Monday 9am UTC
+  # DISABLED — Replaced by n8n workflow "APG Blog - Weekly Draft Generation" (April 2026)
+  # schedule:
+  #   - cron: '0 9 * * 1'  # Monday 9am UTC
   workflow_dispatch:
 
 jobs:
