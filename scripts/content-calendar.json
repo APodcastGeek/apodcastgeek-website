@@ -118,5 +118,85 @@
     "data_points": ["APG builds strategic ad placements into every episode", "10% guest-to-client conversion rate", "Monetisation is structured from day one, not an afterthought"],
     "embed_videos": ["wqzpcd22ed"],
     "internal_links": ["/#outcome-heading", "/blog/turn-podcast-guests-into-clients.html"]
+  },
+  {
+    "week": 13,
+    "keyword": "Irish B2B podcast benchmarks 2026",
+    "title_suggestion": "The Irish B2B Podcast Benchmark Report 2026",
+    "tag": "Industry Insights",
+    "brief": "Original data post based on APG's production experience and publicly available Irish/European podcast data. Cover: typical listener demographics for B2B shows in Ireland, episode length that performs best (25-45 min), publishing cadence (fortnightly vs monthly) and conversion metrics. Frame around the 10% guest-to-client rate. Show what 'good' looks like at month 3, 6, 12 for downloads, subscribers, and pipeline influence. Include a 'benchmark card' for each metric with APG targets. Position APG as the source of Irish B2B podcast data. Target keyword: 'Irish B2B podcast benchmarks'. Secondary: 'B2B podcast stats Ireland'. Word count: 2500-3000.",
+    "data_points": ["10% of podcast guests convert to customers or long-term partnerships", "Award-winning production recognised at Irish Podcast Awards", "Serving B2B founders worldwide from Dublin", "6-month minimum commitment reflects when compounding results begin"],
+    "embed_videos": [],
+    "internal_links": ["/#outcome-heading", "/#services-heading"]
+  },
+  {
+    "week": 14,
+    "keyword": "get CFO approval podcast budget B2B",
+    "title_suggestion": "How to Get Your CFO to Approve a Podcast Budget in 2026",
+    "tag": "B2B Strategy",
+    "brief": "ROI-first framing for finance stakeholders. Cover: how to frame a podcast as a pipeline generator (not a marketing cost), the 10% guest-to-client stat translated into CAC terms, how to build the business case, typical payback period (6-9 months), metrics finance cares about (pipeline influenced, deal acceleration, CAC payback). Include a sample 1-page business case template CFOs will actually read. Address common objections: 'we tried a podcast before', 'we don't have time', 'downloads are low'. End with how the APG Brand Builder derisks the investment with a 6-month commitment. Target keyword: 'podcast budget approval'. Secondary: 'B2B podcast business case'. Word count: 2000-2500.",
+    "data_points": ["10% of podcast guests convert to customers or long-term partnerships", "6-month minimum commitment", "APG offers two fixed tiers: production-only and full done-for-you"],
+    "embed_videos": [],
+    "internal_links": ["/#services-heading", "/#faq-heading"]
+  },
+  {
+    "week": 15,
+    "keyword": "why B2B podcasts fail",
+    "title_suggestion": "We Analysed 50 Failed B2B Podcasts. Here Is What Killed Them.",
+    "tag": "B2B Strategy",
+    "brief": "Contrarian failure analysis based on patterns APG sees repeatedly in the market. Cover the 7 most common failure modes with specific examples: inconsistent publishing cadence, no clear ICP, host who will not commit, no guest recruitment strategy, poor production quality, no distribution plan, no success metrics defined. Each failure mode gets a 'what it looks like', 'why it kills the show', and 'the fix'. End with the APG framework for what right looks like and why the 6-month minimum prevents most of these. Target keyword: 'why B2B podcasts fail'. Secondary: 'failed podcast reasons', 'podcast failure causes'. Word count: 2200-2800.",
+    "data_points": ["6-month minimum commitment reflects when compounding results begin", "Every guest is qualified against the client's ideal customer profile", "APG handles all outreach, follow-ups, and scheduling"],
+    "embed_videos": [],
+    "internal_links": ["/#process-heading", "/#outcome-heading"]
+  },
+  {
+    "week": 16,
+    "keyword": "B2B podcast KPIs metrics",
+    "title_suggestion": "Podcast KPIs That Actually Matter to a B2B CMO",
+    "tag": "B2B Strategy",
+    "brief": "Executive-level framing. Not for podcast practitioners, for CMOs reporting to boards. Cover the KPI hierarchy: vanity metrics (downloads, subscribers) to meaningful metrics (listen-through rate, repeat listeners) to pipeline metrics (guest-to-pipeline conversion, content influence on deals, authority building). Give a 1-page KPI scorecard structure a CMO can drop into a board deck. Cover what to stop tracking, what to start tracking, and how to attribute podcast influence in the sales cycle. Target keyword: 'B2B podcast KPIs'. Secondary: 'podcast metrics CMO', 'podcast ROI dashboard'. Word count: 2000-2500.",
+    "data_points": ["10% guest-to-client conversion rate", "Quality of audience matters more than quantity for B2B", "Consistent monthly production compounds pipeline over time"],
+    "embed_videos": [],
+    "internal_links": ["/#outcome-heading", "/#services-heading"]
+  },
+  {
+    "week": 17,
+    "keyword": "podcast show vs series vs feed B2B",
+    "title_suggestion": "Show vs Series vs Feed: A Decision Tree for B2B Founders",
+    "tag": "B2B Strategy",
+    "brief": "Go deeper than the surface-level industry comparison. Define each clearly: ongoing show (weekly or fortnightly, evergreen topics), limited series (8-12 episode seasons with a narrative arc), branded feed (multiple shows under one brand). Pros and cons for B2B goals. Include a decision tree with 5-6 yes/no questions that point to the right format. Real examples of each format working for B2B. Explain why guest recruitment fits the ongoing show format best. Target keyword: 'podcast show vs series vs feed'. Secondary: 'branded podcast format', 'B2B podcast types'. Word count: 1800-2200.",
+    "data_points": ["6-month minimum commitment reflects when compounding results begin", "APG handles all outreach, follow-ups, and scheduling"],
+    "embed_videos": [],
+    "internal_links": ["/#process-heading", "/#faq-heading"]
+  },
+  {
+    "week": 18,
+    "keyword": "podcast guest conversion rate B2B",
+    "title_suggestion": "The 10 Percent Rule: Why One in Ten of Your Guests Becomes a Customer",
+    "tag": "Guest Recruitment",
+    "brief": "APG's signature stat as its own dedicated post. Explain the mechanics behind the 10% rule: pre-qualified guests who match the ICP, the pre-production briefing that creates a focused conversation, the recording itself as a trust-building event, post-episode follow-up that nurtures the relationship, the high-quality assets guests want to share. Include the math: 4 guests per month times 12 months equals 48 guests times 10% equals roughly 5 new customers per year from the podcast alone. Extrapolate for different show cadences. End with why this only works when guest recruitment is done right. Target keyword: 'podcast guest conversion rate'. Secondary: 'podcast guest to customer', '10 percent rule podcast'. Word count: 2200-2600.",
+    "data_points": ["10% average guest-to-client or partner conversion rate", "Pre-production briefing on both sides ensures focused valuable conversations", "Every guest is qualified against the client's ideal customer profile"],
+    "embed_videos": [],
+    "internal_links": ["/#outcome-heading", "/#services-heading"]
+  },
+  {
+    "week": 19,
+    "keyword": "podcast no pipeline B2B fix",
+    "title_suggestion": "Why Your Podcast Has No Pipeline (And How to Fix It in 90 Days)",
+    "tag": "B2B Strategy",
+    "brief": "Diagnostic post for B2B founders who have a podcast but no pipeline from it. Cover the common reasons: wrong guests (not ICP-qualified), no post-show follow-up system, no content distribution plan, no offer or CTA tied to the content, host is not selling from the podcast. Give a 90-day fix plan: Day 1-30 audit and rebuild the guest pipeline, Day 31-60 implement a follow-up system, Day 61-90 tie content to an offer and measure. Include concrete weekly actions. Target keyword: 'podcast no pipeline'. Secondary: 'podcast not generating leads', 'B2B podcast fix'. Word count: 2000-2500.",
+    "data_points": ["10% guest-to-client conversion is achievable when the system is right", "APG handles all outreach, follow-ups, and scheduling", "Pre-production briefing creates focused conversations"],
+    "embed_videos": [],
+    "internal_links": ["/#process-heading", "/#outcome-heading"]
+  },
+  {
+    "week": 20,
+    "keyword": "podcast production cost Ireland 2000 euro",
+    "title_suggestion": "What 2000 Euro a Month Buys You in B2B Podcast Production",
+    "tag": "B2B Strategy",
+    "brief": "Transparent Ireland-specific pricing breakdown. Compare what each price point actually gets a B2B founder: under 1000 euro (bare bones freelancer, variable quality), 2000 euro (APG production-only tier with full deliverable set), 4000 euro (APG Brand Builder with guest recruitment and strategy), 7000 euro and above (enterprise custom). For each tier list exactly what is included: number of episodes, number of clips, thumbnails, distribution, SEO article, guest recruitment. Build trust through transparency. Position the 2000 euro tier as the serious minimum for B2B. Target keyword: 'podcast production cost Ireland'. Secondary: 'B2B podcast pricing Dublin', 'podcast agency cost Europe'. Word count: 2000-2500.",
+    "data_points": ["APG offers two fixed tiers: production-only and full done-for-you including guest recruitment", "6-month minimum commitment", "10 business day turnaround", "Every episode includes video, audio, trailer, 6 clips, 3 thumbnails, show notes, SEO article"],
+    "embed_videos": [],
+    "internal_links": ["/#services-heading", "/#faq-heading"]
   }
 ]
