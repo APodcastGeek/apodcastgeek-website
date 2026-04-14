@@ -1,15 +1,12 @@
 name: Publish Blog Posts
 
 on:
-  # DISABLED — Replaced by n8n workflow "APG Blog - Daily Publisher" (April 2026)
-  # schedule:
-  #   - cron: '0 6 * * *'
+  schedule:
+    - cron: '0 6 * * *'
   workflow_dispatch:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 jobs:
   publish:
@@ -35,14 +32,3 @@ jobs:
           git add blog/ blog.html sitemap.xml
           git diff --cached --quiet || git commit -m "Publish blog posts [automated]"
           git push
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
