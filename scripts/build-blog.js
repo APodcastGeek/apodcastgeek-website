@@ -4,6 +4,8 @@ const path = require('path');
 const NOTION_API_KEY = process.env.NOTION_API_KEY;
 const NOTION_DB_ID = process.env.NOTION_DB_ID;
 
+const TOTAL_HERO_IMAGES = 16;
+
 async function notionFetch(url, body = null) {
   const opts = {
     method: body ? 'POST' : 'GET',
@@ -21,6 +23,99 @@ async function notionFetch(url, body = null) {
 async function getBlocks(blockId) {
   const data = await notionFetch(`https://api.notion.com/v1/blocks/${blockId}/children?page_size=100`);
   return data.results || [];
+}
+
+// ========= Helpers =========
+
+function slugify(text) {
+  return String(text || '')
+    .toLowerCase()
+    .replace(/<[^>]*>/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .substring(0, 60);
+}
+
+function hashString(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) {
+    h = ((h << 5) - h) + s.charCodeAt(i);
+    h |= 0;
+  }
+  return Math.abs(h);
+}
+
+function heroImageNumber(slug) {
+  const n = (hashString(slug) % TOTAL_HERO_IMAGES) + 1;
+  return String(n).padStart(2, '0');
+}
+
+function readingTimeMinutes(htmlContent) {
+  const text = String(htmlContent || '').replace(/<[^>]*>/g, ' ');
+  const words = text.split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+}
+
+// Add id attributes to h2/h3 and extract h2s for TOC
+function injectHeadingIdsAndExtractToc(html) {
+  const tocItems = [];
+  const withIds = html.replace(/<h([23])>([\s\S]*?)<\/h\1>/g, (match, level, text) => {
+    const id = slugify(text);
+    if (level === '2') tocItems.push({ id, text: text.replace(/<[^>]*>/g, '').trim() });
+    return `<h${level} id="${id}">${text}</h${level}>`;
+  });
+  return { html: withIds, tocItems };
+}
+
+function buildTocHtml(tocItems) {
+  if (!tocItems || tocItems.length < 3) return '';
+  const lis = tocItems.map(t => `<li><a href="#${t.id}">${t.text}</a></li>`).join('\n    ');
+  return `<nav class="toc" aria-label="Table of contents">
+  <div class="toc-label">In this article</div>
+  <ol>
+    ${lis}
+  </ol>
+</nav>`;
+}
+
+// Insert a mid-post CTA after the middle H2
+function injectMidCta(html, tocItems, slug) {
+  if (!tocItems || tocItems.length < 4) return html;
+  const middleIndex = Math.floor(tocItems.length / 2);
+  const targetId = tocItems[middleIndex].id;
+  const midCta = `
+<div class="mid-cta">
+  <div class="mid-cta-inner">
+    <div class="mid-cta-text">
+      <strong>Want this done for you?</strong>
+      <p>Book a 30-minute strategy call with APG. No pitch, just a clear plan for your podcast.</p>
+    </div>
+    <a class="mid-cta-btn" href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-discovery-call" target="_blank" rel="noopener">Book a Call</a>
+  </div>
+</div>
+`;
+  // Insert before the target heading
+  const pattern = new RegExp(`(<h2 id="${targetId}">)`);
+  if (pattern.test(html)) {
+    return html.replace(pattern, midCta + '$1');
+  }
+  return html;
+}
+
+// Process [CALLOUT]...[/CALLOUT], [STAT:XX]...[/STAT], [PULLQUOTE]...[/PULLQUOTE] markers
+function processContentMarkers(html) {
+  let out = html;
+  out = out.replace(/\[CALLOUT\]([\s\S]*?)\[\/CALLOUT\]/g, (m, inner) => {
+    return `<div class="callout"><div class="callout-label">APG Insight</div><div class="callout-body">${inner.trim()}</div></div>`;
+  });
+  out = out.replace(/\[STAT:([^\]]+)\]([\s\S]*?)\[\/STAT\]/g, (m, stat, label) => {
+    return `<div class="stat-highlight"><div class="stat-number">${stat.trim()}</div><div class="stat-label">${label.trim()}</div></div>`;
+  });
+  out = out.replace(/\[PULLQUOTE\]([\s\S]*?)\[\/PULLQUOTE\]/g, (m, inner) => {
+    return `<blockquote class="pullquote">${inner.trim()}</blockquote>`;
+  });
+  return out;
 }
 
 function blocksToHtml(blocks) {
@@ -46,7 +141,7 @@ function blocksToHtml(blocks) {
         const pText = richTextToStr(block.paragraph.rich_text);
         if (pText) {
           // If content already contains HTML tags, output raw (from AI-generated posts)
-          if (pText.includes('<h2>') || pText.includes('<p>') || pText.includes('<ul>')) {
+          if (pText.includes('<h2>') || pText.includes('<p>') || pText.includes('<ul>') || pText.includes('[CALLOUT]') || pText.includes('[STAT:')) {
             html += pText + '\n';
           } else {
             html += `<p>${pText}</p>\n`;
@@ -76,10 +171,17 @@ function blocksToHtml(blocks) {
     }
   }
   if (inList) html += '</ul>\n';
+
   // Defensive: replace legacy Calendly URL with current one (old content in Notion may still reference it)
   html = html.split('apg-brand-builder-podcast-design-call').join('apg-brand-builder-discovery-call');
+
+  // Process content markers before heading ID injection
+  html = processContentMarkers(html);
+
   return html;
 }
+
+// ========= Template =========
 
 function getPostTemplate() {
   return `<!DOCTYPE html>
@@ -96,43 +198,144 @@ function getPostTemplate() {
 <meta property="og:description" content="{{DESCRIPTION}}">
 <meta property="og:url" content="https://apodcastgeek.com/blog/{{SLUG}}.html">
 <meta property="og:type" content="article">
-<meta property="og:image" content="https://apodcastgeek.com/og-image.png">
+<meta property="og:image" content="https://apodcastgeek.com/blog/images/hero/{{HERO_NUM}}.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{TITLE}} | APodcastGeek Blog">
 <meta name="twitter:description" content="{{DESCRIPTION}}">
-<meta name="twitter:image" content="https://apodcastgeek.com/og-image.png">
+<meta name="twitter:image" content="https://apodcastgeek.com/blog/images/hero/{{HERO_NUM}}.jpg">
 <link rel="icon" type="image/png" href="../favicon.png">
 <link rel="apple-touch-icon" href="../favicon.png">
 <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"{{TITLE}}","description":"{{DESCRIPTION}}","author":{"@type":"Organization","name":"APodcastGeek"},"publisher":{"@type":"Organization","name":"APodcastGeek","url":"https://apodcastgeek.com"},"datePublished":"{{DATE}}","mainEntityOfPage":"https://apodcastgeek.com/blog/{{SLUG}}.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"{{TITLE}}","description":"{{DESCRIPTION}}","image":"https://apodcastgeek.com/blog/images/hero/{{HERO_NUM}}.jpg","author":{"@type":"Organization","name":"APodcastGeek","url":"https://apodcastgeek.com"},"publisher":{"@type":"Organization","name":"APodcastGeek","url":"https://apodcastgeek.com","logo":{"@type":"ImageObject","url":"https://apodcastgeek.com/logo.png"}},"datePublished":"{{DATE}}","dateModified":"{{DATE}}","mainEntityOfPage":"https://apodcastgeek.com/blog/{{SLUG}}.html"}</script>
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#060810;color:#c8d4e0;line-height:1.8}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#060810;color:#c8d4e0;line-height:1.75}
+/* Nav */
 .nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:#0a0e1a;border-bottom:0.5px solid rgba(55,138,221,0.2);position:sticky;top:0;z-index:100}
-.nav-logo{height:48px;width:auto;filter:drop-shadow(0 0 1px rgba(255,255,255,0.8)) drop-shadow(0 0 1px rgba(255,255,255,0.8))}.nav-links{display:flex;gap:2rem}.nav-links a{color:#8899aa;text-decoration:none;font-size:14px}.nav-links a:hover{color:#fff}
-.hamburger{display:none;background:none;border:none;cursor:pointer;padding:.5rem;order:3;margin-left:auto}.hamburger svg{display:block}
+.nav-logo{height:48px;width:auto;filter:drop-shadow(0 0 1px rgba(255,255,255,0.8)) drop-shadow(0 0 1px rgba(255,255,255,0.8))}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{color:#8899aa;text-decoration:none;font-size:14px}
+.nav-links a:hover{color:#fff}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:.5rem;order:3;margin-left:auto}
+.hamburger svg{display:block}
 .nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:#0a0e1a;padding:1.5rem 2rem;border-bottom:0.5px solid rgba(55,138,221,0.2);gap:1.25rem}
-.nav-cta{background:#378ADD;color:#fff;border:none;padding:.65rem 1.6rem;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;display:inline-block}.nav-cta:hover{background:#185FA5}
-.post{max-width:780px;margin:0 auto;padding:4rem 2rem 5rem}
-.post-back{display:inline-block;color:#378ADD;text-decoration:none;font-size:14px;margin-bottom:2rem}.post-back:hover{color:#85B7EB}
-.post-tag{display:inline-block;background:rgba(55,138,221,0.12);color:#85B7EB;border-radius:4px;padding:.2rem .6rem;font-size:11px;letter-spacing:.5px;margin-bottom:1rem}
-.post-meta{font-size:13px;color:#556677;margin-bottom:2.5rem}
-.post h1{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:700;color:#fff;line-height:1.25;margin-bottom:1rem}
-.post h2{font-size:1.4rem;font-weight:600;color:#fff;margin-top:2.5rem;margin-bottom:.75rem}
-.post h3{font-size:1.1rem;font-weight:600;color:#fff;margin-top:2rem;margin-bottom:.5rem}
-.post p{font-size:1rem;color:#8899aa;line-height:1.9;margin-bottom:1.25rem}
-.post ul,.post ol{padding-left:1.5rem;margin-bottom:1.25rem}
-.post li{font-size:1rem;color:#8899aa;line-height:1.9;margin-bottom:.5rem}
-.post blockquote{border-left:3px solid #378ADD;padding-left:1.25rem;margin:1.5rem 0;font-style:italic;color:#aabbcc}
-.post a{color:#378ADD;text-decoration:none}.post a:hover{text-decoration:underline}
-.post img{max-width:100%;border-radius:8px;margin:1.5rem 0}
-.post-cta{background:#111827;border:0.5px solid rgba(55,138,221,0.2);border-radius:12px;padding:2.5rem;text-align:center;margin-top:3rem}
-.post-cta h3{font-size:1.2rem;font-weight:600;color:#fff;margin-bottom:.5rem}
-.post-cta p{font-size:.9rem;color:#8899aa;margin-bottom:1.5rem}
-.post-cta a{background:#378ADD;color:#fff;padding:.75rem 2rem;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block}.post-cta a:hover{background:#185FA5}
+.nav-cta{background:#378ADD;color:#fff;border:none;padding:.65rem 1.6rem;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;display:inline-block}
+.nav-cta:hover{background:#185FA5}
+
+/* Hero */
+.post-hero{position:relative;width:100%;height:clamp(240px,44vw,460px);overflow:hidden;background:#0a0e1a}
+.post-hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55}
+.post-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,8,16,0.25) 0%,rgba(6,8,16,0.65) 60%,rgba(6,8,16,0.95) 100%)}
+.post-hero-inner{position:relative;max-width:860px;margin:0 auto;padding:clamp(2rem,6vw,4rem) 2rem 2.25rem;height:100%;display:flex;flex-direction:column;justify-content:flex-end}
+.post-hero-tag{display:inline-block;background:rgba(55,138,221,0.2);color:#85B7EB;border:0.5px solid rgba(55,138,221,0.5);border-radius:999px;padding:.3rem .85rem;font-size:11px;letter-spacing:.5px;text-transform:uppercase;font-weight:600;margin-bottom:1rem;width:fit-content}
+.post-hero h1{font-size:clamp(1.8rem,4.5vw,3rem);font-weight:800;color:#fff;line-height:1.15;letter-spacing:-0.01em;text-shadow:0 2px 20px rgba(0,0,0,0.5)}
+.post-hero-meta{display:flex;gap:1rem;align-items:center;color:#aabbcc;font-size:13px;margin-top:1rem}
+.post-hero-meta .dot{opacity:.4}
+
+/* Article body */
+.post{max-width:780px;margin:0 auto;padding:2.5rem 2rem 4rem}
+.post-back{display:inline-block;color:#378ADD;text-decoration:none;font-size:14px;margin-bottom:2rem}
+.post-back:hover{color:#85B7EB}
+
+/* Table of contents */
+.toc{background:#0d1322;border:0.5px solid rgba(55,138,221,0.18);border-radius:10px;padding:1.5rem 1.75rem;margin:0 0 2.5rem 0}
+.toc-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#85B7EB;font-weight:600;margin-bottom:.85rem}
+.toc ol{list-style:decimal;padding-left:1.25rem;margin:0;color:#8899aa;font-size:.9rem}
+.toc li{margin:.35rem 0;line-height:1.5}
+.toc a{color:#c8d4e0;text-decoration:none;transition:color .15s}
+.toc a:hover{color:#85B7EB}
+
+/* Share buttons */
+.share-row{display:flex;align-items:center;gap:.65rem;margin:1.5rem 0 2.5rem 0;padding:1rem 0;border-top:0.5px solid rgba(55,138,221,0.1);border-bottom:0.5px solid rgba(55,138,221,0.1)}
+.share-label{font-size:12px;color:#667788;text-transform:uppercase;letter-spacing:.7px;margin-right:.35rem}
+.share-btn{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:#0d1322;border:0.5px solid rgba(55,138,221,0.25);color:#8899aa;text-decoration:none;transition:all .15s}
+.share-btn:hover{background:#378ADD;color:#fff;border-color:#378ADD}
+.share-btn svg{width:16px;height:16px;display:block}
+.share-btn.copy{cursor:pointer;font-size:12px;font-weight:600;width:auto;padding:0 .9rem}
+
+/* Typography */
+.post-body h2{font-size:clamp(1.3rem,2.2vw,1.65rem);font-weight:700;color:#fff;margin-top:2.75rem;margin-bottom:.85rem;letter-spacing:-.01em;line-height:1.3;scroll-margin-top:6rem}
+.post-body h3{font-size:1.15rem;font-weight:600;color:#fff;margin-top:2rem;margin-bottom:.5rem;scroll-margin-top:6rem}
+.post-body p{font-size:1.02rem;color:#a8b4c4;line-height:1.85;margin-bottom:1.25rem}
+.post-body ul,.post-body ol{padding-left:1.5rem;margin-bottom:1.4rem}
+.post-body li{font-size:1.02rem;color:#a8b4c4;line-height:1.85;margin-bottom:.5rem}
+.post-body blockquote{border-left:3px solid #378ADD;padding:.5rem 0 .5rem 1.5rem;margin:2rem 0;font-style:italic;color:#c8d4e0;font-size:1.05rem}
+.post-body a{color:#378ADD;text-decoration:underline;text-decoration-color:rgba(55,138,221,0.35);text-underline-offset:3px}
+.post-body a:hover{text-decoration-color:#378ADD}
+.post-body img{max-width:100%;border-radius:10px;margin:1.5rem 0}
+.post-body strong{color:#fff;font-weight:600}
+
+/* Callout box */
+.callout{background:linear-gradient(135deg,rgba(55,138,221,0.08) 0%,rgba(55,138,221,0.02) 100%);border:0.5px solid rgba(55,138,221,0.3);border-left:3px solid #378ADD;border-radius:10px;padding:1.4rem 1.6rem;margin:2rem 0}
+.callout-label{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:#85B7EB;font-weight:700;margin-bottom:.5rem}
+.callout-body{color:#d0dce8;font-size:1rem;line-height:1.7}
+.callout-body p{color:#d0dce8;margin-bottom:.6rem;font-size:1rem}
+.callout-body p:last-child{margin-bottom:0}
+
+/* Pull quote */
+.post-body blockquote.pullquote{border:none;border-top:0.5px solid rgba(55,138,221,0.25);border-bottom:0.5px solid rgba(55,138,221,0.25);padding:1.5rem 0;margin:2.5rem 0;font-size:clamp(1.2rem,2.2vw,1.5rem);font-style:normal;font-weight:600;line-height:1.4;color:#fff;text-align:center;font-style:italic}
+
+/* Stat highlight */
+.stat-highlight{text-align:center;padding:2rem 1rem;margin:2.5rem 0;background:#0d1322;border-radius:12px;border:0.5px solid rgba(55,138,221,0.2)}
+.stat-number{font-size:clamp(2.8rem,6vw,4rem);font-weight:800;color:#378ADD;line-height:1;letter-spacing:-.02em}
+.stat-label{font-size:.95rem;color:#8899aa;margin-top:.75rem;line-height:1.5}
+
+/* Mid-post CTA */
+.mid-cta{margin:3rem 0}
+.mid-cta-inner{background:linear-gradient(135deg,#111827 0%,#0a0f1c 100%);border:0.5px solid rgba(55,138,221,0.3);border-radius:12px;padding:1.5rem 1.75rem;display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap}
+.mid-cta-text{flex:1;min-width:220px}
+.mid-cta-text strong{display:block;font-size:1.05rem;color:#fff;margin-bottom:.25rem}
+.mid-cta-text p{font-size:.9rem;color:#8899aa;margin:0;line-height:1.5}
+.mid-cta-btn{background:#378ADD;color:#fff;padding:.7rem 1.35rem;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;transition:background .15s}
+.mid-cta-btn:hover{background:#185FA5}
+
+/* End CTA */
+.post-cta{background:linear-gradient(135deg,#111827 0%,#0a0f1c 100%);border:0.5px solid rgba(55,138,221,0.2);border-radius:14px;padding:2.5rem 2rem;text-align:center;margin-top:3rem}
+.post-cta h3{font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:.6rem}
+.post-cta p{font-size:.95rem;color:#8899aa;margin-bottom:1.5rem}
+.post-cta a{background:#378ADD;color:#fff;padding:.85rem 2rem;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block;transition:background .15s}
+.post-cta a:hover{background:#185FA5}
+
+/* Author card */
+.author-card{margin-top:3rem;padding:1.5rem;background:#0d1322;border:0.5px solid rgba(55,138,221,0.15);border-radius:10px;display:flex;gap:1rem;align-items:center}
+.author-card-logo{flex-shrink:0;width:56px;height:56px;border-radius:12px;background:#060810;display:flex;align-items:center;justify-content:center;padding:8px}
+.author-card-logo img{width:100%;height:100%;object-fit:contain}
+.author-card-info{flex:1}
+.author-card-name{font-size:1rem;font-weight:600;color:#fff;margin-bottom:.1rem}
+.author-card-bio{font-size:.85rem;color:#8899aa;line-height:1.5}
+.author-card-badge{display:inline-block;background:rgba(55,138,221,0.12);color:#85B7EB;border-radius:4px;padding:.15rem .55rem;font-size:10px;letter-spacing:.5px;text-transform:uppercase;font-weight:600;margin-top:.35rem}
+
+/* Related */
+.related{margin-top:3rem;padding-top:2rem;border-top:0.5px solid rgba(55,138,221,0.12)}
+.related h3{font-size:.8rem;text-transform:uppercase;letter-spacing:1px;font-weight:600;color:#85B7EB;margin-bottom:1.25rem}
+.related a{display:block;text-decoration:none;padding:.75rem 0;border-bottom:0.5px solid rgba(55,138,221,0.08)}
+.related-title{font-size:.95rem;color:#c8d4e0;font-weight:500}
+.related a:hover .related-title{color:#85B7EB}
+.related-meta{display:block;font-size:.72rem;color:#556677;margin-top:.25rem;text-transform:uppercase;letter-spacing:.5px}
+
+/* Footer */
 .footer-simple{background:#040608;border-top:0.5px solid rgba(55,138,221,0.1);padding:2rem 5rem;text-align:center}
 .footer-simple p{font-size:13px;color:#334455}
-.footer-simple a{color:#445566;text-decoration:none}.footer-simple a:hover{color:#85B7EB}
-@media(max-width:1024px){.nav{padding:1rem 2rem;position:relative}.nav-links{display:none}.hamburger{display:block}.nav-logo{height:34px}.nav-cta{display:none}.footer-simple{padding:2rem}}
+.footer-simple a{color:#445566;text-decoration:none}
+.footer-simple a:hover{color:#85B7EB}
+
+@media(max-width:1024px){
+  .nav{padding:1rem 2rem;position:relative}
+  .nav-links{display:none}
+  .hamburger{display:block}
+  .nav-logo{height:34px}
+  .nav-cta{display:none}
+  .footer-simple{padding:2rem}
+  .post-hero-inner{padding:2rem 1.25rem 1.5rem}
+}
+@media(max-width:560px){
+  .share-row{flex-wrap:wrap}
+  .mid-cta-inner{flex-direction:column;align-items:flex-start}
+  .mid-cta-btn{width:100%;text-align:center}
+}
 </style>
 </head>
 <body>
@@ -150,22 +353,56 @@ function getPostTemplate() {
   </div>
   <a href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-discovery-call" class="nav-cta">Book a Strategy Call</a>
 </nav>
+
+<header class="post-hero">
+  <img class="post-hero-img" src="../blog/images/hero/{{HERO_NUM}}.jpg" alt="" loading="eager" fetchpriority="high">
+  <div class="post-hero-overlay"></div>
+  <div class="post-hero-inner">
+    <span class="post-hero-tag">{{TAG}}</span>
+    <h1>{{TITLE}}</h1>
+    <div class="post-hero-meta"><span>{{DATE}}</span><span class="dot">&bull;</span><span>{{READING_TIME}} min read</span><span class="dot">&bull;</span><span>APodcastGeek</span></div>
+  </div>
+</header>
+
 <article class="post">
   <a href="../blog.html" class="post-back">&larr; Back to Blog</a>
-  <span class="post-tag">{{TAG}}</span>
-  <h1>{{TITLE}}</h1>
-  <p class="post-meta">{{DATE}} &middot; APodcastGeek</p>
-  {{CONTENT}}
-  {{RELATED_POSTS}}
+
+  {{TOC}}
+
+  <div class="share-row">
+    <span class="share-label">Share</span>
+    <a class="share-btn" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fapodcastgeek.com%2Fblog%2F{{SLUG}}.html&title={{TITLE_URLENCODED}}" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 18.34V9.67H5.67v8.67h2.67zM7 8.5a1.55 1.55 0 1 0 0-3.1 1.55 1.55 0 0 0 0 3.1zm11.34 9.84V13.5c0-2.54-1.37-3.73-3.2-3.73-1.48 0-2.14.82-2.51 1.39v-1.19H10v8.67h2.63v-4.84c0-1.3.25-2.55 1.86-2.55 1.6 0 1.62 1.5 1.62 2.63v4.76h2.23z"/></svg></a>
+    <a class="share-btn" href="https://twitter.com/intent/tweet?text={{TITLE_URLENCODED}}&url=https%3A%2F%2Fapodcastgeek.com%2Fblog%2F{{SLUG}}.html" target="_blank" rel="noopener" aria-label="Share on X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    <a class="share-btn" href="mailto:?subject={{TITLE_URLENCODED}}&body=Thought%20you%20might%20like%20this%3A%20https%3A%2F%2Fapodcastgeek.com%2Fblog%2F{{SLUG}}.html" aria-label="Share by Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+    <button class="share-btn copy" onclick="(function(b){var u=location.href;navigator.clipboard.writeText(u).then(function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy Link'},1500)});})(this)" type="button">Copy Link</button>
+  </div>
+
+  <div class="post-body">
+    {{CONTENT}}
+  </div>
+
   <div class="post-cta">
     <h3>Ready to turn your podcast into a revenue engine?</h3>
-    <p>Book a strategy call and we will show you how the APG Brand Builder works for your business.</p>
+    <p>Book a 30-minute strategy call and we will show you how the APG Brand Builder works for your business.</p>
     <a href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-discovery-call">Book a Strategy Call</a>
   </div>
+
+  <div class="author-card">
+    <div class="author-card-logo"><img src="../logo.png" alt="APodcastGeek"></div>
+    <div class="author-card-info">
+      <div class="author-card-name">APodcastGeek</div>
+      <div class="author-card-bio">Ireland's award-winning B2B podcast production agency. We turn podcasts into pipeline for founders worldwide.</div>
+      <span class="author-card-badge">Irish Podcast Award Winners</span>
+    </div>
+  </div>
+
+  {{RELATED_POSTS}}
 </article>
+
 <footer class="footer-simple">
   <p>&copy; 2026 APodcastGeek Limited. <a href="../privacy.html">Privacy Policy</a> &middot; <a href="../terms.html">Terms of Service</a> &middot; <a href="/">Home</a></p>
 </footer>
+
 <div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#0a0e1a;border-top:0.5px solid rgba(55,138,221,0.2);padding:1rem 2rem;z-index:200">
   <div style="max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap">
     <p style="font-size:.85rem;color:#8899aa;margin:0;line-height:1.6;flex:1;min-width:280px">We use cookies to analyse site traffic and improve your experience. By continuing to use this site, you consent to our use of cookies. <a href="/privacy.html" style="color:#378ADD;text-decoration:none">Privacy Policy</a></p>
@@ -221,9 +458,27 @@ async function main() {
 
     // Get page content blocks
     const blocks = await getBlocks(page.id);
-    const content = blocksToHtml(blocks);
+    let rawContent = blocksToHtml(blocks);
 
-    cards.push({ title, slug, description, tag, publishDate, content });
+    // Extract TOC, inject heading IDs, inject mid-CTA
+    const { html: contentWithIds, tocItems } = injectHeadingIdsAndExtractToc(rawContent);
+    const contentWithMidCta = injectMidCta(contentWithIds, tocItems, slug);
+    const tocHtml = buildTocHtml(tocItems);
+
+    const heroNum = heroImageNumber(slug);
+    const reading = readingTimeMinutes(contentWithMidCta);
+
+    cards.push({
+      title,
+      slug,
+      description,
+      tag,
+      publishDate,
+      content: contentWithMidCta,
+      tocHtml,
+      heroNum,
+      reading
+    });
   }
 
   // Sort by date descending
@@ -235,27 +490,32 @@ async function main() {
     const related = cards.filter(p => p.slug !== post.slug).slice(0, 3);
     let relatedHtml = '';
     if (related.length > 0) {
-      relatedHtml = '<div style="margin-top:3rem;padding-top:2rem;border-top:0.5px solid rgba(55,138,221,0.12)">' +
-        '<h3 style="font-size:1rem;font-weight:600;color:#fff;margin-bottom:1.25rem">Related Articles</h3>';
+      relatedHtml = '<div class="related"><h3>Related Articles</h3>';
       for (const r of related) {
-        relatedHtml += '<a href="' + r.slug + '.html" style="display:block;text-decoration:none;padding:.75rem 0;border-bottom:0.5px solid rgba(55,138,221,0.08)">' +
-          '<span style="font-size:.875rem;color:#378ADD;font-weight:500">' + r.title + '</span>' +
-          '<span style="display:block;font-size:.75rem;color:#556677;margin-top:.25rem">' + r.tag + ' &middot; ' + r.publishDate + '</span></a>';
+        relatedHtml += '<a href="' + r.slug + '.html">' +
+          '<span class="related-title">' + r.title + '</span>' +
+          '<span class="related-meta">' + r.tag + ' &middot; ' + r.publishDate + '</span></a>';
       }
       relatedHtml += '</div>';
     }
 
+    const titleUrlEncoded = encodeURIComponent(post.title);
+
     const html = template
+      .replace(/\{\{TITLE_URLENCODED\}\}/g, titleUrlEncoded)
       .replace(/\{\{TITLE\}\}/g, post.title)
       .replace(/\{\{SLUG\}\}/g, post.slug)
-      .replace(/\{\{DESCRIPTION\}\}/g, post.description)
+      .replace(/\{\{DESCRIPTION\}\}/g, post.description.replace(/"/g, '&quot;'))
       .replace(/\{\{TAG\}\}/g, post.tag)
       .replace(/\{\{DATE\}\}/g, post.publishDate)
+      .replace(/\{\{HERO_NUM\}\}/g, post.heroNum)
+      .replace(/\{\{READING_TIME\}\}/g, String(post.reading))
+      .replace(/\{\{TOC\}\}/g, post.tocHtml)
       .replace(/\{\{CONTENT\}\}/g, post.content)
       .replace(/\{\{RELATED_POSTS\}\}/g, relatedHtml);
 
     fs.writeFileSync(path.join(blogDir, `${post.slug}.html`), html);
-    console.log(`Built: ${post.slug}.html`);
+    console.log(`Built: ${post.slug}.html (hero ${post.heroNum}, ${post.reading} min)`);
   }
 
   // Update blog.html
@@ -264,11 +524,12 @@ async function main() {
 
   const cardsHtml = cards.map(p =>
     `<a href="blog/${p.slug}.html" class="blog-card">` +
+    `<div class="blog-card-img" style="background-image:url('blog/images/hero/${p.heroNum}.jpg');background-size:cover;background-position:center"></div>` +
     `<div class="blog-card-body">` +
     `<span class="blog-card-tag">${p.tag}</span>` +
     `<h2>${p.title}</h2>` +
     `<p>${p.description}</p>` +
-    `<span class="blog-card-meta">${p.publishDate}</span>` +
+    `<span class="blog-card-meta">${p.publishDate} &middot; ${p.reading} min read</span>` +
     `</div></a>`
   ).join('\n  ');
 

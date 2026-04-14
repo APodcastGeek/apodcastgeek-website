@@ -146,6 +146,7 @@ async function main() {
     'INTERNAL PAGES TO LINK TO:\n' + internalLinks + '\n\n' +
     videoEmbeds + '\n\n' +
     'WRITING RULES:\n' +
+    '- Word count: 2500-3500 words (longer, more substantive than before)\n' +
     '- No em dashes ever\n' +
     '- No exclamation marks\n' +
     '- No filler words or fluff\n' +
@@ -153,15 +154,21 @@ async function main() {
     '- Write from "we" perspective as APodcastGeek\n' +
     '- Use data and specifics, not vague claims\n' +
     '- Every section should be actionable\n' +
+    '- Minimum 6 H2 sections for structure and a scannable table of contents\n' +
     '- Include external links to authoritative sources (HBR, Forbes, industry reports) where relevant\n' +
     '- End with a CTA to book a strategy call at https://calendly.com/apodcastgeek_dave/apg-brand-builder-discovery-call\n\n' +
+    'CONTENT ENHANCEMENT MARKERS (use these exactly, they render as branded visual elements):\n' +
+    '- Include 1-2 branded insight callouts using this format: [CALLOUT]APG Insight: <one or two sentences with a key takeaway or contrarian point>[/CALLOUT]\n' +
+    '- Include exactly 1 stat highlight for your most important data point using this format: [STAT:10%]What one in ten guests becoming customers looks like in pipeline[/STAT] (replace 10% with any number and customise the label)\n' +
+    '- Include exactly 1 pull quote for your strongest line using this format: [PULLQUOTE]Your most quotable sentence from the article.[/PULLQUOTE]\n' +
+    '- Place these strategically within the article, not all at the top. The STAT and PULLQUOTE should appear in the middle third. CALLOUTS can appear between sections.\n\n' +
     'FORMAT YOUR RESPONSE EXACTLY AS:\n' +
     'TITLE: [title]\n' +
     'SLUG: [slug]\n' +
     'DESCRIPTION: [meta description, 150-160 characters]\n' +
     'TAG: [' + brief.tag + ']\n' +
     '---\n' +
-    '[full article content in HTML using h2, h3, p, ul, li, blockquote, a tags. Do NOT include h1. Include the Wistia embed HTML where contextually relevant. Include internal links as <a href="url">anchor text</a>.]';
+    '[full article content in HTML using h2, h3, p, ul, li, blockquote, a tags. Do NOT include h1. Include the Wistia embed HTML where contextually relevant. Include internal links as <a href="url">anchor text</a>. Use the CALLOUT, STAT, and PULLQUOTE markers described above.]';
 
   // Generate with Claude (with retry on rate limit)
   var claudeData = null;
