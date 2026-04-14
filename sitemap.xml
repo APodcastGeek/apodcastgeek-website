@@ -2,17 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://apodcastgeek.com/</loc>
-    <lastmod>2026-04-04</lastmod>
+    <lastmod>2026-04-14</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://apodcastgeek.com/services.html</loc>
-    <lastmod>2026-04-04</lastmod>
+    <lastmod>2026-04-14</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://apodcastgeek.com/blog.html</loc>
-    <lastmod>2026-04-04</lastmod>
+    <lastmod>2026-04-14</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -21,23 +21,33 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://apodcastgeek.com/blog/why-b2b-founders-need-a-podcast.html</loc>
-    <lastmod>2026-04-03</lastmod>
+    <loc>https://apodcastgeek.com/blog/podcast-production-ireland-b2b.html</loc>
+    <lastmod>2026-04-14</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://apodcastgeek.com/blog/podcast-roi-b2b-quality-over-quantity.html</loc>
+    <lastmod>2026-04-13</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://apodcastgeek.com/blog/irish-podcast-production-landscape.html</loc>
+    <lastmod>2026-04-12</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://apodcastgeek.com/blog/podcast-production-cost-breakdown.html</loc>
+    <lastmod>2026-04-10</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://apodcastgeek.com/blog/podcast-roi-b2b-quality-over-quantity.html</loc>
+    <lastmod>2026-04-09</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://apodcastgeek.com/blog/podcast-guest-recruitment-strategy-b2b-sales.html</loc>
     <lastmod>2026-04-03</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://apodcastgeek.com/blog/guest-recruitment-sales-engine.html</loc>
-    <lastmod>2026-04-02</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://apodcastgeek.com/blog/done-for-you-podcast-production.html</loc>
-    <lastmod>2026-04-01</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
