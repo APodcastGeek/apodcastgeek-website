@@ -76,6 +76,8 @@ function blocksToHtml(blocks) {
     }
   }
   if (inList) html += '</ul>\n';
+  // Defensive: replace legacy Calendly URL with current one (old content in Notion may still reference it)
+  html = html.split('apg-brand-builder-podcast-design-call').join('apg-brand-builder-discovery-call');
   return html;
 }
 
@@ -146,7 +148,7 @@ function getPostTemplate() {
     <a href="../blog.html">Blog</a>
     <a href="https://clients.apodcastgeek.com/">Client Login</a>
   </div>
-  <a href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-podcast-design-call" class="nav-cta">Book a Strategy Call</a>
+  <a href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-discovery-call" class="nav-cta">Book a Strategy Call</a>
 </nav>
 <article class="post">
   <a href="../blog.html" class="post-back">&larr; Back to Blog</a>
@@ -158,7 +160,7 @@ function getPostTemplate() {
   <div class="post-cta">
     <h3>Ready to turn your podcast into a revenue engine?</h3>
     <p>Book a strategy call and we will show you how the APG Brand Builder works for your business.</p>
-    <a href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-podcast-design-call">Book a Strategy Call</a>
+    <a href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-discovery-call">Book a Strategy Call</a>
   </div>
 </article>
 <footer class="footer-simple">

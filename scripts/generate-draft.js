@@ -154,7 +154,7 @@ async function main() {
     '- Use data and specifics, not vague claims\n' +
     '- Every section should be actionable\n' +
     '- Include external links to authoritative sources (HBR, Forbes, industry reports) where relevant\n' +
-    '- End with a CTA to book a strategy call at https://calendly.com/apodcastgeek_dave/apg-brand-builder-podcast-design-call\n\n' +
+    '- End with a CTA to book a strategy call at https://calendly.com/apodcastgeek_dave/apg-brand-builder-discovery-call\n\n' +
     'FORMAT YOUR RESPONSE EXACTLY AS:\n' +
     'TITLE: [title]\n' +
     'SLUG: [slug]\n' +
