@@ -335,8 +335,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .mid-cta-text{flex:1;min-width:220px}
 .mid-cta-text strong{display:block;font-size:1.05rem;color:#fff;margin-bottom:.25rem}
 .mid-cta-text p{font-size:.9rem;color:#8899aa;margin:0;line-height:1.5}
-.mid-cta-btn{background:#378ADD;color:#fff;padding:.7rem 1.35rem;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;transition:background .15s}
-.mid-cta-btn:hover{background:#185FA5}
+.mid-cta-btn,.post-body .mid-cta-btn{background:#378ADD !important;color:#fff !important;padding:.7rem 1.35rem;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none !important;white-space:nowrap;transition:background .15s;display:inline-block}
+.mid-cta-btn:hover,.post-body .mid-cta-btn:hover{background:#185FA5 !important;color:#fff !important}
 
 .post-cta{background:linear-gradient(135deg,#111827 0%,#0a0f1c 100%);border:0.5px solid rgba(55,138,221,0.2);border-radius:14px;padding:2.5rem 2rem;text-align:center;margin-top:3rem}
 .post-cta h3{font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:.6rem}
