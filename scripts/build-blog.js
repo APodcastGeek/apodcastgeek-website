@@ -3,8 +3,7 @@ const path = require('path');
 
 const NOTION_API_KEY = process.env.NOTION_API_KEY;
 const NOTION_DB_ID = process.env.NOTION_DB_ID;
-
-const TOTAL_HERO_IMAGES = 16;
+const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
 
 async function notionFetch(url, body = null) {
   const opts = {
@@ -37,24 +36,81 @@ function slugify(text) {
     .substring(0, 60);
 }
 
-function hashString(s) {
-  let h = 0;
-  for (let i = 0; i < s.length; i++) {
-    h = ((h << 5) - h) + s.charCodeAt(i);
-    h |= 0;
-  }
-  return Math.abs(h);
-}
-
-function heroImageNumber(slug) {
-  const n = (hashString(slug) % TOTAL_HERO_IMAGES) + 1;
-  return String(n).padStart(2, '0');
-}
-
 function readingTimeMinutes(htmlContent) {
   const text = String(htmlContent || '').replace(/<[^>]*>/g, ' ');
   const words = text.split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.round(words / 200));
+}
+
+// Extract keywords from post title for Unsplash search
+function searchKeywordFromTitle(title, tag) {
+  const cleaned = String(title || '')
+    .toLowerCase()
+    .replace(/[:\-\(\)\"\']/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const stopWords = new Set([
+    'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with',
+    'by', 'from', 'how', 'what', 'why', 'when', 'where', 'who', 'which', 'this', 'that',
+    'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'do', 'does',
+    'did', 'will', 'would', 'should', 'could', 'may', 'might', 'your', 'you', 'our', 'my',
+    'its', 'it', 'they', 'them', 'their', 'into', 'not', 'no', 'yes', 'actually', 'really',
+    'very', 'so', 'too', 'just', 'only', 'even', 'also', 'here', 'there', 'now', 'then',
+    'still', 'ever', 'more', 'less', 'most', 'least', 'some', 'any', 'each', 'every',
+    'all', 'both', 'either', 'neither', 'other', 'another', 'such', 'own', 'same', 'as',
+    'than', 'like', 'about', 'actually', 'include', 'includes', 'produce', 'production'
+  ]);
+  const words = cleaned.split(' ').filter(w => w.length > 2 && !stopWords.has(w));
+  const primary = words.slice(0, 3).join(' ');
+  const tagHint = (tag || '').toLowerCase().includes('ireland') || cleaned.includes('ireland')
+    ? ' dublin' : ' business';
+  return primary || (tag || 'podcast business');
+}
+
+async function fetchUnsplashImage(query, outfilePath) {
+  if (!UNSPLASH_ACCESS_KEY) {
+    console.warn(`  Unsplash fetch skipped (no UNSPLASH_ACCESS_KEY). Missing: ${outfilePath}`);
+    return false;
+  }
+  try {
+    const searchUrl = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=1&orientation=landscape`;
+    const res = await fetch(searchUrl, {
+      headers: {
+        'Authorization': `Client-ID ${UNSPLASH_ACCESS_KEY}`,
+        'Accept-Version': 'v1'
+      }
+    });
+    const data = await res.json();
+    const imageUrl = data?.results?.[0]?.urls?.regular;
+    if (!imageUrl) {
+      console.warn(`  Unsplash returned no results for query: "${query}"`);
+      return false;
+    }
+    const optimisedUrl = `${imageUrl}${imageUrl.includes('?') ? '&' : '?'}w=1200&h=630&fit=crop&q=80&fm=jpg`;
+    const imgRes = await fetch(optimisedUrl);
+    if (!imgRes.ok) {
+      console.warn(`  Unsplash image download failed: ${imgRes.status}`);
+      return false;
+    }
+    const buffer = Buffer.from(await imgRes.arrayBuffer());
+    fs.mkdirSync(path.dirname(outfilePath), { recursive: true });
+    fs.writeFileSync(outfilePath, buffer);
+    console.log(`  Fetched Unsplash image for "${query}" (${buffer.length} bytes) → ${path.basename(outfilePath)}`);
+    return true;
+  } catch (e) {
+    console.warn(`  Unsplash fetch error: ${e.message}`);
+    return false;
+  }
+}
+
+async function ensurePostImage(slug, title, tag) {
+  const imageDir = path.join(__dirname, '..', 'blog', 'images', 'posts');
+  const imagePath = path.join(imageDir, `${slug}.jpg`);
+  if (fs.existsSync(imagePath)) return `posts/${slug}.jpg`;
+  const query = searchKeywordFromTitle(title, tag);
+  const ok = await fetchUnsplashImage(query, imagePath);
+  if (ok) return `posts/${slug}.jpg`;
+  return 'default.jpg';
 }
 
 // Add id attributes to h2/h3 and extract h2s for TOC
@@ -80,7 +136,7 @@ function buildTocHtml(tocItems) {
 }
 
 // Insert a mid-post CTA after the middle H2
-function injectMidCta(html, tocItems, slug) {
+function injectMidCta(html, tocItems) {
   if (!tocItems || tocItems.length < 4) return html;
   const middleIndex = Math.floor(tocItems.length / 2);
   const targetId = tocItems[middleIndex].id;
@@ -95,7 +151,6 @@ function injectMidCta(html, tocItems, slug) {
   </div>
 </div>
 `;
-  // Insert before the target heading
   const pattern = new RegExp(`(<h2 id="${targetId}">)`);
   if (pattern.test(html)) {
     return html.replace(pattern, midCta + '$1');
@@ -140,7 +195,6 @@ function blocksToHtml(blocks) {
       case 'paragraph':
         const pText = richTextToStr(block.paragraph.rich_text);
         if (pText) {
-          // If content already contains HTML tags, output raw (from AI-generated posts)
           if (pText.includes('<h2>') || pText.includes('<p>') || pText.includes('<ul>') || pText.includes('[CALLOUT]') || pText.includes('[STAT:')) {
             html += pText + '\n';
           } else {
@@ -172,10 +226,10 @@ function blocksToHtml(blocks) {
   }
   if (inList) html += '</ul>\n';
 
-  // Defensive: replace legacy Calendly URL with current one (old content in Notion may still reference it)
+  // Defensive: replace legacy Calendly URL with current one
   html = html.split('apg-brand-builder-podcast-design-call').join('apg-brand-builder-discovery-call');
 
-  // Process content markers before heading ID injection
+  // Process content markers
   html = processContentMarkers(html);
 
   return html;
@@ -198,22 +252,22 @@ function getPostTemplate() {
 <meta property="og:description" content="{{DESCRIPTION}}">
 <meta property="og:url" content="https://apodcastgeek.com/blog/{{SLUG}}.html">
 <meta property="og:type" content="article">
-<meta property="og:image" content="https://apodcastgeek.com/blog/images/hero/{{HERO_NUM}}.jpg">
+<meta property="og:image" content="https://apodcastgeek.com/blog/images/{{POST_IMAGE}}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{TITLE}} | APodcastGeek Blog">
 <meta name="twitter:description" content="{{DESCRIPTION}}">
-<meta name="twitter:image" content="https://apodcastgeek.com/blog/images/hero/{{HERO_NUM}}.jpg">
+<meta name="twitter:image" content="https://apodcastgeek.com/blog/images/{{POST_IMAGE}}">
 <link rel="icon" type="image/png" href="../favicon.png">
 <link rel="apple-touch-icon" href="../favicon.png">
 <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"{{TITLE}}","description":"{{DESCRIPTION}}","image":"https://apodcastgeek.com/blog/images/hero/{{HERO_NUM}}.jpg","author":{"@type":"Organization","name":"APodcastGeek","url":"https://apodcastgeek.com"},"publisher":{"@type":"Organization","name":"APodcastGeek","url":"https://apodcastgeek.com","logo":{"@type":"ImageObject","url":"https://apodcastgeek.com/logo.png"}},"datePublished":"{{DATE}}","dateModified":"{{DATE}}","mainEntityOfPage":"https://apodcastgeek.com/blog/{{SLUG}}.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"{{TITLE}}","description":"{{DESCRIPTION}}","image":"https://apodcastgeek.com/blog/images/{{POST_IMAGE}}","author":{"@type":"Organization","name":"APodcastGeek","url":"https://apodcastgeek.com"},"publisher":{"@type":"Organization","name":"APodcastGeek","url":"https://apodcastgeek.com","logo":{"@type":"ImageObject","url":"https://apodcastgeek.com/logo.png"}},"datePublished":"{{DATE}}","dateModified":"{{DATE}}","mainEntityOfPage":"https://apodcastgeek.com/blog/{{SLUG}}.html"}</script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#060810;color:#c8d4e0;line-height:1.75}
-/* Nav */
+
 .nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:#0a0e1a;border-bottom:0.5px solid rgba(55,138,221,0.2);position:sticky;top:0;z-index:100}
 .nav-logo{height:48px;width:auto;filter:drop-shadow(0 0 1px rgba(255,255,255,0.8)) drop-shadow(0 0 1px rgba(255,255,255,0.8))}
 .nav-links{display:flex;gap:2rem}
@@ -225,22 +279,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .nav-cta{background:#378ADD;color:#fff;border:none;padding:.65rem 1.6rem;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;display:inline-block}
 .nav-cta:hover{background:#185FA5}
 
-/* Hero */
-.post-hero{position:relative;width:100%;height:clamp(240px,44vw,460px);overflow:hidden;background:#0a0e1a}
-.post-hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55}
-.post-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,8,16,0.25) 0%,rgba(6,8,16,0.65) 60%,rgba(6,8,16,0.95) 100%)}
-.post-hero-inner{position:relative;max-width:860px;margin:0 auto;padding:clamp(2rem,6vw,4rem) 2rem 2.25rem;height:100%;display:flex;flex-direction:column;justify-content:flex-end}
-.post-hero-tag{display:inline-block;background:rgba(55,138,221,0.2);color:#85B7EB;border:0.5px solid rgba(55,138,221,0.5);border-radius:999px;padding:.3rem .85rem;font-size:11px;letter-spacing:.5px;text-transform:uppercase;font-weight:600;margin-bottom:1rem;width:fit-content}
-.post-hero h1{font-size:clamp(1.8rem,4.5vw,3rem);font-weight:800;color:#fff;line-height:1.15;letter-spacing:-0.01em;text-shadow:0 2px 20px rgba(0,0,0,0.5)}
-.post-hero-meta{display:flex;gap:1rem;align-items:center;color:#aabbcc;font-size:13px;margin-top:1rem}
-.post-hero-meta .dot{opacity:.4}
-
-/* Article body */
-.post{max-width:780px;margin:0 auto;padding:2.5rem 2rem 4rem}
-.post-back{display:inline-block;color:#378ADD;text-decoration:none;font-size:14px;margin-bottom:2rem}
+.post-header{max-width:780px;margin:0 auto;padding:3rem 2rem 1rem}
+.post-back{display:inline-block;color:#378ADD;text-decoration:none;font-size:14px;margin-bottom:1.5rem}
 .post-back:hover{color:#85B7EB}
+.post-tag{display:inline-block;background:rgba(55,138,221,0.12);color:#85B7EB;border:0.5px solid rgba(55,138,221,0.25);border-radius:999px;padding:.3rem .85rem;font-size:11px;letter-spacing:.5px;text-transform:uppercase;font-weight:600;margin-bottom:1rem}
+.post-header h1{font-size:clamp(2rem,4.5vw,3rem);font-weight:800;color:#fff;line-height:1.2;letter-spacing:-.02em;margin-bottom:1rem}
+.post-header .lede{font-size:1.1rem;color:#8899aa;line-height:1.6;margin-bottom:1.5rem}
+.post-meta{display:flex;gap:.75rem;align-items:center;color:#667788;font-size:13px;flex-wrap:wrap}
+.post-meta .dot{opacity:.5}
 
-/* Table of contents */
+.post-featured-image{max-width:1040px;margin:1.5rem auto 2.5rem;padding:0 2rem}
+.post-featured-image img{width:100%;height:auto;aspect-ratio:1200/630;object-fit:cover;border-radius:14px;display:block;border:0.5px solid rgba(55,138,221,0.15)}
+
+.post{max-width:780px;margin:0 auto;padding:0 2rem 4rem}
+
 .toc{background:#0d1322;border:0.5px solid rgba(55,138,221,0.18);border-radius:10px;padding:1.5rem 1.75rem;margin:0 0 2.5rem 0}
 .toc-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#85B7EB;font-weight:600;margin-bottom:.85rem}
 .toc ol{list-style:decimal;padding-left:1.25rem;margin:0;color:#8899aa;font-size:.9rem}
@@ -248,7 +300,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .toc a{color:#c8d4e0;text-decoration:none;transition:color .15s}
 .toc a:hover{color:#85B7EB}
 
-/* Share buttons */
 .share-row{display:flex;align-items:center;gap:.65rem;margin:1.5rem 0 2.5rem 0;padding:1rem 0;border-top:0.5px solid rgba(55,138,221,0.1);border-bottom:0.5px solid rgba(55,138,221,0.1)}
 .share-label{font-size:12px;color:#667788;text-transform:uppercase;letter-spacing:.7px;margin-right:.35rem}
 .share-btn{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:#0d1322;border:0.5px solid rgba(55,138,221,0.25);color:#8899aa;text-decoration:none;transition:all .15s}
@@ -256,7 +307,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .share-btn svg{width:16px;height:16px;display:block}
 .share-btn.copy{cursor:pointer;font-size:12px;font-weight:600;width:auto;padding:0 .9rem}
 
-/* Typography */
 .post-body h2{font-size:clamp(1.3rem,2.2vw,1.65rem);font-weight:700;color:#fff;margin-top:2.75rem;margin-bottom:.85rem;letter-spacing:-.01em;line-height:1.3;scroll-margin-top:6rem}
 .post-body h3{font-size:1.15rem;font-weight:600;color:#fff;margin-top:2rem;margin-bottom:.5rem;scroll-margin-top:6rem}
 .post-body p{font-size:1.02rem;color:#a8b4c4;line-height:1.85;margin-bottom:1.25rem}
@@ -268,22 +318,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .post-body img{max-width:100%;border-radius:10px;margin:1.5rem 0}
 .post-body strong{color:#fff;font-weight:600}
 
-/* Callout box */
 .callout{background:linear-gradient(135deg,rgba(55,138,221,0.08) 0%,rgba(55,138,221,0.02) 100%);border:0.5px solid rgba(55,138,221,0.3);border-left:3px solid #378ADD;border-radius:10px;padding:1.4rem 1.6rem;margin:2rem 0}
 .callout-label{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:#85B7EB;font-weight:700;margin-bottom:.5rem}
 .callout-body{color:#d0dce8;font-size:1rem;line-height:1.7}
 .callout-body p{color:#d0dce8;margin-bottom:.6rem;font-size:1rem}
 .callout-body p:last-child{margin-bottom:0}
 
-/* Pull quote */
-.post-body blockquote.pullquote{border:none;border-top:0.5px solid rgba(55,138,221,0.25);border-bottom:0.5px solid rgba(55,138,221,0.25);padding:1.5rem 0;margin:2.5rem 0;font-size:clamp(1.2rem,2.2vw,1.5rem);font-style:normal;font-weight:600;line-height:1.4;color:#fff;text-align:center;font-style:italic}
+.post-body blockquote.pullquote{border:none;border-top:0.5px solid rgba(55,138,221,0.25);border-bottom:0.5px solid rgba(55,138,221,0.25);padding:1.5rem 0;margin:2.5rem 0;font-size:clamp(1.2rem,2.2vw,1.5rem);font-weight:600;line-height:1.4;color:#fff;text-align:center;font-style:italic}
 
-/* Stat highlight */
 .stat-highlight{text-align:center;padding:2rem 1rem;margin:2.5rem 0;background:#0d1322;border-radius:12px;border:0.5px solid rgba(55,138,221,0.2)}
 .stat-number{font-size:clamp(2.8rem,6vw,4rem);font-weight:800;color:#378ADD;line-height:1;letter-spacing:-.02em}
 .stat-label{font-size:.95rem;color:#8899aa;margin-top:.75rem;line-height:1.5}
 
-/* Mid-post CTA */
 .mid-cta{margin:3rem 0}
 .mid-cta-inner{background:linear-gradient(135deg,#111827 0%,#0a0f1c 100%);border:0.5px solid rgba(55,138,221,0.3);border-radius:12px;padding:1.5rem 1.75rem;display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap}
 .mid-cta-text{flex:1;min-width:220px}
@@ -292,14 +338,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .mid-cta-btn{background:#378ADD;color:#fff;padding:.7rem 1.35rem;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;transition:background .15s}
 .mid-cta-btn:hover{background:#185FA5}
 
-/* End CTA */
 .post-cta{background:linear-gradient(135deg,#111827 0%,#0a0f1c 100%);border:0.5px solid rgba(55,138,221,0.2);border-radius:14px;padding:2.5rem 2rem;text-align:center;margin-top:3rem}
 .post-cta h3{font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:.6rem}
 .post-cta p{font-size:.95rem;color:#8899aa;margin-bottom:1.5rem}
 .post-cta a{background:#378ADD;color:#fff;padding:.85rem 2rem;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block;transition:background .15s}
 .post-cta a:hover{background:#185FA5}
 
-/* Author card */
 .author-card{margin-top:3rem;padding:1.5rem;background:#0d1322;border:0.5px solid rgba(55,138,221,0.15);border-radius:10px;display:flex;gap:1rem;align-items:center}
 .author-card-logo{flex-shrink:0;width:56px;height:56px;border-radius:12px;background:#060810;display:flex;align-items:center;justify-content:center;padding:8px}
 .author-card-logo img{width:100%;height:100%;object-fit:contain}
@@ -308,7 +352,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .author-card-bio{font-size:.85rem;color:#8899aa;line-height:1.5}
 .author-card-badge{display:inline-block;background:rgba(55,138,221,0.12);color:#85B7EB;border-radius:4px;padding:.15rem .55rem;font-size:10px;letter-spacing:.5px;text-transform:uppercase;font-weight:600;margin-top:.35rem}
 
-/* Related */
 .related{margin-top:3rem;padding-top:2rem;border-top:0.5px solid rgba(55,138,221,0.12)}
 .related h3{font-size:.8rem;text-transform:uppercase;letter-spacing:1px;font-weight:600;color:#85B7EB;margin-bottom:1.25rem}
 .related a{display:block;text-decoration:none;padding:.75rem 0;border-bottom:0.5px solid rgba(55,138,221,0.08)}
@@ -316,7 +359,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .related a:hover .related-title{color:#85B7EB}
 .related-meta{display:block;font-size:.72rem;color:#556677;margin-top:.25rem;text-transform:uppercase;letter-spacing:.5px}
 
-/* Footer */
 .footer-simple{background:#040608;border-top:0.5px solid rgba(55,138,221,0.1);padding:2rem 5rem;text-align:center}
 .footer-simple p{font-size:13px;color:#334455}
 .footer-simple a{color:#445566;text-decoration:none}
@@ -329,12 +371,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   .nav-logo{height:34px}
   .nav-cta{display:none}
   .footer-simple{padding:2rem}
-  .post-hero-inner{padding:2rem 1.25rem 1.5rem}
+  .post-header{padding:2rem 1.25rem 1rem}
+  .post-featured-image{padding:0 1.25rem;margin:1rem auto 2rem}
+  .post{padding:0 1.25rem 3rem}
 }
 @media(max-width:560px){
   .share-row{flex-wrap:wrap}
   .mid-cta-inner{flex-direction:column;align-items:flex-start}
   .mid-cta-btn{width:100%;text-align:center}
+  .post-featured-image img{border-radius:8px}
 }
 </style>
 </head>
@@ -354,19 +399,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   <a href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-discovery-call" class="nav-cta">Book a Strategy Call</a>
 </nav>
 
-<header class="post-hero">
-  <img class="post-hero-img" src="../blog/images/hero/{{HERO_NUM}}.jpg" alt="" loading="eager" fetchpriority="high">
-  <div class="post-hero-overlay"></div>
-  <div class="post-hero-inner">
-    <span class="post-hero-tag">{{TAG}}</span>
-    <h1>{{TITLE}}</h1>
-    <div class="post-hero-meta"><span>{{DATE}}</span><span class="dot">&bull;</span><span>{{READING_TIME}} min read</span><span class="dot">&bull;</span><span>APodcastGeek</span></div>
-  </div>
+<header class="post-header">
+  <a href="../blog.html" class="post-back">&larr; Back to Blog</a>
+  <span class="post-tag">{{TAG}}</span>
+  <h1>{{TITLE}}</h1>
+  <div class="post-meta"><span>{{DATE}}</span><span class="dot">&bull;</span><span>{{READING_TIME}} min read</span><span class="dot">&bull;</span><span>APodcastGeek</span></div>
 </header>
 
-<article class="post">
-  <a href="../blog.html" class="post-back">&larr; Back to Blog</a>
+<figure class="post-featured-image">
+  <img src="../blog/images/{{POST_IMAGE}}" alt="{{TITLE}}" loading="eager" fetchpriority="high">
+</figure>
 
+<article class="post">
   {{TOC}}
 
   <div class="share-row">
@@ -422,7 +466,6 @@ function declineCookies(){localStorage.setItem('cookie_consent','declined');docu
 }
 
 async function main() {
-  // Query published posts
   const data = await notionFetch(`https://api.notion.com/v1/databases/${NOTION_DB_ID}/query`, {
     filter: { property: 'Status', select: { equals: 'Published' } }
   });
@@ -449,23 +492,20 @@ async function main() {
 
     if (!title || !slug) continue;
 
-    // Only publish posts where the publish date is today or in the past
     const today = new Date().toISOString().split('T')[0];
     if (publishDate > today) {
       console.log('Skipping (future date): ' + title + ' (scheduled for ' + publishDate + ')');
       continue;
     }
 
-    // Get page content blocks
     const blocks = await getBlocks(page.id);
     let rawContent = blocksToHtml(blocks);
 
-    // Extract TOC, inject heading IDs, inject mid-CTA
     const { html: contentWithIds, tocItems } = injectHeadingIdsAndExtractToc(rawContent);
-    const contentWithMidCta = injectMidCta(contentWithIds, tocItems, slug);
+    const contentWithMidCta = injectMidCta(contentWithIds, tocItems);
     const tocHtml = buildTocHtml(tocItems);
 
-    const heroNum = heroImageNumber(slug);
+    const postImage = await ensurePostImage(slug, title, tag);
     const reading = readingTimeMinutes(contentWithMidCta);
 
     cards.push({
@@ -476,17 +516,14 @@ async function main() {
       publishDate,
       content: contentWithMidCta,
       tocHtml,
-      heroNum,
+      postImage,
       reading
     });
   }
 
-  // Sort by date descending
   cards.sort((a, b) => b.publishDate.localeCompare(a.publishDate));
 
-  // Build HTML files with related posts
   for (const post of cards) {
-    // Get up to 3 related posts (exclude current post)
     const related = cards.filter(p => p.slug !== post.slug).slice(0, 3);
     let relatedHtml = '';
     if (related.length > 0) {
@@ -508,14 +545,14 @@ async function main() {
       .replace(/\{\{DESCRIPTION\}\}/g, post.description.replace(/"/g, '&quot;'))
       .replace(/\{\{TAG\}\}/g, post.tag)
       .replace(/\{\{DATE\}\}/g, post.publishDate)
-      .replace(/\{\{HERO_NUM\}\}/g, post.heroNum)
+      .replace(/\{\{POST_IMAGE\}\}/g, post.postImage)
       .replace(/\{\{READING_TIME\}\}/g, String(post.reading))
       .replace(/\{\{TOC\}\}/g, post.tocHtml)
       .replace(/\{\{CONTENT\}\}/g, post.content)
       .replace(/\{\{RELATED_POSTS\}\}/g, relatedHtml);
 
     fs.writeFileSync(path.join(blogDir, `${post.slug}.html`), html);
-    console.log(`Built: ${post.slug}.html (hero ${post.heroNum}, ${post.reading} min)`);
+    console.log(`Built: ${post.slug}.html (image: ${post.postImage}, ${post.reading} min)`);
   }
 
   // Update blog.html
@@ -524,7 +561,7 @@ async function main() {
 
   const cardsHtml = cards.map(p =>
     `<a href="blog/${p.slug}.html" class="blog-card">` +
-    `<div class="blog-card-img" style="background-image:url('blog/images/hero/${p.heroNum}.jpg');background-size:cover;background-position:center"></div>` +
+    `<div class="blog-card-img" style="background-image:url('blog/images/${p.postImage}');background-size:cover;background-position:center"></div>` +
     `<div class="blog-card-body">` +
     `<span class="blog-card-tag">${p.tag}</span>` +
     `<h2>${p.title}</h2>` +
@@ -548,7 +585,7 @@ async function main() {
   fs.writeFileSync(blogHtmlPath, blogHtml);
   console.log(`Updated blog.html with ${cards.length} posts`);
 
-  // Update sitemap.xml with blog posts
+  // Update sitemap.xml
   const sitemapPath = path.join(__dirname, '..', 'sitemap.xml');
   const today = new Date().toISOString().split('T')[0];
   let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -596,7 +633,6 @@ async function main() {
   fs.writeFileSync(sitemapPath, sitemap);
   console.log(`Updated sitemap.xml with ${cards.length} blog posts`);
 
-  // Signal to workflow that we have posts
   const { appendFileSync } = require('fs');
   appendFileSync(process.env.GITHUB_ENV || '/dev/null', 'HAS_POSTS=true\n');
 }

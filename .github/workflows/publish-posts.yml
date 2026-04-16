@@ -23,6 +23,7 @@ jobs:
         env:
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
           NOTION_DB_ID: '33388a120cc88069aba2fff072cc8b3d'
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
         run: node scripts/build-blog.js
 
       - name: Commit built files
