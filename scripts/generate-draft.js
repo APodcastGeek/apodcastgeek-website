@@ -133,7 +133,7 @@ async function main() {
   if (brief.embed_videos && brief.embed_videos.length > 0) {
     videoEmbeds = 'EMBED THESE WISTIA VIDEOS (use this exact HTML):\n' +
       brief.embed_videos.map(function(id) {
-        return '<div style="margin:2rem 0"><div class="wistia_embed wistia_async_' + id + ' videoFoam=true" style="width:100%;max-width:640px;aspect-ratio:16/9;margin:0 auto"></div></div>';
+        return '<div style="margin:2rem 0"><div class="wistia_embed wistia_async_' + id + ' videoFoam=true" style="width:100%;max-width:320px;aspect-ratio:16/9;margin:0 auto"></div></div>';
       }).join('\n');
   }
 

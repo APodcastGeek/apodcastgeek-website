@@ -345,7 +345,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .post-cta a:hover{background:#185FA5}
 
 .author-card{margin-top:3rem;padding:1.5rem;background:#0d1322;border:0.5px solid rgba(55,138,221,0.15);border-radius:10px;display:flex;gap:1rem;align-items:center}
-.author-card-logo{flex-shrink:0;width:56px;height:56px;border-radius:12px;background:#060810;display:flex;align-items:center;justify-content:center;padding:8px}
+.author-card-logo{flex-shrink:0;width:56px;height:56px;border-radius:12px;background:#060810;display:flex;align-items:center;justify-content:center;padding:8px;border:1px solid rgba(255,255,255,0.35)}
 .author-card-logo img{width:100%;height:100%;object-fit:contain}
 .author-card-info{flex:1}
 .author-card-name{font-size:1rem;font-weight:600;color:#fff;margin-bottom:.1rem}
