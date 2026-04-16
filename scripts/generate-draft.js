@@ -140,7 +140,11 @@ async function main() {
   var internalLinks = brief.internal_links.map(function(l) { return '- https://apodcastgeek.com' + l; }).join('\n');
   var dataPoints = brief.data_points.map(function(d) { return '- ' + d; }).join('\n');
 
-  var prompt = 'You are writing a blog post for APodcastGeek (apodcastgeek.com), Ireland\'s award-winning B2B podcast production agency based in Dublin. The agency offers done-for-you podcast production under "The APG Brand Builder" service.\n\n' +
+  var todayDate = new Date().toISOString().split('T')[0];
+  var currentYear = String(new Date().getFullYear());
+
+  var prompt = 'CURRENT DATE CONTEXT: Today is ' + todayDate + '. The current year is ' + currentYear + '. Write the article as if it is being published this week. When you need to reference "this year" or use a year in the title or any forward-looking statement, use ' + currentYear + '. Do NOT use 2024, 2023, or any earlier year as "current" or "this year" - those are in the past.\n\n' +
+    'You are writing a blog post for APodcastGeek (apodcastgeek.com), Ireland\'s award-winning B2B podcast production agency based in Dublin. The agency offers done-for-you podcast production under "The APG Brand Builder" service.\n\n' +
     'BRIEF:\n' + brief.brief + '\n\n' +
     'ORIGINAL DATA POINTS TO INCLUDE:\n' + dataPoints + '\n\n' +
     'INTERNAL PAGES TO LINK TO:\n' + internalLinks + '\n\n' +

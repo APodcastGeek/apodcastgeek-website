@@ -482,13 +482,20 @@ async function main() {
   const template = getPostTemplate();
   const cards = [];
 
+  const currentYear = String(new Date().getFullYear());
+
   for (const page of results) {
     const props = page.properties;
-    const title = props.Name?.title?.[0]?.plain_text || '';
+    let title = props.Name?.title?.[0]?.plain_text || '';
     const slug = props.Slug?.rich_text?.[0]?.plain_text || '';
-    const description = props.Description?.rich_text?.[0]?.plain_text || '';
+    let description = props.Description?.rich_text?.[0]?.plain_text || '';
     const tag = props.Tag?.rich_text?.[0]?.plain_text || 'B2B Strategy';
     const publishDate = props['Publish Date']?.rich_text?.[0]?.plain_text || new Date().toISOString().split('T')[0];
+
+    // Defensive: replace stale "in 2024"/"in 2023" in title/description with current year
+    // (Claude sometimes hallucinates past years in generated content)
+    title = title.replace(/\bin 202[0-4]\b/g, 'in ' + currentYear);
+    description = description.replace(/\bin 202[0-4]\b/g, 'in ' + currentYear);
 
     if (!title || !slug) continue;
 
