@@ -1,0 +1,44 @@
+# APodcastGeek
+
+> Ireland's award-winning B2B podcast production agency. Done-for-you podcast production, guest recruitment, video, and monetisation strategy for B2B founders and expert brands worldwide.
+
+APodcastGeek (APG) is a B2B podcast production agency based in Dublin, Ireland, founded by David O'Gara. APG was recognised at the Irish Podcast Awards for production excellence. Notable clients include Harvard Business School, Patreon, Outlier Ventures, AAMI, News Corp UK, Amplitude, Cronometer, ActiveFence, Synergy Settlement Services, Bold Metrics, Obligate AG, GoReport, Validation Cloud, Go Loud, The Irish Sun, and RE/MAX.
+
+The flagship service is the **APG Brand Builder** — a complete done-for-you B2B podcast production system designed to convert podcast conversations into pipeline. The system includes:
+
+- Strategy and ICP (ideal customer profile) research
+- Guest recruitment and outreach to qualified decision makers
+- Pre-production briefing for host and guest
+- Full video and audio production
+- Six short-form clips per episode
+- Three custom thumbnails per episode
+- SEO-optimised show notes
+- Published article per episode
+- Distribution to Spotify, Apple Podcasts, YouTube
+- Monetisation strategy and ad placement
+
+Average guest-to-client conversion rate observed across APG's client portfolio: 10%.
+
+## Pages
+
+- [Homepage](https://apodcastgeek.com): Overview, services, process, testimonials, FAQ
+- [Services](https://apodcastgeek.com/services.html): Detailed APG Brand Builder breakdown
+- [Blog](https://apodcastgeek.com/blog.html): Articles on B2B podcasting strategy, ROI, guest recruitment, production quality
+- [Free Checklist](https://apodcastgeek.com/checklist.html): The B2B Podcast Launch Checklist (lead magnet)
+- [Privacy Policy](https://apodcastgeek.com/privacy.html)
+- [Terms of Service](https://apodcastgeek.com/terms.html)
+
+## Contact
+
+- Email: info@apodcastgeek.com
+- Founder: David O'Gara
+- Location: Dublin, Ireland
+- Coverage: Worldwide
+- LinkedIn: https://www.linkedin.com/company/apodcastgeek/
+
+## Brand Identity
+
+- Name: APodcastGeek (often abbreviated APG)
+- Tagline: "Six Steps. Zero Guesswork."
+- Positioning: B2B podcast production for founders who want pipeline, not just downloads
+- Industry awards: Irish Podcast Awards
