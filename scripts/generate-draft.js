@@ -17,7 +17,7 @@ async function generateNewBrief(existingTitles, previousBriefs) {
     'THE BRIEF MUST:\n' +
     '- Target a specific long-tail SEO keyword relevant to B2B podcast production\n' +
     '- Be a topic that B2B founders would search for\n' +
-    '- Include APG\'s original data points where relevant (10% guest-to-client conversion rate, Irish Podcast Award winners, done-for-you production including video, audio, 6 clips, 3 thumbnails, trailer, show notes, SEO article per episode)\n' +
+    '- Include APG\'s original data points where relevant (10% guest-to-client conversion rate, Irish Podcast Award winners, done-for-you production including video, audio, 5 clips, 3 thumbnails, trailer, show notes, SEO article per episode)\n' +
     '- Specify a tag from: B2B Strategy, Podcast Production, Guest Recruitment, Monetisation, Industry Insights\n' +
     '- Be 1800-2500 words when written\n\n' +
     'RESPOND IN EXACTLY THIS JSON FORMAT (no markdown, no code blocks, just raw JSON):\n' +
