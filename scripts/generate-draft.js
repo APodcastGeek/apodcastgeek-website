@@ -4,6 +4,81 @@ const NOTION_API_KEY = process.env.NOTION_API_KEY;
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 const NOTION_DB_ID = process.env.NOTION_DB_ID || '33388a120cc88069aba2fff072cc8b3d';
 
+async function validateDraft(draftContent, approvedFacts) {
+  // Quick local regex check for known-forbidden patterns (catches instantly, cheap)
+  var localViolations = [];
+  var patterns = [
+    { re: /\b6 short[- ]form clips?\b|\bsix short[- ]form clips?\b|\bsix clips\b|\b6 clips\b/i, issue: 'Wrong clip count: uses "6 clips" (spec is 5)' },
+    { re: /\b20[- ]minute (strategy |discovery |)(call|chat)|\b15[- ]minute (strategy |discovery |)(call|chat)|\b45[- ]minute (strategy |discovery |)(call|chat)\b/i, issue: 'Wrong call duration: uses incorrect minute count (spec is 30 minutes)' },
+    { re: /\baudiogram(s| clips?)?\b/i, issue: 'Forbidden deliverable: Audiograms are not part of the Brand Builder' },
+    { re: /\bquote (graphics|cards)\b/i, issue: 'Forbidden deliverable: Quote graphics/cards are not part of the Brand Builder' },
+    { re: /\btranscripts? for (seo|accessibility|search)/i, issue: 'Forbidden deliverable: Transcripts are not listed as a separate deliverable' },
+    { re: /\bapg-brand-builder-podcast-design-call\b/i, issue: 'Stale Calendly URL: should be apg-brand-builder-discovery-call' },
+    { re: /\bin 202[0-4]\b/i, issue: 'Stale year reference (2020-2024) used as "current"' },
+    { re: /\b5% (guest|conversion)|\b20% guest-to/i, issue: 'Wrong conversion rate (spec is 10%)' },
+    { re: /\b14 business day|\btwo[- ]week turnaround|\b2[- ]week turnaround\b/i, issue: 'Wrong turnaround (spec is 10 business days)' },
+    { re: /\b3[- ]month minimum|\b12[- ]month minimum\b/i, issue: 'Wrong minimum commitment (spec is 6 months)' },
+    { re: /\bwebby|ambie|signal award/i, issue: 'Invented award (only Irish Podcast Awards are approved)' }
+  ];
+  for (var p of patterns) {
+    if (p.re.test(draftContent)) localViolations.push(p.issue);
+  }
+
+  // Claude-based validator (catches subtler hallucinations the regex misses)
+  var judgePrompt = 'You are a strict fact-checker for APodcastGeek blog content. Check the ARTICLE below against the APPROVED FACTS. Return ONLY a JSON object (no markdown, no explanation outside JSON) with this shape:\n' +
+    '{"pass": true/false, "violations": ["specific issue 1", "specific issue 2"]}\n\n' +
+    'A violation is any factual claim about APodcastGeek that:\n' +
+    '- Contradicts the APPROVED FACTS (wrong numbers, wrong deliverables, wrong turnaround)\n' +
+    '- Appears in the FORBIDDEN CLAIMS list\n' +
+    '- Invents awards, credentials, or services not listed in APPROVED FACTS\n' +
+    '- Uses a stale Calendly URL or year\n\n' +
+    'Do NOT flag: external industry stats (HubSpot, Forbes, HBR), general B2B advice, editorial opinions, stylistic choices. Only flag factual claims about APG specifically.\n\n' +
+    'If the article passes with no violations, return {"pass": true, "violations": []}.\n\n' +
+    '=== APPROVED FACTS ===\n' + approvedFacts + '\n\n' +
+    '=== ARTICLE TO CHECK ===\n' + draftContent.substring(0, 12000);
+
+  var judgeRes = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'x-api-key': ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 1000,
+      messages: [{ role: 'user', content: judgePrompt }]
+    })
+  });
+  var judgeData = await judgeRes.json();
+  var judgeViolations = [];
+  var judgePass = true;
+  try {
+    var jtxt = (judgeData.content && judgeData.content[0] && judgeData.content[0].text || '').trim();
+    jtxt = jtxt.replace(/^```json?\n?/, '').replace(/\n?```$/, '');
+    var parsed = JSON.parse(jtxt);
+    judgePass = parsed.pass === true;
+    judgeViolations = Array.isArray(parsed.violations) ? parsed.violations : [];
+  } catch (e) {
+    console.warn('Validator JSON parse failed, treating as pass (regex layer only):', e.message);
+  }
+
+  var allViolations = localViolations.concat(judgeViolations);
+  return { pass: localViolations.length === 0 && judgePass, violations: allViolations };
+}
+
+async function alertSlackValidationFailure(title, keyword, violations, attempt) {
+  if (!process.env.SLACK_WEBHOOK_URL) return;
+  var text = ':warning: *Blog draft BLOCKED by hallucination filter (attempt ' + attempt + '/2)*\n' +
+    '*Title:* ' + title + '\n' +
+    '*Keyword:* ' + keyword + '\n' +
+    '*Violations:*\n' + violations.map(function(v) { return '- ' + v; }).join('\n') + '\n\n' +
+    (attempt === 2 ? 'Draft was NOT saved to Notion. Brief remains unused for retry.' : 'Regenerating...');
+  try {
+    await fetch(process.env.SLACK_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: text })
+    });
+  } catch (e) { console.warn('Slack alert failed:', e.message); }
+}
+
 async function generateNewBrief(existingTitles, previousBriefs) {
   var existingKeywords = previousBriefs.map(function(b) { return b.keyword; });
   var existingTopics = existingTitles.concat(previousBriefs.map(function(b) { return b.title_suggestion; }));
@@ -142,8 +217,13 @@ async function main() {
 
   var todayDate = new Date().toISOString().split('T')[0];
   var currentYear = String(new Date().getFullYear());
+  var approvedFacts = fs.readFileSync('scripts/apg-facts.md', 'utf-8');
 
   var prompt = 'CURRENT DATE CONTEXT: Today is ' + todayDate + '. The current year is ' + currentYear + '. Write the article as if it is being published this week. When you need to reference "this year" or use a year in the title or any forward-looking statement, use ' + currentYear + '. Do NOT use 2024, 2023, or any earlier year as "current" or "this year" - those are in the past.\n\n' +
+    '=== APG APPROVED FACTS (SINGLE SOURCE OF TRUTH) ===\n' +
+    'Every factual claim about APodcastGeek in your article must match these facts exactly. If a fact is not on this list, OMIT IT rather than invent it. The FORBIDDEN CLAIMS section lists hallucinations that must never appear.\n\n' +
+    approvedFacts + '\n' +
+    '=== END APPROVED FACTS ===\n\n' +
     'You are writing a blog post for APodcastGeek (apodcastgeek.com), Ireland\'s award-winning B2B podcast production agency based in Dublin. The agency offers done-for-you podcast production under "The APG Brand Builder" service.\n\n' +
     'BRIEF:\n' + brief.brief + '\n\n' +
     'ORIGINAL DATA POINTS TO INCLUDE:\n' + dataPoints + '\n\n' +
@@ -228,6 +308,57 @@ async function main() {
   var slug = slugMatch[1].trim();
   var description = descMatch ? descMatch[1].trim() : '';
   var tag = tagMatch ? tagMatch[1].trim() : brief.tag;
+
+  // HALLUCINATION VALIDATOR: check draft, regenerate once on failure, skip if second attempt fails
+  var validation = await validateDraft(content, approvedFacts);
+  if (!validation.pass) {
+    console.warn('Draft validation failed (attempt 1): ' + validation.violations.join('; '));
+    await alertSlackValidationFailure(title, brief.keyword, validation.violations, 1);
+
+    // Regenerate with violation feedback appended to prompt
+    var regenPrompt = prompt + '\n\nPREVIOUS ATTEMPT FAILED VALIDATION WITH THESE SPECIFIC VIOLATIONS (you must fix all of these in your new version):\n' +
+      validation.violations.map(function(v) { return '- ' + v; }).join('\n') +
+      '\n\nRewrite the ENTIRE article from scratch, avoiding every violation above. Only use facts from the APPROVED FACTS block.';
+
+    var regenRes = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'x-api-key': ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
+      body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 4000, messages: [{ role: 'user', content: regenPrompt }] })
+    });
+    var regenData = await regenRes.json();
+    if (regenData.content && regenData.content[0]) {
+      var regenResponse = regenData.content[0].text;
+      var rTitleMatch = regenResponse.match(/TITLE:\s*(.+)/);
+      var rSlugMatch = regenResponse.match(/SLUG:\s*(.+)/);
+      var rDescMatch = regenResponse.match(/DESCRIPTION:\s*(.+)/);
+      var rContentParts = regenResponse.split('---\n');
+      var rContent = rContentParts.length > 1 ? rContentParts.slice(1).join('---\n').trim() : '';
+      if (rTitleMatch && rSlugMatch && rContent) {
+        title = rTitleMatch[1].trim();
+        slug = rSlugMatch[1].trim();
+        description = rDescMatch ? rDescMatch[1].trim() : description;
+        content = rContent;
+        // Re-validate after regeneration
+        var validation2 = await validateDraft(content, approvedFacts);
+        if (!validation2.pass) {
+          console.error('Draft validation FAILED after regeneration. Skipping brief: ' + brief.keyword);
+          await alertSlackValidationFailure(title, brief.keyword, validation2.violations, 2);
+          continue; // skip to next brief in the batch loop, don't mark brief as used
+        }
+        console.log('Draft passed validation after regeneration');
+      } else {
+        console.error('Regeneration produced unparseable response. Skipping brief.');
+        await alertSlackValidationFailure(title, brief.keyword, ['Regeneration produced unparseable response'], 2);
+        continue;
+      }
+    } else {
+      console.error('Regeneration Claude call failed. Skipping brief.');
+      await alertSlackValidationFailure(title, brief.keyword, ['Regeneration Claude API call failed: ' + JSON.stringify(regenData).substring(0, 300)], 2);
+      continue;
+    }
+  } else {
+    console.log('Draft passed hallucination validation');
+  }
   var today = new Date().toISOString().split('T')[0];
 
   // Split content into chunks for Notion's 2000 char block limit

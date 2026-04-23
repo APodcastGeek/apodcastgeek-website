@@ -229,6 +229,19 @@ function blocksToHtml(blocks) {
   // Defensive: replace legacy Calendly URL with current one
   html = html.split('apg-brand-builder-podcast-design-call').join('apg-brand-builder-discovery-call');
 
+  // Hallucination safety net: auto-correct known-wrong claims that may have slipped through
+  // the n8n validator (last-mile defence before content hits the reader)
+  html = html.replace(/\b6 short[- ]form clips?\b/gi, '5 short-form clips');
+  html = html.replace(/\bsix short[- ]form clips?\b/gi, 'five short-form clips');
+  html = html.replace(/\b6 clips\b/gi, '5 clips');
+  html = html.replace(/\bsix clips\b/gi, 'five clips');
+  html = html.replace(/\b20[- ]minute (strategy |discovery |)(call|chat)\b/gi, '30-minute $1$2');
+  html = html.replace(/\b15[- ]minute (strategy |discovery |)(call|chat)\b/gi, '30-minute $1$2');
+  html = html.replace(/\b45[- ]minute (strategy |discovery |)(call|chat)\b/gi, '30-minute $1$2');
+  html = html.replace(/\b14 business day[s]?\b/gi, '10 business days');
+  html = html.replace(/\b3[- ]month minimum\b/gi, '6-month minimum');
+  html = html.replace(/\b12[- ]month minimum\b/gi, '6-month minimum');
+
   // Process content markers
   html = processContentMarkers(html);
 
