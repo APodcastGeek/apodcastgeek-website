@@ -155,36 +155,46 @@
 .engine-stage p{font-size:.88rem;color:#8899aa;line-height:1.65;margin:0}
 .apg-engine-tag{font-size:.82rem;color:#667788;letter-spacing:.03em;margin-top:1.5rem;text-align:center}
 
-/* === Two Options two-tier cards (sales-deck inspired) === */
-.opt-section{padding:5.5rem 5rem;background:#060810}
-.opt-header-wrap{max-width:1140px;margin:0 auto 3rem;text-align:center}
-.opt-header-wrap .section-title,.opt-header-wrap .section-sub,.opt-header-wrap .divider{margin-left:auto;margin-right:auto}
-.opt-option-card{max-width:1180px;margin:0 auto 2.5rem;background:#0a0e1a;border:0.5px solid rgba(55,138,221,0.2);border-radius:18px;padding:2.25rem 2.5rem 2.5rem;position:relative}
-.opt-option-card:last-of-type{margin-bottom:0}
-.opt-option-header{display:flex;align-items:flex-start;justify-content:space-between;gap:2rem;margin-bottom:1.75rem;padding-bottom:1.5rem;border-bottom:0.5px solid rgba(55,138,221,0.15)}
-.opt-option-header-left{flex:1}
-.opt-option-header-left h3{font-size:1.55rem;font-weight:800;color:#fff;letter-spacing:-.015em;margin:0 0 .5rem;line-height:1.2}
-.opt-option-header-left p{font-size:.95rem;color:#8899aa;line-height:1.55;max-width:680px;margin:0}
-.opt-option-badge{flex-shrink:0;display:inline-block;background:rgba(55,138,221,0.12);color:#85B7EB;border:0.5px solid rgba(55,138,221,0.3);border-radius:999px;padding:.45rem 1.1rem;font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;white-space:nowrap}
-.opt-tiers{display:grid;grid-template-columns:1fr 1.35fr;gap:1.5rem;align-items:start}
-.opt-tier{background:#111827;border:0.5px solid rgba(55,138,221,0.15);border-radius:14px;padding:1.75rem 1.5rem;position:relative}
-.opt-tier.month1::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#378ADD,#85B7EB);border-radius:14px 14px 0 0}
-.opt-tier.month2::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#f5b800,#ffaa55);border-radius:14px 14px 0 0}
-.opt-tier-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;font-weight:700;text-transform:uppercase;color:#85B7EB;margin-bottom:.5rem}
-.opt-tier.month2 .opt-tier-label{color:#f5b800}
-.opt-tier-title{font-size:1.1rem;font-weight:700;color:#fff;margin:0 0 .35rem;letter-spacing:-.005em;line-height:1.3}
-.opt-tier-sub{font-size:.82rem;color:#8899aa;margin-bottom:1.2rem;line-height:1.55}
-.opt-deliverables{list-style:none;margin:0;padding:0}
-.opt-deliverables li{display:flex;align-items:flex-start;gap:.65rem;padding:.6rem 0;border-bottom:0.5px solid rgba(55,138,221,0.08);font-size:.88rem;color:#c2cad6;line-height:1.55}
-.opt-deliverables li:last-child{border-bottom:none}
-.opt-deliverables li svg{flex-shrink:0;margin-top:3px}
-.opt-deliverables li .li-note{color:#667788;font-size:.78rem;margin-left:.25rem;display:block;margin-top:1px;font-weight:400}
-.opt-deliverables li strong{color:#fff;font-weight:600}
-.opt-includes-banner{margin-top:1.1rem;padding:.7rem .9rem;background:rgba(245,184,0,.08);border:0.5px solid rgba(245,184,0,.25);border-radius:8px;font-size:.82rem;color:#f5b800;text-align:center;font-weight:600;letter-spacing:.02em}
-.opt-cta{margin-top:1.75rem;text-align:center}
-.opt-cta a{display:inline-block;background:#378ADD;color:#fff;padding:.9rem 2.5rem;border-radius:8px;font-size:14.5px;font-weight:600;text-decoration:none;letter-spacing:.01em;transition:background .14s ease}
-.opt-cta a:hover{background:#185FA5}
-@media(max-width:1024px){.apg-engine-grid{grid-template-columns:repeat(2,1fr)}.opt-section{padding:4rem 2rem}.opt-tiers{grid-template-columns:1fr}.opt-option-header{flex-direction:column;align-items:flex-start;gap:1rem}.opt-option-card{padding:1.75rem}}
+/* === Two Options two-tier cards (hardened to override any global .section padding) === */
+section.opt-section{padding:5.5rem 5rem !important;background:#060810 !important}
+section.opt-section .opt-header-wrap{max-width:1140px;margin:0 auto 3rem;text-align:center}
+section.opt-section .opt-header-wrap .section-title,
+section.opt-section .opt-header-wrap .section-sub,
+section.opt-section .opt-header-wrap .divider{margin-left:auto;margin-right:auto}
+section.opt-section .opt-option-card{max-width:1180px;margin:0 auto 2.5rem !important;background:#0a0e1a !important;border:0.5px solid rgba(55,138,221,0.2);border-radius:18px !important;padding:2.25rem 2.5rem 2.5rem !important;position:relative;display:block !important}
+section.opt-section .opt-option-card:last-of-type{margin-bottom:0 !important}
+section.opt-section .opt-option-header{display:flex !important;align-items:flex-start;justify-content:space-between;gap:2rem;margin-bottom:1.75rem;padding-bottom:1.5rem;border-bottom:0.5px solid rgba(55,138,221,0.15)}
+section.opt-section .opt-option-header-left{flex:1}
+section.opt-section .opt-option-header-left h3{font-size:1.55rem !important;font-weight:800 !important;color:#fff !important;letter-spacing:-.015em;margin:0 0 .5rem !important;line-height:1.2}
+section.opt-section .opt-option-header-left p{font-size:.95rem;color:#8899aa;line-height:1.55;max-width:680px;margin:0}
+section.opt-section .opt-option-badge{flex-shrink:0;display:inline-block;background:rgba(55,138,221,0.12);color:#85B7EB;border:0.5px solid rgba(55,138,221,0.3);border-radius:999px;padding:.45rem 1.1rem;font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;white-space:nowrap}
+section.opt-section .opt-tiers{display:grid !important;grid-template-columns:1fr 1.35fr !important;gap:1.5rem;align-items:start}
+section.opt-section .opt-tier{background:#111827 !important;border:0.5px solid rgba(55,138,221,0.15);border-radius:14px !important;padding:1.75rem 1.5rem !important;position:relative;display:block !important}
+section.opt-section .opt-tier.month1::before,
+section.opt-section .opt-tier.month2::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0}
+section.opt-section .opt-tier.month1::before{background:linear-gradient(90deg,#378ADD,#85B7EB)}
+section.opt-section .opt-tier.month2::before{background:linear-gradient(90deg,#f5b800,#ffaa55)}
+section.opt-section .opt-tier-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;font-weight:700;text-transform:uppercase;color:#85B7EB;margin-bottom:.5rem}
+section.opt-section .opt-tier.month2 .opt-tier-label{color:#f5b800}
+section.opt-section .opt-tier-title{font-size:1.1rem;font-weight:700;color:#fff;margin:0 0 .35rem;letter-spacing:-.005em;line-height:1.3}
+section.opt-section .opt-tier-sub{font-size:.82rem;color:#8899aa;margin-bottom:1.2rem;line-height:1.55}
+section.opt-section .opt-deliverables{list-style:none !important;margin:0 !important;padding:0 !important}
+section.opt-section .opt-deliverables li{display:flex !important;align-items:flex-start;gap:.65rem;padding:.6rem 0 !important;border-bottom:0.5px solid rgba(55,138,221,0.08);font-size:.88rem;color:#c2cad6;line-height:1.55;margin:0 !important}
+section.opt-section .opt-deliverables li:last-child{border-bottom:none}
+section.opt-section .opt-deliverables li svg{flex-shrink:0;margin-top:3px}
+section.opt-section .opt-deliverables li .li-main{display:block;color:#e8edf5;font-weight:500}
+section.opt-section .opt-deliverables li .li-note{display:block;color:#667788;font-size:.78rem;margin:2px 0 0 0;font-weight:400;line-height:1.5}
+section.opt-section .opt-includes-banner{margin-top:1.1rem;padding:.7rem .9rem;background:rgba(245,184,0,.08);border:0.5px solid rgba(245,184,0,.25);border-radius:8px;font-size:.82rem;color:#f5b800;text-align:center;font-weight:600;letter-spacing:.02em}
+section.opt-section .opt-cta{margin-top:1.75rem;text-align:center}
+section.opt-section .opt-cta a{display:inline-block;background:#378ADD;color:#fff;padding:.9rem 2.5rem;border-radius:8px;font-size:14.5px;font-weight:600;text-decoration:none;letter-spacing:.01em;transition:background .14s ease}
+section.opt-section .opt-cta a:hover{background:#185FA5}
+@media(max-width:1024px){
+  .apg-engine-grid{grid-template-columns:repeat(2,1fr)}
+  section.opt-section{padding:4rem 2rem !important}
+  section.opt-section .opt-tiers{grid-template-columns:1fr !important}
+  section.opt-section .opt-option-header{flex-direction:column;align-items:flex-start;gap:1rem}
+  section.opt-section .opt-option-card{padding:1.75rem !important}
+}
 @media(max-width:640px){.apg-engine-grid{grid-template-columns:1fr}.engine-stage-arrow{display:none}}
 </style>
 
@@ -231,32 +241,34 @@
         <div class="opt-tier-title">Month 1 — Launch &amp; Setup</div>
         <div class="opt-tier-sub">Everything we ship to turn an idea into a live, branded show.</div>
         <ul class="opt-deliverables">
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Consultation<span class="li-note"> (concept, strategy, action plan)</span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Intro &amp; Outro<span class="li-note"> (scripting &amp; production)</span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Ads × 3<span class="li-note"> (scripting &amp; production)</span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>YouTube and audio host optimization<span class="li-note"></span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Podcast trailer<span class="li-note"></span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Custom intro and outro<span class="li-note"></span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Full tech setup, guidance &amp; branding<span class="li-note"> (mic, camera, lighting, software)</span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>YouTube and host platform setup<span class="li-note"></span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Structured 60-day social media launch plan<span class="li-note"></span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Consultation</span><span class="li-note">(concept, strategy, action plan)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Guest Outreach</span><span class="li-note">(booking, coordination &amp; briefing — optional)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Intro &amp; Outro</span><span class="li-note">(scripting &amp; production)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Ads × 3</span><span class="li-note">(scripting &amp; production)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">YouTube and audio host optimization</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Podcast Launch Trailer</span><span class="li-note">(vertical &amp; horizontal)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Custom intro and outro</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Full tech setup, guidance &amp; branding</span><span class="li-note">(mic, camera, lighting, software)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">YouTube and host platform setup</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Structured 60-day social media launch plan</span></span></li>
         </ul>
         <div class="opt-includes-banner">Includes the full Brand Builder ecosystem</div>
       </div>
         <div class="opt-tier month2">
           <div class="opt-tier-label">02 · Ongoing</div>
           <div class="opt-tier-title">Month 2 &amp; Beyond</div>
-          <div class="opt-tier-sub">The recurring monthly production engine. Identical for both options.</div>
+          <div class="opt-tier-sub">The full Brand Builder ecosystem.</div>
           <ul class="opt-deliverables">
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Strategic guest recruitment, coordination &amp; briefing<span class="li-note"> (optional)</span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Full video and audio podcast production<span class="li-note"></span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Guest intro trailer<span class="li-note"> (vertical &amp; horizontal)</span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>5 short-form clips<span class="li-note"> (vertical)</span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>4 custom thumbnails<span class="li-note"></span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>SEO show notes &amp; published article<span class="li-note"></span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Distribution across all platforms<span class="li-note"></span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Performance analytics<span class="li-note"> (video, audio, ads)</span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Quarterly consultations with our founder<span class="li-note"></span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Ongoing strategic guest recruitment, coordination &amp; briefing</span><span class="li-note">(optional)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Full video and audio podcast production</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Guest intro trailer</span><span class="li-note">(vertical &amp; horizontal)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">5 short-form clips</span><span class="li-note">(vertical)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">4 custom thumbnails</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">SEO show notes &amp; published article</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Distribution across all platforms</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Social media posting</span><span class="li-note">(3 posts across 3 platforms, per episode)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Performance analytics</span><span class="li-note">(video, audio, ads)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Quarterly consultations with our founder</span></span></li>
           </ul>
         </div>
     </div>
@@ -278,27 +290,29 @@
         <div class="opt-tier-title">Month 1 — Audit &amp; Reset</div>
         <div class="opt-tier-sub">Strategic reset, branding alignment, and the first production cycle.</div>
         <ul class="opt-deliverables">
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Consultation<span class="li-note"> (audit, strategy, action plan, execute)</span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Intro &amp; Outro<span class="li-note"> (scripting &amp; production)</span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Ads × 3<span class="li-note"> (scripting &amp; production)</span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>YouTube and audio host optimization<span class="li-note"></span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Consultation</span><span class="li-note">(audit, strategy, action plan, execute)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Strategic Guest Recruitment, Coordination &amp; Briefing</span><span class="li-note">(optional)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Intro &amp; Outro</span><span class="li-note">(scripting &amp; production)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Ads × 3</span><span class="li-note">(scripting &amp; production)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">YouTube and audio host optimization</span></span></li>
         </ul>
         <div class="opt-includes-banner">Includes the full Brand Builder ecosystem</div>
       </div>
         <div class="opt-tier month2">
           <div class="opt-tier-label">02 · Ongoing</div>
           <div class="opt-tier-title">Month 2 &amp; Beyond</div>
-          <div class="opt-tier-sub">The recurring monthly production engine. Identical for both options.</div>
+          <div class="opt-tier-sub">The full Brand Builder ecosystem.</div>
           <ul class="opt-deliverables">
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Strategic guest recruitment, coordination &amp; briefing<span class="li-note"> (optional)</span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Full video and audio podcast production<span class="li-note"></span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Guest intro trailer<span class="li-note"> (vertical &amp; horizontal)</span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>5 short-form clips<span class="li-note"> (vertical)</span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>4 custom thumbnails<span class="li-note"></span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>SEO show notes &amp; published article<span class="li-note"></span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Distribution across all platforms<span class="li-note"></span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Performance analytics<span class="li-note"> (video, audio, ads)</span></span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>Quarterly consultations with our founder<span class="li-note"></span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Ongoing strategic guest recruitment, coordination &amp; briefing</span><span class="li-note">(optional)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Full video and audio podcast production</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Guest intro trailer</span><span class="li-note">(vertical &amp; horizontal)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">5 short-form clips</span><span class="li-note">(vertical)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">4 custom thumbnails</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">SEO show notes &amp; published article</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Distribution across all platforms</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Social media posting</span><span class="li-note">(3 posts across 3 platforms, per episode)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Performance analytics</span><span class="li-note">(video, audio, ads)</span></span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span><span class="li-main">Quarterly consultations with our founder</span></span></li>
           </ul>
         </div>
     </div>
