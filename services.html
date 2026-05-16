@@ -143,9 +143,73 @@
   <a target="_blank" rel="noopener" href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-discovery-call" class="btn-primary">Book a Strategy Call</a>
 </section>
 
+
+<style>
+/* === APG Engine grid (services page) === */
+.apg-engine-grid{max-width:1140px;margin:3rem auto 1.5rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.engine-stage{position:relative;background:#0a0e1a;border:0.5px solid rgba(55,138,221,0.25);border-radius:14px;padding:1.75rem 1.5rem;text-align:left;transition:transform .25s ease, border-color .25s ease}
+.engine-stage:hover{transform:translateY(-4px);border-color:rgba(55,138,221,0.5)}
+.engine-stage-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;font-weight:700;color:#378ADD;background:rgba(55,138,221,0.12);display:inline-block;padding:3px 8px;border-radius:999px;margin-bottom:.85rem}
+.engine-stage-arrow{position:absolute;top:1.35rem;right:1.1rem;font-size:1.1rem;color:#378ADD;opacity:.4;font-weight:700}
+.engine-stage h3{font-size:1.08rem;font-weight:700;color:#fff;margin-bottom:.55rem;letter-spacing:-.005em;line-height:1.3}
+.engine-stage p{font-size:.88rem;color:#8899aa;line-height:1.65;margin:0}
+.apg-engine-tag{font-size:.82rem;color:#667788;letter-spacing:.03em;margin-top:1.5rem;text-align:center}
+
+/* === Two Options two-tier cards (sales-deck inspired) === */
+.opt-section{padding:5.5rem 5rem;background:#060810}
+.opt-header-wrap{max-width:1140px;margin:0 auto 3rem;text-align:center}
+.opt-header-wrap .section-title,.opt-header-wrap .section-sub,.opt-header-wrap .divider{margin-left:auto;margin-right:auto}
+.opt-option-card{max-width:1180px;margin:0 auto 2.5rem;background:#0a0e1a;border:0.5px solid rgba(55,138,221,0.2);border-radius:18px;padding:2.25rem 2.5rem 2.5rem;position:relative}
+.opt-option-card:last-of-type{margin-bottom:0}
+.opt-option-header{display:flex;align-items:flex-start;justify-content:space-between;gap:2rem;margin-bottom:1.75rem;padding-bottom:1.5rem;border-bottom:0.5px solid rgba(55,138,221,0.15)}
+.opt-option-header-left{flex:1}
+.opt-option-header-left h3{font-size:1.55rem;font-weight:800;color:#fff;letter-spacing:-.015em;margin:0 0 .5rem;line-height:1.2}
+.opt-option-header-left p{font-size:.95rem;color:#8899aa;line-height:1.55;max-width:680px;margin:0}
+.opt-option-badge{flex-shrink:0;display:inline-block;background:rgba(55,138,221,0.12);color:#85B7EB;border:0.5px solid rgba(55,138,221,0.3);border-radius:999px;padding:.45rem 1.1rem;font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;white-space:nowrap}
+.opt-tiers{display:grid;grid-template-columns:1fr 1.35fr;gap:1.5rem;align-items:start}
+.opt-tier{background:#111827;border:0.5px solid rgba(55,138,221,0.15);border-radius:14px;padding:1.75rem 1.5rem;position:relative}
+.opt-tier.month1::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#378ADD,#85B7EB);border-radius:14px 14px 0 0}
+.opt-tier.month2::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#f5b800,#ffaa55);border-radius:14px 14px 0 0}
+.opt-tier-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;font-weight:700;text-transform:uppercase;color:#85B7EB;margin-bottom:.5rem}
+.opt-tier.month2 .opt-tier-label{color:#f5b800}
+.opt-tier-title{font-size:1.1rem;font-weight:700;color:#fff;margin:0 0 .35rem;letter-spacing:-.005em;line-height:1.3}
+.opt-tier-sub{font-size:.82rem;color:#8899aa;margin-bottom:1.2rem;line-height:1.55}
+.opt-deliverables{list-style:none;margin:0;padding:0}
+.opt-deliverables li{display:flex;align-items:flex-start;gap:.65rem;padding:.6rem 0;border-bottom:0.5px solid rgba(55,138,221,0.08);font-size:.88rem;color:#c2cad6;line-height:1.55}
+.opt-deliverables li:last-child{border-bottom:none}
+.opt-deliverables li svg{flex-shrink:0;margin-top:3px}
+.opt-deliverables li .li-note{color:#667788;font-size:.78rem;margin-left:.25rem;display:block;margin-top:1px;font-weight:400}
+.opt-deliverables li strong{color:#fff;font-weight:600}
+.opt-includes-banner{margin-top:1.1rem;padding:.7rem .9rem;background:rgba(245,184,0,.08);border:0.5px solid rgba(245,184,0,.25);border-radius:8px;font-size:.82rem;color:#f5b800;text-align:center;font-weight:600;letter-spacing:.02em}
+.opt-cta{margin-top:1.75rem;text-align:center}
+.opt-cta a{display:inline-block;background:#378ADD;color:#fff;padding:.9rem 2.5rem;border-radius:8px;font-size:14.5px;font-weight:600;text-decoration:none;letter-spacing:.01em;transition:background .14s ease}
+.opt-cta a:hover{background:#185FA5}
+@media(max-width:1024px){.apg-engine-grid{grid-template-columns:repeat(2,1fr)}.opt-section{padding:4rem 2rem}.opt-tiers{grid-template-columns:1fr}.opt-option-header{flex-direction:column;align-items:flex-start;gap:1rem}.opt-option-card{padding:1.75rem}}
+@media(max-width:640px){.apg-engine-grid{grid-template-columns:1fr}.engine-stage-arrow{display:none}}
+</style>
+
+<!-- The APG Engine -->
+<section class="section section-dark" aria-labelledby="apg-engine-services-heading">
+  <div class="inner centered">
+    <div class="section-label" id="apg-engine">The framework</div>
+    <div class="divider"></div>
+    <h2 class="section-title" id="apg-engine-services-heading">The APG Engine&trade;</h2>
+    <p class="section-sub">Every Brand Builder client runs on the same six-step operating system. Built once. Refined over 600+ episodes. Deployed across every account.</p>
+    <div class="apg-engine-grid">
+      <div class="engine-stage"><div class="engine-stage-num">01</div><div class="engine-stage-arrow">&rarr;</div><h3>Strategy and ICP Research</h3><p>We define your ideal customer profile and identify the guests who move the needle. Your show is built around commercial strategy, not content for content's sake.</p></div>
+      <div class="engine-stage"><div class="engine-stage-num">02</div><div class="engine-stage-arrow">&rarr;</div><h3>Podcast Guest Recruitment and Outreach</h3><p>We research, qualify, and reach out to your ideal guests. Follow-ups, coordination, and scheduling handled in full. You get the right decision makers in front of your microphone.</p></div>
+      <div class="engine-stage"><div class="engine-stage-num">03</div><div class="engine-stage-arrow">&rarr;</div><h3>Pre-Production Briefing on Both Sides</h3><p>Both you and your guest receive full pre-production briefs before every recording. The conversation has direction, depth, and purpose from the very first question.</p></div>
+      <div class="engine-stage"><div class="engine-stage-num">04</div><div class="engine-stage-arrow">&rarr;</div><h3>You Record. We Handle Everything Else.</h3><p>You show up. We produce: video, audio, clips, thumbnails, guest trailer, show notes, SEO article. Published and distributed.</p></div>
+      <div class="engine-stage"><div class="engine-stage-num">05</div><div class="engine-stage-arrow">&rarr;</div><h3>Monetisation and Pipeline Growth</h3><p>Strategic ad placements are built into every episode. Guest relationships are nurtured. Your B2B podcast compounds over time into a predictable source of pipeline and revenue.</p></div>
+      <div class="engine-stage"><div class="engine-stage-num">06</div><div class="engine-stage-arrow">&#8635;</div><h3>Performance Analytics</h3><p>We analyse video performance, audio metrics, and ad results across every episode. You see what's working, what's growing, and where the revenue is coming from.</p></div>
+    </div>
+    <p class="apg-engine-tag">A trademarked framework. Built once. Refined over 600+ episodes.</p>
+  </div>
+</section>
+
 <!-- Two Options -->
 <section class="opt-section">
-  <div class="inner centered" style="max-width:1240px;margin:0 auto;text-align:center">
+  <div class="opt-header-wrap">
     <div class="section-label">Two options</div>
     <div class="divider"></div>
     <h2 class="section-title">Same engine. Two starting points.</h2>

@@ -88,6 +88,17 @@
 .award-icon-wrap{width:52px;height:52px;background:rgba(55,138,221,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .award-text h3{font-size:1.1rem;font-weight:600;color:#fff;text-align:left;margin-bottom:.25rem}.award-text p{font-size:.875rem;color:#8899aa;text-align:left}
 .trailer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+/* === Blog teaser card under Results === */
+.results-blog-teaser{max-width:780px;margin:3rem auto 0;background:linear-gradient(135deg,rgba(55,138,221,0.10) 0%,rgba(55,138,221,0.02) 100%);border:0.5px solid rgba(55,138,221,0.3);border-radius:14px;padding:1.75rem 2rem;display:flex;align-items:center;gap:1.5rem;text-decoration:none;transition:border-color .15s ease, transform .15s ease}
+.results-blog-teaser:hover{border-color:rgba(55,138,221,0.6);transform:translateY(-2px)}
+.results-blog-teaser .rbt-icon{flex-shrink:0;width:54px;height:54px;background:rgba(55,138,221,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#85B7EB}
+.results-blog-teaser .rbt-body{flex:1;text-align:left}
+.results-blog-teaser .rbt-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#85B7EB;background:rgba(55,138,221,0.15);padding:3px 9px;border-radius:999px;margin-bottom:.5rem}
+.results-blog-teaser h4{font-size:1.05rem;font-weight:700;color:#fff;margin:0 0 .3rem;line-height:1.35}
+.results-blog-teaser p{font-size:.88rem;color:#a8b4c4;margin:0;line-height:1.55}
+.results-blog-teaser .rbt-arrow{flex-shrink:0;color:#378ADD;font-size:1.5rem;font-weight:700}
+@media(max-width:640px){.results-blog-teaser{flex-direction:column;text-align:center;padding:1.5rem}.results-blog-teaser .rbt-body{text-align:center}.results-blog-teaser .rbt-arrow{display:none}}
+
 .trailer-card{background:#111827;border:0.5px solid rgba(55,138,221,0.2);border-radius:12px;overflow:hidden}
 .trailer-thumb{background:#0d1625;border-bottom:0.5px solid rgba(55,138,221,0.12)}
 .trailer-wistia{width:100%;aspect-ratio:16/9;position:relative}.trailer-wistia .wistia_embed{width:100%;height:100%}
@@ -348,6 +359,17 @@
       <div class="testimonial-card"><div class="testimonial-video"><div class="wistia-responsive"><div class="wistia_embed wistia_async_egwudhtavb videoFoam=true" style="height:100%;position:relative;width:100%">&nbsp;</div></div></div><div class="testimonial-quote"><blockquote>"He continues to make me look good, the show look good. The promise I make to all my guests is that everybody looks good in post production."</blockquote><div class="testimonial-author">Brian Aquart, Vice President, Workforce &amp; Community Education</div></div></div>
       <div class="testimonial-card"><div class="testimonial-video"><div class="wistia-responsive"><div class="wistia_embed wistia_async_ee6i1k1wm3 videoFoam=true" style="height:100%;position:relative;width:100%">&nbsp;</div></div></div><div class="testimonial-quote"><blockquote>"They exceeded expectations on deliverables and support."</blockquote><div class="testimonial-author">Kepo, Director of Product Marketing, Bain &amp; Deloitte</div></div></div>
     </div>
+      <a href="blog/april-2026-client-results-real-data.html" class="results-blog-teaser">
+        <div class="rbt-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>
+        </div>
+        <div class="rbt-body">
+          <span class="rbt-tag">Recent results</span>
+          <h4>What APG Delivered for Our Podcast Clients in April 2026</h4>
+          <p>Real numbers from a single month: +2,920% watch hours on one show, 441,823 views on another, 7 of 8 clients growing month over month. Read the full breakdown.</p>
+        </div>
+        <div class="rbt-arrow">&rarr;</div>
+      </a>
   </div>
 </section>
 
