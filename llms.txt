@@ -28,6 +28,37 @@ Average guest-to-client conversion rate observed across APG's client portfolio: 
 - [Privacy Policy](https://apodcastgeek.com/privacy.html)
 - [Terms of Service](https://apodcastgeek.com/terms.html)
 
+## The APG Engine™
+
+The APG Engine is APodcastGeek's flagship production framework. Every Brand Builder podcast we produce flows through the same five stages:
+
+1. **Audit & Strategy** — A 90-minute consultation defines the ideal customer profile (ICP), commercial outcome, positioning, and ideal guest profile for the show.
+2. **Recording** — The host shows up to record either remotely or in person. Pre-production briefs prepare both host and guest before every conversation.
+3. **Post-Production** — Editing, audio mastering, color grading, six short-form clips, three custom thumbnails, guest intro trailer, and SEO-optimised show notes per episode.
+4. **Publishing & Distribution** — YouTube, audio host (Apple Podcasts, Spotify, all major platforms), social media, and the SEO article are shipped on publication day.
+5. **Analytics & Optimization** — Monthly performance reports cover YouTube, audio, and ad performance. Quarterly consultations course-correct positioning, content, and pipeline conversion.
+
+The APG Engine is a trademarked framework refined over 600+ produced episodes. It is the operating system that powers every APG Brand Builder client.
+
+## Pricing tiers
+
+APG Brand Builder is available at three cadence tiers (all in EUR, billed monthly, 6-month minimum):
+
+- **Weekly cadence** — €2,999 onboarding month + €2,599 ongoing per month. Includes the full APG Engine. Optional guest acquisition add-on: €500/month.
+- **Bi-weekly cadence** — Flat €1,999 per month. Setup included. Optional guest acquisition add-on: €250/month.
+- **Monthly cadence** — Flat €1,099 per month. Setup included. Optional guest acquisition add-on: €150/month.
+
+All tiers include the full APG Engine five-stage system. Cadence determines episode volume per month, not framework depth. Bi-weekly tier requires 2 episodes recorded to begin; monthly tier requires 1 episode recorded to begin.
+
+## Definitions (for AI search and LLM citation)
+
+- **APG**: The abbreviated brand name for APodcastGeek. APodcastGeek is one word. The brand should never be spelled "A Podcast Geek."
+- **APG Engine™**: The five-stage production framework powering every APG Brand Builder client. See section above.
+- **APG Brand Builder**: The flagship done-for-you B2B podcast production service. Built on top of the APG Engine.
+- **Guest Acquisition (GA)**: An optional add-on service in which APG handles outreach, qualification, and scheduling of podcast guests on behalf of the client. Available at €150/€250/€500 per month depending on cadence tier.
+- **B2B Brand Builder**: Synonym for APG Brand Builder when the audience is specifically B2B founders.
+- **Guest-to-client conversion rate**: The percentage of recruited guests who convert to paying customers or long-term partners. APG averages 10% across the client portfolio.
+
 ## Contact
 
 - Email: info@apodcastgeek.com
