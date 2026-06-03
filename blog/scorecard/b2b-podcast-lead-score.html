@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B2B Podcast Lead Score | APodcastGeek</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:#060810;
+  color:#c8d4e0;
+  min-height:100vh;
+  padding:3rem 1.5rem 5rem;
+}
+
+.page{max-width:720px;margin:0 auto}
+
+/* Top bar */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;
+}
+.topbar-logo{height:40px;width:auto;filter:drop-shadow(0 0 1px rgba(255,255,255,0.8)) drop-shadow(0 0 1px rgba(255,255,255,0.8))}
+.print-btn{
+  background:#378ADD;color:#fff;border:none;border-radius:6px;
+  padding:.55rem 1.35rem;font-size:13px;font-weight:600;
+  cursor:pointer;font-family:inherit;letter-spacing:.01em;
+}
+.print-btn:hover{background:#185FA5}
+
+/* Hero */
+.hero{
+  background:#0a0e1a;
+  border:0.5px solid rgba(55,138,221,0.2);
+  border-radius:14px;
+  padding:2.5rem 2.5rem 2rem;
+  margin-bottom:1.5rem;
+  position:relative;overflow:hidden;
+}
+.hero::after{
+  content:'';position:absolute;
+  top:-80px;right:-80px;width:320px;height:320px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(55,138,221,0.12) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-tag{
+  display:inline-block;
+  background:rgba(55,138,221,0.12);color:#85B7EB;
+  border:0.5px solid rgba(55,138,221,0.25);border-radius:999px;
+  padding:.25rem .85rem;font-size:10px;letter-spacing:1px;
+  text-transform:uppercase;font-weight:700;margin-bottom:1rem;
+}
+.hero h1{
+  font-size:clamp(1.75rem,4vw,2.5rem);
+  font-weight:800;color:#fff;line-height:1.15;
+  letter-spacing:-.02em;margin-bottom:.65rem;
+}
+.hero-sub{font-size:.95rem;color:#667788;line-height:1.65;max-width:520px}
+
+/* Instructions */
+.instructions{
+  background:#0d1322;
+  border:0.5px solid rgba(55,138,221,0.15);
+  border-left:3px solid #378ADD;
+  border-radius:10px;
+  padding:1.1rem 1.4rem;
+  margin-bottom:1.5rem;
+  font-size:.88rem;color:#8899aa;line-height:1.6;
+}
+.instructions strong{color:#c8d4e0}
+
+/* Questions card */
+.questions-card{
+  background:#0a0e1a;
+  border:0.5px solid rgba(55,138,221,0.2);
+  border-radius:14px;
+  overflow:hidden;
+  margin-bottom:1.5rem;
+}
+.questions-header{
+  padding:1.1rem 2rem;
+  border-bottom:0.5px solid rgba(55,138,221,0.12);
+  font-size:10px;text-transform:uppercase;letter-spacing:1.5px;
+  font-weight:700;color:#85B7EB;
+}
+
+.question{
+  display:flex;align-items:flex-start;gap:1rem;
+  padding:1.1rem 2rem;
+  border-bottom:0.5px solid rgba(55,138,221,0.08);
+}
+.question:last-child{border-bottom:none}
+
+.q-num{
+  width:26px;height:26px;
+  background:#0d1322;border:0.5px solid rgba(55,138,221,0.25);
+  border-radius:6px;font-size:11px;font-weight:700;color:#85B7EB;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:1px;
+}
+.q-text{flex:1;font-size:.93rem;color:#a8b4c4;line-height:1.55;font-weight:400}
+
+.q-options{
+  display:flex;gap:.4rem;flex-shrink:0;margin-top:1px;
+}
+.q-option{
+  position:relative;
+}
+.q-option input[type="radio"]{
+  position:absolute;opacity:0;width:0;height:0;
+}
+.q-option label{
+  display:flex;align-items:center;justify-content:center;
+  width:46px;height:30px;border-radius:6px;
+  font-size:11px;font-weight:700;letter-spacing:.5px;
+  cursor:pointer;transition:all .15s;
+  border:0.5px solid rgba(55,138,221,0.2);
+  color:#445566;background:#060810;
+  user-select:none;
+}
+.q-option.yes input:checked + label{
+  background:rgba(55,138,221,0.15);
+  border-color:#378ADD;color:#85B7EB;
+}
+.q-option.no input:checked + label{
+  background:rgba(180,50,50,0.12);
+  border-color:#cc4444;color:#cc6666;
+}
+.q-option label:hover{border-color:rgba(55,138,221,0.4);color:#8899aa}
+
+/* Score tally */
+.tally{
+  background:#0a0e1a;
+  border:0.5px solid rgba(55,138,221,0.2);
+  border-radius:14px;
+  padding:1.75rem 2rem;
+  margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:2rem;flex-wrap:wrap;
+}
+.tally-text{flex:1;min-width:200px}
+.tally-label{
+  font-size:10px;text-transform:uppercase;letter-spacing:1.5px;
+  font-weight:700;color:#85B7EB;margin-bottom:.4rem;
+}
+.tally-desc{font-size:.88rem;color:#667788;line-height:1.55}
+.tally-box{
+  width:90px;height:90px;
+  border:0.5px solid rgba(55,138,221,0.3);
+  border-radius:12px;
+  background:#0d1322;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.tally-box-num{
+  font-size:3rem;font-weight:900;color:#378ADD;
+  line-height:1;letter-spacing:-.03em;
+}
+.tally-box-sub{
+  font-size:9px;text-transform:uppercase;letter-spacing:1px;
+  color:#445566;font-weight:600;margin-top:.2rem;
+}
+
+/* Verdicts */
+.verdicts{
+  background:#0a0e1a;
+  border:0.5px solid rgba(55,138,221,0.2);
+  border-radius:14px;
+  overflow:hidden;
+  margin-bottom:1.5rem;
+}
+.verdicts-header{
+  padding:1.1rem 2rem;
+  border-bottom:0.5px solid rgba(55,138,221,0.12);
+  font-size:10px;text-transform:uppercase;letter-spacing:1.5px;
+  font-weight:700;color:#85B7EB;
+}
+
+.verdict{
+  display:flex;align-items:flex-start;gap:1.25rem;
+  padding:1.25rem 2rem;
+  border-bottom:0.5px solid rgba(55,138,221,0.08);
+  transition:background .2s;
+}
+.verdict:last-child{border-bottom:none}
+.verdict.active-verdict{background:rgba(55,138,221,0.06)}
+
+.verdict-badge{
+  min-width:56px;
+  padding:.3rem .6rem;
+  border-radius:6px;
+  font-size:12px;font-weight:800;
+  text-align:center;flex-shrink:0;
+  margin-top:1px;
+}
+.verdict.low .verdict-badge{background:rgba(180,50,50,0.15);color:#cc6666;border:0.5px solid rgba(180,50,50,0.3)}
+.verdict.mid .verdict-badge{background:rgba(180,140,0,0.12);color:#cc9900;border:0.5px solid rgba(180,140,0,0.3)}
+.verdict.high .verdict-badge{background:rgba(40,160,80,0.12);color:#44aa66;border:0.5px solid rgba(40,160,80,0.3)}
+
+.verdict-body strong{
+  display:block;font-size:.93rem;font-weight:600;
+  margin-bottom:.3rem;
+}
+.verdict.low .verdict-body strong{color:#cc6666}
+.verdict.mid .verdict-body strong{color:#cc9900}
+.verdict.high .verdict-body strong{color:#44aa66}
+.verdict-body p{font-size:.85rem;color:#667788;line-height:1.6}
+
+/* Footer CTA */
+.footer-cta{
+  background:#0d1322;
+  border:0.5px solid rgba(55,138,221,0.2);
+  border-radius:14px;
+  padding:2rem 2rem;
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;gap:1.25rem;
+}
+.footer-cta-text strong{display:block;font-size:1rem;color:#fff;margin-bottom:.3rem}
+.footer-cta-text p{font-size:.85rem;color:#667788;line-height:1.5}
+.footer-cta-btn{
+  background:#378ADD;color:#fff;
+  border-radius:8px;padding:.7rem 1.75rem;
+  font-size:14px;font-weight:600;text-decoration:none;
+  transition:background .15s;display:inline-block;
+}
+.footer-cta-btn:hover{background:#185FA5}
+
+@media(max-width:600px){
+  body{padding:2rem 1rem 4rem}
+  .hero{padding:1.75rem 1.5rem 1.5rem}
+  .question{padding:.9rem 1.25rem;gap:.75rem}
+  .questions-header,.verdicts-header{padding:1rem 1.25rem}
+  .verdict{padding:1rem 1.25rem}
+  .tally{padding:1.25rem 1.5rem}
+  .footer-cta{padding:1.25rem 1.5rem}
+}
+
+@page{size:A4;margin:1.2cm}
+@media print{
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+  body{padding:0;font-size:12px}
+  .print-btn{display:none}
+  .page{max-width:100%}
+  .topbar{margin-bottom:1.1rem}
+  .topbar-logo{height:30px}
+  .hero{padding:1.4rem 1.6rem;margin-bottom:.85rem;border-radius:8px}
+  .hero h1{font-size:1.65rem;margin-bottom:.4rem}
+  .hero-sub{font-size:.82rem}
+  .hero-tag{margin-bottom:.55rem;padding:.2rem .7rem;font-size:9px}
+  .instructions{padding:.75rem 1.1rem;margin-bottom:.85rem;font-size:.82rem}
+  .questions-card{margin-bottom:.85rem;border-radius:8px}
+  .questions-header{padding:.65rem 1.35rem;font-size:9px}
+  .question{padding:.6rem 1.35rem;gap:.7rem}
+  .q-num{width:22px;height:22px;font-size:9px;border-radius:4px}
+  .q-text{font-size:.82rem;line-height:1.45}
+  .q-option label{width:38px;height:24px;font-size:9px;border-radius:4px}
+  .tally{page-break-before:always;break-before:page;padding:1.25rem 1.5rem;margin-bottom:.85rem;gap:1.25rem;border-radius:8px}
+  .tally-label{font-size:9px}
+  .tally-desc{font-size:.8rem}
+  .tally-box{width:68px;height:68px;border-radius:8px}
+  .tally-box-num{font-size:2.2rem}
+  .tally-box-sub{font-size:8px}
+  .verdicts{margin-bottom:.85rem;border-radius:8px}
+  .verdicts-header{padding:.65rem 1.35rem;font-size:9px}
+  .verdict{padding:.85rem 1.35rem;gap:.85rem}
+  .verdict-badge{min-width:48px;font-size:10px;padding:.25rem .45rem}
+  .verdict-body strong{font-size:.82rem;margin-bottom:.2rem}
+  .verdict-body p{font-size:.76rem;line-height:1.5}
+  .footer-cta{padding:1.1rem 1.35rem;border-radius:8px;gap:.85rem}
+  .footer-cta-text strong{font-size:.9rem}
+  .footer-cta-text p{font-size:.78rem}
+  .footer-cta-btn{padding:.55rem 1.2rem;font-size:12px;border-radius:6px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <img src="../../logo.png" alt="APodcastGeek" class="topbar-logo">
+    <button class="print-btn" onclick="window.print()">Save as PDF</button>
+  </div>
+
+  <div class="hero">
+    <span class="hero-tag">Free Scorecard</span>
+    <h1>B2B Podcast<br>Lead Score</h1>
+    <p class="hero-sub">10 questions that tell you whether your podcast is set up to generate clients or just downloads. Answer honestly. Tally your score below.</p>
+  </div>
+
+  <div class="instructions">
+    <strong>How to use this:</strong> Select YES or NO for each question based on your current show, or the show you are planning. Your total YES count updates automatically. Find your verdict at the bottom.
+  </div>
+
+  <div class="questions-card">
+    <div class="questions-header">The 10 Questions</div>
+
+    <div class="question">
+      <div class="q-num">1</div>
+      <div class="q-text">Do you select podcast guests based on whether they match your ideal customer profile or have direct access to your ideal buyer?</div>
+      <div class="q-options">
+        <div class="q-option yes"><input type="radio" name="q1" id="q1y" value="1" onchange="updateScore()"><label for="q1y">YES</label></div>
+        <div class="q-option no"><input type="radio" name="q1" id="q1n" value="0" onchange="updateScore()"><label for="q1n">NO</label></div>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="q-num">2</div>
+      <div class="q-text">Does every episode follow a consistent format with questions anchored to the specific problem your business solves?</div>
+      <div class="q-options">
+        <div class="q-option yes"><input type="radio" name="q2" id="q2y" value="1" onchange="updateScore()"><label for="q2y">YES</label></div>
+        <div class="q-option no"><input type="radio" name="q2" id="q2n" value="0" onchange="updateScore()"><label for="q2n">NO</label></div>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="q-num">3</div>
+      <div class="q-text">Do you direct listeners to a specific piece of content after each episode, rather than just your homepage or social profiles?</div>
+      <div class="q-options">
+        <div class="q-option yes"><input type="radio" name="q3" id="q3y" value="1" onchange="updateScore()"><label for="q3y">YES</label></div>
+        <div class="q-option no"><input type="radio" name="q3" id="q3n" value="0" onchange="updateScore()"><label for="q3n">NO</label></div>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="q-num">4</div>
+      <div class="q-text">Do you have a way to capture listener email addresses from your podcast traffic?</div>
+      <div class="q-options">
+        <div class="q-option yes"><input type="radio" name="q4" id="q4y" value="1" onchange="updateScore()"><label for="q4y">YES</label></div>
+        <div class="q-option no"><input type="radio" name="q4" id="q4n" value="0" onchange="updateScore()"><label for="q4n">NO</label></div>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="q-num">5</div>
+      <div class="q-text">Do you send guests a clip, quote graphic, or asset pack within 48 hours of an episode going live?</div>
+      <div class="q-options">
+        <div class="q-option yes"><input type="radio" name="q5" id="q5y" value="1" onchange="updateScore()"><label for="q5y">YES</label></div>
+        <div class="q-option no"><input type="radio" name="q5" id="q5n" value="0" onchange="updateScore()"><label for="q5n">NO</label></div>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="q-num">6</div>
+      <div class="q-text">Do you have a structured follow-up sequence with guests after the episode, not a pitch but genuine continued contact?</div>
+      <div class="q-options">
+        <div class="q-option yes"><input type="radio" name="q6" id="q6y" value="1" onchange="updateScore()"><label for="q6y">YES</label></div>
+        <div class="q-option no"><input type="radio" name="q6" id="q6n" value="0" onchange="updateScore()"><label for="q6n">NO</label></div>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="q-num">7</div>
+      <div class="q-text">Do you publish on a consistent schedule, at least twice per month, without gaps longer than two weeks?</div>
+      <div class="q-options">
+        <div class="q-option yes"><input type="radio" name="q7" id="q7y" value="1" onchange="updateScore()"><label for="q7y">YES</label></div>
+        <div class="q-option no"><input type="radio" name="q7" id="q7n" value="0" onchange="updateScore()"><label for="q7n">NO</label></div>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="q-num">8</div>
+      <div class="q-text">Is your show focused on a specific problem set rather than general conversations about your industry?</div>
+      <div class="q-options">
+        <div class="q-option yes"><input type="radio" name="q8" id="q8y" value="1" onchange="updateScore()"><label for="q8y">YES</label></div>
+        <div class="q-option no"><input type="radio" name="q8" id="q8n" value="0" onchange="updateScore()"><label for="q8n">NO</label></div>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="q-num">9</div>
+      <div class="q-text">Does someone on your team track which guests or listeners move toward a sales conversation and follow up on those signals?</div>
+      <div class="q-options">
+        <div class="q-option yes"><input type="radio" name="q9" id="q9y" value="1" onchange="updateScore()"><label for="q9y">YES</label></div>
+        <div class="q-option no"><input type="radio" name="q9" id="q9n" value="0" onchange="updateScore()"><label for="q9n">NO</label></div>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="q-num">10</div>
+      <div class="q-text">Have you ever tracked, or do you plan to track, your guest-to-client conversion rate?</div>
+      <div class="q-options">
+        <div class="q-option yes"><input type="radio" name="q10" id="q10y" value="1" onchange="updateScore()"><label for="q10y">YES</label></div>
+        <div class="q-option no"><input type="radio" name="q10" id="q10n" value="0" onchange="updateScore()"><label for="q10n">NO</label></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tally">
+    <div class="tally-text">
+      <div class="tally-label">Your Score</div>
+      <div class="tally-desc">Your total YES answers update automatically as you answer. Find your verdict below.</div>
+    </div>
+    <div class="tally-box">
+      <div class="tally-box-num" id="score-display">0</div>
+      <div class="tally-box-sub">out of 10</div>
+    </div>
+  </div>
+
+  <div class="verdicts">
+    <div class="verdicts-header">Your Verdict</div>
+
+    <div class="verdict low" id="verdict-low">
+      <div class="verdict-badge">0 to 4</div>
+      <div class="verdict-body">
+        <strong>Your podcast is a brand play, not a sales channel</strong>
+        <p>You are producing episodes without the infrastructure to convert listeners into clients. The guest strategy, follow-up system, and listener capture mechanism all need to be built. None of it is complicated. It just needs to be intentional from the start.</p>
+      </div>
+    </div>
+
+    <div class="verdict mid" id="verdict-mid">
+      <div class="verdict-badge">5 to 7</div>
+      <div class="verdict-body">
+        <strong>You have the foundation. Two or three things are leaking leads.</strong>
+        <p>The core of a lead-generating podcast is there, but gaps in your guest follow-up, listener CTA, or consistency are costing you pipeline. Look at which questions you answered NO to. Those are the levers to fix first.</p>
+      </div>
+    </div>
+
+    <div class="verdict high" id="verdict-high">
+      <div class="verdict-badge">8 to 10</div>
+      <div class="verdict-body">
+        <strong>The system is in place. This is now a traffic problem.</strong>
+        <p>Your podcast is structured to generate leads. The constraint is no longer the system, it is reach. Prioritise getting in front of more of your ideal audience: guest on other shows, submit to directories, and build backlinks through consistent publishing.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-cta">
+    <div class="footer-cta-text">
+      <strong>Want a second opinion on your score?</strong>
+      <p>Book a 30-minute call with the APG team. We will tell you exactly what your podcast is missing and what it would take to fix it.</p>
+    </div>
+    <a href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-discovery-call" class="footer-cta-btn">Book a Strategy Call</a>
+  </div>
+
+</div>
+
+<script>
+function updateScore() {
+  var score = 0;
+  for (var i = 1; i <= 10; i++) {
+    var el = document.querySelector('input[name="q' + i + '"]:checked');
+    if (el && el.value === '1') score++;
+  }
+  document.getElementById('score-display').textContent = score;
+
+  document.getElementById('verdict-low').classList.remove('active-verdict');
+  document.getElementById('verdict-mid').classList.remove('active-verdict');
+  document.getElementById('verdict-high').classList.remove('active-verdict');
+
+  var answered = document.querySelectorAll('input[type="radio"]:checked').length;
+  if (answered > 0) {
+    if (score <= 4) document.getElementById('verdict-low').classList.add('active-verdict');
+    else if (score <= 7) document.getElementById('verdict-mid').classList.add('active-verdict');
+    else document.getElementById('verdict-high').classList.add('active-verdict');
+  }
+}
+</script>
+</body>
+</html>
