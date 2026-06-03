@@ -190,7 +190,12 @@ body{
   transition:background .2s;
 }
 .verdict:last-child{border-bottom:none}
-.verdict.active-verdict{background:rgba(55,138,221,0.06)}
+.verdict.low{border-left:3px solid #cc4444}
+.verdict.mid{border-left:3px solid #cc9900}
+.verdict.high{border-left:3px solid #44aa66}
+.verdict.active-verdict.low{background:rgba(204,68,68,0.08)}
+.verdict.active-verdict.mid{background:rgba(204,153,0,0.08)}
+.verdict.active-verdict.high{background:rgba(68,170,102,0.08)}
 
 .verdict-badge{
   min-width:56px;
