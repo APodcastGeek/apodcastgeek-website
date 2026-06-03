@@ -148,13 +148,17 @@ body{
 .tally-desc{font-size:.88rem;color:#667788;line-height:1.55}
 .tally-box{
   width:90px;height:90px;
-  border:0.5px solid rgba(55,138,221,0.3);
+  border:2px solid rgba(55,138,221,0.3);
   border-radius:12px;
   background:#0d1322;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
   flex-shrink:0;
+  transition:border-color .3s;
 }
+.tally-box.score-low{border-color:#cc4444;box-shadow:0 0 12px rgba(204,68,68,0.2)}
+.tally-box.score-mid{border-color:#cc9900;box-shadow:0 0 12px rgba(204,153,0,0.2)}
+.tally-box.score-high{border-color:#44aa66;box-shadow:0 0 12px rgba(68,170,102,0.2)}
 .tally-box-num{
   font-size:3rem;font-weight:900;color:#378ADD;
   line-height:1;letter-spacing:-.03em;
@@ -450,11 +454,14 @@ function updateScore() {
   document.getElementById('verdict-mid').classList.remove('active-verdict');
   document.getElementById('verdict-high').classList.remove('active-verdict');
 
+  var box = document.querySelector('.tally-box');
+  box.classList.remove('score-low','score-mid','score-high');
+
   var answered = document.querySelectorAll('input[type="radio"]:checked').length;
   if (answered > 0) {
-    if (score <= 4) document.getElementById('verdict-low').classList.add('active-verdict');
-    else if (score <= 7) document.getElementById('verdict-mid').classList.add('active-verdict');
-    else document.getElementById('verdict-high').classList.add('active-verdict');
+    if (score <= 4) { document.getElementById('verdict-low').classList.add('active-verdict'); box.classList.add('score-low'); }
+    else if (score <= 7) { document.getElementById('verdict-mid').classList.add('active-verdict'); box.classList.add('score-mid'); }
+    else { document.getElementById('verdict-high').classList.add('active-verdict'); box.classList.add('score-high'); }
   }
 }
 </script>
