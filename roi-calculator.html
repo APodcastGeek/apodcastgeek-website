@@ -30,78 +30,80 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .nav-cta:hover{background:#185FA5}
 
 /* HERO */
-.hero{background:#0a0e1a;padding:5rem 5rem 4rem;text-align:center}
-.hero-tag{display:inline-block;background:rgba(55,138,221,0.12);color:#85B7EB;border:0.5px solid rgba(55,138,221,0.3);border-radius:20px;padding:.35rem 1.1rem;font-size:13px;letter-spacing:.5px;margin-bottom:1.5rem}
-.hero h1{font-size:clamp(2rem,4vw,3.2rem);font-weight:800;color:#fff;line-height:1.12;margin-bottom:1rem;max-width:700px;margin-left:auto;margin-right:auto}
+.hero{background:#0a0e1a;padding:3.5rem 5rem 3rem;text-align:center}
+.hero-tag{display:inline-block;background:rgba(55,138,221,0.12);color:#85B7EB;border:0.5px solid rgba(55,138,221,0.3);border-radius:20px;padding:.3rem 1rem;font-size:12px;letter-spacing:.5px;margin-bottom:1.25rem}
+.hero h1{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;color:#fff;line-height:1.12;margin-bottom:.75rem;max-width:640px;margin-left:auto;margin-right:auto}
 .hero h1 span{color:#378ADD}
-.hero-sub{font-size:clamp(.9rem,1.6vw,1.05rem);color:#8899aa;line-height:1.8;max-width:520px;margin:0 auto}
+.hero-sub{font-size:.95rem;color:#8899aa;line-height:1.7;max-width:480px;margin:0 auto}
 
 /* CALCULATOR */
-.calc-section{padding:3rem 5rem 5rem;background:#060810}
-.inner{max-width:1160px;margin:0 auto}
+.calc-section{padding:2.5rem 5rem 3.5rem;background:#060810}
+.inner{max-width:1200px;margin:0 auto}
 
-/* STAT CARDS — 3 across top */
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:1.5rem}
-.stat-card{background:#0a0e1a;border:0.5px solid rgba(55,138,221,0.2);border-radius:14px;padding:1.6rem 2rem;transition:border-color .2s}
-.stat-card:hover{border-color:rgba(55,138,221,0.45)}
-.stat-label{font-size:.72rem;letter-spacing:1.5px;color:#378ADD;text-transform:uppercase;font-weight:600;margin-bottom:.4rem}
-.stat-number{font-size:2.2rem;font-weight:800;color:#fff;letter-spacing:-.03em;line-height:1}
-.stat-desc{font-size:.78rem;color:#556677;margin-top:.4rem}
+/* TWO-COLUMN LAYOUT */
+.main-row{display:grid;grid-template-columns:1fr 1.6fr;gap:1.5rem;align-items:start}
+
+/* LEFT — INPUTS */
+.inputs-panel{background:#0a0e1a;border:0.5px solid rgba(55,138,221,0.2);border-radius:14px;padding:2rem}
+.inputs-panel h2{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.25rem}
+.inputs-panel p{font-size:.8rem;color:#667788;margin-bottom:1.75rem}
+
+.slider-group{margin-bottom:1.6rem}
+.slider-group:last-child{margin-bottom:0}
+.slider-label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.6rem}
+.slider-label span{font-size:.83rem;color:#aabbcc;font-weight:500}
+.slider-value{font-size:1.15rem;font-weight:700;color:#378ADD;letter-spacing:-.02em}
+
+input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;background:rgba(55,138,221,0.2);outline:none;cursor:pointer}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:17px;height:17px;border-radius:50%;background:#378ADD;cursor:pointer;box-shadow:0 0 0 3px rgba(55,138,221,0.25);transition:box-shadow .15s}
+input[type="range"]::-webkit-slider-thumb:hover{box-shadow:0 0 0 5px rgba(55,138,221,0.3)}
+input[type="range"]::-moz-range-thumb{width:17px;height:17px;border:none;border-radius:50%;background:#378ADD;cursor:pointer}
+.slider-range{display:flex;justify-content:space-between;margin-top:.35rem}
+.slider-range span{font-size:.7rem;color:#445566}
+
+/* RIGHT COLUMN */
+.right-col{display:flex;flex-direction:column;gap:1rem}
+
+/* STAT CARDS — 3 compact boxes in a row */
+.stats-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
+.stat-card{background:#0a0e1a;border:0.5px solid rgba(55,138,221,0.2);border-radius:12px;padding:1rem 1.1rem}
+.stat-label{font-size:.65rem;letter-spacing:1.2px;color:#378ADD;text-transform:uppercase;font-weight:600;margin-bottom:.3rem}
+.stat-number{font-size:1.6rem;font-weight:800;color:#fff;letter-spacing:-.03em;line-height:1}
+.stat-desc{font-size:.7rem;color:#556677;margin-top:.25rem;line-height:1.4}
 .stat-card.stat-accent{background:linear-gradient(135deg,rgba(23,68,136,0.4) 0%,rgba(29,104,169,0.2) 100%);border-color:rgba(55,138,221,0.4)}
 .stat-card.stat-accent .stat-number{color:#378ADD}
 .stat-card.stat-accent .stat-label{color:#85B7EB}
 
-/* MAIN ROW — inputs left, chart right */
-.main-row{display:grid;grid-template-columns:1fr 1.5fr;gap:1.5rem;align-items:start}
-
-/* INPUTS */
-.inputs-panel{background:#0a0e1a;border:0.5px solid rgba(55,138,221,0.2);border-radius:14px;padding:2.25rem}
-.inputs-panel h2{font-size:1rem;font-weight:700;color:#fff;margin-bottom:.3rem}
-.inputs-panel p{font-size:.82rem;color:#667788;margin-bottom:2rem}
-
-.slider-group{margin-bottom:1.75rem}
-.slider-group:last-child{margin-bottom:0}
-.slider-label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.65rem}
-.slider-label span{font-size:.85rem;color:#aabbcc;font-weight:500}
-.slider-value{font-size:1.25rem;font-weight:700;color:#378ADD;letter-spacing:-.02em}
-
-input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;background:rgba(55,138,221,0.2);outline:none;cursor:pointer}
-input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:#378ADD;cursor:pointer;box-shadow:0 0 0 3px rgba(55,138,221,0.25);transition:box-shadow .15s}
-input[type="range"]::-webkit-slider-thumb:hover{box-shadow:0 0 0 5px rgba(55,138,221,0.3)}
-input[type="range"]::-moz-range-thumb{width:18px;height:18px;border:none;border-radius:50%;background:#378ADD;cursor:pointer}
-.slider-range{display:flex;justify-content:space-between;margin-top:.4rem}
-.slider-range span{font-size:.72rem;color:#445566}
-
 /* CHART PANEL */
-.chart-panel{background:#0a0e1a;border:0.5px solid rgba(55,138,221,0.2);border-radius:14px;padding:2.25rem}
-.chart-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.35rem;flex-wrap:wrap;gap:.75rem}
-.chart-header h2{font-size:1rem;font-weight:700;color:#fff}
+.chart-panel{background:#0a0e1a;border:0.5px solid rgba(55,138,221,0.2);border-radius:14px;padding:1.5rem 1.75rem;flex:1}
+.chart-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.2rem;flex-wrap:wrap;gap:.5rem}
+.chart-header h3{font-size:.9rem;font-weight:700;color:#fff}
 .total-block{text-align:right}
-.total-label{font-size:.7rem;letter-spacing:1.5px;color:#378ADD;text-transform:uppercase;font-weight:600}
-.total-value{font-size:2rem;font-weight:800;color:#378ADD;letter-spacing:-.03em;line-height:1.1}
-.chart-assumption{font-size:.75rem;color:#445566;margin-bottom:1.25rem}
+.total-label{font-size:.62rem;letter-spacing:1.2px;color:#378ADD;text-transform:uppercase;font-weight:600}
+.total-value{font-size:1.5rem;font-weight:800;color:#378ADD;letter-spacing:-.03em;line-height:1.1}
+.chart-assumption{font-size:.7rem;color:#445566;margin-bottom:1rem}
 .chart-assumption span{color:#667788}
 .chart-dot{opacity:0;transition:opacity .15s;cursor:default}
 .chart-dot:hover{opacity:1}
 #chart-container{width:100%}
 
 /* CONTEXT */
-.context-section{background:#0a0e1a;padding:5rem 5rem;border-top:0.5px solid rgba(55,138,221,0.1)}
-.context-inner{max-width:1000px;margin:0 auto}
-.context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.context-section{background:#0a0e1a;padding:4.5rem 5rem;border-top:0.5px solid rgba(55,138,221,0.1)}
+.context-inner{max-width:1100px;margin:0 auto}
+.context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem}
 .context-card{background:#111827;border:0.5px solid rgba(55,138,221,0.15);border-radius:12px;padding:1.75rem}
 .context-card h3{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:.5rem}
 .context-card p{font-size:.85rem;color:#8899aa;line-height:1.7}
 .context-stat{font-size:1.9rem;font-weight:800;color:#378ADD;margin-bottom:.35rem;letter-spacing:-.02em}
 .section-label{font-size:12px;letter-spacing:2px;color:#378ADD;text-transform:uppercase;margin-bottom:.75rem}
 .divider{width:48px;height:3px;background:#378ADD;border-radius:2px;margin-bottom:1.5rem}
-.section-title{font-size:clamp(1.7rem,2.8vw,2.3rem);font-weight:700;color:#fff;line-height:1.2;margin-bottom:1rem}
+.section-title{font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:700;color:#fff;line-height:1.2;margin-bottom:1rem}
 .section-sub{font-size:1rem;color:#8899aa;line-height:1.8;max-width:560px}
 
 /* CTA */
-.cta-section{background:#060810;padding:5.5rem 5rem;text-align:center;border-top:0.5px solid rgba(55,138,221,0.1)}
+.cta-section{background:#060810;padding:5rem 5rem;text-align:center;border-top:0.5px solid rgba(55,138,221,0.1)}
 .cta-inner{max-width:600px;margin:0 auto}
-.cta-section h2{font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;color:#fff;line-height:1.15;margin-bottom:1.25rem}
+.cta-section h2{font-size:clamp(1.7rem,2.8vw,2.4rem);font-weight:800;color:#fff;line-height:1.15;margin-bottom:1.25rem}
 .cta-section h2 span{color:#378ADD}
 .cta-section p{font-size:1rem;color:#8899aa;line-height:1.8;margin-bottom:2.5rem}
 .btn-primary{background:#378ADD;color:#fff;border:none;padding:1.1rem 2.8rem;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s}
@@ -118,19 +120,16 @@ input[type="range"]::-moz-range-thumb{width:18px;height:18px;border:none;border-
 @media(max-width:1024px){
   .nav{padding:1rem 2rem}
   .nav-links{display:none}
-  .hero{padding:4rem 2rem 3rem}
-  .calc-section{padding:2.5rem 2rem 4rem}
-  .stats-row{grid-template-columns:1fr 1fr}
-  .stats-row .stat-card:last-child{grid-column:1/-1}
+  .hero{padding:3rem 2rem 2.5rem}
+  .calc-section{padding:2rem 2rem 3rem}
   .main-row{grid-template-columns:1fr}
-  .context-section{padding:4rem 2rem}
+  .context-section{padding:3.5rem 2rem}
   .context-grid{grid-template-columns:1fr 1fr}
   .cta-section{padding:4rem 2rem}
   .footer{flex-direction:column;gap:1rem;text-align:center;padding:1.75rem 2rem}
 }
 @media(max-width:600px){
-  .stats-row{grid-template-columns:1fr}
-  .stats-row .stat-card:last-child{grid-column:auto}
+  .stats-mini{grid-template-columns:1fr}
   .context-grid{grid-template-columns:1fr}
 }
 </style>
@@ -163,29 +162,9 @@ input[type="range"]::-moz-range-thumb{width:18px;height:18px;border:none;border-
 
 <section class="calc-section">
   <div class="inner">
-
-    <!-- 3 stat cards -->
-    <div class="stats-row">
-      <div class="stat-card">
-        <div class="stat-label">Monthly Reach</div>
-        <div class="stat-number" id="out-reach">2,000</div>
-        <div class="stat-desc">Total listeners reached per month</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Monthly Leads</div>
-        <div class="stat-number" id="out-leads">20</div>
-        <div class="stat-desc">Listeners entering your pipeline</div>
-      </div>
-      <div class="stat-card stat-accent">
-        <div class="stat-label">Monthly Revenue Potential</div>
-        <div class="stat-number" id="out-revenue">$100K</div>
-        <div class="stat-desc">Pipeline value from podcast listeners</div>
-      </div>
-    </div>
-
-    <!-- Inputs | Chart -->
     <div class="main-row">
 
+      <!-- LEFT: sliders -->
       <div class="inputs-panel">
         <h2>Your Podcast Numbers</h2>
         <p>Move the sliders to match your situation or goals.</p>
@@ -227,20 +206,40 @@ input[type="range"]::-moz-range-thumb{width:18px;height:18px;border:none;border-
         </div>
       </div>
 
-      <div class="chart-panel">
-        <div class="chart-header">
-          <div>
-            <h2>12-Month Compounding Value</h2>
-            <p class="chart-assumption">Assumes <span>5% monthly audience growth</span> from back-catalog discovery.</p>
+      <!-- RIGHT: 3 stat cards + chart -->
+      <div class="right-col">
+
+        <div class="stats-mini">
+          <div class="stat-card">
+            <div class="stat-label">Monthly Reach</div>
+            <div class="stat-number" id="out-reach">2,000</div>
+            <div class="stat-desc">Listeners per month</div>
           </div>
-          <div class="total-block">
-            <div class="total-label">12-Month Total</div>
-            <div class="total-value" id="out-12m">$1.6M</div>
+          <div class="stat-card">
+            <div class="stat-label">Monthly Leads</div>
+            <div class="stat-number" id="out-leads">20</div>
+            <div class="stat-desc">Into your pipeline</div>
+          </div>
+          <div class="stat-card stat-accent">
+            <div class="stat-label">Monthly Revenue</div>
+            <div class="stat-number" id="out-revenue">$100K</div>
+            <div class="stat-desc">Pipeline potential</div>
           </div>
         </div>
-        <div id="chart-container"></div>
-      </div>
 
+        <div class="chart-panel">
+          <div class="chart-header">
+            <h3>12-Month Compounding Value</h3>
+            <div class="total-block">
+              <div class="total-label">12-Month Total</div>
+              <div class="total-value" id="out-12m">$1.6M</div>
+            </div>
+          </div>
+          <p class="chart-assumption">Assumes <span>5% monthly growth</span> from back-catalog discovery.</p>
+          <div id="chart-container"></div>
+        </div>
+
+      </div>
     </div>
   </div>
 </section>
@@ -308,14 +307,14 @@ input[type="range"]::-moz-range-thumb{width:18px;height:18px;border:none;border-
   function fmtShort(n){
     if(n>=1000000) return '$'+(n/1000000).toFixed(1).replace(/\.0$/,'')+'M';
     if(n>=1000)    return '$'+Math.round(n/1000)+'k';
-    return n===0 ? '$0' : '$'+Math.round(n);
+    return n===0?'$0':'$'+Math.round(n);
   }
 
   function buildChart(vals){
     var container = document.getElementById('chart-container');
-    var W = container.offsetWidth || 560;
-    var H = 240;
-    var pT=20, pR=12, pB=32, pL=54;
+    var W = container.offsetWidth || 500;
+    var H = 180;
+    var pT=16, pR=10, pB=28, pL=48;
     var cW=W-pL-pR, cH=H-pT-pB;
     var N=vals.length;
     var max=Math.max.apply(null,vals)*1.15;
@@ -337,23 +336,23 @@ input[type="range"]::-moz-range-thumb{width:18px;height:18px;border:none;border-
     var ap=lp+' L '+xs[N-1].toFixed(1)+','+(pT+cH)+' L '+pL+','+(pT+cH)+' Z';
 
     var grid='',yLbls='';
-    for(var t=0;t<=4;t++){
-      var v=(max/1.15)*(t/4);
+    for(var t=0;t<=3;t++){
+      var v=(max/1.15)*(t/3);
       var y=(pT+cH-(v/max)*cH).toFixed(1);
       grid  +='<line x1="'+pL+'" y1="'+y+'" x2="'+(W-pR)+'" y2="'+y+'" stroke="rgba(55,138,221,0.1)" stroke-dasharray="3 3"/>';
-      yLbls +='<text x="'+(pL-8)+'" y="'+(parseFloat(y)+4)+'" text-anchor="end" fill="#445566" font-size="11" font-family="system-ui,sans-serif">'+fmtShort(v)+'</text>';
+      yLbls +='<text x="'+(pL-6)+'" y="'+(parseFloat(y)+4)+'" text-anchor="end" fill="#445566" font-size="10" font-family="system-ui,sans-serif">'+fmtShort(v)+'</text>';
     }
 
     var xLbls='';
-    var step=W<420?3:W<580?2:1;
+    var step=W<400?3:W<560?2:1;
     for(var m=0;m<N;m++){
       if(m%step!==0&&m!==N-1) continue;
-      xLbls+='<text x="'+xs[m].toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" fill="#445566" font-size="11" font-family="system-ui,sans-serif">'+MNS[m]+'</text>';
+      xLbls+='<text x="'+xs[m].toFixed(1)+'" y="'+(H-5)+'" text-anchor="middle" fill="#445566" font-size="10" font-family="system-ui,sans-serif">'+MNS[m]+'</text>';
     }
 
     var dots='';
     for(var d=0;d<N;d++){
-      dots+='<circle class="chart-dot" cx="'+xs[d].toFixed(1)+'" cy="'+ys[d].toFixed(1)+'" r="5" fill="#378ADD" stroke="#0a0e1a" stroke-width="2"><title>'+MNS[d]+': '+fmtUSD(vals[d])+'</title></circle>';
+      dots+='<circle class="chart-dot" cx="'+xs[d].toFixed(1)+'" cy="'+ys[d].toFixed(1)+'" r="4" fill="#378ADD" stroke="#0a0e1a" stroke-width="2"><title>'+MNS[d]+': '+fmtUSD(vals[d])+'</title></circle>';
     }
 
     container.innerHTML=
@@ -366,7 +365,7 @@ input[type="range"]::-moz-range-thumb{width:18px;height:18px;border:none;border-
         '</defs>'+
         grid+
         '<path d="'+ap+'" fill="url(#ag)" stroke="none"/>'+
-        '<path id="cline" d="'+lp+'" fill="none" stroke="#378ADD" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'+
+        '<path id="cline" d="'+lp+'" fill="none" stroke="#378ADD" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'+
         yLbls+xLbls+dots+
       '</svg>';
 
