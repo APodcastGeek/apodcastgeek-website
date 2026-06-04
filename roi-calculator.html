@@ -41,7 +41,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .inner{max-width:1200px;margin:0 auto}
 
 /* TWO-COLUMN LAYOUT */
-.main-row{display:grid;grid-template-columns:1fr 1.6fr;gap:1.5rem;align-items:start}
+.main-row{display:grid;grid-template-columns:1fr 1.6fr;gap:1.5rem;align-items:stretch}
 
 /* LEFT — INPUTS */
 .inputs-panel{background:#0a0e1a;border:0.5px solid rgba(55,138,221,0.2);border-radius:14px;padding:2rem}
@@ -62,7 +62,7 @@ input[type="range"]::-moz-range-thumb{width:17px;height:17px;border:none;border-
 .slider-range span{font-size:.7rem;color:#445566}
 
 /* RIGHT COLUMN */
-.right-col{display:flex;flex-direction:column;gap:1rem}
+.right-col{display:flex;flex-direction:column;gap:1rem;height:100%}
 
 /* STAT CARDS — 3 compact boxes in a row */
 .stats-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
@@ -75,7 +75,8 @@ input[type="range"]::-moz-range-thumb{width:17px;height:17px;border:none;border-
 .stat-card.stat-accent .stat-label{color:#85B7EB}
 
 /* CHART PANEL */
-.chart-panel{background:#0a0e1a;border:0.5px solid rgba(55,138,221,0.2);border-radius:14px;padding:1.5rem 1.75rem;flex:1}
+.chart-panel{background:#0a0e1a;border:0.5px solid rgba(55,138,221,0.2);border-radius:14px;padding:1.5rem 1.75rem;flex:1;display:flex;flex-direction:column}
+#chart-container{flex:1;min-height:120px}
 .chart-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.2rem;flex-wrap:wrap;gap:.5rem}
 .chart-header h3{font-size:.9rem;font-weight:700;color:#fff}
 .total-block{text-align:right}
@@ -313,7 +314,7 @@ input[type="range"]::-moz-range-thumb{width:17px;height:17px;border:none;border-
   function buildChart(vals){
     var container = document.getElementById('chart-container');
     var W = container.offsetWidth || 500;
-    var H = 180;
+    var H = Math.max(140, container.offsetHeight || 180);
     var pT=16, pR=10, pB=28, pL=48;
     var cW=W-pL-pR, cH=H-pT-pB;
     var N=vals.length;
