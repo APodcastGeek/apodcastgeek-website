@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Episode Brief Generator — APodcastGeek</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #060810;
+      color: #fff;
+      line-height: 1.7;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      background-image:
+        radial-gradient(60% 50% at 50% 0%, rgba(55,138,221,0.15) 0%, rgba(55,138,221,0) 70%),
+        radial-gradient(40% 30% at 50% 100%, rgba(55,138,221,0.06) 0%, rgba(55,138,221,0) 70%);
+      background-attachment: fixed;
+    }
+
+    /* HEADER */
+    .site-header {
+      border-bottom: 0.5px solid rgba(55,138,221,0.25);
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(6,8,16,0.95);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(8px);
+    }
+
+    .site-header img {
+      height: 34px;
+      width: auto;
+      filter: drop-shadow(0 0 2px rgba(255,255,255,1)) drop-shadow(0 0 2px rgba(255,255,255,1));
+    }
+
+    .header-badge {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #85B7EB;
+      background: rgba(55,138,221,0.12);
+      border: 0.5px solid rgba(55,138,221,0.3);
+      border-radius: 20px;
+      padding: 3px 12px;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 72px 40px 80px;
+      text-align: center;
+      border-bottom: 0.5px solid rgba(55,138,221,0.15);
+    }
+
+    .hero-icon {
+      font-size: 48px;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(30px, 5vw, 48px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+
+    .hero p {
+      font-size: 17px;
+      color: #8899aa;
+      max-width: 580px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* CONTENT */
+    .content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+    }
+
+    /* SECTION TITLE */
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #85B7EB;
+      margin: 52px 0 18px;
+    }
+
+    .section-title:first-child { margin-top: 0; }
+
+    /* CALLOUT BOXES */
+    .callout {
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 16px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      border: 0.5px solid rgba(55,138,221,0.25);
+    }
+
+    .callout.blue {
+      background: rgba(55,138,221,0.08);
+    }
+
+    .callout.amber {
+      background: rgba(246,201,14,0.06);
+      border-color: rgba(246,201,14,0.2);
+    }
+
+    .callout.gray {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    .callout-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .callout-body { flex: 1; }
+    .callout-body p { font-size: 15px; color: #aabbcc; line-height: 1.65; }
+    .callout-body p + p { margin-top: 8px; }
+    .callout-body strong { color: #fff; font-weight: 600; }
+
+    /* ACCORDIONS */
+    details {
+      background: #0a0e1a;
+      border: 0.5px solid rgba(55,138,221,0.2);
+      border-radius: 12px;
+      margin: 10px 0;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    details:hover { border-color: rgba(55,138,221,0.4); }
+    details[open] { border-color: rgba(55,138,221,0.4); }
+
+    summary {
+      padding: 16px 20px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      gap: 12px;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content: '+';
+      font-size: 22px;
+      font-weight: 300;
+      color: #378ADD;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    details[open] summary::after { transform: rotate(45deg); }
+
+    .details-body {
+      padding: 4px 20px 20px;
+      border-top: 0.5px solid rgba(55,138,221,0.15);
+    }
+
+    .details-body p {
+      font-size: 15px;
+      color: #8899aa;
+      margin-top: 14px;
+      line-height: 1.65;
+    }
+
+    .details-body ul, .details-body ol {
+      padding-left: 20px;
+      margin-top: 12px;
+    }
+
+    .details-body li {
+      font-size: 15px;
+      color: #8899aa;
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    .details-body li a {
+      color: #378ADD;
+      text-decoration: underline;
+    }
+
+    /* PRE-START CHECKLIST */
+    .pre-checklist {
+      list-style: none;
+      padding: 0;
+      margin-top: 12px;
+    }
+
+    .pre-checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 0.5px solid rgba(55,138,221,0.1);
+      font-size: 15px;
+      color: #8899aa;
+    }
+
+    .pre-checklist li:last-child { border-bottom: none; }
+
+    .pre-checklist li::before {
+      content: '';
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid rgba(55,138,221,0.4);
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      background: rgba(55,138,221,0.05);
+    }
+
+    /* STEPS */
+    .steps { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+
+    .step {
+      background: #0a0e1a;
+      border: 0.5px solid rgba(55,138,221,0.2);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .step:hover { border-color: rgba(55,138,221,0.4); }
+    .step.open { border-color: rgba(55,138,221,0.4); }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .step-num {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #174488 0%, #378ADD 100%);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      flex: 1;
+    }
+
+    .step-toggle {
+      font-size: 20px;
+      font-weight: 300;
+      color: #378ADD;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .step.open .step-toggle { transform: rotate(45deg); }
+
+    .step-body {
+      display: none;
+      padding: 4px 20px 20px 70px;
+      border-top: 0.5px solid rgba(55,138,221,0.15);
+    }
+
+    .step.open .step-body { display: block; }
+
+    .step-body p {
+      font-size: 15px;
+      color: #8899aa;
+      margin-top: 12px;
+      line-height: 1.65;
+    }
+
+    .step-body ul {
+      padding-left: 18px;
+      margin-top: 10px;
+    }
+
+    .step-body li {
+      font-size: 15px;
+      color: #8899aa;
+      margin-bottom: 7px;
+    }
+
+    .step-body strong { color: #fff; font-weight: 600; }
+
+    /* GOOD OUTPUT BOX */
+    .good-output-box {
+      background: rgba(55,138,221,0.06);
+      border: 0.5px solid rgba(55,138,221,0.3);
+      border-radius: 14px;
+      padding: 28px 32px;
+      margin: 28px 0;
+    }
+
+    .good-output-box h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .good-output-box ul {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+
+    @media (max-width: 580px) {
+      .good-output-box ul { grid-template-columns: 1fr; }
+    }
+
+    .good-output-box li {
+      font-size: 14px;
+      color: #8899aa;
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .good-output-box li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: #378ADD;
+      font-weight: 600;
+    }
+
+    /* QUALITY CHECKLIST */
+    .quality-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .quality-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 0.5px solid rgba(55,138,221,0.1);
+      font-size: 15px;
+      color: #8899aa;
+      line-height: 1.5;
+    }
+
+    .quality-list li:last-child { border-bottom: none; }
+
+    .quality-list li::before {
+      content: '✓';
+      color: #378ADD;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* DIVIDER */
+    hr {
+      border: none;
+      border-top: 0.5px solid rgba(55,138,221,0.15);
+      margin: 48px 0;
+    }
+
+    /* MASTER PROMPT SECTION */
+    .master-prompt-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .master-prompt-header .section-title { margin: 0; }
+
+    .btn-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      background: #378ADD;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      letter-spacing: 0.01em;
+      font-family: inherit;
+    }
+
+    .btn-copy:hover { background: #185FA5; transform: translateY(-1px); }
+    .btn-copy:active { transform: translateY(0); }
+
+    .btn-copy svg {
+      width: 15px;
+      height: 15px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .btn-copy.copied { background: #276749; }
+
+    .prompt-hint {
+      font-size: 13px;
+      color: #667788;
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .master-prompt-box {
+      background: #040608;
+      border: 0.5px solid rgba(55,138,221,0.3);
+      border-radius: 12px;
+      padding: 28px 32px;
+      font-size: 14px;
+      line-height: 1.85;
+      color: #aabbcc;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 580px;
+      overflow-y: auto;
+    }
+
+    .master-prompt-box::-webkit-scrollbar { width: 5px; }
+    .master-prompt-box::-webkit-scrollbar-track { background: #0a0e1a; }
+    .master-prompt-box::-webkit-scrollbar-thumb { background: rgba(55,138,221,0.4); border-radius: 3px; }
+
+    .prompt-h {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #378ADD;
+      margin: 20px 0 6px;
+    }
+
+    .prompt-h:first-child { margin-top: 0; }
+
+    /* FINAL NOTE */
+    .final-note {
+      background: rgba(55,138,221,0.08);
+      border: 0.5px solid rgba(55,138,221,0.3);
+      border-radius: 14px;
+      padding: 32px 36px;
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    .final-note p {
+      font-size: 17px;
+      color: #8899aa;
+      line-height: 1.7;
+    }
+
+    .final-note strong { color: #fff; font-weight: 600; }
+
+    /* FOOTER */
+    .site-footer {
+      border-top: 0.5px solid rgba(55,138,221,0.15);
+      text-align: center;
+      padding: 24px;
+      font-size: 13px;
+      color: #445566;
+    }
+
+    .site-footer a { color: #85B7EB; text-decoration: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      .site-header { padding: 14px 20px; }
+      .hero { padding: 52px 20px 60px; }
+      .content { padding: 40px 16px 60px; }
+      .step-body { padding-left: 20px; }
+      .master-prompt-box { padding: 20px; }
+      .good-output-box { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <img src="logo.png" alt="APodcastGeek">
+    <span class="header-badge">Internal Resource</span>
+  </header>
+
+  <div class="hero">
+    <span class="hero-icon">🎙️</span>
+    <h1>Episode Brief Generator</h1>
+    <p>Use this page to create a completed Episode Brief before recording a podcast guest conversation.</p>
+  </div>
+
+  <div class="content">
+
+    <div class="callout blue">
+      <span class="callout-icon">🎯</span>
+      <div class="callout-body">
+        <p>The Episode Brief is designed to help the host walk into the conversation with clear intention, a strong strategic direction, and a defined listener journey. It is not just an interview question sheet. It is a pre-production document that connects the podcast's audience, the guest's expertise, and the purpose of the episode.</p>
+      </div>
+    </div>
+
+    <!-- WHAT THIS CREATES -->
+    <p class="section-title">What this creates</p>
+
+    <details>
+      <summary>The Episode Brief Generator helps you produce a finished brief that includes&hellip;</summary>
+      <div class="details-body">
+        <ul>
+          <li>Podcast and episode details</li>
+          <li>Guest name and title</li>
+          <li>Episode Goal and North Star</li>
+          <li>The core purpose of the conversation</li>
+          <li>Why the episode matters to the audience</li>
+          <li>The single most important listener takeaway</li>
+          <li>Audience transformation from A to B</li>
+          <li>A clear value proposition for the episode</li>
+          <li>Guest bio and credibility points</li>
+          <li>A structured conversation map</li>
+          <li>Strategic interview questions</li>
+          <li>A host-ready guest intro, where required by the template</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- WHY THIS MATTERS -->
+    <p class="section-title">Why this matters</p>
+
+    <details>
+      <summary>A strong podcast episode is not built around a random list of questions&hellip;</summary>
+      <div class="details-body">
+        <p>It is built around a clear strategic purpose. This process helps you:</p>
+        <ul>
+          <li>Avoid generic conversations</li>
+          <li>Clarify what the episode needs to accomplish</li>
+          <li>Connect the guest's expertise to your audience's needs</li>
+          <li>Define what the listener should think, feel, understand, or do by the end</li>
+          <li>Give the host a stronger way into the conversation</li>
+          <li>Create better questions that uncover stories, examples, frameworks, and useful insights</li>
+          <li>Improve the quality of downstream content, including titles, clips, intros, and promotional copy</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- TOOLS YOU CAN USE -->
+    <p class="section-title">Tools you can use</p>
+
+    <details>
+      <summary>This prompt works with ChatGPT, Gemini, Claude, or any advanced AI assistant&hellip;</summary>
+      <div class="details-body">
+        <p>For best results, use a tool that supports:</p>
+        <ul>
+          <li>File uploads</li>
+          <li>Web research or browsing</li>
+          <li>Reading Word documents or Google Docs exports</li>
+          <li>Generating a downloadable document</li>
+          <li>Preserving document structure and formatting</li>
+        </ul>
+        <p>Results may vary slightly depending on the AI tool you use. For the most accurate formatting, upload the APodcastGeek Episode Brief template as a <strong>.docx</strong> file and instruct the AI to use it as the design shell rather than recreating the document from scratch.</p>
+      </div>
+    </details>
+
+    <!-- WHAT YOU NEED -->
+    <p class="section-title">What you need before starting</p>
+
+    <details open>
+      <summary>Prepare the following before using the prompt&hellip;</summary>
+      <div class="details-body">
+        <ul class="pre-checklist">
+          <li>Your Podcast Guide doc (sent via email after our initial design call)</li>
+          <li><a href="https://docs.google.com/document/d/11kbOGaQmSsdkVguM19YpcOgDaj7Ryx3thrRZE00Dxuo/edit?usp=sharing" target="_blank" rel="noopener">The APodcastGeek Episode Brief template</a></li>
+          <li>Guest name</li>
+          <li>Guest LinkedIn URL</li>
+          <li>Guest website, if available</li>
+          <li>Any extra notes you already have about the guest</li>
+        </ul>
+      </div>
+    </details>
+
+    <div class="callout amber">
+      <span class="callout-icon">♻️</span>
+      <div class="callout-body">
+        <p>The <strong>Podcast Guide</strong> gives the AI context about your show, audience, tone, themes, positioning, and goals.</p>
+        <p>The <strong>Episode Brief template</strong> gives the AI the structure and visual format it needs to preserve.</p>
+        <p>The <strong>guest details</strong> allow the AI to research the guest and suggest strategic episode directions.</p>
+      </div>
+    </div>
+
+    <!-- FORMATTING -->
+    <p class="section-title">Important formatting instruction</p>
+
+    <div class="callout gray">
+      <span class="callout-icon">⚠️</span>
+      <div class="callout-body">
+        <p>Do not ask the AI to create a new document from scratch. Ask it to use the uploaded Episode Brief template as the design shell. The AI should preserve: logo placement, page layout, heading structure, boxed North Star section, borders, section order, font hierarchy, spacing style, bullet formatting, and numbered question formatting.</p>
+        <p>The AI should replace only the placeholder content with completed content.</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- HOW THE WORKFLOW WORKS -->
+    <p class="section-title">How the workflow works</p>
+
+    <div class="steps">
+
+      <div class="step" data-step>
+        <div class="step-header" onclick="toggleStep(this)">
+          <div class="step-num">1</div>
+          <span class="step-title">Upload the Podcast Guide</span>
+          <span class="step-toggle">+</span>
+        </div>
+        <div class="step-body">
+          <p>Upload your APodcastGeek Podcast Guide. The AI should read this first so it understands the purpose of the podcast, target audience, audience problems, desires, beliefs and objections, the tone and personality of the show, the host's point of view, recurring themes, and what makes a strong episode for this audience.</p>
+        </div>
+      </div>
+
+      <div class="step" data-step>
+        <div class="step-header" onclick="toggleStep(this)">
+          <div class="step-num">2</div>
+          <span class="step-title">Upload the Episode Brief template</span>
+          <span class="step-toggle">+</span>
+        </div>
+        <div class="step-body">
+          <p>Upload the <a href="https://docs.google.com/document/d/11kbOGaQmSsdkVguM19YpcOgDaj7Ryx3thrRZE00Dxuo/edit?usp=sharing" target="_blank" rel="noopener" style="color:#378ADD">APodcastGeek Episode Brief template</a>. The AI should use this as the document shell and preserve the structure as closely as possible.</p>
+        </div>
+      </div>
+
+      <div class="step" data-step>
+        <div class="step-header" onclick="toggleStep(this)">
+          <div class="step-num">3</div>
+          <span class="step-title">Provide guest details</span>
+          <span class="step-toggle">+</span>
+        </div>
+        <div class="step-body">
+          <p>Give the AI: guest name, guest LinkedIn URL, guest website if available, and any extra context you have.</p>
+        </div>
+      </div>
+
+      <div class="step" data-step>
+        <div class="step-header" onclick="toggleStep(this)">
+          <div class="step-num">4</div>
+          <span class="step-title">Let the AI research the guest</span>
+          <span class="step-toggle">+</span>
+        </div>
+        <div class="step-body">
+          <p>The AI researches the guest using the information provided, looking for: current role, background, career story, expertise, strong points of view, notable achievements, relevant projects, credentials, and topics they are credible to speak about.</p>
+          <p>If LinkedIn cannot be fully accessed, the AI should use the guest's website and other reliable public sources. It should not invent facts.</p>
+        </div>
+      </div>
+
+      <div class="step" data-step>
+        <div class="step-header" onclick="toggleStep(this)">
+          <div class="step-num">5</div>
+          <span class="step-title">Choose an Episode Strategy Direction</span>
+          <span class="step-toggle">+</span>
+        </div>
+        <div class="step-body">
+          <p>Before creating the final brief, the AI generates <strong>five Episode Strategy Directions</strong>. Each includes a direction title, North Star, core purpose, why the episode matters, Audience A, Audience B, value proposition, and why the guest fits.</p>
+          <p><strong>This is the most important step.</strong> You are not just choosing a topic. You are choosing the strategic spine of the episode.</p>
+        </div>
+      </div>
+
+      <div class="step" data-step>
+        <div class="step-header" onclick="toggleStep(this)">
+          <div class="step-num">6</div>
+          <span class="step-title">Approve, refine, combine, or ask for more</span>
+          <span class="step-toggle">+</span>
+        </div>
+        <div class="step-body">
+          <p>After seeing the five directions, reply with: "I choose option 2", "Refine option 4", "Combine options 1 and 3", or "Generate five more". The AI should not create the completed brief until you approve one direction. Repeat until the direction feels right.</p>
+        </div>
+      </div>
+
+      <div class="step" data-step>
+        <div class="step-header" onclick="toggleStep(this)">
+          <div class="step-num">7</div>
+          <span class="step-title">Generate the completed Episode Brief</span>
+          <span class="step-toggle">+</span>
+        </div>
+        <div class="step-body">
+          <p>Once a direction is approved, the AI completes the full Episode Brief using the uploaded template, including: episode goal and North Star, core purpose, why the episode matters, single most important takeaway, audience A to B transformation, value proposition, guest bio, conversation map, 10 to 12 interview questions, and guest intro where required.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- GOOD OUTPUT -->
+    <div class="good-output-box">
+      <h3><span>🔍</span> What good output looks like</h3>
+      <ul>
+        <li>Specific to the guest</li>
+        <li>Aligned with the Podcast Guide</li>
+        <li>Clear about the listener journey</li>
+        <li>Built around one strong North Star</li>
+        <li>Useful for the host before recording</li>
+        <li>Structured without feeling scripted</li>
+        <li>Practical for the target audience</li>
+        <li>Written in a finished, professional style</li>
+        <li>Formatted in the APodcastGeek template</li>
+      </ul>
+    </div>
+
+    <!-- QUALITY CHECKLIST -->
+    <p class="section-title">Quality checklist before recording</p>
+
+    <details>
+      <summary>Before using the brief, check&hellip;</summary>
+      <div class="details-body">
+        <ul class="quality-list">
+          <li>Is the North Star clear?</li>
+          <li>Does the episode have a clear listener A to B transformation?</li>
+          <li>Does the guest fit the chosen direction?</li>
+          <li>Will the audience care about this conversation?</li>
+          <li>Are the questions specific and useful?</li>
+          <li>Does the Conversation Map create a natural arc?</li>
+          <li>Does the brief help the host lead a stronger conversation?</li>
+          <li>Does the final document preserve the APodcastGeek template structure?</li>
+        </ul>
+      </div>
+    </details>
+
+    <hr>
+
+    <!-- MASTER PROMPT -->
+    <div class="master-prompt-header">
+      <p class="section-title">Master Prompt</p>
+      <button class="btn-copy" id="copyBtn" onclick="copyPrompt()">
+        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        Copy Prompt
+      </button>
+    </div>
+    <p class="prompt-hint">Paste directly into ChatGPT, Claude, Gemini, or any advanced AI assistant, then upload your Podcast Guide and Episode Brief template.</p>
+
+    <div class="master-prompt-box" id="masterPromptBox"><span class="prompt-h">Role</span>You are my APodcastGeek Episode Brief Strategist.
+Your job is to create a completed Episode Brief using the uploaded APodcastGeek Podcast Guide and the uploaded APodcastGeek Episode Brief template.
+This must be a finished production document, not a draft, outline, or strategy note.
+Use the uploaded Episode Brief template as the design shell. Do not recreate the document from scratch. Preserve the logo, layout, headings, borders, font hierarchy, spacing style, section order, and visual structure as closely as possible. Replace only the placeholder content with completed content.
+
+<span class="prompt-h">Inputs</span>Use the files and information I provide:
+- Uploaded Podcast Guide
+- Uploaded Episode Brief template
+- Guest name
+- Guest LinkedIn URL
+- Guest website, if available
+- Any additional guest context, if available
+
+Do not ask me to paste the Podcast Guide or template manually. Use the uploaded files.
+
+<span class="prompt-h">Step 1: Understand the podcast</span>Read the uploaded Podcast Guide first.
+Use it to understand:
+- The podcast's purpose
+- Target audience
+- Audience problems, desires, beliefs, and objections
+- Tone and personality
+- Host point of view
+- Recurring themes
+- What makes a strong episode for this show
+- What transformation the podcast wants to create for listeners
+
+Do not summarize the Podcast Guide unless I ask you to.
+
+<span class="prompt-h">Step 2: Understand the Episode Brief template</span>Read the uploaded Episode Brief template.
+You must preserve the template's structure and use it as the final document shell.
+The final brief must include and complete the template sections:
+- Podcast name
+- Episode number
+- Date and time
+- Guest name and title
+- Episode Goal | North Star of This Episode
+- Core purpose
+- Why this episode matters
+- Single most important takeaway
+- Audience transformation: A to B
+- Audience Starting Point (A)
+- Audience End State (B)
+- Value Proposition
+- Guest Bio
+- Conversation Map
+- Interview Questions
+- Guest Intro, if included in the template or example structure
+
+If any metadata is missing, use a clearly marked placeholder instead of inventing it.
+
+<span class="prompt-h">Step 3: Research the guest</span>Research the guest using the guest name, LinkedIn URL, website, and public information available.
+Look for:
+- Current role
+- Background
+- Career story
+- Expertise
+- Strong points of view
+- Notable achievements
+- Relevant projects, clients, companies, or results
+- Credentials, awards, or education
+- Topics they are credible to speak about
+- What makes them valuable to this podcast's audience
+
+If LinkedIn is inaccessible, use the guest website and other publicly available sources. Do not invent facts.
+
+<span class="prompt-h">Step 4: Generate five Episode Strategy Directions</span>Before completing the Episode Brief, generate five possible Episode Strategy Directions.
+Each option must include:
+- Direction title
+- North Star
+- Core purpose of the episode
+- Why this episode matters
+- Audience Starting Point (A)
+- Audience End State (B)
+- Value proposition
+- Why the guest fits this direction
+
+Do not recommend a best option. Let me choose.
+
+After presenting the five options, stop and ask:
+"Which direction would you like to proceed with? You can choose one, ask me to refine one, combine multiple options, or ask me to generate five more."
+
+<span class="prompt-h">Step 5: Approval loop</span>Do not complete the Episode Brief until I approve one direction.
+If I ask for five more, generate five new options.
+If I ask for refinements, refine the selected option.
+If I ask to combine options, create a stronger combined direction and ask me to approve it.
+Continue until I clearly approve one direction.
+
+<span class="prompt-h">Step 6: Complete the Episode Brief</span>Once I approve the direction, complete the entire Episode Brief using the uploaded template.
+The final brief must:
+- Use the uploaded template as the design shell
+- Preserve the document's visual structure as closely as possible
+- Follow the exact section order
+- Stay aligned with the Podcast Guide
+- Stay aligned with the approved direction
+- Be specific to the guest
+- Include a clear listener A to B transformation
+- Include a strong value proposition
+- Include a curated guest bio
+- Include a strategic conversation map
+- Include 10 to 12 thoughtful interview questions
+- Include a host-ready guest intro if the template or APodcastGeek example structure requires it
+- Be ready to download as a completed Google Doc-style document or .docx file
+
+<span class="prompt-h">Writing standards</span>Write with clarity, specificity, and strategic intent.
+The brief should feel useful to the host before recording.
+The questions should help uncover:
+- Stories
+- Examples
+- Lessons
+- Trade-offs
+- Frameworks
+- Beliefs
+- Mistakes
+- Practical takeaways
+- Future-facing insights
+
+Avoid generic interview questions.
+Avoid filler.
+Avoid vague episode angles.
+Do not mention that you are an AI.
+Do not include research notes unless the template requires them.
+Do not include process commentary in the final document.
+
+<span class="prompt-h">Layout and length controls</span>To preserve the design and avoid layout drift:
+- Core purpose: 2 to 4 sentences
+- Why it matters: 2 to 4 sentences
+- Main takeaway: 1 sentence
+- Audience A: 1 short sentence
+- Audience B: 1 short sentence
+- Value proposition: 1 sentence
+- Guest bio: 4 to 6 bullets
+- Conversation map: 1 short paragraph per section
+- Interview questions: 10 to 12 questions
+- Guest intro Clip 1: 90 to 130 words
+- Guest intro Clip 2: 50 to 90 words
+
+<span class="prompt-h">Final output</span>The final output must be the completed Episode Brief document.
+Provide it as a downloadable Google Doc-style document or .docx file.
+Do not provide a copy/paste text version unless I specifically ask for one.</div>
+
+    <!-- FINAL NOTE -->
+    <div class="final-note">
+      <p>The Episode Brief is not a formality. It is the <strong>strategic foundation of the conversation</strong>. Use it to decide what the episode is really trying to achieve before you press record.</p>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 APodcastGeek &mdash; <a href="https://apodcastgeek.com" target="_blank" rel="noopener">apodcastgeek.com</a></p>
+  </footer>
+
+  <script>
+    function toggleStep(header) {
+      const step = header.parentElement;
+      step.classList.toggle('open');
+    }
+
+    function copyPrompt() {
+      const box = document.getElementById('masterPromptBox');
+      const btn = document.getElementById('copyBtn');
+
+      const text = Array.from(box.childNodes).map(node => {
+        if (node.nodeType === Node.TEXT_NODE) return node.textContent;
+        if (node.classList && node.classList.contains('prompt-h')) {
+          return '\n## ' + node.textContent + '\n';
+        }
+        return node.textContent;
+      }).join('').trim();
+
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 15 4 10"></polyline></svg> Copied!`;
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy Prompt`;
+        }, 2500);
+      }).catch(() => {
+        const range = document.createRange();
+        range.selectNodeContents(box);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        document.execCommand('copy');
+        sel.removeAllRanges();
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy Prompt'; }, 2500);
+      });
+    }
+  </script>
+</body>
+</html>
