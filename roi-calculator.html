@@ -114,6 +114,36 @@ input[type="range"]::-moz-range-thumb{
 .section-title{font-size:clamp(1.7rem,2.8vw,2.4rem);font-weight:700;color:#fff;line-height:1.2;margin-bottom:1rem}
 .section-sub{font-size:1rem;color:#8899aa;line-height:1.8;max-width:560px}
 
+/* COMPOUND CHART SECTION */
+.compound-section{background:#060810;padding:0 5rem 5rem;border-top:none}
+.compound-panel{background:#0a0e1a;border:0.5px solid rgba(55,138,221,0.2);border-radius:16px;padding:2.5rem 2.5rem 2rem;margin-top:2.5rem}
+.compound-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.5rem;flex-wrap:wrap;gap:1rem}
+.compound-header h2{font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:-.01em}
+.compound-total-block{text-align:right}
+.compound-total-label{font-size:.75rem;letter-spacing:1.5px;color:#378ADD;text-transform:uppercase;font-weight:600}
+.compound-total-value{font-size:2.4rem;font-weight:800;color:#378ADD;letter-spacing:-.03em;line-height:1.1}
+.compound-assumption{font-size:.78rem;color:#445566;margin-bottom:1.75rem}
+.compound-assumption span{color:#667788}
+
+.chart-wrap{position:relative;height:180px;display:flex;align-items:flex-end;gap:6px}
+.chart-bar-col{display:flex;flex-direction:column;align-items:center;flex:1;height:100%}
+.chart-bar-outer{flex:1;display:flex;align-items:flex-end;width:100%}
+.chart-bar{width:100%;background:linear-gradient(180deg,#378ADD 0%,rgba(23,68,136,0.6) 100%);border-radius:4px 4px 0 0;transition:height .35s cubic-bezier(.4,0,.2,1);min-height:4px;cursor:default;position:relative}
+.chart-bar:hover{background:linear-gradient(180deg,#60AAEE 0%,rgba(55,138,221,0.7) 100%)}
+.chart-bar-tip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#111827;border:0.5px solid rgba(55,138,221,0.35);border-radius:6px;padding:.3rem .55rem;font-size:.72rem;color:#fff;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s;z-index:10}
+.chart-bar:hover .chart-bar-tip{opacity:1}
+.chart-month-label{font-size:.68rem;color:#445566;margin-top:.45rem;text-align:center}
+
+.chart-labels-row{display:flex;gap:6px;margin-top:0}
+.chart-month-labels{display:flex;gap:6px}
+.chart-month-labels span{flex:1;font-size:.68rem;color:#445566;text-align:center}
+
+@media(max-width:900px){
+  .compound-section{padding:0 2rem 4rem}
+  .chart-wrap{gap:3px;height:140px}
+  .chart-month-label{display:none}
+}
+
 /* CTA SECTION */
 .cta-section{background:#060810;padding:5.5rem 5rem;text-align:center;border-top:0.5px solid rgba(55,138,221,0.1)}
 .cta-inner{max-width:620px;margin:0 auto}
@@ -236,6 +266,25 @@ input[type="range"]::-moz-range-thumb{
   </div>
 </section>
 
+<section class="compound-section">
+  <div class="inner">
+    <div class="compound-panel">
+      <div class="compound-header">
+        <div>
+          <h2>12-Month Compounding Value</h2>
+          <p class="compound-assumption">Assumes <span>5% monthly audience growth</span> from back-catalog discovery and algorithmic reach.</p>
+        </div>
+        <div class="compound-total-block">
+          <div class="compound-total-label">12-Month Total</div>
+          <div class="compound-total-value" id="out-12m">$1.6M</div>
+        </div>
+      </div>
+      <div class="chart-wrap" id="chart-bars"></div>
+      <div class="chart-month-labels" id="chart-labels"></div>
+    </div>
+  </div>
+</section>
+
 <section class="context-section">
   <div class="context-inner">
     <div class="section-label">Why it compounds</div>
@@ -286,14 +335,40 @@ input[type="range"]::-moz-range-thumb{
   var listeners = document.getElementById('slider-listeners');
   var conversion = document.getElementById('slider-conversion');
   var deal = document.getElementById('slider-deal');
+  var GROWTH = 0.05;
+  var MONTHS = 12;
+  var MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-  function fmt(n){
-    return n.toLocaleString('en-US');
-  }
+  function fmt(n){ return n.toLocaleString('en-US'); }
   function fmtUSD(n){
     if(n>=1000000) return '$' + (n/1000000).toFixed(1).replace(/\.0$/,'') + 'M';
     if(n>=1000) return '$' + (n/1000).toFixed(0) + 'K';
     return '$' + n.toLocaleString('en-US');
+  }
+
+  function buildChart(monthlyValues){
+    var barsEl = document.getElementById('chart-bars');
+    var labelsEl = document.getElementById('chart-labels');
+    var max = Math.max.apply(null, monthlyValues);
+    barsEl.innerHTML = '';
+    labelsEl.innerHTML = '';
+    monthlyValues.forEach(function(val, i){
+      var pct = max > 0 ? (val / max) * 100 : 0;
+      var col = document.createElement('div');
+      col.className = 'chart-bar-col';
+      col.innerHTML =
+        '<div class="chart-bar-outer">' +
+          '<div class="chart-bar" style="height:' + pct + '%">' +
+            '<div class="chart-bar-tip">' + MONTH_NAMES[i] + ': ' + fmtUSD(val) + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="chart-month-label">' + MONTH_NAMES[i] + '</div>';
+      barsEl.appendChild(col);
+
+      var lbl = document.createElement('span');
+      lbl.textContent = MONTH_NAMES[i];
+      labelsEl.appendChild(lbl);
+    });
   }
 
   function update(){
@@ -314,6 +389,16 @@ input[type="range"]::-moz-range-thumb{
     document.getElementById('out-reach').textContent = fmt(reach);
     document.getElementById('out-leads').textContent = fmt(leads);
     document.getElementById('out-revenue').textContent = fmtUSD(revenue);
+
+    var monthlyValues = [];
+    var total12 = 0;
+    for(var m = 0; m < MONTHS; m++){
+      var mVal = Math.round(revenue * Math.pow(1 + GROWTH, m));
+      monthlyValues.push(mVal);
+      total12 += mVal;
+    }
+    document.getElementById('out-12m').textContent = fmtUSD(total12);
+    buildChart(monthlyValues);
   }
 
   episodes.addEventListener('input', update);
