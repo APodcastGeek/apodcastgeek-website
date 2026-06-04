@@ -125,23 +125,11 @@ input[type="range"]::-moz-range-thumb{
 .compound-assumption{font-size:.78rem;color:#445566;margin-bottom:1.75rem}
 .compound-assumption span{color:#667788}
 
-.chart-wrap{position:relative;height:180px;display:flex;align-items:flex-end;gap:6px}
-.chart-bar-col{display:flex;flex-direction:column;align-items:center;flex:1;height:100%}
-.chart-bar-outer{flex:1;display:flex;align-items:flex-end;width:100%}
-.chart-bar{width:100%;background:linear-gradient(180deg,#378ADD 0%,rgba(23,68,136,0.6) 100%);border-radius:4px 4px 0 0;transition:height .35s cubic-bezier(.4,0,.2,1);min-height:4px;cursor:default;position:relative}
-.chart-bar:hover{background:linear-gradient(180deg,#60AAEE 0%,rgba(55,138,221,0.7) 100%)}
-.chart-bar-tip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#111827;border:0.5px solid rgba(55,138,221,0.35);border-radius:6px;padding:.3rem .55rem;font-size:.72rem;color:#fff;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s;z-index:10}
-.chart-bar:hover .chart-bar-tip{opacity:1}
-.chart-month-label{font-size:.68rem;color:#445566;margin-top:.45rem;text-align:center}
-
-.chart-labels-row{display:flex;gap:6px;margin-top:0}
-.chart-month-labels{display:flex;gap:6px}
-.chart-month-labels span{flex:1;font-size:.68rem;color:#445566;text-align:center}
+.chart-dot{opacity:0;transition:opacity .15s;cursor:default}
+.chart-dot:hover{opacity:1}
 
 @media(max-width:900px){
   .compound-section{padding:0 2rem 4rem}
-  .chart-wrap{gap:3px;height:140px}
-  .chart-month-label{display:none}
 }
 
 /* CTA SECTION */
@@ -181,10 +169,15 @@ input[type="range"]::-moz-range-thumb{
     <img src="logo.png" alt="APodcastGeek" class="nav-logo">
   </a>
   <div class="nav-links">
-    <a href="/services.html">Services</a>
-    <a href="/blog.html">Blog</a>
-    <a href="/our-work/">Results</a>
-    <a href="/about/">About</a>
+    <a href="/">Home</a>
+    <a href="services.html">Services</a>
+    <a href="/#apg-engine">The APG Engine</a>
+    <a href="/our-work/">Our Work</a>
+    <a href="/#testimonials-heading">Results</a>
+    <a href="/#faq-heading">FAQ</a>
+    <a href="blog.html">Blog</a>
+    <a href="/roi-calculator.html" style="color:#378ADD;font-weight:600">ROI Calculator</a>
+    <a target="_blank" rel="noopener" href="https://clients.apodcastgeek.com/">Client Login</a>
   </div>
   <a href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-discovery-call" class="nav-cta" target="_blank" rel="noopener">Book a Call</a>
 </nav>
@@ -279,8 +272,7 @@ input[type="range"]::-moz-range-thumb{
           <div class="compound-total-value" id="out-12m">$1.6M</div>
         </div>
       </div>
-      <div class="chart-wrap" id="chart-bars"></div>
-      <div class="chart-month-labels" id="chart-labels"></div>
+      <div id="chart-container" style="width:100%;margin-top:.5rem"></div>
     </div>
   </div>
 </section>
@@ -331,44 +323,99 @@ input[type="range"]::-moz-range-thumb{
 
 <script>
 (function(){
-  var episodes = document.getElementById('slider-episodes');
-  var listeners = document.getElementById('slider-listeners');
+  var episodes   = document.getElementById('slider-episodes');
+  var listeners  = document.getElementById('slider-listeners');
   var conversion = document.getElementById('slider-conversion');
-  var deal = document.getElementById('slider-deal');
+  var deal       = document.getElementById('slider-deal');
   var GROWTH = 0.05;
   var MONTHS = 12;
-  var MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var MNS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var firstRender = true;
 
   function fmt(n){ return n.toLocaleString('en-US'); }
   function fmtUSD(n){
-    if(n>=1000000) return '$' + (n/1000000).toFixed(1).replace(/\.0$/,'') + 'M';
-    if(n>=1000) return '$' + (n/1000).toFixed(0) + 'K';
-    return '$' + n.toLocaleString('en-US');
+    if(n>=1000000) return '$'+(n/1000000).toFixed(1).replace(/\.0$/,'')+'M';
+    if(n>=1000)    return '$'+(n/1000).toFixed(0)+'K';
+    return '$'+n.toLocaleString('en-US');
+  }
+  function fmtShort(n){
+    if(n>=1000000) return '$'+(n/1000000).toFixed(1).replace(/\.0$/,'')+'M';
+    if(n>=1000)    return '$'+Math.round(n/1000)+'k';
+    return '$'+Math.round(n);
   }
 
-  function buildChart(monthlyValues){
-    var barsEl = document.getElementById('chart-bars');
-    var labelsEl = document.getElementById('chart-labels');
-    var max = Math.max.apply(null, monthlyValues);
-    barsEl.innerHTML = '';
-    labelsEl.innerHTML = '';
-    monthlyValues.forEach(function(val, i){
-      var pct = max > 0 ? (val / max) * 100 : 0;
-      var col = document.createElement('div');
-      col.className = 'chart-bar-col';
-      col.innerHTML =
-        '<div class="chart-bar-outer">' +
-          '<div class="chart-bar" style="height:' + pct + '%">' +
-            '<div class="chart-bar-tip">' + MONTH_NAMES[i] + ': ' + fmtUSD(val) + '</div>' +
-          '</div>' +
-        '</div>' +
-        '<div class="chart-month-label">' + MONTH_NAMES[i] + '</div>';
-      barsEl.appendChild(col);
+  function buildChart(vals){
+    var container = document.getElementById('chart-container');
+    var W = container.offsetWidth || 700;
+    var H = 260;
+    var pT=20, pR=16, pB=36, pL=62;
+    var cW=W-pL-pR, cH=H-pT-pB;
+    var N = vals.length;
+    var max = Math.max.apply(null,vals) * 1.15;
+    if(max===0) max=1;
 
-      var lbl = document.createElement('span');
-      lbl.textContent = MONTH_NAMES[i];
-      labelsEl.appendChild(lbl);
-    });
+    var xs = vals.map(function(_,i){ return pL + (i/(N-1))*cW; });
+    var ys = vals.map(function(v){   return pT + cH - (v/max)*cH; });
+
+    function linePath(){
+      var d = 'M '+xs[0].toFixed(1)+','+ys[0].toFixed(1);
+      for(var i=0;i<N-1;i++){
+        var cpx = ((xs[i]+xs[i+1])/2).toFixed(1);
+        d += ' C '+cpx+','+ys[i].toFixed(1)+' '+cpx+','+ys[i+1].toFixed(1)+' '+xs[i+1].toFixed(1)+','+ys[i+1].toFixed(1);
+      }
+      return d;
+    }
+
+    var lp = linePath();
+    var ap = lp+' L '+xs[N-1].toFixed(1)+','+(pT+cH)+' L '+pL+','+(pT+cH)+' Z';
+
+    var grid='', yLbls='';
+    for(var t=0;t<=4;t++){
+      var v = (max/1.15)*(t/4);
+      var y = (pT+cH-(v/max)*cH).toFixed(1);
+      grid  += '<line x1="'+pL+'" y1="'+y+'" x2="'+(W-pR)+'" y2="'+y+'" stroke="rgba(55,138,221,0.1)" stroke-dasharray="3 3"/>';
+      yLbls += '<text x="'+(pL-8)+'" y="'+(parseFloat(y)+4)+'" text-anchor="end" fill="#445566" font-size="11" font-family="system-ui,sans-serif">'+fmtShort(v)+'</text>';
+    }
+
+    var xLbls='';
+    var step = W<480 ? 3 : W<640 ? 2 : 1;
+    for(var m=0;m<N;m++){
+      if(m%step!==0 && m!==N-1) continue;
+      xLbls += '<text x="'+xs[m].toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" fill="#445566" font-size="11" font-family="system-ui,sans-serif">'+MNS[m]+'</text>';
+    }
+
+    var dots='';
+    for(var d=0;d<N;d++){
+      dots += '<circle class="chart-dot" cx="'+xs[d].toFixed(1)+'" cy="'+ys[d].toFixed(1)+'" r="5" fill="#378ADD" stroke="#0a0e1a" stroke-width="2"><title>'+MNS[d]+': '+fmtUSD(vals[d])+'</title></circle>';
+    }
+
+    container.innerHTML =
+      '<svg width="'+W+'" height="'+H+'" style="display:block;overflow:visible">'+
+        '<defs>'+
+          '<linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">'+
+            '<stop offset="5%"  stop-color="#378ADD" stop-opacity="0.3"/>'+
+            '<stop offset="95%" stop-color="#378ADD" stop-opacity="0"/>'+
+          '</linearGradient>'+
+        '</defs>'+
+        grid+
+        '<path d="'+ap+'" fill="url(#ag)" stroke="none"/>'+
+        '<path id="cline" d="'+lp+'" fill="none" stroke="#378ADD" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'+
+        yLbls+xLbls+dots+
+      '</svg>';
+
+    if(firstRender){
+      firstRender = false;
+      var line = document.getElementById('cline');
+      if(line && line.getTotalLength){
+        var len = line.getTotalLength();
+        line.style.strokeDasharray  = len;
+        line.style.strokeDashoffset = len;
+        line.style.transition = 'stroke-dashoffset 1.4s cubic-bezier(0.4,0,0.2,1)';
+        requestAnimationFrame(function(){
+          requestAnimationFrame(function(){ line.style.strokeDashoffset = '0'; });
+        });
+      }
+    }
   }
 
   function update(){
@@ -377,34 +424,41 @@ input[type="range"]::-moz-range-thumb{
     var cv = parseFloat(conversion.value);
     var dv = parseInt(deal.value);
 
-    var reach = ep * ls;
-    var leads = Math.round(reach * (cv / 100));
+    var reach   = ep * ls;
+    var leads   = Math.round(reach * (cv/100));
     var revenue = leads * dv;
 
-    document.getElementById('val-episodes').textContent = ep;
-    document.getElementById('val-listeners').textContent = fmt(ls);
-    document.getElementById('val-conversion').textContent = cv.toFixed(1) + '%';
-    document.getElementById('val-deal').textContent = '$' + fmt(dv);
+    document.getElementById('val-episodes').textContent   = ep;
+    document.getElementById('val-listeners').textContent  = fmt(ls);
+    document.getElementById('val-conversion').textContent = cv.toFixed(1)+'%';
+    document.getElementById('val-deal').textContent       = '$'+fmt(dv);
 
-    document.getElementById('out-reach').textContent = fmt(reach);
-    document.getElementById('out-leads').textContent = fmt(leads);
+    document.getElementById('out-reach').textContent   = fmt(reach);
+    document.getElementById('out-leads').textContent   = fmt(leads);
     document.getElementById('out-revenue').textContent = fmtUSD(revenue);
 
-    var monthlyValues = [];
-    var total12 = 0;
-    for(var m = 0; m < MONTHS; m++){
-      var mVal = Math.round(revenue * Math.pow(1 + GROWTH, m));
-      monthlyValues.push(mVal);
-      total12 += mVal;
+    var vals=[], total12=0;
+    for(var m=0;m<MONTHS;m++){
+      var mv = Math.round(revenue * Math.pow(1+GROWTH, m));
+      vals.push(mv);
+      total12 += mv;
     }
     document.getElementById('out-12m').textContent = fmtUSD(total12);
-    buildChart(monthlyValues);
+    buildChart(vals);
   }
 
-  episodes.addEventListener('input', update);
-  listeners.addEventListener('input', update);
+  episodes.addEventListener('input',   update);
+  listeners.addEventListener('input',  update);
   conversion.addEventListener('input', update);
-  deal.addEventListener('input', update);
+  deal.addEventListener('input',       update);
+
+  window.addEventListener('resize', function(){
+    var vals=[], ep=parseInt(episodes.value), ls=parseInt(listeners.value),
+        cv=parseFloat(conversion.value), dv=parseInt(deal.value);
+    var rev = Math.round(ep*ls*(cv/100)) * dv;
+    for(var m=0;m<MONTHS;m++) vals.push(Math.round(rev*Math.pow(1+GROWTH,m)));
+    buildChart(vals);
+  });
 
   update();
 })();
