@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMQX2BE32H"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FMQX2BE32H');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>B2B Podcast ROI Calculator | APodcastGeek</title>
+<meta name="description" content="Calculate the ROI of your B2B podcast. See your monthly reach, leads, and revenue potential based on your episode volume, audience size, and deal value.">
+<meta property="og:title" content="B2B Podcast ROI Calculator | APodcastGeek">
+<meta property="og:description" content="How much is your B2B podcast actually worth? Find out in 30 seconds.">
+<meta property="og:url" content="https://apodcastgeek.com/roi-calculator">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://apodcastgeek.com/og-image.png">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="canonical" href="https://apodcastgeek.com/roi-calculator">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#060810;color:#fff;line-height:1.6}
+
+/* NAV */
+.nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:#0a0e1a;border-bottom:0.5px solid rgba(55,138,221,0.2);position:sticky;top:0;z-index:100}
+.nav-logo{height:48px;width:auto;filter:drop-shadow(0 0 1px rgba(255,255,255,0.8)) drop-shadow(0 0 1px rgba(255,255,255,0.8))}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{color:#8899aa;text-decoration:none;font-size:14px}
+.nav-links a:hover{color:#fff}
+.nav-cta{background:#378ADD;color:#fff;border:none;padding:.65rem 1.6rem;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;display:inline-block}
+.nav-cta:hover{background:#185FA5}
+
+/* HERO */
+.hero{background:#0a0e1a;padding:6rem 5rem 5rem;text-align:center}
+.hero-tag{display:inline-block;background:rgba(55,138,221,0.12);color:#85B7EB;border:0.5px solid rgba(55,138,221,0.3);border-radius:20px;padding:.35rem 1.1rem;font-size:13px;letter-spacing:.5px;margin-bottom:1.75rem}
+.hero h1{font-size:clamp(2.2rem,4.5vw,3.6rem);font-weight:800;color:#fff;line-height:1.12;margin-bottom:1.25rem;max-width:760px;margin-left:auto;margin-right:auto}
+.hero h1 span{color:#378ADD}
+.hero-sub{font-size:clamp(.95rem,1.8vw,1.1rem);color:#8899aa;line-height:1.8;max-width:560px;margin:0 auto}
+
+/* CALCULATOR SECTION */
+.calc-section{padding:4rem 5rem 5.5rem;background:#060810}
+.inner{max-width:1100px;margin:0 auto}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start;margin-top:3rem}
+
+/* INPUTS */
+.inputs-panel{background:#0a0e1a;border:0.5px solid rgba(55,138,221,0.2);border-radius:16px;padding:2.5rem}
+.inputs-panel h2{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:.4rem;letter-spacing:-.01em}
+.inputs-panel p{font-size:.85rem;color:#667788;margin-bottom:2rem}
+
+.slider-group{margin-bottom:2rem}
+.slider-group:last-child{margin-bottom:0}
+.slider-label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.75rem}
+.slider-label span{font-size:.875rem;color:#aabbcc;font-weight:500}
+.slider-value{font-size:1.3rem;font-weight:700;color:#378ADD;letter-spacing:-.02em}
+
+input[type="range"]{
+  -webkit-appearance:none;
+  appearance:none;
+  width:100%;
+  height:4px;
+  border-radius:2px;
+  background:rgba(55,138,221,0.2);
+  outline:none;
+  cursor:pointer;
+}
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  appearance:none;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:#378ADD;
+  cursor:pointer;
+  box-shadow:0 0 0 3px rgba(55,138,221,0.25);
+  transition:box-shadow .15s ease;
+}
+input[type="range"]::-webkit-slider-thumb:hover{
+  box-shadow:0 0 0 5px rgba(55,138,221,0.3);
+}
+input[type="range"]::-moz-range-thumb{
+  width:18px;
+  height:18px;
+  border:none;
+  border-radius:50%;
+  background:#378ADD;
+  cursor:pointer;
+}
+.slider-range{display:flex;justify-content:space-between;margin-top:.4rem}
+.slider-range span{font-size:.75rem;color:#445566}
+
+/* RESULTS */
+.results-panel{display:flex;flex-direction:column;gap:1.25rem}
+
+.result-card{background:#0a0e1a;border:0.5px solid rgba(55,138,221,0.2);border-radius:16px;padding:2rem 2.25rem;transition:border-color .2s ease}
+.result-card:hover{border-color:rgba(55,138,221,0.45)}
+.result-label{font-size:.78rem;letter-spacing:1.5px;color:#378ADD;text-transform:uppercase;margin-bottom:.5rem;font-weight:600}
+.result-number{font-size:2.6rem;font-weight:800;color:#fff;letter-spacing:-.03em;line-height:1}
+.result-desc{font-size:.82rem;color:#667788;margin-top:.5rem;line-height:1.5}
+
+.result-card.result-hero{background:linear-gradient(135deg,rgba(23,68,136,0.35) 0%,rgba(29,104,169,0.2) 100%);border-color:rgba(55,138,221,0.45)}
+.result-card.result-hero .result-number{font-size:3.2rem;color:#378ADD}
+.result-card.result-hero .result-label{color:#85B7EB}
+
+/* CONTEXT SECTION */
+.context-section{background:#0a0e1a;padding:5rem 5rem;border-top:0.5px solid rgba(55,138,221,0.1)}
+.context-inner{max-width:900px;margin:0 auto}
+.context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.context-card{background:#111827;border:0.5px solid rgba(55,138,221,0.15);border-radius:12px;padding:1.75rem}
+.context-card h3{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:.5rem}
+.context-card p{font-size:.85rem;color:#8899aa;line-height:1.7}
+.context-stat{font-size:1.9rem;font-weight:800;color:#378ADD;margin-bottom:.35rem;letter-spacing:-.02em}
+
+.section-label{font-size:12px;letter-spacing:2px;color:#378ADD;text-transform:uppercase;margin-bottom:.75rem}
+.divider{width:48px;height:3px;background:#378ADD;border-radius:2px;margin-bottom:1.5rem}
+.section-title{font-size:clamp(1.7rem,2.8vw,2.4rem);font-weight:700;color:#fff;line-height:1.2;margin-bottom:1rem}
+.section-sub{font-size:1rem;color:#8899aa;line-height:1.8;max-width:560px}
+
+/* CTA SECTION */
+.cta-section{background:#060810;padding:5.5rem 5rem;text-align:center;border-top:0.5px solid rgba(55,138,221,0.1)}
+.cta-inner{max-width:620px;margin:0 auto}
+.cta-section h2{font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;color:#fff;line-height:1.15;margin-bottom:1.25rem}
+.cta-section h2 span{color:#378ADD}
+.cta-section p{font-size:1rem;color:#8899aa;line-height:1.8;margin-bottom:2.5rem}
+.btn-primary{background:#378ADD;color:#fff;border:none;padding:1.1rem 2.8rem;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s ease}
+.btn-primary:hover{background:#185FA5}
+
+/* FOOTER */
+.footer{background:#0a0e1a;border-top:0.5px solid rgba(55,138,221,0.15);padding:2rem 5rem;display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:.8rem;color:#445566}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-size:.8rem;color:#445566;text-decoration:none}
+.footer-links a:hover{color:#8899aa}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .nav{padding:1rem 2rem}
+  .hero{padding:4rem 2rem 3.5rem}
+  .calc-section{padding:3rem 2rem 4rem}
+  .calc-grid{grid-template-columns:1fr;gap:1.5rem}
+  .context-section{padding:4rem 2rem}
+  .context-grid{grid-template-columns:1fr;gap:1rem}
+  .cta-section{padding:4rem 2rem}
+  .footer{flex-direction:column;gap:1rem;text-align:center;padding:1.75rem 2rem}
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" style="display:inline-block;line-height:0">
+    <img src="logo.png" alt="APodcastGeek" class="nav-logo">
+  </a>
+  <div class="nav-links">
+    <a href="/services.html">Services</a>
+    <a href="/blog.html">Blog</a>
+    <a href="/our-work/">Results</a>
+    <a href="/about/">About</a>
+  </div>
+  <a href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-discovery-call" class="nav-cta" target="_blank" rel="noopener">Book a Call</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-tag">ROI Calculator</div>
+  <h1>What Is Your B2B Podcast<br><span>Actually Worth?</span></h1>
+  <p class="hero-sub">Adjust the sliders below to see your monthly reach, leads, and revenue potential from a done-for-you B2B podcast.</p>
+</section>
+
+<section class="calc-section">
+  <div class="inner">
+    <div class="calc-grid">
+
+      <div class="inputs-panel">
+        <h2>Your Podcast Numbers</h2>
+        <p>Move the sliders to match your situation or goals.</p>
+
+        <div class="slider-group">
+          <div class="slider-label">
+            <span>Episodes per Month</span>
+            <span class="slider-value" id="val-episodes">2</span>
+          </div>
+          <input type="range" id="slider-episodes" min="1" max="8" step="1" value="2">
+          <div class="slider-range"><span>1</span><span>8</span></div>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-label">
+            <span>Avg. Listeners per Episode</span>
+            <span class="slider-value" id="val-listeners">1,000</span>
+          </div>
+          <input type="range" id="slider-listeners" min="200" max="10000" step="100" value="1000">
+          <div class="slider-range"><span>200</span><span>10,000</span></div>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-label">
+            <span>Lead Conversion Rate</span>
+            <span class="slider-value" id="val-conversion">1.0%</span>
+          </div>
+          <input type="range" id="slider-conversion" min="0.5" max="5" step="0.5" value="1">
+          <div class="slider-range"><span>0.5%</span><span>5%</span></div>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-label">
+            <span>Avg. Deal Value</span>
+            <span class="slider-value" id="val-deal">$5,000</span>
+          </div>
+          <input type="range" id="slider-deal" min="1000" max="50000" step="1000" value="5000">
+          <div class="slider-range"><span>$1,000</span><span>$50,000</span></div>
+        </div>
+      </div>
+
+      <div class="results-panel">
+
+        <div class="result-card">
+          <div class="result-label">Monthly Reach</div>
+          <div class="result-number" id="out-reach">2,000</div>
+          <div class="result-desc">Total listeners exposed to your brand and message each month.</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-label">Monthly Leads</div>
+          <div class="result-number" id="out-leads">20</div>
+          <div class="result-desc">Listeners who take action and enter your pipeline.</div>
+        </div>
+
+        <div class="result-card result-hero">
+          <div class="result-label">Monthly Revenue Potential</div>
+          <div class="result-number" id="out-revenue">$100,000</div>
+          <div class="result-desc">Pipeline value generated from podcast listeners converting to clients at your average deal size.</div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="context-section">
+  <div class="context-inner">
+    <div class="section-label">Why it compounds</div>
+    <div class="divider"></div>
+    <h2 class="section-title">A B2B Podcast Is Not a Content Channel.<br>It Is a Pipeline System.</h2>
+    <p class="section-sub">Every episode you publish builds authority, ranks on search, and works for you in perpetuity. The numbers above are conservative. The real value is what happens over 12 to 24 months.</p>
+
+    <div class="context-grid">
+      <div class="context-card">
+        <div class="context-stat">10%</div>
+        <h3>Guest-to-Client Rate</h3>
+        <p>Across APG's client portfolio, roughly 1 in 10 podcast guests converts to a customer, partner, or long-term relationship.</p>
+      </div>
+      <div class="context-card">
+        <div class="context-stat">30+ min</div>
+        <h3>Average Listen Time</h3>
+        <p>Podcast audiences spend 30 or more minutes with your voice and ideas per episode. No social platform comes close to that level of trust-building.</p>
+      </div>
+      <div class="context-card">
+        <div class="context-stat">Forever</div>
+        <h3>Content Shelf Life</h3>
+        <p>Episodes rank on Google and Apple Podcasts indefinitely. A conversation recorded today can generate leads two years from now.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2>Want These Numbers Without<br><span>Doing the Work?</span></h2>
+    <p>APG's Brand Builder is a fully done-for-you B2B podcast production system. You show up to record. We handle strategy, guest recruitment, production, clips, distribution, and analytics.</p>
+    <a href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-discovery-call" class="btn-primary" target="_blank" rel="noopener">Book a Free Strategy Call</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <span class="footer-copy">&copy; 2026 APodcastGeek. All rights reserved.</span>
+  <div class="footer-links">
+    <a href="/privacy.html">Privacy</a>
+    <a href="/services.html">Services</a>
+    <a href="mailto:info@apodcastgeek.com">info@apodcastgeek.com</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var episodes = document.getElementById('slider-episodes');
+  var listeners = document.getElementById('slider-listeners');
+  var conversion = document.getElementById('slider-conversion');
+  var deal = document.getElementById('slider-deal');
+
+  function fmt(n){
+    return n.toLocaleString('en-US');
+  }
+  function fmtUSD(n){
+    if(n>=1000000) return '$' + (n/1000000).toFixed(1).replace(/\.0$/,'') + 'M';
+    if(n>=1000) return '$' + (n/1000).toFixed(0) + 'K';
+    return '$' + n.toLocaleString('en-US');
+  }
+
+  function update(){
+    var ep = parseInt(episodes.value);
+    var ls = parseInt(listeners.value);
+    var cv = parseFloat(conversion.value);
+    var dv = parseInt(deal.value);
+
+    var reach = ep * ls;
+    var leads = Math.round(reach * (cv / 100));
+    var revenue = leads * dv;
+
+    document.getElementById('val-episodes').textContent = ep;
+    document.getElementById('val-listeners').textContent = fmt(ls);
+    document.getElementById('val-conversion').textContent = cv.toFixed(1) + '%';
+    document.getElementById('val-deal').textContent = '$' + fmt(dv);
+
+    document.getElementById('out-reach').textContent = fmt(reach);
+    document.getElementById('out-leads').textContent = fmt(leads);
+    document.getElementById('out-revenue').textContent = fmtUSD(revenue);
+  }
+
+  episodes.addEventListener('input', update);
+  listeners.addEventListener('input', update);
+  conversion.addEventListener('input', update);
+  deal.addEventListener('input', update);
+
+  update();
+})();
+</script>
+
+</body>
+</html>
