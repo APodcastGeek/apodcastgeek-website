@@ -1,8 +1,8 @@
 name: Publish Blog Posts
 
 on:
-  schedule:
-    - cron: '0 6 * * *'
+  # schedule:
+  #   - cron: '0 6 * * *'  # DISABLED — run manually via workflow_dispatch if needed
   workflow_dispatch:
 
 permissions:
