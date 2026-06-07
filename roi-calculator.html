@@ -22,12 +22,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
 /* NAV */
 .nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:#0a0e1a;border-bottom:0.5px solid rgba(55,138,221,0.2);position:sticky;top:0;z-index:100}
-.nav-logo{height:48px;width:auto;filter:drop-shadow(0 0 1px rgba(255,255,255,0.8)) drop-shadow(0 0 1px rgba(255,255,255,0.8))}
+.nav-logo{height:48px;width:auto;display:block;filter:drop-shadow(0 0 1px rgba(255,255,255,0.8)) drop-shadow(0 0 1px rgba(255,255,255,0.8))}
 .nav-links{display:flex;gap:2rem}
 .nav-links a{color:#8899aa;text-decoration:none;font-size:14px}
 .nav-links a:hover{color:#fff}
 .nav-cta{background:#378ADD;color:#fff;border:none;padding:.65rem 1.6rem;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;display:inline-block}
 .nav-cta:hover{background:#185FA5}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:.5rem;order:3;margin-left:auto}.hamburger svg{display:block}
+.nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:#0a0e1a;padding:1.5rem 2rem;border-bottom:0.5px solid rgba(55,138,221,0.2);gap:1.25rem}
 
 /* HERO */
 .hero{background:#0a0e1a;padding:3.5rem 5rem 3rem;text-align:center}
@@ -119,8 +121,11 @@ input[type="range"]::-moz-range-thumb{width:17px;height:17px;border:none;border-
 
 /* RESPONSIVE */
 @media(max-width:1024px){
-  .nav{padding:1rem 2rem}
+  .nav{padding:1rem 2rem;position:relative}
   .nav-links{display:none}
+  .hamburger{display:block}
+  .nav-logo{height:34px}
+  .nav-cta{display:none}
   .hero{padding:3rem 2rem 2.5rem}
   .calc-section{padding:2rem 2rem 3rem}
   .main-row{grid-template-columns:1fr}
@@ -137,10 +142,9 @@ input[type="range"]::-moz-range-thumb{width:17px;height:17px;border:none;border-
 </head>
 <body>
 
-<nav class="nav">
-  <a href="/" style="display:inline-block;line-height:0">
-    <img src="logo.png" alt="APodcastGeek" class="nav-logo">
-  </a>
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="/"><img src="logo.png" class="nav-logo" alt="APodcastGeek" width="160" height="48"></a>
+  <button class="hamburger" aria-label="Open menu" onclick="document.querySelector('.nav-links').classList.toggle('open')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8899aa" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
   <div class="nav-links">
     <a href="/">Home</a>
     <a href="services.html">Services</a>
