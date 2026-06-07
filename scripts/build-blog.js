@@ -579,7 +579,22 @@ async function main() {
   const blogHtmlPath = path.join(__dirname, '..', 'blog.html');
   let blogHtml = fs.readFileSync(blogHtmlPath, 'utf-8');
 
-  const cardsHtml = cards.map(p =>
+  // Manual posts — built outside Notion, always prepended so they survive automated runs
+  const manualCards = [
+    {
+      slug: 'b2b-founders-close-deals-podcasting',
+      postImage: 'posts/why-b2b-founders-need-a-podcast.jpg',
+      tag: 'B2B Strategy',
+      title: 'How B2B Founders Close High-Ticket Deals Through Podcasting (Without Cold Outreach)',
+      description: 'Cold outreach response rates have collapsed. Here is how B2B founders are using their podcast to close high-ticket deals without a single cold email.',
+      publishDate: '2026-06-03',
+      reading: 9
+    }
+  ];
+
+  const allCards = [...manualCards, ...cards];
+
+  const cardsHtml = allCards.map(p =>
     `<a href="blog/${p.slug}.html" class="blog-card">` +
     `<div class="blog-card-img" style="background-image:url('blog/images/${p.postImage}');background-size:cover;background-position:center"></div>` +
     `<div class="blog-card-body">` +
