@@ -25,20 +25,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 /* VALUE STACK */
 .stack-section{background:#0a0e1a;border:0.5px solid rgba(55,138,221,0.2);border-radius:16px;max-width:720px;margin:0 auto 2.5rem;padding:2rem 2.5rem}
 .stack-title{font-size:.75rem;letter-spacing:1.2px;color:#378ADD;text-transform:uppercase;font-weight:600;margin-bottom:1.25rem}
+.stack-title-secondary{font-size:.75rem;letter-spacing:1.2px;color:#445566;text-transform:uppercase;font-weight:600;margin-bottom:.75rem;margin-top:1.5rem}
 .stack-row{display:flex;justify-content:space-between;align-items:center;padding:.65rem 0;border-bottom:0.5px solid rgba(55,138,221,0.1)}
 .stack-row:last-child{border-bottom:none}
 .stack-item{font-size:.9rem;color:#ccdaeb}
 .stack-value{font-size:.9rem;color:#8899aa;text-align:right}
-.stack-divider{border-top:0.5px solid rgba(55,138,221,0.3);margin-top:1rem;padding-top:1rem;display:flex;justify-content:space-between;align-items:center}
+.stack-included-label{font-size:.8rem;color:#445566;text-align:right;font-style:italic}
+.stack-divider{border-top:0.5px solid rgba(55,138,221,0.3);margin-top:1.25rem;padding-top:1.25rem;display:flex;justify-content:space-between;align-items:center}
 .stack-total-label{font-size:.85rem;font-weight:700;color:#fff}
 .stack-total-value{font-size:1.3rem;font-weight:800;color:#378ADD}
-.stack-your-price{display:flex;justify-content:space-between;align-items:center;margin-top:.5rem}
-.stack-your-label{font-size:.85rem;color:#8899aa}
-.stack-your-value{font-size:1.1rem;font-weight:700;color:#4ade80}
+.stack-pilot{display:flex;justify-content:space-between;align-items:center;margin-top:.5rem}
+.stack-pilot-label{font-size:.85rem;color:#8899aa}
+.stack-pilot-value{font-size:1rem;font-weight:700;color:#4ade80}
 
 /* GUARANTEE */
-.guarantee{max-width:720px;margin:0 auto 2.5rem;background:rgba(55,138,221,0.06);border:0.5px solid rgba(55,138,221,0.25);border-radius:12px;padding:1.25rem 2rem;display:flex;align-items:center;gap:1rem}
-.guarantee-icon{font-size:1.5rem;flex-shrink:0}
+.guarantee{max-width:720px;margin:0 auto 2.5rem;background:rgba(55,138,221,0.06);border:0.5px solid rgba(55,138,221,0.25);border-radius:12px;padding:1.25rem 2rem;display:flex;align-items:flex-start;gap:1rem}
+.guarantee-icon{font-size:1.5rem;flex-shrink:0;margin-top:.1rem}
 .guarantee p{font-size:.875rem;color:#aabbcc;line-height:1.6}
 .guarantee strong{color:#fff}
 
@@ -83,6 +85,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   .form-card{padding:1.5rem}
   .field-row{grid-template-columns:1fr}
   .stack-section{padding:1.5rem}
+  .radio-group{flex-direction:column}
 }
 </style>
 </head>
@@ -96,58 +99,61 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="hero">
   <div class="badge">Existing Clients Only</div>
   <h1>Your podcast is about to become a <span>sales pipeline</span></h1>
-  <p class="hero-sub">We're adding a full guest booking system to your show at no extra cost for the first month. Two of your ideal clients, booked as podcast guests, every 30 days.</p>
+  <p class="hero-sub">We're adding a full guest booking system to your show. Two of your ideal clients, booked as podcast guests, every 30 days.</p>
 </div>
 
 <!-- VALUE STACK -->
 <div class="stack-section">
-  <div class="stack-title">What's included</div>
+  <div class="stack-title">What's being added</div>
   <div class="stack-row">
     <span class="stack-item">2 ICP guests booked per month</span>
-    <span class="stack-value">€1,500 value</span>
+    <span class="stack-value">€1,500/mo value</span>
   </div>
   <div class="stack-row">
     <span class="stack-item">Episode brief with ignition questions built in</span>
-    <span class="stack-value">€300 value</span>
+    <span class="stack-value">€300/mo value</span>
   </div>
   <div class="stack-row">
-    <span class="stack-item">Full Brand Builder production (already included)</span>
-    <span class="stack-value">€1,500 value</span>
-  </div>
-  <div class="stack-row">
-    <span class="stack-item">Clips and ads (already included)</span>
-    <span class="stack-value">€500 value</span>
-  </div>
-  <div class="stack-row">
-    <span class="stack-item">Per-episode lead magnet scorecard + QR code</span>
-    <span class="stack-value">€400 value</span>
+    <span class="stack-item">Per-episode lead magnet scorecard with QR code</span>
+    <span class="stack-value">€400/mo value</span>
   </div>
   <div class="stack-row">
     <span class="stack-item">Episode newsletter, formatted and ready to send</span>
-    <span class="stack-value">€200 value</span>
+    <span class="stack-value">€200/mo value</span>
   </div>
   <div class="stack-row">
     <span class="stack-item">7-email onboarding drip sequence (plug and play)</span>
     <span class="stack-value">€800 value</span>
   </div>
   <div class="stack-row">
-    <span class="stack-item">Monthly pipeline report: guests + leads captured</span>
-    <span class="stack-value">€200 value</span>
+    <span class="stack-item">Monthly pipeline report: guests booked + leads captured</span>
+    <span class="stack-value">€200/mo value</span>
   </div>
+
+  <div class="stack-title-secondary">What you already have</div>
+  <div class="stack-row">
+    <span class="stack-item">Full Brand Builder production</span>
+    <span class="stack-included-label">Already included</span>
+  </div>
+  <div class="stack-row">
+    <span class="stack-item">Short-form clips and social ads</span>
+    <span class="stack-included-label">Already included</span>
+  </div>
+
   <div class="stack-divider">
-    <span class="stack-total-label">Total standalone value</span>
-    <span class="stack-total-value">€5,400/mo</span>
+    <span class="stack-total-label">New standalone value added</span>
+    <span class="stack-total-value">€3,400/mo</span>
   </div>
-  <div class="stack-your-price">
-    <span class="stack-your-label">Your price this month</span>
-    <span class="stack-your-value">Free</span>
+  <div class="stack-pilot">
+    <span class="stack-pilot-label">Added to your current plan for month one</span>
+    <span class="stack-pilot-value">No extra charge</span>
   </div>
 </div>
 
 <!-- GUARANTEE -->
 <div class="guarantee">
   <div class="guarantee-icon">🛡</div>
-  <p><strong>The guarantee:</strong> If we don't book you 2 qualified ICP guests in your first month, that month is on us. No questions asked.</p>
+  <p><strong>The guarantee:</strong> If we don't book you 2 qualified ICP guests in your first 30 days, month two runs at our cost until we deliver. You keep your current Brand Builder rate throughout. Zero downside.</p>
 </div>
 
 <!-- FORM -->
@@ -196,6 +202,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
             <span class="radio-label">No, set the criteria and go</span>
           </label>
         </div>
+        <div class="field-note">Either way, we build the criteria first. Approval mode means we send you a shortlist before reaching out.</div>
       </div>
 
       <div class="field">
@@ -210,6 +217,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
           <option value="other">Other</option>
           <option value="none">I don't have one yet</option>
         </select>
+        <div class="field-note">We'll format the drip sequence for your platform. If you don't have one, we'll cover that in your kickoff call.</div>
       </div>
 
       <div class="field">
@@ -223,14 +231,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
   <!-- CONFIRMATION -->
   <div class="confirm-state" id="confirm-state">
-    <div class="confirm-icon">✅</div>
+    <div class="confirm-icon">&#10003;</div>
     <h2>You're in.</h2>
     <p>Dave will be in touch within 24 hours to confirm your first guest booking campaign is live. Keep an eye on your inbox.</p>
   </div>
 </div>
 
 <script>
-// Radio visual selection
 document.querySelectorAll('.radio-option input[type="radio"]').forEach(radio => {
   radio.addEventListener('change', () => {
     document.querySelectorAll('.radio-option').forEach(opt => opt.classList.remove('selected'));
@@ -238,7 +245,6 @@ document.querySelectorAll('.radio-option input[type="radio"]').forEach(radio => 
   });
 });
 
-// Form submission
 document.getElementById('intake-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const btn = document.getElementById('submit-btn');
