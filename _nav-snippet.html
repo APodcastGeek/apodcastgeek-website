@@ -1,0 +1,19 @@
+<!-- APG SHARED NAV SNIPPET
+     Copy this block verbatim into every new page.
+     Logo rule: transparent RGBA PNG on #060810 dark bg — confirmed CSS below (approved by Dave 2026-06-15).
+     Use logo.png (relative path, not /logo.png) so it works both locally and on the deployed site.
+     Source: APG-BRAND-GUIDE.md Section 6. -->
+
+<!-- PASTE INTO <style> -->
+<!--
+.nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:#0a0e1a;border-bottom:0.5px solid rgba(55,138,221,0.2)}
+.nav-logo{height:44px;width:auto;display:block;filter:drop-shadow(0 0 1px white)}
+@media(max-width:640px){.nav{padding:1rem 1.5rem}}
+-->
+
+<!-- PASTE INTO <body> -->
+<!--
+<nav class="nav">
+  <a href="/"><img src="logo.png" alt="APodcastGeek" class="nav-logo"></a>
+</nav>
+-->
