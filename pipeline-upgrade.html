@@ -124,7 +124,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     <span class="stack-value">€800 value</span>
   </div>
   <div class="stack-row">
-    <span class="stack-item">Monthly pipeline report: guests booked + leads captured</span>
+    <span class="stack-item">Full guest coordination (brief, prep pack, thank you, promo pack on launch day)</span>
+    <span class="stack-value">€200/mo value</span>
+  </div>
+  <div class="stack-row">
+    <span class="stack-item">VSL landing page, APG hosted, with full attribution tracking</span>
+    <span class="stack-value">€300/mo value</span>
+  </div>
+  <div class="stack-row">
+    <span class="stack-item">Monthly pipeline report: guests booked, VSL views, calls booked</span>
     <span class="stack-value">€200/mo value</span>
   </div>
 
@@ -136,7 +144,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
   <div class="stack-divider">
     <span class="stack-total-label">New standalone value added</span>
-    <span class="stack-total-value">€3,200/mo</span>
+    <span class="stack-total-value">€3,700/mo</span>
   </div>
   <div class="stack-pilot">
     <span class="stack-pilot-label">Added to your current plan for month one</span>
@@ -189,6 +197,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
       <div class="field">
         <label for="outcome">What is the one outcome you deliver for them?</label>
         <textarea id="outcome" name="outcome" placeholder="e.g. We build and manage their paid acquisition funnel so they consistently generate 30+ qualified demos per month without relying on word of mouth." required></textarea>
+      </div>
+
+      <div class="field">
+        <label for="dreamlist">Who would be your dream podcast guests? <span style="color:#445566;font-weight:400">(optional)</span></label>
+        <textarea id="dreamlist" name="dreamlist" placeholder="e.g. Name 5-10 people or companies you've always wanted to work with. They must be potential clients, not just industry names you admire."></textarea>
+        <div class="field-note">We'll prioritise these in outreach and work hard to get them on your show.</div>
       </div>
 
       <div class="field">
@@ -259,6 +273,7 @@ document.getElementById('intake-form').addEventListener('submit', async (e) => {
     icp: document.getElementById('icp').value,
     outcome: document.getElementById('outcome').value,
     approval: document.querySelector('input[name="approval"]:checked')?.value,
+    dreamlist: document.getElementById('dreamlist').value,
     platform: document.getElementById('platform').value,
     challenge: document.getElementById('challenge').value,
     submitted_at: new Date().toISOString()
