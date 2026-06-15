@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMQX2BE32H"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FMQX2BE32H');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
 <title>B2B Podcast ROI Calculator | APodcastGeek</title>
@@ -14,7 +14,7 @@
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://apodcastgeek.com/og-image.png">
 <link rel="icon" type="image/png" href="favicon.png">
-<link rel="canonical" href="https://apodcastgeek.com/roi-calculator">
+<link rel="canonical" href="https://apodcastgeek.com/roi-calculator.html">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;overflow-y:scroll}
@@ -22,7 +22,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
 /* NAV */
 .nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:#0a0e1a;border-bottom:0.5px solid rgba(55,138,221,0.2);position:sticky;top:0;z-index:100}
-.nav-logo{height:48px;width:auto;display:block;filter:drop-shadow(0 0 1px rgba(255,255,255,0.8)) drop-shadow(0 0 1px rgba(255,255,255,0.8))}
+.nav-logo{height:48px;width:auto;display:block;filter:drop-shadow(0 0 2px white) drop-shadow(0 0 2px white)}
 .nav-links{display:flex;gap:2rem}
 .nav-links a{color:#8899aa;text-decoration:none;font-size:14px}
 .nav-links a:hover{color:#fff}
@@ -279,7 +279,7 @@ input[type="range"]::-moz-range-thumb{width:17px;height:17px;border:none;border-
   <div class="cta-inner">
     <h2>Want These Numbers Without<br><span>Doing the Work?</span></h2>
     <p>APG's Brand Builder is a fully done-for-you B2B podcast production system. You show up to record. We handle strategy, guest recruitment, production, clips, distribution, and analytics.</p>
-    <a href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-discovery-call" class="btn-primary" target="_blank" rel="noopener">Book a Free Strategy Call</a>
+    <a href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-discovery-call" class="btn-primary" target="_blank" rel="noopener">Apply to work with us</a>
   </div>
 </section>
 
@@ -433,6 +433,38 @@ input[type="range"]::-moz-range-thumb{width:17px;height:17px;border:none;border-
 
   update();
 })();
+</script>
+
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#0a0e1a;border-top:0.5px solid rgba(55,138,221,0.2);padding:1rem 2rem;z-index:200">
+  <div style="max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap">
+    <p style="font-size:.85rem;color:#8899aa;margin:0;line-height:1.6;flex:1;min-width:280px">We use cookies to analyse site traffic and improve your experience. By continuing to use this site, you consent to our use of cookies. <a href="/privacy.html" style="color:#378ADD;text-decoration:none">Privacy Policy</a></p>
+    <div style="display:flex;gap:.75rem;flex-shrink:0">
+      <button onclick="acceptCookies()" style="background:#378ADD;color:#fff;border:none;padding:.5rem 1.25rem;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer">Accept</button>
+      <button onclick="declineCookies()" style="background:transparent;color:#8899aa;border:0.5px solid rgba(55,138,221,0.3);padding:.5rem 1.25rem;border-radius:6px;font-size:13px;cursor:pointer">Decline</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var consent = localStorage.getItem('cookie_consent');
+  if (consent === null) {
+    document.getElementById('cookie-banner').style.display = 'block';
+    window['ga-disable-G-FMQX2BE32H'] = true;
+  } else if (consent === 'declined') {
+    window['ga-disable-G-FMQX2BE32H'] = true;
+  }
+})();
+function acceptCookies() {
+  localStorage.setItem('cookie_consent', 'accepted');
+  document.getElementById('cookie-banner').style.display = 'none';
+  window['ga-disable-G-FMQX2BE32H'] = false;
+  gtag('config', 'G-FMQX2BE32H');
+}
+function declineCookies() {
+  localStorage.setItem('cookie_consent', 'declined');
+  document.getElementById('cookie-banner').style.display = 'none';
+  window['ga-disable-G-FMQX2BE32H'] = true;
+}
 </script>
 
 </body>

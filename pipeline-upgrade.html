@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Your Guest Pipeline Add-On | APodcastGeek</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#060810;color:#fff;line-height:1.6;min-height:100vh}
+
+/* NAV */
+.nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:#0a0e1a;border-bottom:0.5px solid rgba(55,138,221,0.2)}
+.nav-logo{height:44px;width:auto;display:block;filter:drop-shadow(0 0 2px white) drop-shadow(0 0 2px white)}
+
+/* HERO */
+.hero{padding:4rem 2rem 3rem;text-align:center;max-width:720px;margin:0 auto}
+.badge{display:inline-block;background:rgba(55,138,221,0.12);color:#85B7EB;border:0.5px solid rgba(55,138,221,0.3);border-radius:20px;padding:.3rem 1rem;font-size:12px;letter-spacing:.5px;margin-bottom:1.5rem;text-transform:uppercase}
+.hero h1{font-size:clamp(1.9rem,3.5vw,2.7rem);font-weight:800;color:#fff;line-height:1.12;margin-bottom:1rem}
+.hero h1 span{color:#378ADD}
+.hero-sub{font-size:1rem;color:#8899aa;line-height:1.8;max-width:560px;margin:0 auto}
+
+/* VALUE STACK */
+.stack-section{background:#0a0e1a;border:0.5px solid rgba(55,138,221,0.2);border-radius:16px;max-width:720px;margin:0 auto 2.5rem;padding:2rem 2.5rem}
+.stack-title{font-size:.75rem;letter-spacing:1.2px;color:#378ADD;text-transform:uppercase;font-weight:600;margin-bottom:1.25rem}
+.stack-row{display:flex;justify-content:space-between;align-items:center;padding:.65rem 0;border-bottom:0.5px solid rgba(55,138,221,0.1)}
+.stack-row:last-child{border-bottom:none}
+.stack-item{font-size:.9rem;color:#ccdaeb}
+.stack-value{font-size:.9rem;color:#8899aa;text-align:right}
+.stack-divider{border-top:0.5px solid rgba(55,138,221,0.3);margin-top:1rem;padding-top:1rem;display:flex;justify-content:space-between;align-items:center}
+.stack-total-label{font-size:.85rem;font-weight:700;color:#fff}
+.stack-total-value{font-size:1.3rem;font-weight:800;color:#378ADD}
+.stack-your-price{display:flex;justify-content:space-between;align-items:center;margin-top:.5rem}
+.stack-your-label{font-size:.85rem;color:#8899aa}
+.stack-your-value{font-size:1.1rem;font-weight:700;color:#4ade80}
+
+/* GUARANTEE */
+.guarantee{max-width:720px;margin:0 auto 2.5rem;background:rgba(55,138,221,0.06);border:0.5px solid rgba(55,138,221,0.25);border-radius:12px;padding:1.25rem 2rem;display:flex;align-items:center;gap:1rem}
+.guarantee-icon{font-size:1.5rem;flex-shrink:0}
+.guarantee p{font-size:.875rem;color:#aabbcc;line-height:1.6}
+.guarantee strong{color:#fff}
+
+/* FORM */
+.form-section{max-width:720px;margin:0 auto;padding:0 0 5rem}
+.form-card{background:#0a0e1a;border:0.5px solid rgba(55,138,221,0.2);border-radius:16px;padding:2.5rem}
+.form-card h2{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:.35rem}
+.form-card p{font-size:.875rem;color:#667788;margin-bottom:2rem;line-height:1.6}
+
+.field{margin-bottom:1.5rem}
+.field label{display:block;font-size:.8rem;font-weight:600;color:#aabbcc;letter-spacing:.3px;margin-bottom:.5rem}
+.field input,.field textarea,.field select{width:100%;background:#060810;border:0.5px solid rgba(55,138,221,0.25);border-radius:8px;padding:.75rem 1rem;color:#fff;font-size:.9rem;font-family:inherit;outline:none;transition:border-color .2s}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:#378ADD}
+.field textarea{resize:vertical;min-height:90px;line-height:1.6}
+.field select option{background:#0a0e1a;color:#fff}
+.field-note{font-size:.75rem;color:#556677;margin-top:.4rem}
+
+.radio-group{display:flex;gap:1rem;margin-top:.25rem}
+.radio-option{flex:1;display:flex;align-items:center;gap:.6rem;background:#060810;border:0.5px solid rgba(55,138,221,0.2);border-radius:8px;padding:.75rem 1rem;cursor:pointer;transition:border-color .2s}
+.radio-option:hover{border-color:rgba(55,138,221,0.5)}
+.radio-option input[type="radio"]{accent-color:#378ADD;width:16px;height:16px;flex-shrink:0}
+.radio-option.selected{border-color:#378ADD;background:rgba(55,138,221,0.06)}
+.radio-label{font-size:.9rem;color:#ccdaeb}
+
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+.submit-btn{width:100%;background:#378ADD;color:#fff;border:none;padding:1rem 2rem;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;transition:background .2s;margin-top:.5rem;letter-spacing:.2px}
+.submit-btn:hover{background:#185FA5}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* CONFIRMATION */
+.confirm-state{display:none;text-align:center;padding:4rem 2rem}
+.confirm-icon{font-size:3rem;margin-bottom:1.5rem}
+.confirm-state h2{font-size:1.6rem;font-weight:800;color:#fff;margin-bottom:.75rem}
+.confirm-state p{font-size:.95rem;color:#8899aa;line-height:1.7;max-width:480px;margin:0 auto}
+
+/* MOBILE */
+@media(max-width:640px){
+  .nav{padding:1rem 1.5rem}
+  .hero{padding:2.5rem 1.25rem 2rem}
+  .stack-section,.guarantee,.form-section{margin-left:1.25rem;margin-right:1.25rem;max-width:calc(100% - 2.5rem)}
+  .form-card{padding:1.5rem}
+  .field-row{grid-template-columns:1fr}
+  .stack-section{padding:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/"><img src="/logo.png" alt="APodcastGeek" class="nav-logo"></a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">Existing Clients Only</div>
+  <h1>Your podcast is about to become a <span>sales pipeline</span></h1>
+  <p class="hero-sub">We're adding a full guest booking system to your show at no extra cost for the first month. Two of your ideal clients, booked as podcast guests, every 30 days.</p>
+</div>
+
+<!-- VALUE STACK -->
+<div class="stack-section">
+  <div class="stack-title">What's included</div>
+  <div class="stack-row">
+    <span class="stack-item">2 ICP guests booked per month</span>
+    <span class="stack-value">€1,500 value</span>
+  </div>
+  <div class="stack-row">
+    <span class="stack-item">Episode brief with ignition questions built in</span>
+    <span class="stack-value">€300 value</span>
+  </div>
+  <div class="stack-row">
+    <span class="stack-item">Full Brand Builder production (already included)</span>
+    <span class="stack-value">€1,500 value</span>
+  </div>
+  <div class="stack-row">
+    <span class="stack-item">Clips and ads (already included)</span>
+    <span class="stack-value">€500 value</span>
+  </div>
+  <div class="stack-row">
+    <span class="stack-item">Per-episode lead magnet scorecard + QR code</span>
+    <span class="stack-value">€400 value</span>
+  </div>
+  <div class="stack-row">
+    <span class="stack-item">Episode newsletter, formatted and ready to send</span>
+    <span class="stack-value">€200 value</span>
+  </div>
+  <div class="stack-row">
+    <span class="stack-item">7-email onboarding drip sequence (plug and play)</span>
+    <span class="stack-value">€800 value</span>
+  </div>
+  <div class="stack-row">
+    <span class="stack-item">Monthly pipeline report: guests + leads captured</span>
+    <span class="stack-value">€200 value</span>
+  </div>
+  <div class="stack-divider">
+    <span class="stack-total-label">Total standalone value</span>
+    <span class="stack-total-value">€5,400/mo</span>
+  </div>
+  <div class="stack-your-price">
+    <span class="stack-your-label">Your price this month</span>
+    <span class="stack-your-value">Free</span>
+  </div>
+</div>
+
+<!-- GUARANTEE -->
+<div class="guarantee">
+  <div class="guarantee-icon">🛡</div>
+  <p><strong>The guarantee:</strong> If we don't book you 2 qualified ICP guests in your first month, that month is on us. No questions asked.</p>
+</div>
+
+<!-- FORM -->
+<div class="form-section">
+  <div class="form-card" id="form-card">
+    <h2>Tell us about your business</h2>
+    <p>Takes 3 minutes. We use this to build your guest booking campaign and write your ignition questions and drip sequence before we start.</p>
+
+    <form id="intake-form">
+      <div class="field-row">
+        <div class="field">
+          <label for="name">Your name</label>
+          <input type="text" id="name" name="name" placeholder="Calvin Tiloki" required>
+        </div>
+        <div class="field">
+          <label for="email">Your email</label>
+          <input type="email" id="email" name="email" placeholder="you@yourbusiness.com" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="podcast">Podcast name</label>
+        <input type="text" id="podcast" name="podcast" placeholder="Socially Awkward" required>
+      </div>
+
+      <div class="field">
+        <label for="icp">Who is your ideal client?</label>
+        <textarea id="icp" name="icp" placeholder="e.g. Marketing directors at B2B SaaS companies with 20-100 employees, based in the US or UK, annual budget of €50k+" required></textarea>
+        <div class="field-note">Industry, job title, company size, location. Be specific.</div>
+      </div>
+
+      <div class="field">
+        <label for="outcome">What is the one outcome you deliver for them?</label>
+        <textarea id="outcome" name="outcome" placeholder="e.g. We build and manage their paid acquisition funnel so they consistently generate 30+ qualified demos per month without relying on word of mouth." required></textarea>
+      </div>
+
+      <div class="field">
+        <label>Do you want to approve each guest before we reach out?</label>
+        <div class="radio-group">
+          <label class="radio-option" id="opt-yes">
+            <input type="radio" name="approval" value="yes" required>
+            <span class="radio-label">Yes, I want to approve each one</span>
+          </label>
+          <label class="radio-option" id="opt-no">
+            <input type="radio" name="approval" value="no" required>
+            <span class="radio-label">No, set the criteria and go</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="platform">Email platform</label>
+        <select id="platform" name="platform" required>
+          <option value="" disabled selected>Select your platform</option>
+          <option value="kit">Kit (ConvertKit)</option>
+          <option value="mailchimp">Mailchimp</option>
+          <option value="activecampaign">ActiveCampaign</option>
+          <option value="hubspot">HubSpot</option>
+          <option value="gohighlevel">GoHighLevel</option>
+          <option value="other">Other</option>
+          <option value="none">I don't have one yet</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="challenge">What's your biggest challenge with the podcast right now? <span style="color:#445566;font-weight:400">(optional)</span></label>
+        <textarea id="challenge" name="challenge" placeholder="e.g. We're getting listens but nobody is reaching out or converting into clients..."></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submit-btn">Send my details to APodcastGeek</button>
+    </form>
+  </div>
+
+  <!-- CONFIRMATION -->
+  <div class="confirm-state" id="confirm-state">
+    <div class="confirm-icon">✅</div>
+    <h2>You're in.</h2>
+    <p>Dave will be in touch within 24 hours to confirm your first guest booking campaign is live. Keep an eye on your inbox.</p>
+  </div>
+</div>
+
+<script>
+// Radio visual selection
+document.querySelectorAll('.radio-option input[type="radio"]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    document.querySelectorAll('.radio-option').forEach(opt => opt.classList.remove('selected'));
+    radio.closest('.radio-option').classList.add('selected');
+  });
+});
+
+// Form submission
+document.getElementById('intake-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  const data = {
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    podcast: document.getElementById('podcast').value,
+    icp: document.getElementById('icp').value,
+    outcome: document.getElementById('outcome').value,
+    approval: document.querySelector('input[name="approval"]:checked')?.value,
+    platform: document.getElementById('platform').value,
+    challenge: document.getElementById('challenge').value,
+    submitted_at: new Date().toISOString()
+  };
+
+  try {
+    const res = await fetch('https://apodcastgeek.app.n8n.cloud/webhook/pipeline-upgrade-intake', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) console.error('Pipeline intake webhook failed:', res.status);
+  } catch(err) {
+    console.error('Pipeline intake webhook error:', err);
+  }
+
+  document.getElementById('form-card').style.display = 'none';
+  document.getElementById('confirm-state').style.display = 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+});
+</script>
+
+</body>
+</html>
