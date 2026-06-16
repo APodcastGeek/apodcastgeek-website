@@ -169,7 +169,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="form-section">
   <div class="form-card" id="form-card">
     <h2>Tell us about your business</h2>
-    <p>Takes 3 minutes. We use this to build your guest booking campaign and write your ignition questions and drip sequence before we start.</p>
+    <p>Takes 5 minutes. We use this to build your guest booking campaign and create your VSL brief before we start.</p>
 
     <form id="intake-form">
       <div class="field-row">
@@ -235,9 +235,54 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
         <div class="field-note">We'll format the drip sequence for your platform. If you don't have one, we'll cover that in your kickoff call.</div>
       </div>
 
+      <div class="field" style="margin-top:2.5rem;padding-top:2.5rem;border-top:0.5px solid rgba(55,138,221,0.15)">
+        <p class="stack-title" style="margin-bottom:0.25rem">Your offer and message</p>
+        <p style="font-size:.8rem;color:#445566;margin-bottom:0">These help us build your VSL brief and guest booking strategy.</p>
+      </div>
+
       <div class="field">
-        <label for="challenge">What's your biggest challenge with the podcast right now? <span style="color:#445566;font-weight:400">(optional)</span></label>
-        <textarea id="challenge" name="challenge" placeholder="e.g. We're getting listens but nobody is reaching out or converting into clients..."></textarea>
+        <label for="surface_problem">What problem do your clients tell you they have?</label>
+        <textarea id="surface_problem" name="surface_problem" placeholder="e.g. They can't generate consistent leads without relying on referrals" required></textarea>
+      </div>
+
+      <div class="field">
+        <label for="paradigm">What is the real problem underneath that, that most of them don't see yet?</label>
+        <textarea id="paradigm" name="paradigm" placeholder="e.g. They're trying to fix lead volume when the real issue is they have no conversion system for the leads they already get" required></textarea>
+      </div>
+
+      <div class="field">
+        <label for="method_name">What do you call your process or system? <span style="color:#445566;font-weight:400">(optional)</span></label>
+        <input type="text" id="method_name" name="method_name" placeholder="e.g. The Pipeline Method, The 90-Day Blueprint">
+        <div class="field-note">Leave blank if you'd like us to suggest name options.</div>
+      </div>
+
+      <div class="field">
+        <label>Are you happy for us to propose name options for your process?</label>
+        <div class="radio-group">
+          <label class="radio-option" id="opt-naming-yes">
+            <input type="radio" name="method_naming" value="yes" required>
+            <span class="radio-label">Yes, suggest three options for me to choose from</span>
+          </label>
+          <label class="radio-option" id="opt-naming-no">
+            <input type="radio" name="method_naming" value="no">
+            <span class="radio-label">No, I already have a name I want to use</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="method_steps">Describe how your process works in 2 to 4 steps or components</label>
+        <textarea id="method_steps" name="method_steps" placeholder="e.g. 1. Audit their current pipeline. 2. Build a 90-day outbound sequence. 3. Weekly coaching calls. 4. Hit target MRR." required></textarea>
+      </div>
+
+      <div class="field">
+        <label for="best_result">Your strongest client result: who, what changed, and how long it took</label>
+        <textarea id="best_result" name="best_result" placeholder="e.g. James, a SaaS founder, went from 3 cold leads a month to 22 qualified demos in 8 weeks without increasing his ad spend" required></textarea>
+      </div>
+
+      <div class="field">
+        <label for="discovery_call">What happens on your discovery call, and what does someone walk away with?</label>
+        <textarea id="discovery_call" name="discovery_call" placeholder="e.g. A free 30-minute session where we audit their pipeline and they leave with a clear action plan, even if they don't work with us" required></textarea>
       </div>
 
       <button type="submit" class="submit-btn" id="submit-btn">Send my details to APodcastGeek</button>
@@ -255,7 +300,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <script>
 document.querySelectorAll('.radio-option input[type="radio"]').forEach(radio => {
   radio.addEventListener('change', () => {
-    document.querySelectorAll('.radio-option').forEach(opt => opt.classList.remove('selected'));
+    const group = radio.closest('.radio-group, .field');
+    group.querySelectorAll('.radio-option').forEach(opt => opt.classList.remove('selected'));
     radio.closest('.radio-option').classList.add('selected');
   });
 });
@@ -275,7 +321,13 @@ document.getElementById('intake-form').addEventListener('submit', async (e) => {
     approval: document.querySelector('input[name="approval"]:checked')?.value,
     dreamlist: document.getElementById('dreamlist').value,
     platform: document.getElementById('platform').value,
-    challenge: document.getElementById('challenge').value,
+    surface_problem: document.getElementById('surface_problem').value,
+    paradigm: document.getElementById('paradigm').value,
+    method_name: document.getElementById('method_name').value,
+    method_naming: document.querySelector('input[name="method_naming"]:checked')?.value,
+    method_steps: document.getElementById('method_steps').value,
+    best_result: document.getElementById('best_result').value,
+    discovery_call: document.getElementById('discovery_call').value,
     submitted_at: new Date().toISOString()
   };
 
