@@ -12,12 +12,10 @@ html{scroll-behavior:smooth}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#060810;color:#fff;line-height:1.6;min-height:100vh}
 
 /* NAV */
-.nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:#0a0e1a;border-bottom:0.5px solid rgba(55,138,221,0.2)}
-.nav-logo{height:44px;width:auto;display:block;filter:drop-shadow(0 0 1px white)}
+.hero-logo{height:88px;width:auto;display:block;margin:0 auto 1.5rem;filter:drop-shadow(0 0 1px white)}
 
 /* HERO */
 .hero{padding:4rem 2rem 3rem;text-align:center;max-width:720px;margin:0 auto}
-.badge{display:inline-block;background:rgba(55,138,221,0.12);color:#85B7EB;border:0.5px solid rgba(55,138,221,0.3);border-radius:20px;padding:.3rem 1rem;font-size:12px;letter-spacing:.5px;margin-bottom:1.5rem;text-transform:uppercase}
 .hero h1{font-size:clamp(1.9rem,3.5vw,2.7rem);font-weight:800;color:#fff;line-height:1.12;margin-bottom:1rem}
 .hero h1 span{color:#378ADD}
 .hero-sub{font-size:1rem;color:#8899aa;line-height:1.8;max-width:560px;margin:0 auto}
@@ -81,7 +79,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
 /* MOBILE */
 @media(max-width:640px){
-  .nav{padding:1rem 1.5rem}
   .hero{padding:2.5rem 1.25rem 2rem}
   .stack-section,.guarantee,.form-section{margin-left:1.25rem;margin-right:1.25rem;max-width:calc(100% - 2.5rem)}
   .form-card{padding:1.5rem}
@@ -93,13 +90,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </head>
 <body>
 
-<nav class="nav">
-  <a href="/"><img src="logo.png" alt="APodcastGeek" class="nav-logo"></a>
-</nav>
-
 <!-- HERO -->
 <div class="hero">
-  <div class="badge">Existing Clients Only</div>
+  <img src="logo.png" alt="APodcastGeek" class="hero-logo">
   <h1>Your podcast is about to become a <span>sales pipeline</span></h1>
   <p class="hero-sub">We're adding a full guest booking system to your show. Two of your ideal clients, booked as podcast guests, every 30 days.</p>
 </div>
@@ -232,7 +225,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
           <option value="other">Other</option>
           <option value="none">I don't have one yet</option>
         </select>
-        <div class="field-note">We'll format the drip sequence for your platform. If you don't have one, we'll cover that in your kickoff call.</div>
+        <div class="field-note">If you don't have one, we'll cover that in your kickoff call.</div>
+      </div>
+
+      <div class="field">
+        <label for="booking_link">Your discovery call booking link</label>
+        <input type="url" id="booking_link" name="booking_link" placeholder="e.g. https://calendly.com/yourname/discovery" required>
       </div>
 
       <div class="field" style="margin-top:2.5rem;padding-top:2.5rem;border-top:0.5px solid rgba(55,138,221,0.15)">
@@ -253,21 +251,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
       <div class="field">
         <label for="method_name">What do you call your process or system? <span style="color:#445566;font-weight:400">(optional)</span></label>
         <input type="text" id="method_name" name="method_name" placeholder="e.g. The Pipeline Method, The 90-Day Blueprint">
-        <div class="field-note">Leave blank if you'd like us to suggest name options.</div>
-      </div>
-
-      <div class="field">
-        <label>Are you happy for us to propose name options for your process?</label>
-        <div class="radio-group">
-          <label class="radio-option" id="opt-naming-yes">
-            <input type="radio" name="method_naming" value="yes" required>
-            <span class="radio-label">Yes, suggest three options for me to choose from</span>
-          </label>
-          <label class="radio-option" id="opt-naming-no">
-            <input type="radio" name="method_naming" value="no">
-            <span class="radio-label">No, I already have a name I want to use</span>
-          </label>
-        </div>
       </div>
 
       <div class="field">
@@ -275,14 +258,78 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
         <textarea id="method_steps" name="method_steps" placeholder="e.g. 1. Audit their current pipeline. 2. Build a 90-day outbound sequence. 3. Weekly coaching calls. 4. Hit target MRR." required></textarea>
       </div>
 
+      <div class="field" style="margin-top:2.5rem;padding-top:2.5rem;border-top:0.5px solid rgba(55,138,221,0.15)">
+        <p class="stack-title" style="margin-bottom:0.25rem">Your proof</p>
+        <p style="font-size:.8rem;color:#445566;margin-bottom:0">Two client case studies power the email sequence. Pick your two strongest — they should cover different situations or objections.</p>
+      </div>
+
       <div class="field">
-        <label for="best_result">Your strongest client result: who, what changed, and how long it took</label>
-        <textarea id="best_result" name="best_result" placeholder="e.g. James, a SaaS founder, went from 3 cold leads a month to 22 qualified demos in 8 weeks without increasing his ad spend" required></textarea>
+        <label for="case1_client">Case study one: client first name or company</label>
+        <input type="text" id="case1_client" name="case1_client" placeholder="e.g. James / Northside Digital" required>
+      </div>
+
+      <div class="field">
+        <label for="case1_before">What were they struggling with when they came to you?</label>
+        <textarea id="case1_before" name="case1_before" placeholder="e.g. Relying entirely on referrals, no outbound system, losing deals to better-known competitors" required></textarea>
+      </div>
+
+      <div class="field">
+        <label for="case1_results">What specific results did they get? Include numbers and timeframes.</label>
+        <textarea id="case1_results" name="case1_results" placeholder="e.g. 22 qualified demos in 8 weeks, closed 3 retainer clients worth €14k MRR, pipeline went from empty to 60-day visibility" required></textarea>
+        <div class="field-note">Real numbers only. No approximations.</div>
+      </div>
+
+      <div class="field">
+        <label for="case1_quote">A quote from them about the experience <span style="color:#445566;font-weight:400">(optional)</span></label>
+        <textarea id="case1_quote" name="case1_quote" placeholder="e.g. &quot;I went from chasing referrals to having a full pipeline in two months. I wish I'd done this sooner.&quot;"></textarea>
+        <div class="field-note">Their words, not yours. Even one sentence is enough.</div>
+      </div>
+
+      <div class="field">
+        <label for="case1_video">Testimonial video URL <span style="color:#445566;font-weight:400">(optional but strongly recommended)</span></label>
+        <input type="url" id="case1_video" name="case1_video" placeholder="e.g. https://vimeo.com/yourlink">
+      </div>
+
+      <div class="field" style="margin-top:1.5rem;padding-top:1.5rem;border-top:0.5px solid rgba(55,138,221,0.1)">
+        <label for="case2_client">Case study two: client first name or company</label>
+        <input type="text" id="case2_client" name="case2_client" placeholder="e.g. Sarah / Clearpoint Advisory" required>
+      </div>
+
+      <div class="field">
+        <label for="case2_before">What were they struggling with when they came to you?</label>
+        <textarea id="case2_before" name="case2_before" placeholder="e.g. Had tried an agency before, felt burned, didn't trust the process would work for their niche" required></textarea>
+      </div>
+
+      <div class="field">
+        <label for="case2_results">What specific results did they get? Include numbers and timeframes.</label>
+        <textarea id="case2_results" name="case2_results" placeholder="e.g. Booked 8 new clients in 90 days, reduced sales cycle from 6 weeks to 12 days, hit monthly revenue target for the first time" required></textarea>
+        <div class="field-note">Real numbers only. No approximations.</div>
+      </div>
+
+      <div class="field">
+        <label for="case2_quote">A quote from them about the experience <span style="color:#445566;font-weight:400">(optional)</span></label>
+        <textarea id="case2_quote" name="case2_quote" placeholder="e.g. &quot;I was sceptical at first but the results spoke for themselves within the first month.&quot;"></textarea>
+        <div class="field-note">Their words, not yours. Even one sentence is enough.</div>
+      </div>
+
+      <div class="field">
+        <label for="case2_video">Testimonial video URL <span style="color:#445566;font-weight:400">(optional but strongly recommended)</span></label>
+        <input type="url" id="case2_video" name="case2_video" placeholder="e.g. https://vimeo.com/yourlink">
+      </div>
+
+      <div class="field" style="margin-top:2.5rem;padding-top:2.5rem;border-top:0.5px solid rgba(55,138,221,0.15)">
+        <p class="stack-title" style="margin-bottom:0.25rem">Your discovery call</p>
       </div>
 
       <div class="field">
         <label for="discovery_call">What happens on your discovery call, and what does someone walk away with?</label>
         <textarea id="discovery_call" name="discovery_call" placeholder="e.g. A free 30-minute session where we audit their pipeline and they leave with a clear action plan, even if they don't work with us" required></textarea>
+      </div>
+
+      <div class="field">
+        <label for="guarantee">What guarantee or risk reversal do you offer? <span style="color:#445566;font-weight:400">(optional)</span></label>
+        <textarea id="guarantee" name="guarantee" placeholder="e.g. If you don't see at least 5 qualified conversations in your first 60 days, we work for free until you do"></textarea>
+        <div class="field-note">Leave blank if you don't offer one.</div>
       </div>
 
       <button type="submit" class="submit-btn" id="submit-btn">Send my details to APodcastGeek</button>
@@ -306,6 +353,7 @@ document.querySelectorAll('.radio-option input[type="radio"]').forEach(radio => 
   });
 });
 
+
 document.getElementById('intake-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const btn = document.getElementById('submit-btn');
@@ -321,13 +369,23 @@ document.getElementById('intake-form').addEventListener('submit', async (e) => {
     approval: document.querySelector('input[name="approval"]:checked')?.value,
     dreamlist: document.getElementById('dreamlist').value,
     platform: document.getElementById('platform').value,
+    booking_link: document.getElementById('booking_link').value,
     surface_problem: document.getElementById('surface_problem').value,
     paradigm: document.getElementById('paradigm').value,
     method_name: document.getElementById('method_name').value,
-    method_naming: document.querySelector('input[name="method_naming"]:checked')?.value,
     method_steps: document.getElementById('method_steps').value,
-    best_result: document.getElementById('best_result').value,
+    case1_client: document.getElementById('case1_client').value,
+    case1_before: document.getElementById('case1_before').value,
+    case1_results: document.getElementById('case1_results').value,
+    case1_quote: document.getElementById('case1_quote').value,
+    case1_video: document.getElementById('case1_video').value,
+    case2_client: document.getElementById('case2_client').value,
+    case2_before: document.getElementById('case2_before').value,
+    case2_results: document.getElementById('case2_results').value,
+    case2_quote: document.getElementById('case2_quote').value,
+    case2_video: document.getElementById('case2_video').value,
     discovery_call: document.getElementById('discovery_call').value,
+    guarantee: document.getElementById('guarantee').value,
     submitted_at: new Date().toISOString()
   };
 
