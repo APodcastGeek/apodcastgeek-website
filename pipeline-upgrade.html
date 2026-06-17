@@ -84,14 +84,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .submit-btn:disabled{opacity:.5;cursor:not-allowed}
 
 /* CONFIRMATION */
-.confirm-state{display:none;text-align:center;padding:4rem 2rem}
-.confirm-icon{font-size:3rem;margin-bottom:1.5rem}
+.confirm-state{display:none;min-height:100vh;padding:4rem 2rem;text-align:center}
+.confirm-logo{height:88px;width:auto;display:block;margin:0 auto 2.5rem;filter:drop-shadow(0 0 1px white)}
+.confirm-icon{font-size:3rem;margin-bottom:1.25rem;color:#4ade80}
 .confirm-state h2{font-size:1.6rem;font-weight:800;color:#fff;margin-bottom:.75rem}
 .confirm-state > p{font-size:.95rem;color:#8899aa;line-height:1.7;max-width:480px;margin:0 auto 2.5rem}
 .confirm-steps{max-width:480px;margin:0 auto;text-align:left}
 .confirm-step{display:flex;gap:1.25rem;padding:1rem 0;border-bottom:0.5px solid rgba(55,138,221,0.1)}
 .confirm-step:last-child{border-bottom:none}
-.confirm-step-label{font-size:.72rem;font-weight:700;color:#378ADD;text-transform:uppercase;letter-spacing:.5px;min-width:110px;flex-shrink:0;padding-top:.15rem}
+.confirm-step-label{font-size:.72rem;font-weight:700;color:#378ADD;text-transform:uppercase;letter-spacing:.5px;min-width:120px;flex-shrink:0;padding-top:.15rem}
 .confirm-step-text{font-size:.875rem;color:#aabbcc;line-height:1.6}
 
 /* MOBILE */
@@ -108,283 +109,289 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </head>
 <body>
 
-<!-- HERO -->
-<div class="hero">
-  <img src="logo.png" alt="APodcastGeek" class="hero-logo">
-  <div class="system-badge">APG Acquisition System</div>
-  <h1>Your podcast has been building trust. <span>Now let's turn it into clients.</span></h1>
-  <p class="hero-sub">We're adding a complete guest booking system to your Brand Builder plan. Two of your ideal clients on your show every month, starting at no extra charge.</p>
-</div>
+<!-- MAIN PAGE CONTENT -->
+<div id="page-content">
 
-<!-- SCARCITY -->
-<div class="scarcity-bar">
-  <div class="scarcity-bar-inner">
-    <span class="scarcity-dot"></span>
-    <span class="scarcity-text">Only 2 pilot spots available. First come, first served.</span>
-  </div>
-</div>
-
-<!-- VALUE STACK -->
-<div class="stack-section">
-  <div class="stack-title">What's being added</div>
-  <div class="stack-row">
-    <span class="stack-item">2 ICP guests booked per month</span>
-    <span class="stack-value">€1,500/mo value</span>
-  </div>
-  <div class="stack-row">
-    <span class="stack-item">Episode brief with ignition questions built in</span>
-    <span class="stack-value">€300/mo value</span>
-  </div>
-  <div class="stack-row">
-    <span class="stack-item">Per-episode lead magnet scorecard with QR code</span>
-    <span class="stack-value">€400/mo value</span>
-  </div>
-  <div class="stack-row">
-    <span class="stack-item">9-email onboarding drip sequence (plug and play)</span>
-    <span class="stack-value">€800 value</span>
-  </div>
-  <div class="stack-row">
-    <span class="stack-item">Full guest coordination (brief, prep pack, thank you, promo pack on launch day)</span>
-    <span class="stack-value">€200/mo value</span>
-  </div>
-  <div class="stack-row">
-    <span class="stack-item">Video sales letter landing page, APG hosted, with full attribution tracking</span>
-    <span class="stack-value">€300 value</span>
-  </div>
-  <div class="stack-row">
-    <span class="stack-item">Monthly pipeline report: guests booked, VSL views, calls booked</span>
-    <span class="stack-value">€200/mo value</span>
+  <!-- HERO -->
+  <div class="hero">
+    <img src="logo.png" alt="APodcastGeek" class="hero-logo">
+    <div class="system-badge">APG Acquisition System</div>
+    <h1>Your podcast has been building trust. <span>Now let's turn it into clients.</span></h1>
+    <p class="hero-sub">We're adding a complete guest booking system to your Brand Builder plan. Two of your ideal clients on your show every month, starting at no extra charge.</p>
   </div>
 
-  <div class="stack-title-secondary">What you already have</div>
-  <div class="stack-row">
-    <span class="stack-item">Full Brand Builder production (clips, ads, newsletter, show notes)</span>
-    <span class="stack-included-label">Already included</span>
+  <!-- SCARCITY -->
+  <div class="scarcity-bar">
+    <div class="scarcity-bar-inner">
+      <span class="scarcity-dot"></span>
+      <span class="scarcity-text">Only 2 pilot spots available. First come, first served.</span>
+    </div>
   </div>
 
-  <div class="stack-divider">
-    <span class="stack-total-label">New standalone value added</span>
-    <span class="stack-total-value">€3,700 value</span>
-  </div>
-  <div class="stack-pilot">
-    <span class="stack-pilot-label">Added to your current plan for month one</span>
-    <span class="stack-pilot-value">No extra charge</span>
-  </div>
-  <div class="stack-month2">
-    <span class="stack-month2-label">Month two onwards</span>
-    <span class="stack-month2-value">€500/mo, locked in at this rate</span>
-  </div>
-  <div class="stack-ask">
-    The only thing we ask for month one: a short testimonial on what we delivered. That's it.
-  </div>
-</div>
+  <!-- VALUE STACK -->
+  <div class="stack-section">
+    <div class="stack-title">What's being added</div>
+    <div class="stack-row">
+      <span class="stack-item">2 ICP guests booked per month</span>
+      <span class="stack-value">€1,500/mo value</span>
+    </div>
+    <div class="stack-row">
+      <span class="stack-item">Episode brief with ignition questions built in</span>
+      <span class="stack-value">€300/mo value</span>
+    </div>
+    <div class="stack-row">
+      <span class="stack-item">Per-episode lead magnet scorecard with QR code</span>
+      <span class="stack-value">€400/mo value</span>
+    </div>
+    <div class="stack-row">
+      <span class="stack-item">9-email onboarding drip sequence (plug and play)</span>
+      <span class="stack-value">€800 value</span>
+    </div>
+    <div class="stack-row">
+      <span class="stack-item">Full guest coordination (brief, prep pack, thank you, promo pack on launch day)</span>
+      <span class="stack-value">€200/mo value</span>
+    </div>
+    <div class="stack-row">
+      <span class="stack-item">Video sales letter landing page, APG hosted, with full attribution tracking</span>
+      <span class="stack-value">€300 value</span>
+    </div>
+    <div class="stack-row">
+      <span class="stack-item">Monthly pipeline report: guests booked, VSL views, calls booked</span>
+      <span class="stack-value">€200/mo value</span>
+    </div>
 
-<!-- GUARANTEE -->
-<div class="guarantee">
-  <div class="guarantee-icon">🛡</div>
-  <p><strong>The guarantee:</strong> If we don't book 2 qualified ICP guests in your first 30 days, we run the following month at no additional charge until we do. Your Brand Builder rate stays fixed throughout. Zero downside. Qualified means they match the ICP criteria you define in the form below. You have final say.</p>
-</div>
+    <div class="stack-title-secondary">What you already have</div>
+    <div class="stack-row">
+      <span class="stack-item">Full Brand Builder production (clips, ads, newsletter, show notes)</span>
+      <span class="stack-included-label">Already included</span>
+    </div>
 
-<!-- FORM -->
-<div class="form-section">
-  <div class="form-card" id="form-card">
-    <h2>Tell us about your business</h2>
-    <p>Takes around 15 minutes. We use this to build your guest booking campaign and create your VSL brief before we start.</p>
+    <div class="stack-divider">
+      <span class="stack-total-label">New standalone value added</span>
+      <span class="stack-total-value">€3,700 value</span>
+    </div>
+    <div class="stack-pilot">
+      <span class="stack-pilot-label">Added to your current plan for month one</span>
+      <span class="stack-pilot-value">No extra charge</span>
+    </div>
+    <div class="stack-month2">
+      <span class="stack-month2-label">Month two onwards</span>
+      <span class="stack-month2-value">€500/mo, locked in at this rate</span>
+    </div>
+    <div class="stack-ask">
+      The only thing we ask for month one: a short testimonial on what we delivered. That's it.
+    </div>
+  </div>
 
-    <form id="intake-form">
-      <div class="field-row">
+  <!-- GUARANTEE -->
+  <div class="guarantee">
+    <div class="guarantee-icon">🛡</div>
+    <p><strong>The guarantee:</strong> If we don't book 2 qualified ICP guests in your first 30 days, we run the following month at no additional charge until we do. Your Brand Builder rate stays fixed throughout. Zero downside. Qualified means they match the ICP criteria you define in the form below. You have final say.</p>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-section">
+    <div class="form-card" id="form-card">
+      <h2>Tell us about your business</h2>
+      <p>Takes around 15 minutes. We use this to build your guest booking campaign and create your VSL brief before we start.</p>
+
+      <form id="intake-form">
+        <div class="field-row">
+          <div class="field">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" placeholder="Your full name" required>
+          </div>
+          <div class="field">
+            <label for="email">Your email</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+          </div>
+        </div>
+
         <div class="field">
-          <label for="name">Your name</label>
-          <input type="text" id="name" name="name" placeholder="Your full name" required>
+          <label for="podcast">Podcast name</label>
+          <input type="text" id="podcast" name="podcast" placeholder="Your podcast name" required>
         </div>
+
         <div class="field">
-          <label for="email">Your email</label>
-          <input type="email" id="email" name="email" placeholder="your@email.com" required>
+          <label for="icp">Who is your ideal client?</label>
+          <textarea id="icp" name="icp" placeholder="e.g. Marketing directors at B2B SaaS companies with 20-100 employees, based in the US or UK, annual budget of €50k+" required></textarea>
+          <div class="field-note">Industry, job title, company size, location. Be specific.</div>
         </div>
-      </div>
 
-      <div class="field">
-        <label for="podcast">Podcast name</label>
-        <input type="text" id="podcast" name="podcast" placeholder="Your podcast name" required>
-      </div>
-
-      <div class="field">
-        <label for="icp">Who is your ideal client?</label>
-        <textarea id="icp" name="icp" placeholder="e.g. Marketing directors at B2B SaaS companies with 20-100 employees, based in the US or UK, annual budget of €50k+" required></textarea>
-        <div class="field-note">Industry, job title, company size, location. Be specific.</div>
-      </div>
-
-      <div class="field">
-        <label for="outcome">What is the one outcome you deliver for them?</label>
-        <textarea id="outcome" name="outcome" placeholder="e.g. We build and manage their paid acquisition funnel so they consistently generate 30+ qualified demos per month without relying on word of mouth." required></textarea>
-      </div>
-
-      <div class="field">
-        <label for="dreamlist">Who would be your dream podcast guests? <span style="color:#445566;font-weight:400">(optional)</span></label>
-        <textarea id="dreamlist" name="dreamlist" placeholder="e.g. Name 5-10 people or companies you've always wanted to work with. They must be potential clients, not just industry names you admire."></textarea>
-        <div class="field-note">We'll prioritise these in outreach and work hard to get them on your show.</div>
-      </div>
-
-      <div class="field">
-        <label>Do you want to approve each guest before we reach out?</label>
-        <div class="radio-group">
-          <label class="radio-option" id="opt-yes">
-            <input type="radio" name="approval" value="yes" required>
-            <span class="radio-label">Yes, I want to approve each one</span>
-          </label>
-          <label class="radio-option" id="opt-no">
-            <input type="radio" name="approval" value="no" required>
-            <span class="radio-label">No, set the criteria and go</span>
-          </label>
+        <div class="field">
+          <label for="outcome">What is the one outcome you deliver for them?</label>
+          <textarea id="outcome" name="outcome" placeholder="e.g. We build and manage their paid acquisition funnel so they consistently generate 30+ qualified demos per month without relying on word of mouth." required></textarea>
         </div>
-        <div class="field-note">Either way, we build the criteria first. Approval mode means we send you a shortlist before reaching out.</div>
-      </div>
 
-      <div class="field">
-        <label for="platform">Email platform</label>
-        <select id="platform" name="platform" required>
-          <option value="" disabled selected>Select your platform</option>
-          <option value="kit">Kit (ConvertKit)</option>
-          <option value="mailchimp">Mailchimp</option>
-          <option value="activecampaign">ActiveCampaign</option>
-          <option value="hubspot">HubSpot</option>
-          <option value="gohighlevel">GoHighLevel</option>
-          <option value="other">Other</option>
-          <option value="none">I don't have one yet</option>
-        </select>
-        <div class="field-note">If you don't have one, we'll cover that in your kickoff call.</div>
-      </div>
+        <div class="field">
+          <label for="dreamlist">Who would be your dream podcast guests? <span style="color:#445566;font-weight:400">(optional)</span></label>
+          <textarea id="dreamlist" name="dreamlist" placeholder="e.g. Name 5-10 people or companies you've always wanted to work with. They must be potential clients, not just industry names you admire."></textarea>
+          <div class="field-note">We'll prioritise these in outreach and work hard to get them on your show.</div>
+        </div>
 
-      <div class="field">
-        <label for="booking_link">Your discovery call booking link</label>
-        <input type="url" id="booking_link" name="booking_link" placeholder="e.g. https://calendly.com/yourname/discovery" required>
-      </div>
+        <div class="field">
+          <label>Do you want to approve each guest before we reach out?</label>
+          <div class="radio-group">
+            <label class="radio-option" id="opt-yes">
+              <input type="radio" name="approval" value="yes" required>
+              <span class="radio-label">Yes, I want to approve each one</span>
+            </label>
+            <label class="radio-option" id="opt-no">
+              <input type="radio" name="approval" value="no" required>
+              <span class="radio-label">No, set the criteria and go</span>
+            </label>
+          </div>
+          <div class="field-note">Either way, we build the criteria first. Approval mode means we send you a shortlist before reaching out.</div>
+        </div>
 
-      <div class="field" style="margin-top:2.5rem;padding-top:2.5rem;border-top:0.5px solid rgba(55,138,221,0.15)">
-        <p class="stack-title" style="margin-bottom:0.25rem">Your offer and message</p>
-        <p style="font-size:.8rem;color:#445566;margin-bottom:0">These help us build your VSL brief and guest booking strategy.</p>
-      </div>
+        <div class="field">
+          <label for="platform">Email platform</label>
+          <select id="platform" name="platform" required>
+            <option value="" disabled selected>Select your platform</option>
+            <option value="kit">Kit (ConvertKit)</option>
+            <option value="mailchimp">Mailchimp</option>
+            <option value="activecampaign">ActiveCampaign</option>
+            <option value="hubspot">HubSpot</option>
+            <option value="gohighlevel">GoHighLevel</option>
+            <option value="other">Other</option>
+            <option value="none">I don't have one yet</option>
+          </select>
+          <div class="field-note">If you don't have one, we'll cover that in your kickoff call.</div>
+        </div>
 
-      <div class="field">
-        <label for="surface_problem">What problem do your clients tell you they have?</label>
-        <textarea id="surface_problem" name="surface_problem" placeholder="e.g. They can't generate consistent leads without relying on referrals" required></textarea>
-      </div>
+        <div class="field">
+          <label for="booking_link">Your discovery call booking link</label>
+          <input type="url" id="booking_link" name="booking_link" placeholder="e.g. https://calendly.com/yourname/discovery" required>
+        </div>
 
-      <div class="field">
-        <label for="paradigm">What is the real problem underneath that, that most of them don't see yet?</label>
-        <textarea id="paradigm" name="paradigm" placeholder="e.g. They're trying to fix lead volume when the real issue is they have no conversion system for the leads they already get" required></textarea>
-      </div>
+        <div class="field" style="margin-top:2.5rem;padding-top:2.5rem;border-top:0.5px solid rgba(55,138,221,0.15)">
+          <p class="stack-title" style="margin-bottom:0.25rem">Your offer and message</p>
+          <p style="font-size:.8rem;color:#445566;margin-bottom:0">These help us build your VSL brief and guest booking strategy.</p>
+        </div>
 
-      <div class="field">
-        <label for="method_name">What do you call your process or system? <span style="color:#445566;font-weight:400">(optional)</span></label>
-        <input type="text" id="method_name" name="method_name" placeholder="e.g. The Pipeline Method, The 90-Day Blueprint">
-      </div>
+        <div class="field">
+          <label for="surface_problem">What problem do your clients tell you they have?</label>
+          <textarea id="surface_problem" name="surface_problem" placeholder="e.g. They can't generate consistent leads without relying on referrals" required></textarea>
+        </div>
 
-      <div class="field">
-        <label for="method_steps">Describe how your process works in 2 to 4 steps or components</label>
-        <textarea id="method_steps" name="method_steps" placeholder="e.g. 1. Audit their current pipeline. 2. Build a 90-day outbound sequence. 3. Weekly coaching calls. 4. Hit target MRR." required></textarea>
-      </div>
+        <div class="field">
+          <label for="paradigm">What is the real problem underneath that, that most of them don't see yet?</label>
+          <textarea id="paradigm" name="paradigm" placeholder="e.g. They're trying to fix lead volume when the real issue is they have no conversion system for the leads they already get" required></textarea>
+        </div>
 
-      <div class="field" style="margin-top:2.5rem;padding-top:2.5rem;border-top:0.5px solid rgba(55,138,221,0.15)">
-        <p class="stack-title" style="margin-bottom:0.25rem">Your proof</p>
-        <p style="font-size:.8rem;color:#445566;margin-bottom:0">Two client case studies power the email sequence. Pick your two strongest, covering different situations or objections.</p>
-      </div>
+        <div class="field">
+          <label for="method_name">What do you call your process or system? <span style="color:#445566;font-weight:400">(optional)</span></label>
+          <input type="text" id="method_name" name="method_name" placeholder="e.g. The Pipeline Method, The 90-Day Blueprint">
+        </div>
 
-      <div class="field">
-        <label for="case1_client">Case study one: client first name or company</label>
-        <input type="text" id="case1_client" name="case1_client" placeholder="e.g. James / Northside Digital" required>
-      </div>
+        <div class="field">
+          <label for="method_steps">Describe how your process works in 2 to 4 steps or components</label>
+          <textarea id="method_steps" name="method_steps" placeholder="e.g. 1. Audit their current pipeline. 2. Build a 90-day outbound sequence. 3. Weekly coaching calls. 4. Hit target MRR." required></textarea>
+        </div>
 
-      <div class="field">
-        <label for="case1_before">What were they struggling with when they came to you?</label>
-        <textarea id="case1_before" name="case1_before" placeholder="e.g. Relying entirely on referrals, no outbound system, losing deals to better-known competitors" required></textarea>
-      </div>
+        <div class="field" style="margin-top:2.5rem;padding-top:2.5rem;border-top:0.5px solid rgba(55,138,221,0.15)">
+          <p class="stack-title" style="margin-bottom:0.25rem">Your proof</p>
+          <p style="font-size:.8rem;color:#445566;margin-bottom:0">Two client case studies power the email sequence. Pick your two strongest, covering different situations or objections.</p>
+        </div>
 
-      <div class="field">
-        <label for="case1_results">What specific results did they get? Include numbers and timeframes.</label>
-        <textarea id="case1_results" name="case1_results" placeholder="e.g. 22 qualified demos in 8 weeks, closed 3 retainer clients worth €14k MRR, pipeline went from empty to 60-day visibility" required></textarea>
-        <div class="field-note">Real numbers only. No approximations.</div>
-      </div>
+        <div class="field">
+          <label for="case1_client">Case study one: client first name or company</label>
+          <input type="text" id="case1_client" name="case1_client" placeholder="e.g. James / Northside Digital" required>
+        </div>
 
-      <div class="field">
-        <label for="case1_quote">A quote from them about the experience <span style="color:#445566;font-weight:400">(optional)</span></label>
-        <textarea id="case1_quote" name="case1_quote" placeholder="e.g. &quot;I went from chasing referrals to having a full pipeline in two months. I wish I'd done this sooner.&quot;"></textarea>
-        <div class="field-note">Their words, not yours. Even one sentence is enough.</div>
-      </div>
+        <div class="field">
+          <label for="case1_before">What were they struggling with when they came to you?</label>
+          <textarea id="case1_before" name="case1_before" placeholder="e.g. Relying entirely on referrals, no outbound system, losing deals to better-known competitors" required></textarea>
+        </div>
 
-      <div class="field">
-        <label for="case1_video">Testimonial video URL <span style="color:#445566;font-weight:400">(optional but strongly recommended)</span></label>
-        <input type="url" id="case1_video" name="case1_video" placeholder="e.g. https://vimeo.com/yourlink">
-      </div>
+        <div class="field">
+          <label for="case1_results">What specific results did they get? Include numbers and timeframes.</label>
+          <textarea id="case1_results" name="case1_results" placeholder="e.g. 22 qualified demos in 8 weeks, closed 3 retainer clients worth €14k MRR, pipeline went from empty to 60-day visibility" required></textarea>
+          <div class="field-note">Real numbers only. No approximations.</div>
+        </div>
 
-      <div class="field" style="margin-top:1.5rem;padding-top:1.5rem;border-top:0.5px solid rgba(55,138,221,0.1)">
-        <label for="case2_client">Case study two: client first name or company</label>
-        <input type="text" id="case2_client" name="case2_client" placeholder="e.g. Sarah / Clearpoint Advisory" required>
-      </div>
+        <div class="field">
+          <label for="case1_quote">A quote from them about the experience <span style="color:#445566;font-weight:400">(optional)</span></label>
+          <textarea id="case1_quote" name="case1_quote" placeholder="e.g. &quot;I went from chasing referrals to having a full pipeline in two months. I wish I'd done this sooner.&quot;"></textarea>
+          <div class="field-note">Their words, not yours. Even one sentence is enough.</div>
+        </div>
 
-      <div class="field">
-        <label for="case2_before">What were they struggling with when they came to you?</label>
-        <textarea id="case2_before" name="case2_before" placeholder="e.g. Had tried an agency before, felt burned, didn't trust the process would work for their niche" required></textarea>
-      </div>
+        <div class="field">
+          <label for="case1_video">Testimonial video URL <span style="color:#445566;font-weight:400">(optional but strongly recommended)</span></label>
+          <input type="url" id="case1_video" name="case1_video" placeholder="e.g. https://vimeo.com/yourlink">
+        </div>
 
-      <div class="field">
-        <label for="case2_results">What specific results did they get? Include numbers and timeframes.</label>
-        <textarea id="case2_results" name="case2_results" placeholder="e.g. Booked 8 new clients in 90 days, reduced sales cycle from 6 weeks to 12 days, hit monthly revenue target for the first time" required></textarea>
-        <div class="field-note">Real numbers only. No approximations.</div>
-      </div>
+        <div class="field" style="margin-top:1.5rem;padding-top:1.5rem;border-top:0.5px solid rgba(55,138,221,0.1)">
+          <label for="case2_client">Case study two: client first name or company</label>
+          <input type="text" id="case2_client" name="case2_client" placeholder="e.g. Sarah / Clearpoint Advisory" required>
+        </div>
 
-      <div class="field">
-        <label for="case2_quote">A quote from them about the experience <span style="color:#445566;font-weight:400">(optional)</span></label>
-        <textarea id="case2_quote" name="case2_quote" placeholder="e.g. &quot;I was sceptical at first but the results spoke for themselves within the first month.&quot;"></textarea>
-        <div class="field-note">Their words, not yours. Even one sentence is enough.</div>
-      </div>
+        <div class="field">
+          <label for="case2_before">What were they struggling with when they came to you?</label>
+          <textarea id="case2_before" name="case2_before" placeholder="e.g. Had tried an agency before, felt burned, didn't trust the process would work for their niche" required></textarea>
+        </div>
 
-      <div class="field">
-        <label for="case2_video">Testimonial video URL <span style="color:#445566;font-weight:400">(optional but strongly recommended)</span></label>
-        <input type="url" id="case2_video" name="case2_video" placeholder="e.g. https://vimeo.com/yourlink">
-      </div>
+        <div class="field">
+          <label for="case2_results">What specific results did they get? Include numbers and timeframes.</label>
+          <textarea id="case2_results" name="case2_results" placeholder="e.g. Booked 8 new clients in 90 days, reduced sales cycle from 6 weeks to 12 days, hit monthly revenue target for the first time" required></textarea>
+          <div class="field-note">Real numbers only. No approximations.</div>
+        </div>
 
-      <div class="field" style="margin-top:2.5rem;padding-top:2.5rem;border-top:0.5px solid rgba(55,138,221,0.15)">
-        <p class="stack-title" style="margin-bottom:0.25rem">Your discovery call</p>
-      </div>
+        <div class="field">
+          <label for="case2_quote">A quote from them about the experience <span style="color:#445566;font-weight:400">(optional)</span></label>
+          <textarea id="case2_quote" name="case2_quote" placeholder="e.g. &quot;I was sceptical at first but the results spoke for themselves within the first month.&quot;"></textarea>
+          <div class="field-note">Their words, not yours. Even one sentence is enough.</div>
+        </div>
 
-      <div class="field">
-        <label for="discovery_call">What happens on your discovery call, and what does someone walk away with?</label>
-        <textarea id="discovery_call" name="discovery_call" placeholder="e.g. A free 30-minute session where we audit their pipeline and they leave with a clear action plan, even if they don't work with us" required></textarea>
-      </div>
+        <div class="field">
+          <label for="case2_video">Testimonial video URL <span style="color:#445566;font-weight:400">(optional but strongly recommended)</span></label>
+          <input type="url" id="case2_video" name="case2_video" placeholder="e.g. https://vimeo.com/yourlink">
+        </div>
 
-      <div class="field">
-        <label for="guarantee">What guarantee or risk reversal do you offer? <span style="color:#445566;font-weight:400">(optional)</span></label>
-        <textarea id="guarantee" name="guarantee" placeholder="e.g. If you don't see at least 5 qualified conversations in your first 60 days, we work for free until you do"></textarea>
-        <div class="field-note">Leave blank if you don't offer one.</div>
-      </div>
+        <div class="field" style="margin-top:2.5rem;padding-top:2.5rem;border-top:0.5px solid rgba(55,138,221,0.15)">
+          <p class="stack-title" style="margin-bottom:0.25rem">Your discovery call</p>
+        </div>
 
-      <button type="submit" class="submit-btn" id="submit-btn">Send my details to APodcastGeek</button>
-    </form>
+        <div class="field">
+          <label for="discovery_call">What happens on your discovery call, and what does someone walk away with?</label>
+          <textarea id="discovery_call" name="discovery_call" placeholder="e.g. A free 30-minute session where we audit their pipeline and they leave with a clear action plan, even if they don't work with us" required></textarea>
+        </div>
+
+        <div class="field">
+          <label for="guarantee">What guarantee or risk reversal do you offer? <span style="color:#445566;font-weight:400">(optional)</span></label>
+          <textarea id="guarantee" name="guarantee" placeholder="e.g. If you don't see at least 5 qualified conversations in your first 60 days, we work for free until you do"></textarea>
+          <div class="field-note">Leave blank if you don't offer one.</div>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submit-btn">Send my details to APodcastGeek</button>
+      </form>
+    </div>
   </div>
 
-  <!-- CONFIRMATION -->
-  <div class="confirm-state" id="confirm-state">
-    <div class="confirm-icon">&#10003;</div>
-    <h2>You're in.</h2>
-    <p>Here is what happens next.</p>
-    <div class="confirm-steps">
-      <div class="confirm-step">
-        <span class="confirm-step-label">Within 24 hours</span>
-        <span class="confirm-step-text">Dave reviews your details and sends a quick confirmation with any questions.</span>
-      </div>
-      <div class="confirm-step">
-        <span class="confirm-step-label">Within 72 hours</span>
-        <span class="confirm-step-text">Your guest booking campaign is built and ready to go.</span>
-      </div>
-      <div class="confirm-step">
-        <span class="confirm-step-label">Week 1</span>
-        <span class="confirm-step-text">First outreach goes out to your ICP guest list.</span>
-      </div>
-      <div class="confirm-step">
-        <span class="confirm-step-label">Day 30</span>
-        <span class="confirm-step-text">Two ICP guests booked, or we run month two at no charge until we do.</span>
-      </div>
+</div><!-- end #page-content -->
+
+<!-- CONFIRMATION — full page replacement -->
+<div class="confirm-state" id="confirm-state">
+  <img src="logo.png" alt="APodcastGeek" class="confirm-logo">
+  <div class="confirm-icon">&#10003;</div>
+  <h2>You're in.</h2>
+  <p>Here is what happens next.</p>
+  <div class="confirm-steps">
+    <div class="confirm-step">
+      <span class="confirm-step-label">Within 24 hours</span>
+      <span class="confirm-step-text">Your details land with Dave. He'll review and send a personal confirmation with your next steps.</span>
+    </div>
+    <div class="confirm-step">
+      <span class="confirm-step-label">Within 72 hours</span>
+      <span class="confirm-step-text">Your ICP guest shortlist is researched and your campaign is set up. If you chose approval mode, your first shortlist arrives in your inbox.</span>
+    </div>
+    <div class="confirm-step">
+      <span class="confirm-step-label">Week 1</span>
+      <span class="confirm-step-text">First outreach goes out to your ICP guest list.</span>
+    </div>
+    <div class="confirm-step">
+      <span class="confirm-step-label">Day 30</span>
+      <span class="confirm-step-text">Two ICP guests booked (pending your guest approvals), or we run month two at no charge until we do.</span>
     </div>
   </div>
 </div>
@@ -444,7 +451,7 @@ document.getElementById('intake-form').addEventListener('submit', async (e) => {
     console.error('Pipeline intake webhook error:', err);
   }
 
-  document.getElementById('form-card').style.display = 'none';
+  document.getElementById('page-content').style.display = 'none';
   document.getElementById('confirm-state').style.display = 'block';
   window.scrollTo({top: 0, behavior: 'smooth'});
 });
