@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cut Unplanned Downtime 30% in 90 Days | Test Operator Show</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: #060810;
+    color: #e8e8f0;
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: #378ADD; text-decoration: none; }
+
+  /* NAV */
+  nav {
+    background: #060810;
+    border-bottom: 0.5px solid rgba(255,255,255,0.08);
+    padding: 18px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-podcast-name {
+    color: #8888aa;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 80px 20px;
+  }
+
+  .section-inner {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .section-bg {
+    background: #0a0e1a;
+    border-top: 0.5px solid rgba(255,255,255,0.08);
+    border-bottom: 0.5px solid rgba(255,255,255,0.08);
+  }
+
+  /* HERO */
+  .hero {
+    background: #060810;
+    padding: 90px 20px 80px;
+    text-align: center;
+  }
+
+  .hero .section-inner {
+    max-width: 820px;
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.15;
+    color: #e8e8f0;
+    margin-bottom: 22px;
+    letter-spacing: -0.02em;
+  }
+
+  .hero h1 span {
+    color: #378ADD;
+  }
+
+  .hero .subheadline {
+    font-size: clamp(16px, 2.2vw, 20px);
+    font-weight: 400;
+    color: #8888aa;
+    margin-bottom: 44px;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
+  /* VIDEO */
+  .video-placeholder {
+    background: #0a0e1a;
+    border: 0.5px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    margin-bottom: 44px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* CTA BUTTON */
+  .cta-btn {
+    display: inline-block;
+    background: #378ADD;
+    color: #ffffff;
+    padding: 18px 40px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+    letter-spacing: 0.01em;
+    line-height: 1;
+  }
+
+  .cta-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    color: #ffffff;
+  }
+
+  /* SECTION HEADINGS */
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #378ADD;
+    margin-bottom: 14px;
+  }
+
+  .section-heading {
+    font-size: clamp(26px, 3.5vw, 38px);
+    font-weight: 800;
+    line-height: 1.2;
+    color: #e8e8f0;
+    margin-bottom: 36px;
+    letter-spacing: -0.02em;
+  }
+
+  /* PROBLEM PARAGRAPHS */
+  .problem-block p {
+    color: #e8e8f0;
+    font-weight: 400;
+    margin-bottom: 22px;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .problem-block p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* MECHANISM */
+  .method-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #378ADD;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+    display: inline-block;
+    border: 0.5px solid rgba(55,138,221,0.35);
+    padding: 6px 16px;
+    border-radius: 4px;
+  }
+
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .step-item {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    background: rgba(55,138,221,0.12);
+    border: 0.5px solid rgba(55,138,221,0.35);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: #378ADD;
+    margin-top: 2px;
+  }
+
+  .step-content h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: #e8e8f0;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .step-content p {
+    color: #8888aa;
+    font-size: 16px;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  /* CASE STUDY CARDS */
+  .case-study-card {
+    background: #0a0e1a;
+    border: 0.5px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 40px 40px;
+    margin-bottom: 28px;
+  }
+
+  .case-study-card:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .case-study-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #8888aa;
+    margin-bottom: 8px;
+  }
+
+  .case-study-client {
+    font-size: 22px;
+    font-weight: 700;
+    color: #e8e8f0;
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+
+  .case-study-divider {
+    width: 100%;
+    height: 0.5px;
+    background: rgba(255,255,255,0.08);
+    margin-bottom: 28px;
+  }
+
+  .case-study-block-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #8888aa;
+    margin-bottom: 10px;
+  }
+
+  .case-study-before {
+    margin-bottom: 28px;
+  }
+
+  .case-study-before p,
+  .case-study-after p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+    color: #e8e8f0;
+  }
+
+  .result-highlight {
+    display: inline-block;
+    background: rgba(55,138,221,0.12);
+    border: 0.5px solid rgba(55,138,221,0.3);
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #378ADD;
+    margin-bottom: 10px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  /* GUARANTEE */
+  .guarantee-block {
+    background: #0a0e1a;
+    border-left: 3px solid #378ADD;
+    border-radius: 0 8px 8px 0;
+    padding: 36px 40px;
+    border-top: 0.5px solid rgba(255,255,255,0.08);
+    border-right: 0.5px solid rgba(255,255,255,0.08);
+    border-bottom: 0.5px solid rgba(255,255,255,0.08);
+  }
+
+  .guarantee-heading {
+    font-size: 22px;
+    font-weight: 700;
+    color: #e8e8f0;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .guarantee-block p {
+    font-size: 17px;
+    font-weight: 400;
+    color: #e8e8f0;
+    line-height: 1.75;
+  }
+
+  /* FINAL CTA */
+  .final-cta {
+    background: #060810;
+    text-align: center;
+    padding: 90px 20px;
+  }
+
+  .final-cta .section-inner {
+    max-width: 640px;
+  }
+
+  .final-cta p {
+    font-size: 17px;
+    font-weight: 400;
+    color: #8888aa;
+    line-height: 1.75;
+    margin-bottom: 40px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #060810;
+    border-top: 0.5px solid rgba(255,255,255,0.08);
+    padding: 32px 40px;
+    text-align: center;
+  }
+
+  .footer-podcast-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e8e8f0;
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+  }
+
+  .footer-credit {
+    font-size: 12px;
+    color: #8888aa;
+    font-weight: 400;
+  }
+
+  .footer-credit a {
+    color: #8888aa;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    nav { padding: 16px 20px; }
+    .case-study-card { padding: 28px 22px; }
+    .guarantee-block { padding: 28px 22px; }
+    .step-item { flex-direction: row; gap: 16px; }
+    footer { padding: 28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <img src="../logo.png" alt="APodcastGeek" style="height:30px;filter:drop-shadow(0 0 1px white);">
+  <span class="nav-podcast-name">Test Operator Show</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="section-inner">
+    <h1>Cut Unplanned Production Downtime <span>30% in 90 Days</span></h1>
+    <p class="subheadline">Dave OGara works with operations directors at mid-market manufacturers to find and remove the hidden constraint points that keep stopping the line.</p>
+    <div class="video-placeholder"><p style="color:#8888aa;text-align:center;padding:60px 20px;">Video coming soon, embed will be inserted here</p></div>
+    <a href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-discovery-call?utm_source=vsl&utm_medium=podcast&utm_campaign=test-operator-show" class="cta-btn" target="_blank" rel="noopener">Book a Free Strategy Call</a>
+  </div>
+</section>
+
+<!-- PROBLEM SECTION -->
+<section class="section-bg">
+  <div class="section-inner">
+    <div class="section-label">The Situation</div>
+    <h2 class="section-heading">The Reality</h2>
+    <div class="problem-block">
+      <p>Lines keep stopping and nobody on the floor can give a clear answer as to why. The data exists somewhere in the system, but translating it into a root cause takes time that most operations teams do not have. The result is a cycle of reactive fixes that solve the symptom and leave the actual cause in place.</p>
+      <p>Operations directors at manufacturers with 50 to 500 staff carry the pressure of output targets while managing teams that are stretched thin across multiple shifts. When a fault recurs on the main line, the cost is not just the downtime itself. It is the overtime, the customer conversations, and the knock-on effect across every downstream process.</p>
+      <p>The standard response is to add monitoring, run more shift reviews, or bring in a generalist consultant who maps everything and recommends everything. None of that addresses the two or three specific points on the line where the real damage is happening. The problem stays unsolved because the focus stays too wide.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MECHANISM SECTION -->
+<section style="background:#060810; padding:80px 20px;">
+  <div class="section-inner">
+    <div class="section-label">The Approach</div>
+    <h2 class="section-heading">How It Works</h2>
+    <div class="method-name">The Constraint Removal System</div>
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Map the Line</h3>
+          <p>We start by building a clear picture of where time is actually being lost across the full production line. This is not a high-level audit. It targets the specific handoff points, machine cycles, and shift patterns that generate the unplanned stops your team is dealing with week to week.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Find the Two or Three Constraints</h3>
+          <p>The downtime is not caused by the whole line. It is caused by two or three hidden constraint points that trigger a cascade every time they fail. We identify those specific points using the line map and production data, and we prioritise them by impact so the team knows exactly where to act first.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Remove Them in Sequence</h3>
+          <p>Constraints are removed one at a time in the order that delivers the greatest reduction in downtime. Each removal is verified before moving to the next, so the team can see the improvement in real numbers before the 90 day window closes. The result is a line that runs to plan rather than reacting to faults that repeat themselves.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="section-bg">
+  <div class="section-inner">
+    <div class="section-label">Results</div>
+    <h2 class="section-heading">What Happens in Practice</h2>
+
+    <div class="case-study-card">
+      <div class="case-study-label">Case Study</div>
+      <div class="case-study-client">Halton Engineering</div>
+      <div class="case-study-divider"></div>
+      <div class="case-study-before">
+        <div class="case-study-block-label">Before</div>
+        <p>Halton Engineering was losing 14 hours a week to unplanned stops on the main line. The faults were not consistent in type, which made it difficult for the team to identify a pattern or target a single cause. Shift handovers were being consumed by troubleshooting rather than planned production activity.</p>
+      </div>
+      <div class="case-study-after">
+        <div class="result-highlight">Results</div>
+        <p>After applying the Constraint Removal System, downtime fell by 34 percent in six weeks. The team recovered 9 hours of productive line time per week, and the recurring faults that had been driving the unplanned stops were removed at the source rather than patched.</p>
+      </div>
+    </div>
+
+    <div class="case-study-card">
+      <div class="case-study-label">Case Study</div>
+      <div class="case-study-client">Ardmore Plastics</div>
+      <div class="case-study-divider"></div>
+      <div class="case-study-before">
+        <div class="case-study-block-label">Before</div>
+        <p>Ardmore Plastics had three shifts firefighting the same recurring fault across the production line. The fault had been present long enough that the team treated it as a fixed cost of running the line. Significant time and resource were going into managing the symptom on each shift rather than eliminating the underlying cause.</p>
+      </div>
+      <div class="case-study-after">
+        <div class="result-highlight">Results</div>
+        <p>The root cause of the fault was identified and removed within the engagement period. Downtime dropped by 28 percent in two months, and the shift teams were able to focus on planned activity rather than reacting to a fault they had stopped expecting to solve.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<section style="background:#060810; padding:80px 20px;">
+  <div class="section-inner">
+    <div class="section-label">The Commitment</div>
+    <h2 class="section-heading">Zero Risk to You</h2>
+    <div class="guarantee-block">
+      <div class="guarantee-heading">The 90 Day Downtime Guarantee</div>
+      <p>If we do not cut your unplanned downtime by 30 percent within 90 days, we continue working on your line at no charge until we do. The target is fixed, the timeline is fixed, and the financial risk sits with us rather than with you.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="section-inner">
+    <div class="section-label">Get Started</div>
+    <h2 class="section-heading" style="max-width:520px;margin-left:auto;margin-right:auto;margin-bottom:28px;">The First Step Takes 30 Minutes</h2>
+    <p>Book a strategy call with Dave OGara. The call covers your current downtime situation, where the likely constraint points are on your line, and whether the Constraint Removal System is the right fit for your operation. There is no sales pitch and no obligation to proceed.</p>
+    <a href="https://calendly.com/apodcastgeek_dave/apg-brand-builder-discovery-call?utm_source=vsl&utm_medium=podcast&utm_campaign=test-operator-show" class="cta-btn" target="_blank" rel="noopener">Book Your Free Strategy Call</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-podcast-name">Test Operator Show</div>
+  <div class="footer-credit">Produced by <a href="https://apodcastgeek.com" target="_blank" rel="noopener">APodcastGeek</a> &nbsp;|&nbsp; 2026</div>
+</footer>
+
+</body>
+</html>
