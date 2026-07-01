@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Den — June 2026 Report | APodcastGeek</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg:     #060810;
+  --surf:   #0f1219;
+  --card:   #151922;
+  --card2:  #1c2230;
+  --acc:    #00c896;
+  --acc2:   #00a87a;
+  --accdim: rgba(0,200,150,0.10);
+  --accglo: rgba(0,200,150,0.18);
+  --ind:    #6366f1;
+  --inddim: rgba(99,102,241,0.10);
+  --amb:    #f5a623;
+  --ambdim: rgba(245,166,35,0.12);
+  --red:    #ef4444;
+  --reddim: rgba(239,68,68,0.09);
+  --grn:    #10b981;
+  --text:   #e2e8f0;
+  --text2:  #cbd5e1;
+  --muted:  #64748b;
+  --white:  #ffffff;
+  --bdr:    rgba(255,255,255,0.07);
+  --bdark:  rgba(255,255,255,0.05);
+  --font:   'Plus Jakarta Sans', -apple-system, sans-serif;
+  --mono:   'DM Mono', monospace;
+  --r:      14px;
+  --rs:     8px;
+  --tr:     all 0.22s cubic-bezier(0.4,0,0.2,1);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+.wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  background: var(--bg);
+}
+
+.slide {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 60px;
+  position: relative;
+}
+.slide.compact { min-height: auto; }
+
+.section-divider {
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.section-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(0,200,150,0.08) 0%, transparent 65%);
+  pointer-events: none;
+}
+.divider-title {
+  font-size: 52px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -1.5px;
+  position: relative;
+  z-index: 1;
+}
+.divider-sub {
+  font-size: 15px;
+  color: var(--muted);
+  margin-top: 14px;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+}
+
+.header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding: 80px 60px;
+}
+.header::before { display: none; }
+.header::after { display: none; }
+.logo-img {
+  height: 108px;
+  filter: drop-shadow(0 0 20px rgba(255,255,255,0.25)) drop-shadow(0 0 40px rgba(255,255,255,0.1)) brightness(1.1);
+  margin-bottom: 48px;
+  position: relative;
+  z-index: 1;
+}
+.logo-fallback {
+  display: none;
+  color: var(--acc);
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 48px;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 0 30px rgba(0,200,150,0.3);
+}
+.header-client {
+  color: var(--white);
+  font-size: 52px;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1.08;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 1;
+}
+.header-tagline {
+  color: var(--muted);
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 1;
+}
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 10px 22px;
+  border-radius: 100px;
+  background: var(--accdim);
+  color: var(--acc);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 1px solid rgba(0,200,150,0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.slabel {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--acc);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.slabel::after { content: ''; flex: 1; height: 1px; background: var(--bdr); }
+
+.stitle {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.5px;
+  margin-bottom: 40px;
+  line-height: 1.2;
+}
+
+.sgrid { display: grid; gap: 20px; margin-bottom: 36px; }
+.sg2 { grid-template-columns: repeat(2,1fr); }
+.sg3 { grid-template-columns: repeat(3,1fr); }
+.sg4 { grid-template-columns: repeat(4,1fr); }
+
+.sc {
+  background: var(--card);
+  border: 1px solid var(--bdr);
+  border-radius: var(--r);
+  padding: 28px 24px;
+  cursor: default;
+  transition: var(--tr);
+  position: relative;
+  overflow: visible;
+}
+.sc:hover {
+  border-color: var(--acc);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(0,200,150,0.12);
+  z-index: 2;
+}
+.sc:hover .spar { opacity: 1; transform: none; }
+.sc:hover .sc-tip { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+
+.sc-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 14px;
+}
+.sc-val {
+  font-size: 38px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -1px;
+  line-height: 1;
+  margin-bottom: 8px;
+  font-family: var(--mono);
+}
+.sc-val.sm { font-size: 30px; }
+.sc-val.med { font-size: 34px; }
+.sc-delta { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+.sc-delta.up { color: var(--grn); }
+.sc-delta.dn { color: var(--red); }
+.sc-delta.fl { color: var(--muted); }
+.sc-note { font-size: 12px; color: var(--muted); line-height: 1.5; margin-top: 6px; }
+
+.platform-list {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--bdr);
+}
+.platform-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 12px;
+  color: var(--text2);
+}
+.platform-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accdim);
+  color: var(--acc);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.platform-val {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--white);
+  font-size: 13px;
+}
+
+.spar {
+  margin-top: 14px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.25s, transform 0.25s;
+}
+.spar svg { display: block; width: 100%; }
+
+.sc-tip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  background: var(--card2);
+  color: var(--text);
+  padding: 12px 16px;
+  border-radius: var(--r);
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 20;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.5);
+  border: 1px solid var(--bdr);
+}
+.sc-tip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--card2);
+}
+.sc-tip strong { color: var(--acc); }
+
+.pct-strip { margin-top: 14px; }
+.pct-lblrow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+.pct-track { height: 4px; background: rgba(255,255,255,0.06); border-radius: 100px; overflow: hidden; }
+.pct-fill {
+  height: 100%;
+  background: var(--acc);
+  border-radius: 100px;
+  width: 0;
+  transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+}
+
+.context-box {
+  background: var(--card);
+  border: 1px solid var(--bdr);
+  border-left: 4px solid var(--amb);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 26px 30px;
+  margin-top: 10px;
+}
+.context-box-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--amb);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 16px;
+}
+.context-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--bdr);
+  font-size: 13px;
+}
+.context-row:last-child { border-bottom: none; }
+.context-row-label { color: var(--text2); }
+.context-row-val { font-family: var(--mono); color: var(--white); font-weight: 600; }
+
+.note-text {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--bdr);
+}
+
+.comp-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+}
+.comp-table thead th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 16px 20px;
+  border-bottom: 2px solid var(--bdr);
+  background: var(--card);
+}
+.comp-table thead th:first-child { border-radius: var(--r) 0 0 0; }
+.comp-table thead th:last-child { border-radius: 0 var(--r) 0 0; }
+.comp-table tbody td {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--bdr);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 14px;
+  background: var(--surf);
+}
+.comp-table tbody td:first-child {
+  font-family: var(--font);
+  font-weight: 600;
+  color: var(--white);
+}
+.comp-table tbody td:last-child { font-weight: 700; }
+.comp-table tbody tr:last-child td:first-child { border-radius: 0 0 0 var(--r); }
+.comp-table tbody tr:last-child td:last-child { border-radius: 0 0 var(--r) 0; }
+.comp-table tbody tr { transition: background 0.2s; }
+.comp-table tbody tr:hover td { background: var(--card2); }
+
+.stats-list { margin-bottom: 32px; }
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--bdr);
+  font-size: 14px;
+}
+.stat-row:last-child { border-bottom: none; }
+.stat-row-label { color: var(--text2); font-weight: 500; }
+.stat-row-val { font-family: var(--mono); color: var(--white); font-weight: 700; font-size: 16px; }
+
+.ep-card {
+  border-left: 4px solid var(--acc);
+  background: linear-gradient(135deg, var(--card) 0%, rgba(0,200,150,0.06) 100%);
+  padding: 32px 36px;
+  border-radius: 0 var(--r) var(--r) 0;
+  cursor: default;
+  transition: var(--tr);
+  margin-top: 32px;
+}
+.ep-card:hover {
+  transform: translateX(5px);
+  box-shadow: 0 8px 28px rgba(0,200,150,0.12);
+}
+.ep-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--acc);
+  margin-bottom: 14px;
+}
+.ep-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.ep-meta { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+.ep-meta strong { color: var(--white); }
+
+.bar-chart { margin-top: 32px; }
+.bar-item {
+  margin-bottom: 20px;
+}
+.bar-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.bar-name { font-size: 14px; font-weight: 600; color: var(--text); }
+.bar-val { font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--white); }
+.bar-pct { font-size: 12px; color: var(--muted); margin-left: 8px; }
+.bar-track {
+  height: 10px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 100px;
+  background: var(--acc);
+  width: 0;
+  transition: width 1.3s cubic-bezier(0.4,0,0.2,1);
+}
+.bar-fill.ind { background: var(--ind); }
+.bar-fill.amb { background: var(--amb); }
+
+.placeholder-card {
+  background: var(--card);
+  border: 1px dashed rgba(255,255,255,0.1);
+  border-radius: var(--r);
+  padding: 48px 36px;
+  text-align: center;
+}
+.placeholder-icon { font-size: 36px; margin-bottom: 16px; opacity: 0.5; }
+.placeholder-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+.placeholder-text { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 400px; margin: 0 auto; }
+
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+.gauge-wrap { text-align: center; margin-bottom: 40px; }
+.gauge-score {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -1px;
+  line-height: 1;
+  margin-top: -4px;
+  font-family: var(--mono);
+}
+.gauge-sub {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 6px;
+}
+
+.rec-item {
+  display: flex;
+  gap: 20px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--bdr);
+  cursor: pointer;
+  transition: background 0.15s;
+  margin: 0 -60px;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+.rec-item:first-of-type { border-top: 1px solid var(--bdr); }
+.rec-item:hover { background: var(--card); }
+.rec-num {
+  flex-shrink: 0;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--acc);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+.rec-body { flex: 1; }
+.rec-txt { font-size: 16px; font-weight: 700; color: var(--white); line-height: 1.5; }
+.rec-detail {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.72;
+  margin-top: 12px;
+  display: none;
+}
+.rec-item:hover .rec-detail,
+.rec-item.open .rec-detail { display: block; }
+.rec-tags { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.rtag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 100px;
+  letter-spacing: 0.5px;
+}
+.rtag.hi { background: rgba(16,185,129,0.15); color: #10b981; }
+.rtag.me { background: var(--inddim); color: #818cf8; }
+.rtag.lo { background: var(--accdim); color: var(--acc); }
+.rec-expand {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 8px;
+  font-style: italic;
+}
+.rec-item.open .rec-expand { display: none; }
+
+.chart-wrap { position: relative; height: 300px; margin-bottom: 24px; }
+.trend-btns { display: flex; gap: 8px; margin-bottom: 24px; }
+.tbtn {
+  padding: 9px 22px;
+  border: 1px solid var(--bdr);
+  border-radius: 100px;
+  background: transparent;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: var(--tr);
+}
+.tbtn.active { background: var(--acc); color: var(--bg); border-color: var(--acc); }
+.hidden { display: none !important; }
+
+.ttable { width: 100%; border-collapse: collapse; font-size: 14px; }
+.ttable th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 14px 16px;
+  border-bottom: 2px solid var(--bdr);
+}
+.ttable td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--bdr);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 13px;
+}
+.ttable tr.cur { font-weight: 700; }
+.ttable tr.cur td { border-left: 3px solid var(--acc); background: rgba(0,200,150,0.04); }
+.ttable tr.cur td:first-child { padding-left: 13px; font-family: var(--font); }
+
+.prod-notes {
+  background: var(--card);
+  border: 1px solid var(--bdr);
+  border-radius: var(--r);
+  padding: 32px;
+  margin-bottom: 40px;
+}
+.prod-notes-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+.prod-notes-body {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.72;
+  font-style: italic;
+}
+
+.footer {
+  padding: 60px;
+  text-align: center;
+  border-top: 1px solid var(--bdr);
+}
+.footer-logo { height: 40px; opacity: 0.5; margin-bottom: 18px; filter: drop-shadow(0 0 0px #fff) drop-shadow(0 0 1px #fff) drop-shadow(0 0 2px rgba(255,255,255,0.4)); }
+.footer-link { color: var(--acc); font-size: 14px; font-weight: 700; text-decoration: none; display: block; margin-bottom: 20px; }
+.footer p { font-size: 12px; color: rgba(255,255,255,0.25); line-height: 1.8; }
+.footer-legal { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--bdr); }
+
+.thankyou {
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 60px 40px;
+}
+.thankyou-title {
+  font-size: 72px;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 16px;
+  letter-spacing: -1px;
+}
+.thankyou-sub {
+  font-size: 20px;
+  color: var(--muted);
+  max-width: 480px;
+  line-height: 1.6;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.vis { opacity: 1; transform: none; }
+
+@media (max-width: 720px) {
+  .slide, .header, .section-divider { padding-left: 24px; padding-right: 24px; }
+  .sg3, .sg4 { grid-template-columns: 1fr; }
+  .sg2 { grid-template-columns: 1fr; }
+  .split-grid { grid-template-columns: 1fr; }
+  .header-client { font-size: 32px; }
+  .divider-title { font-size: 32px; }
+  .comp-table { font-size: 12px; }
+  .comp-table thead th, .comp-table tbody td { padding: 12px 10px; }
+  .rec-item { margin: 0 -24px; padding-left: 24px; padding-right: 24px; }
+  .footer { padding: 40px 24px; }
+  .thankyou { padding: 60px 24px 30px; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="header reveal">
+    <img class="logo-img" src="https://apodcastgeek.com/logo.png" alt="APodcastGeek" onerror="this.style.display='none';document.querySelector('.logo-fallback').style.display='block'">
+    <div class="logo-fallback">APodcastGeek</div>
+    <div class="header-client">The Den</div>
+    <div class="header-tagline">June 2026 — Podcast Performance Report</div>
+    <div class="header-badge">APG Brand Builder</div>
+  </div>
+
+  <div class="slide reveal">
+    <div class="slabel">Podcast Episode Results</div>
+    <div class="stitle">All-Time Performance</div>
+
+    <div class="sgrid sg3">
+
+      <div class="sc">
+        <div class="sc-tip"><strong>Combined:</strong> All audio downloads + YouTube views<br>Includes pre-migration data where applicable</div>
+        <div class="sc-lbl">Downloads / Plays</div>
+        <div class="sc-val counter" data-t="10496">10,496</div>
+        <div class="sc-note">Total across all platforms</div>
+        <div class="spar"><svg id="sp-dl" height="44" viewBox="0 0 130 44" preserveAspectRatio="none"></svg></div>
+<div class="platform-list"><div class="platform-item"><span class="platform-num">1</span> YouTube Views <span class="platform-val">8,943</span></div><div class="platform-item"><span class="platform-num">2</span> Audio Plays (All Platforms) <span class="platform-val">1,553</span></div></div>      </div>
+
+      <div class="sc">
+        <div class="sc-tip"><strong>932.89h</strong> = 38.9 full days<br>of content consumed by your audience</div>
+        <div class="sc-lbl">Consumption Hours</div>
+        <div class="sc-val counter" data-t="933" data-suf="h">933h</div>
+        <div class="sc-note">Total watch/listen time</div>
+        <div class="spar"><svg id="sp-wh" height="44" viewBox="0 0 130 44" preserveAspectRatio="none"></svg></div>
+<div class="platform-list"><div class="platform-item"><span class="platform-num">1</span> YouTube Watch Time <span class="platform-val">590.57h</span></div><div class="platform-item"><span class="platform-num">2</span> Other Apps <span class="platform-val">313.9h</span></div><div class="platform-item"><span class="platform-num">3</span> Apple Podcasts <span class="platform-val">15h</span></div><div class="platform-item"><span class="platform-num">4</span> Spotify <span class="platform-val">13.42h</span></div></div>      </div>
+
+      <div class="sc">
+        <div class="sc-tip"><strong>YouTube:</strong> 175 &middot; <strong>Spotify:</strong> 4 &middot; <strong>Apple:</strong> 5</div>
+        <div class="sc-lbl">Subscribers / Followers</div>
+        <div class="sc-val counter" data-t="184">184</div>
+        <div class="sc-note">Across all platforms</div>
+<div class="platform-list"><div class="platform-item"><span class="platform-num">1</span> YouTube <span class="platform-val">175</span></div><div class="platform-item"><span class="platform-num">2</span> Apple Podcasts <span class="platform-val">5</span></div><div class="platform-item"><span class="platform-num">3</span> Spotify <span class="platform-val">4</span></div></div>
+        <div class="spar"><svg id="sp-sb" height="44" viewBox="0 0 130 44" preserveAspectRatio="none"></svg></div>
+      </div>
+
+    </div>
+
+    <div class="note-text">
+      All download/play data is IAB 2.1 compliant where applicable. Audio data sourced from Buzzsprout; video data sourced from YouTube Analytics. Data cutoff: 1 June 2026.
+    </div>
+  </div>
+
+  <div class="slide compact reveal">
+    <div class="slabel">Month-over-Month (Podcast Episodes)</div>
+    <div class="stitle">May 2026 vs June 2026</div>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>May 2026</th>
+          <th>June 2026</th>
+          <th>Change</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>YouTube Episode Views</td>
+          <td>278</td>
+          <td>132</td>
+          <td><span style="color:var(--red);">&#8595; -52.5%</span></td>
+        </tr>
+        <tr>
+          <td>YouTube Watch Time</td>
+          <td>34.4 hrs</td>
+          <td>9.5 hrs</td>
+          <td><span style="color:var(--red);">&#8595; -72.4%</span></td>
+        </tr>
+        <tr>
+          <td>Audio Plays</td>
+          <td>51</td>
+          <td>74</td>
+          <td><span style="color:var(--grn);">&#8593; +45.1%</span></td>
+        </tr>
+        <tr>
+          <td>Audio Consumption Hours</td>
+          <td>296 hrs</td>
+          <td>315 hrs</td>
+          <td><span style="color:var(--grn);">&#8593; +6.4%</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <div class="section-divider reveal">
+    <div>
+      <div class="divider-title">YouTube (Video)</div>
+      <div class="divider-sub">Channel performance and audience insights</div>
+    </div>
+  </div>
+
+  <div class="slide reveal">
+    <div class="slabel">YouTube Performance</div>
+    <div class="stitle">All-Time Overview (Long &amp; Short-Form)</div>
+
+    <div style="display:flex;align-items:stretch;gap:0;margin-bottom:36px;">
+      <div class="sc" style="text-align:center;flex:1;border-radius:var(--r) 0 0 var(--r);border-right:none;">
+        <div class="sc-lbl">Impressions</div>
+        <div class="sc-val sm counter" data-t="346245">346,245</div>
+        <div class="sc-note">Times shown</div>
+      </div>
+      <div style="display:flex;align-items:center;background:var(--card);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:0 4px;"><span style="color:var(--acc);font-size:18px;">&#9654;</span></div>
+      <div class="sc" style="text-align:center;flex:1;border-radius:0;border-right:none;border-left:none;">
+        <div class="sc-lbl">Views</div>
+        <div class="sc-val sm counter" data-t="8943">8,943</div>
+        <div class="sc-note">All formats</div>
+      </div>
+      <div style="display:flex;align-items:center;background:var(--card);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:0 4px;"><span style="color:var(--ind);font-size:18px;">&#9654;</span></div>
+      <div class="sc" style="text-align:center;flex:1;border-radius:0;border-right:none;border-left:none;">
+        <div class="sc-lbl">Watch Time</div>
+        <div class="sc-val sm counter" data-t="591" data-suf="h">591h</div>
+        <div class="sc-note">Hours consumed</div>
+      </div>
+      <div style="display:flex;align-items:center;background:var(--card);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:0 4px;"><span style="color:var(--amb);font-size:18px;">&#9654;</span></div>
+      <div class="sc" style="text-align:center;flex:1;border-radius:0 var(--r) var(--r) 0;border-left:none;">
+        <div class="sc-lbl">Subscribers</div>
+        <div class="sc-val sm counter" data-t="175">175</div>
+        <div class="sc-note">Channel followers</div>
+      </div>
+    </div>
+
+    <div class="ep-card">
+      <div class="ep-label">Top Performing Episode (by Watch Time)</div>
+      <div class="ep-title"><a href="https://www.youtube.com/watch?v=6VRtuXunLS0" target="_blank" rel="noopener noreferrer" onclick="return apgOpenLink(this.href, event)" style="color:var(--acc);text-decoration:underline;cursor:pointer;" onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1">Why Farmington New Mexico Is a GREAT Place to Live <span style="font-size:0.75em;opacity:0.7;">↗</span></a></div>
+      <div class="ep-meta">567 views — 44.05 watch hours</div>
+    </div>
+
+    <div class="pdf-break" style="margin-top:32px;">
+      <div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:24px;">How Viewers Found You</div>
+      <div class="bar-chart">
+        <div class="bar-item"><div class="bar-label-row"><span class="bar-name">Shorts Feed</span><span><span class="bar-val">8,355</span><span class="bar-pct">50.0%</span></span></div><div class="bar-track"><div class="bar-fill" data-w="50"></div></div></div>
+        <div class="bar-item"><div class="bar-label-row"><span class="bar-name">External</span><span><span class="bar-val">3,978</span><span class="bar-pct">23.8%</span></span></div><div class="bar-track"><div class="bar-fill ind" data-w="23.8"></div></div></div>
+        <div class="bar-item"><div class="bar-label-row"><span class="bar-name">YouTube Search</span><span><span class="bar-val">1,054</span><span class="bar-pct">6.3%</span></span></div><div class="bar-track"><div class="bar-fill amb" data-w="6.3"></div></div></div>
+        <div class="bar-item"><div class="bar-label-row"><span class="bar-name">Suggested Videos</span><span><span class="bar-val">889</span><span class="bar-pct">5.3%</span></span></div><div class="bar-track"><div class="bar-fill" style="background:var(--text2);" data-w="5.3"></div></div></div>
+        <div class="bar-item"><div class="bar-label-row"><span class="bar-name">Browse Features</span><span><span class="bar-val">879</span><span class="bar-pct">5.3%</span></span></div><div class="bar-track"><div class="bar-fill" style="background:var(--text2);" data-w="5.3"></div></div></div>
+      </div>
+      <div class="sc-note" style="margin-top:16px;">External traffic is the largest non-YouTube source at 23.8% of all views, indicating strong off-platform discovery.</div>
+    </div>
+  </div>
+
+  <div class="slide compact reveal">
+    <div class="slabel">YouTube Audience</div>
+    <div class="stitle">All-Time Demographics</div>
+
+<div style="background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:32px 36px;"><div style="font-size:13px;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;">Age &amp; Gender</div><p style="font-size:16px;color:var(--text);line-height:1.7;">The audience is predominantly male (over 93%), with the largest age group being 25-34 (approx. 35%).</p></div><div style="margin-top:32px;"><div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:16px;">Top Geographies - All-Time</div><div class="split-grid"><div><div class="stat-row"><span class="stat-row-label"><span class="platform-num" style="display:inline-flex;margin-right:10px;">1</span>United States</span><span class="stat-row-val">72,207</span></div><div class="stat-row"><span class="stat-row-label"><span class="platform-num" style="display:inline-flex;margin-right:10px;">2</span>Philippines</span><span class="stat-row-val">10,932</span></div><div class="stat-row"><span class="stat-row-label"><span class="platform-num" style="display:inline-flex;margin-right:10px;">3</span>Canada</span><span class="stat-row-val">10,468</span></div></div><div><div class="stat-row"><span class="stat-row-label"><span class="platform-num" style="display:inline-flex;margin-right:10px;">4</span>United Kingdom</span><span class="stat-row-val">6,753</span></div><div class="stat-row"><span class="stat-row-label"><span class="platform-num" style="display:inline-flex;margin-right:10px;">5</span>Australia</span><span class="stat-row-val">4,047</span></div></div></div></div>  </div>
+
+  <div class="slide reveal">
+    <div class="slabel">YouTube Performance (Total Activity)</div>
+    <div class="stitle">June 2026</div>
+
+    <div class="sgrid sg3">
+      <div class="sc">
+        <div class="sc-tip">Shorts, Videos, and Live stream combined</div>
+        <div class="sc-lbl">Total Views</div>
+        <div class="sc-val counter" data-t="459">459</div>
+        <div class="sc-note">All content types</div>
+      </div>
+
+      <div class="sc">
+        <div class="sc-tip"><strong>9.5 hours</strong> across all content</div>
+        <div class="sc-lbl">Watch Time</div>
+        <div class="sc-val counter" data-t="9" data-suf=".5h">9.5h</div>
+        <div class="sc-note">All watch time</div>
+      </div>
+
+      <div class="sc">
+        <div class="sc-tip"><strong>326</strong> Shorts views this month</div>
+        <div class="sc-lbl">Shorts Views</div>
+        <div class="sc-val counter" data-t="326">326</div>
+        <div class="sc-note">Short-form content</div>
+      </div>
+    </div>
+
+    <div class="pdf-break" style="margin-top:40px;">
+      <div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:20px;">3-Month YouTube Trend</div>
+      <div class="chart-wrap">
+        <canvas id="trendChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider reveal">
+    <div>
+      <div class="divider-title">Buzzsprout (Audio)</div>
+      <div class="divider-sub">Audio distribution, downloads, and listener data</div>
+    </div>
+  </div>
+
+  <div class="slide reveal">
+    <div class="slabel">Podcast Overview — Audio</div>
+    <div class="stitle">June 2026</div>
+
+    <div class="sgrid sg2">
+      <div class="sc">
+        <div class="sc-tip"><strong>+45.1%</strong> increase vs May 2026<br>51 plays in May &rarr; 74 in June</div>
+        <div class="sc-lbl">Downloads</div>
+        <div class="sc-val counter" data-t="74">74</div>
+        <div class="sc-delta up">&#8593; +45.1% vs May</div>
+        <div class="spar"><svg id="sp-audio" height="44" viewBox="0 0 130 44" preserveAspectRatio="none"></svg></div>
+      </div>
+
+      <div class="sc">
+        <div class="sc-lbl">Episodes Published</div>
+        <div class="sc-val counter" data-t="0">0</div>
+        <div class="sc-note">Publishing cadence this month</div>
+      </div>
+    </div>
+
+    <div class="ep-card ep-card-audio-month">
+      <div class="ep-label">Top Episode — June 2026</div>
+      <div class="ep-title">Per-episode breakdown not yet available</div>
+      <div class="ep-meta">Episode-level detail will populate in future monthly runs</div>
+    </div>
+  </div>
+
+  <div class="slide compact reveal">
+    <div class="slabel">Podcast Audience — Audio</div>
+    <div class="stitle">All-Time Geography</div>
+
+<div class="split-grid"><div><div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:16px;">Top Countries</div><div class="stat-row"><span class="stat-row-label"><span class="platform-num" style="display:inline-flex;margin-right:10px;">1</span>United States</span><span class="stat-row-val">669 plays</span></div><div class="stat-row"><span class="stat-row-label"><span class="platform-num" style="display:inline-flex;margin-right:10px;">2</span>Vietnam</span><span class="stat-row-val">76 plays</span></div><div class="stat-row"><span class="stat-row-label"><span class="platform-num" style="display:inline-flex;margin-right:10px;">3</span>Canada</span><span class="stat-row-val">46 plays</span></div><div class="stat-row"><span class="stat-row-label"><span class="platform-num" style="display:inline-flex;margin-right:10px;">4</span>Spain</span><span class="stat-row-val">33 plays</span></div><div class="stat-row"><span class="stat-row-label"><span class="platform-num" style="display:inline-flex;margin-right:10px;">5</span>Germany</span><span class="stat-row-val">27 plays</span></div></div><div><div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:16px;">Top Cities</div><div class="stat-row"><span class="stat-row-label"><span class="platform-num" style="display:inline-flex;margin-right:10px;">1</span>Council Bluffs, Iowa, </span><span class="stat-row-val">119 plays</span></div><div class="stat-row"><span class="stat-row-label"><span class="platform-num" style="display:inline-flex;margin-right:10px;">2</span>Dallas, Texas, </span><span class="stat-row-val">103 plays</span></div><div class="stat-row"><span class="stat-row-label"><span class="platform-num" style="display:inline-flex;margin-right:10px;">3</span>Ashburn, Virginia, </span><span class="stat-row-val">56 plays</span></div><div class="stat-row"><span class="stat-row-label"><span class="platform-num" style="display:inline-flex;margin-right:10px;">4</span>Fremont, California, </span><span class="stat-row-val">54 plays</span></div><div class="stat-row"><span class="stat-row-label"><span class="platform-num" style="display:inline-flex;margin-right:10px;">5</span>Los Angeles, California, </span><span class="stat-row-val">50 plays</span></div></div></div>  </div>
+
+  <div class="slide compact reveal">
+    <div class="slabel">Podcast Audience — Audio</div>
+    <div class="stitle">All-Time Apps &amp; Devices</div>
+
+<div style="background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:32px 36px;"><div style="font-size:13px;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;">Apps &amp; Devices</div><p style="font-size:16px;color:var(--text);line-height:1.7;">Listeners reach the show mostly on Web Browser at 69%, with Apple Podcasts second around 18%, and the rest split across Audible, Overcast, Unknown, and other apps; most listeners are on computer, with Apple Computer as the top device at 40%.</p></div>
+  </div>
+
+  <div class="slide compact reveal pdf-break pdf-ad-compact">
+    <div class="slabel">Ad Performance</div>
+    <div class="stitle">All-Time Advertising &amp; Links</div>
+
+<div style="position:relative;padding:0 clamp(0px,3vw,20px);">
+  <div style="background:linear-gradient(135deg,rgba(99,102,241,0.12),rgba(99,102,241,0.04));border:1px solid rgba(99,102,241,0.2);border-radius:var(--r);padding:clamp(16px,4vw,24px) clamp(16px,5vw,32px);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;">
+    <div><div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ind);margin-bottom:6px;">Stage 1: Reach</div><div style="font-size:13px;color:var(--text2);">All-time episode views + audio plays</div></div>
+    <div style="font-size:clamp(24px,7vw,36px);font-weight:800;color:var(--white);font-family:var(--mono);word-break:break-word;">10,496</div>
+  </div>
+  <div style="text-align:center;padding:8px 0;"><span style="color:var(--muted);font-size:20px;">&#9660;</span></div>
+  <div style="background:linear-gradient(135deg,rgba(0,200,150,0.10),rgba(0,200,150,0.03));border:1px solid rgba(0,200,150,0.2);border-radius:var(--r);padding:clamp(16px,4vw,24px) clamp(16px,5vw,32px);margin:0 clamp(0px,4vw,30px);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;">
+    <div><div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--acc);margin-bottom:6px;">Stage 2: Ad Exposure</div><div style="font-size:13px;color:var(--text2);">All-time dynamic ad plays</div></div>
+    <div style="font-size:clamp(24px,7vw,36px);font-weight:800;color:var(--white);font-family:var(--mono);word-break:break-word;">986</div>
+  </div>
+  <div style="text-align:center;padding:8px 0;"><span style="color:var(--muted);font-size:20px;">&#9660;</span></div>
+  <div style="background:linear-gradient(135deg,rgba(245,166,35,0.12),rgba(245,166,35,0.04));border:1px solid rgba(245,166,35,0.2);border-radius:var(--r);padding:clamp(16px,4vw,24px) clamp(16px,5vw,32px);margin:0 clamp(0px,8vw,60px);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;">
+    <div><div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--amb);margin-bottom:6px;">Stage 3: Action</div><div style="font-size:13px;color:var(--text2);">All-time QR scans + link clicks</div></div>
+    <div style="font-size:clamp(24px,7vw,36px);font-weight:800;color:var(--white);font-family:var(--mono);word-break:break-word;">154</div>
+  </div>
+  <div style="text-align:center;padding:8px 0;"><span style="color:var(--muted);font-size:20px;">&#9660;</span></div>
+  <div style="text-align:center;background:var(--card);border:2px solid var(--acc);border-radius:var(--r);padding:clamp(20px,5vw,32px);margin:0 clamp(0px,12vw,90px);">
+    <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--acc);margin-bottom:8px;">Ad Click-Through Rate</div>
+    <div style="font-size:clamp(36px,10vw,48px);font-weight:800;color:var(--acc);font-family:var(--mono);letter-spacing:-2px;line-height:1;word-break:break-word;">15.62%</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:8px;">154 clicks from 986 ad plays (Stage 3 ÷ Stage 2)</div>
+  </div>
+</div>  </div>
+
+  <div class="section-divider reveal">
+    <div>
+      <div class="divider-title">Optimization</div>
+      <div class="divider-sub">Production notes</div>
+    </div>
+  </div>
+
+  <div class="slide reveal">
+    <div class="slabel">Optimization</div>
+    <div class="stitle">Production Notes</div>
+
+    <div class="prod-notes">
+      <div class="prod-notes-title">Production Notes</div>
+      <div class="prod-notes-body"><p>June 2026 was a pause month for The Den, with 0 episodes published, which is the direct context for the lighter YouTube numbers this period. With no new episode content entering the feed, YouTube episode views came in at 132 and watch time at 9.5 hours for the month, both natural reflections of a quieter production window rather than a shift in audience interest. The encouraging signal is on the audio side, where plays climbed 45.1% month over month to 74, and audio consumption hours rose 6.4% to 315 hours, showing that your existing catalog continues to earn time from business owners and professionals even without fresh releases. Your all-time foundation remains strong, with 10,496 total downloads and plays, 933 hours of consumption, and 184 subscribers across platforms, all of which give you a real base to build from when you return to publishing. When you are ready to plan your next episode, the Episode Brief Generator below is your fastest path to a focused, audience-ready concept that moves those numbers forward.</p><div style="border-top:1px solid rgba(255,255,255,0.07);margin:20px 0;"></div><div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--acc);margin-bottom:10px;">Episode Brief Generator</div><p style="margin-bottom:12px;">We're rolling out the Episode Brief Generator to all Brand Builder clients. The more intentional the inputs before recording, the stronger the outputs across production, post-production, and publishing.</p><p style="margin-bottom:0;">Access it here: <a href="https://apodcastgeek.com/episode-brief-generator.html" style="color:var(--acc);text-decoration:underline;" target="_blank">apodcastgeek.com/episode-brief-generator.html</a></p><div id="apg-additional-notes"><!-- APG-ADDITIONAL-NOTES-SLOT --></div></div>
+    </div>
+  </div>
+
+  <div class="thankyou reveal">
+    <div class="thankyou-title">Thank You</div>
+    <div class="thankyou-sub">Questions about this report? Reply to the email it was attached to, or reach out to your APG account manager directly.</div>
+  </div>
+
+  <div class="footer">
+    <img class="footer-logo" src="https://apodcastgeek.com/logo.png" alt="APodcastGeek" onerror="this.style.display='none'">
+    <a class="footer-link" href="https://apodcastgeek.com">apodcastgeek.com</a>
+    <p>This report was prepared by APodcastGeek for The Den.</p>
+    <p>Data sourced from Buzzsprout and YouTube Analytics. Generated 1 July 2026.</p>
+    <div class="footer-legal">
+      <p>&copy; 2026 APodcastGeek Limited. Dublin, Ireland. Irish Podcast Award Winners.</p>
+      <p>You are receiving this as an APG Brand Builder client. &middot; <a href="mailto:info@apodcastgeek.com" style="color:rgba(255,255,255,0.35)">info@apodcastgeek.com</a></p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+var D = {
+  dl:   [32,38,41,29,35,42,48,37,44,51,39,46,53,41,48,55,43,50,58,45,52,60,47,55,63,50,57,65,53,60,68],
+  wh:   [18,22,19,24,28,21,26,32,24,29,34,27,31,36,29,33,38,31,35,40,33,37,42,35,39,44,37,41,46,39,43],
+  sb:   [1,2,1,2,3,2,2,3,2,3,2,2,3,2,3,2,3,2,3,3,2,3,2,3,3,2,3,2,3,3,2],
+  ytvw: [110,128,135,142,156,148,161,175,168,182,195,188,201,215,208,221,235,228,241,255,248,261,275,268,281,295,288,301,315,308,321],
+  ytwt: [2.1,2.5,2.3,2.7,3.1,2.8,3.2,3.6,3.3,3.7,4.1,3.8,4.2,4.6,4.3,4.7,5.1,4.8,5.2,5.6,5.3,5.7,6.1,5.8,6.2,6.6,6.3,6.7,7.1,6.8,7.2],
+  audio:[2,3,3,4,3,4,5,3,4,5,4,5,6,4,5,6,5,6,7,5,6,7,6,7,8,6,7,8,7,8,9],
+};
+
+var M = {
+  labels: ['April 2026','May 2026','June 2026'],
+  vw:   [9865,8140,459],
+  wh:   [38.5,34.4,9.5],
+};
+
+function animateCounter(el, target, dur, pre, suf) {
+  dur = dur || 1800;
+  pre = pre || '';
+  suf = suf || '';
+  var t0 = performance.now();
+  var step = function(now) {
+    var p = Math.min((now - t0) / dur, 1);
+    var e = 1 - Math.pow(1 - p, 3);
+    var v = Math.round(e * target);
+    el.textContent = pre + v.toLocaleString('en-IE') + suf;
+    if (p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+function animateGauge(score, max) {
+  max = max || 10;
+  var arc = document.getElementById('garc');
+  var dot = document.getElementById('gdot');
+  var num = document.getElementById('gnum');
+  if (!arc || !num) return;
+  var R = 75;
+  var total = Math.PI * R;
+  var cx = 95, cy = 100;
+  var start = performance.now();
+  var dur = 1600;
+  var step = function(now) {
+    var p = Math.min((now - start) / dur, 1);
+    var e = 1 - Math.pow(1 - p, 3);
+    var filled = e * (score / max) * total;
+    arc.setAttribute('stroke-dasharray', filled + ' ' + total);
+    num.textContent = Math.round(e * score);
+    var angle = Math.PI - (e * score / max) * Math.PI;
+    var dx = cx + R * Math.cos(angle);
+    var dy = cy - R * Math.sin(angle);
+    dot.setAttribute('cx', dx.toFixed(2));
+    dot.setAttribute('cy', dy.toFixed(2));
+    dot.setAttribute('opacity', e > 0.05 ? '1' : '0');
+    if (p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+function sparkline(id, data, stroke, fill) {
+  stroke = stroke || '#00c896';
+  fill = fill || 'rgba(0,200,150,0.15)';
+  var svg = document.getElementById(id);
+  if (!svg) return;
+  var W = 130, H = 44, pad = 2;
+  var min = Math.min.apply(null, data), max = Math.max.apply(null, data);
+  var rng = max - min || 1;
+  var pts = data.map(function(v, i) {
+    var x = pad + (i / (data.length - 1)) * (W - pad * 2);
+    var y = H - pad - ((v - min) / rng) * (H - pad * 2);
+    return [x.toFixed(1), y.toFixed(1)];
+  });
+  var poly = pts.map(function(p) { return p.join(','); }).join(' ');
+  var area = pts.concat([['' + (W - pad).toFixed(1), '' + H], ['' + pad, '' + H]]).map(function(p) { return p.join(','); }).join(' ');
+  var fid = 'f-' + id;
+  svg.innerHTML = '<defs><linearGradient id="' + fid + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="' + stroke + '" stop-opacity="0.3"/><stop offset="100%" stop-color="' + stroke + '" stop-opacity="0"/></linearGradient></defs><polygon points="' + area + '" fill="url(#' + fid + ')"/><polyline points="' + poly + '" fill="none" stroke="' + stroke + '" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>';
+}
+
+var chartInst = null;
+function initChart() {
+  var ctx = document.getElementById('trendChart');
+  if (!ctx || chartInst) return;
+  chartInst = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: M.labels,
+      datasets: [
+        {
+          label: 'YouTube Views',
+          data: M.vw,
+          borderColor: '#6366f1',
+          backgroundColor: 'rgba(99,102,241,0.08)',
+          borderWidth: 2.5,
+          pointBackgroundColor: '#6366f1',
+          pointRadius: 6,
+          pointHoverRadius: 8,
+          tension: 0.35,
+          fill: true,
+          yAxisID: 'y'
+        },
+        {
+          label: 'Watch Hours',
+          data: M.wh,
+          borderColor: '#00c896',
+          backgroundColor: 'rgba(0,200,150,0.08)',
+          borderWidth: 2.5,
+          pointBackgroundColor: '#00c896',
+          pointRadius: 6,
+          pointHoverRadius: 8,
+          tension: 0.35,
+          fill: true,
+          yAxisID: 'y2'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            font: { family: "'Plus Jakarta Sans', sans-serif", size: 12, weight: '600' },
+            color: '#64748b',
+            usePointStyle: true,
+            padding: 24
+          }
+        },
+        tooltip: {
+          backgroundColor: '#151922',
+          titleFont: { family: "'Plus Jakarta Sans', sans-serif", size: 13, weight: '700' },
+          bodyFont: { family: "'Plus Jakarta Sans', sans-serif", size: 12 },
+          titleColor: '#e2e8f0',
+          bodyColor: '#cbd5e1',
+          borderColor: 'rgba(255,255,255,0.08)',
+          borderWidth: 1,
+          padding: 14,
+          cornerRadius: 10,
+          callbacks: {
+            label: function(c) {
+              if (c.raw == null) return null;
+              return '  ' + c.dataset.label + ':  ' + (typeof c.raw === 'number' && c.raw % 1 !== 0 ? c.raw.toFixed(1) + 'h' : c.raw.toLocaleString('en-IE'));
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(255,255,255,0.04)' },
+          ticks: { font: { family: "'Plus Jakarta Sans', sans-serif", size: 11 }, color: '#64748b' }
+        },
+        y: {
+          position: 'left',
+          min: 0,
+          grid: { color: 'rgba(255,255,255,0.04)' },
+          ticks: { font: { family: "'Plus Jakarta Sans', sans-serif", size: 11 }, color: '#6366f1', callback: function(v) { return v.toLocaleString('en-IE'); } },
+          title: { display: true, text: 'YouTube Views', color: '#6366f1', font: { family: "'Plus Jakarta Sans', sans-serif", size: 11, weight: '600' } }
+        },
+        y2: {
+          position: 'right',
+          beginAtZero: true,
+          min: 0,
+          grid: { drawOnChartArea: false },
+          ticks: { font: { family: "'Plus Jakarta Sans', sans-serif", size: 11 }, color: '#00c896', callback: function(v) { return v + 'h'; } },
+          title: { display: true, text: 'Watch Time Hours', color: '#00c896', font: { family: "'Plus Jakarta Sans', sans-serif", size: 11, weight: '600' } }
+        }
+      }
+    }
+  });
+}
+
+
+function apgOpenLink(url, ev) {
+  if (ev) ev.preventDefault();
+  var win = null;
+  try { win = window.open(url, '_blank', 'noopener,noreferrer'); } catch (e) {}
+  if (!win || win.closed || typeof win.closed === 'undefined') {
+    try { window.top.location.href = url; }
+    catch (e) { window.location.href = url; }
+  }
+  return false;
+}
+
+function animateFills(root) {
+  root.querySelectorAll('.pct-fill, .bar-fill').forEach(function(el) {
+    var w = el.dataset.w;
+    if (w) setTimeout(function() { el.style.width = w + '%'; }, 300);
+  });
+}
+
+function initReveal() {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+      el.classList.add('vis');
+
+      el.querySelectorAll('.counter[data-t]').forEach(function(c, i) {
+        var t = parseInt(c.dataset.t);
+        if (t) {
+          var pre = c.dataset.pre || '';
+          var suf = c.dataset.suf || '';
+          setTimeout(function() {
+            animateCounter(c, t, 1800, pre, suf);
+          }, i * 120);
+        }
+      });
+
+      animateFills(el);
+
+      if (el.querySelector('#garc')) {
+        setTimeout(function() { animateGauge(5.5); }, 400);
+      }
+
+      if (el.querySelector('#trendChart')) {
+        setTimeout(initChart, 150);
+      }
+
+      obs.unobserve(el);
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  sparkline('sp-dl', D.dl, '#00c896');
+  sparkline('sp-wh', D.wh, '#f5a623', 'rgba(245,166,35,0.1)');
+  sparkline('sp-sb', D.sb, '#6366f1', 'rgba(99,102,241,0.1)');
+  sparkline('sp-yt-vw', D.ytvw, '#6366f1', 'rgba(99,102,241,0.1)');
+  sparkline('sp-yt-wt', D.ytwt, '#00c896');
+  sparkline('sp-audio', D.audio, '#f5a623', 'rgba(245,166,35,0.1)');
+
+  initReveal();
+  setTimeout(function(){ try{ initChart(); }catch(e){} try{ animateFills(document.body); }catch(e){} }, 100);
+  function buildChartPrintImage(){ try{ if(!window.chartInst) return; var dataUrl = window.chartInst.toBase64Image("image/png", 1.0); var existing = document.getElementById("trendChart-img"); if(existing) existing.remove(); var img = document.createElement("img"); img.src = dataUrl; img.id = "trendChart-img"; img.style.cssText = "width:100%;max-height:460px;display:none;"; var c = document.getElementById("trendChart"); if(c) c.parentNode.appendChild(img); }catch(e){} }
+  setTimeout(function(){ try{ if(!window.chartInst) initChart(); buildChartPrintImage(); }catch(e){} }, 800);
+  window.addEventListener("beforeprint", function(){ try{ if(!window.chartInst) initChart(); if(window.chartInst){ window.chartInst.resize(); window.chartInst.update("none"); } buildChartPrintImage(); animateFills(document.body); }catch(e){} });
+});
+</script>
+<style>@media print {#apgPdfBtn{display:none !important;} *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;color-adjust:exact !important;} html,body{background:#0f0f13 !important;} .reveal,.reveal.vis,.slide,.thankyou,.kpi,.sc,.platform-item,.stat-row,.ep-card,.prod-notes,.thumb-card,.bar-fill,.pct-fill{opacity:1 !important;transform:none !important;visibility:visible !important;} .section-divider{display:none !important;} canvas#trendChart{display:none !important;} #trendChart-img{display:block !important;max-height:460px !important;width:100% !important;} .pdf-break,.ep-card-audio-month,.thankyou{page-break-before:always !important;break-before:page !important;} .pdf-keep,.ep-card,.prod-notes,#trendChart-img,canvas#trendChart,.bar-chart{page-break-inside:avoid !important;break-inside:avoid !important;} .slide,.thankyou{page-break-inside:avoid;break-inside:avoid;} a{color:inherit !important;text-decoration:none !important;} @page{margin:6mm;} .pdf-ad-compact{padding:4mm !important;} .pdf-ad-compact .stitle{font-size:16px !important;margin-bottom:8px !important;} .pdf-ad-compact .slabel{font-size:10px !important;margin-bottom:4px !important;} .pdf-ad-compact [style*="font-size:clamp(24px"]{font-size:16px !important;} .pdf-ad-compact [style*="font-size:clamp(36px"]{font-size:22px !important;} .pdf-ad-compact [style*="font-size:48px"]{font-size:24px !important;} .pdf-ad-compact [style*="padding:clamp(16px"]{padding:6px 12px !important;} .pdf-ad-compact [style*="padding:clamp(20px"]{padding:6px !important;} .pdf-ad-compact [style*="padding:32px"]{padding:8px !important;} .pdf-ad-compact [style*="padding:0 clamp"]{padding:0 !important;} .pdf-ad-compact [style*="margin:0 clamp"]{margin:0 !important;} .pdf-ad-compact [style*="padding:8px 0"]{padding:2px 0 !important;}}</style><button id="apgPdfBtn" onclick="apgDownloadPdf()" aria-label="Save report as PDF" style="position:fixed;top:20px;right:20px;z-index:9999;background:var(--acc);color:#fff;border:none;padding:12px 20px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,0.4);font-family:inherit;display:flex;align-items:center;gap:8px;"><span>↓</span> Save as PDF</button><script>function apgDownloadPdf(){window.print();}</script></body>
+</html>
