@@ -1547,12 +1547,12 @@
         <div class="tier-col">
           <div class="tier-label installation">
             <span class="tier-label-num">1</span>
-            <span><span class="tier-label-text">Month 1</span> · Onboarding &amp; Audit</span>
+            <span><span class="tier-label-text">Setup Month</span> · Onboarding &amp; Setup</span>
           </div>
           <div class="tier tier-month1">
-            <div class="tier-name">Month 1 · Onboarding</div>
-            <div class="tier-price" data-prospect="m1Primary">€1,099</div>
-            <div class="tier-price-sub" data-prospect="m1Secondary">≈ $1,187 · billed monthly · setup included</div>
+            <div class="tier-name">Setup Month</div>
+            <div class="tier-price" data-prospect="m1Primary">€1,499</div>
+            <div class="tier-price-sub" data-prospect="m1Secondary">≈ $1,710 · covers your first month of setup and optimization</div>
             <div class="tier-divider"></div>
             <div class="tier-list">
               <div class="tier-li"><span class="check">✓</span><span><strong>Onboarding Consultation</strong><span class="li-sub">Audit, strategy &amp; action plan for your show</span></span></div>
@@ -1572,8 +1572,8 @@
           </div>
           <div class="tier tier-month2">
             <div class="tier-name">Month 2 &amp; beyond</div>
-            <div class="tier-price" data-prospect="m2Primary">€1,999</div>
-            <div class="tier-price-sub" data-prospect="m2Secondary">≈ £1,731 · billed monthly · ongoing</div>
+            <div class="tier-price" data-prospect="m2Primary">€1,099</div>
+            <div class="tier-price-sub" data-prospect="m2Secondary">≈ $1,254 · billed monthly · ongoing</div>
             <div class="tier-divider"></div>
             <div class="tier-list">
               <div class="tier-li"><span class="check">✓</span><span><strong>Episode Production</strong><span class="li-sub">Monthly episode, editing &amp; packaging</span></span></div>
@@ -1588,7 +1588,7 @@
 
       <div class="tier-footer-note">
         <span class="info">i</span>
-        <span><strong>6-month minimum.</strong> Total six-month investment is <strong data-prospect="sixMonthInvestment">€15,994</strong> (≈ <span data-prospect="sixMonthInvestmentLocal">£13,851</span>). Exchange rates accurate at the time of preparing this deck. Final invoicing always in EUR.</span>
+        <span><strong>6-month minimum.</strong> Total six-month investment is <strong data-prospect="sixMonthInvestment">€6,994</strong> (≈ <span data-prospect="sixMonthInvestmentLocal">$7,978</span>). Exchange rates accurate at the time of preparing this deck. Final invoicing always in EUR.</span>
       </div>
     </div>
   </section>
@@ -1638,15 +1638,6 @@
        TERMS
        ============================================================ -->
   
-  <section class="slide" id="s-roi" data-label="Your ROI">
-    <div class="slide-inner">
-      <span class="eyebrow">Your numbers, <span data-prospect="firstName">Tracy</span></span>
-      <h2 class="display-md">The math behind your decision.</h2>
-      <p class="lede">Our engagement is six months. Here is how that maps against the value of new clients to your business.</p>
-      <div class="roi-grid"><div class="roi-figures"><div class="roi-row"><span class="label">Your client lifetime value (low end)</span><span class="value" data-prospect="ltvLocal"></span></div><div class="roi-row"><span class="label">Month 1</span><span class="value" data-prospect="m1ROI"></span></div><div class="roi-row"><span class="label">Months 2 to 6</span><span class="value" data-prospect="m2to6ROI"></span></div><div class="roi-row"><span class="label">Six-month total</span><span class="value" data-prospect="sixMonthROI"></span></div><div class="roi-row highlight"><span class="label">Break-even</span><span class="value" data-prospect="breakevenLabel"></span></div><p class="roi-offer-quote">Your offer: "<span data-prospect="offer"></span>"</p></div><div class="roi-headline"><div class="breakeven-label" data-prospect="breakevenHeadline"></div><div class="breakeven-number" data-prospect="breakevenSurplus"></div><div class="breakeven-desc" data-prospect="breakevenDesc"></div></div></div>
-      <div class="roi-footer"><strong data-prospect="touchpointMath"></strong></div>
-    </div>
-  </section>
   <section class="slide legal-slide" data-label="Terms">
     <div class="slide-inner">
       <span class="eyebrow">The agreement</span>
@@ -1705,9 +1696,9 @@
     ltvCurrency: "USD",
     offer: "Tracy provides attorneys with end-to-end medical-legal litigation support — including expert witness placement, medical record analysis, and case strategy — while also training clinicians to become credentialed expert witnesses through her National Expert Academy.",
     displayCurrency: "USD",
-    fxRate: 1,
-    fxDate: "2026-07-09",
-    month1PriceEUR: 1099,
+    fxRate: 1.1406,
+    fxDate: "2026-07-15",
+    month1PriceEUR: 1499,
     month2PriceEUR: 1099,
     guestAcqPriceEUR: 250,
     calendlyId: ""
@@ -1756,7 +1747,7 @@
       touchpointMath: `${episodesPerSixMonths} episodes over six months, 14 distribution touchpoints per episode = ${touchpoints} brand touchpoints.`,
       m1Primary: fmt(p.month1PriceEUR, "EUR"),
       m1ROI: fmt(p.month1PriceEUR, "EUR"),
-      m1Secondary: "≈ " + fmt(Math.round(p.month1PriceEUR * p.fxRate), p.displayCurrency) + " · billed monthly · setup included",
+      m1Secondary: "≈ " + fmt(Math.round(p.month1PriceEUR * p.fxRate), p.displayCurrency) + " · covers your first month of setup and optimization",
       m2Primary: fmt(p.month2PriceEUR, "EUR"),
       m2Secondary: "≈ " + fmt(Math.round(p.month2PriceEUR * p.fxRate), p.displayCurrency) + " · billed monthly · ongoing",
       sixMonthInvestment: fmt(sixMonthTotal, "EUR"),
