@@ -1407,63 +1407,99 @@ Everything must be clinically plausible enough that a nurse or physician would f
   var hint = document.getElementById('keyhint');
   setTimeout(function(){ if (hint) hint.classList.add('gone'); }, 6000);
 
-  /* ---------- EDITABLE FIELDS + SAVE ---------- */
+  /* ---------- SHARED STATE (saves centrally, follows the link) ---------- */
+  var SLUG = 'statutes-and-stethoscopes';
+  var API  = 'https://apodcastgeek.app.n8n.cloud/webhook/podcast-design-state';
+
   var GROUPS = {
     'tso-final': ['tso-final'],
     'publishing': ['pub-schedule','pub-releases','pub-sec1','pub-sec2','pub-sec3'],
     'other-details': ['od-publishing','od-scripts','od-deliveries','od-consult1','od-consult2']
   };
 
+  function field(key){ return document.querySelector('[data-key="'+key+'"]'); }
+  function allFieldKeys(){
+    return Object.keys(GROUPS).reduce(function(a,g){ return a.concat(GROUPS[g]); }, []);
+  }
+  function readVal(el){
+    var v = (el.innerText !== undefined ? el.innerText : el.textContent);
+    return v.replace(/\s+$/, '');
+  }
+
+  /* Build the complete current state, so saving one section never wipes another. */
+  function currentPayload(){
+    var p = {};
+    allFieldKeys().forEach(function(k){
+      var el = field(k);
+      if (el) p[k] = readVal(el);
+    });
+    document.querySelectorAll('.tickbox').forEach(function(box){
+      p['tick:' + box.getAttribute('data-tick')] = box.classList.contains('done') ? '1' : '0';
+    });
+    return p;
+  }
+
+  function applyPayload(p){
+    if (!p) return;
+    allFieldKeys().forEach(function(k){
+      if (typeof p[k] !== 'string') return;
+      var el = field(k);
+      if (el) el.textContent = p[k];
+    });
+    document.querySelectorAll('.tickbox').forEach(function(box){
+      var v = p['tick:' + box.getAttribute('data-tick')];
+      if (v === undefined) return;
+      var on = (v === '1');
+      box.classList.toggle('done', on);
+      var row = box.closest('li');
+      if (row) row.classList.toggle('done', on);
+    });
+  }
+
+  function save(cb){
+    var body = JSON.stringify({ slug: SLUG, payload: currentPayload() });
+    try { localStorage.setItem('ss-guide:backup', body); } catch(err){}
+    fetch(API, { method:'POST', headers:{'content-type':'application/json'}, body: body })
+      .then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function(){ if (cb) cb(true); })
+      .catch(function(){ if (cb) cb(false); });
+  }
+
+  /* Load saved state on open. Falls back to the local backup if offline. */
+  fetch(API + '?slug=' + encodeURIComponent(SLUG) + '&t=' + Date.now())
+    .then(function(r){ return r.json(); })
+    .then(function(d){ if (d && d.payload) applyPayload(d.payload); })
+    .catch(function(){
+      try {
+        var b = localStorage.getItem('ss-guide:backup');
+        if (b) applyPayload(JSON.parse(b).payload);
+      } catch(err){}
+    });
+
   /* ---------- GETTING STARTED CHECKLIST ---------- */
   document.querySelectorAll('.tickbox').forEach(function(box){
-    var key = 'ss-guide:tick:' + box.getAttribute('data-tick');
     var row = box.closest('li');
-    function paint(on){
-      box.classList.toggle('done', on);
-      if (row) row.classList.toggle('done', on);
-    }
-    var saved = null;
-    try { saved = localStorage.getItem(key); } catch(err){}
-    paint(saved === '1');
     box.addEventListener('click', function(){
       var on = !box.classList.contains('done');
-      paint(on);
-      try { localStorage.setItem(key, on ? '1' : '0'); } catch(err){}
-    });
-  });
-
-  function field(key){ return document.querySelector('[data-key="'+key+'"]'); }
-
-  Object.keys(GROUPS).forEach(function(group){
-    GROUPS[group].forEach(function(key){
-      var saved = null;
-      try { saved = localStorage.getItem('ss-guide:'+key); } catch(err){}
-      if (saved !== null){
-        var el = field(key);
-        if (el) el.textContent = saved;
-      }
+      box.classList.toggle('done', on);
+      if (row) row.classList.toggle('done', on);
+      save();
     });
   });
 
   document.querySelectorAll('.save-btn').forEach(function(btn){
     btn.addEventListener('click', function(){
-      var group = btn.getAttribute('data-save');
-      var keys = GROUPS[group] || [];
-      var ok = true;
-      keys.forEach(function(key){
-        var el = field(key);
-        if (!el) return;
-        var val = (el.innerText !== undefined ? el.innerText : el.textContent);
-        try { localStorage.setItem('ss-guide:'+key, val.replace(/\s+$/,'')); }
-        catch(err){ ok = false; }
-      });
-      var label = btn.textContent;
-      btn.textContent = ok ? 'Saved' : 'Could not save';
+      var label = btn.getAttribute('data-label') || btn.textContent;
+      btn.setAttribute('data-label', label);
+      btn.textContent = 'Saving...';
       btn.classList.add('saved');
-      setTimeout(function(){
-        btn.textContent = label;
-        btn.classList.remove('saved');
-      }, 1900);
+      save(function(ok){
+        btn.textContent = ok ? 'Saved' : 'Save failed, retry';
+        setTimeout(function(){
+          btn.textContent = label;
+          btn.classList.remove('saved');
+        }, 1900);
+      });
     });
   });
 
