@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statutes &amp; Stethoscopes | APG Podcast Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --wash:#EEF0F2;
+    --rule:#D3D3D3;
+    --ink:#1A2E5C;
+    --ink-deep:#10203F;
+    --ink-soft:#5A688A;
+    --teal:#008080;
+    --teal-deep:#006B6B;
+    --teal-light:#7FC9C4;
+    --cream:#F8F3E7;
+    --on-dark:#E8EBF2;
+    --on-dark-soft:#AFB9CE;
+    --measure:1060px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Open Sans', Helvetica, Arial, sans-serif;
+    font-size:15.5px;
+    line-height:1.68;
+    color:var(--ink);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'EB Garamond', Garamond, 'Times New Roman', serif;
+    font-weight:500;
+    color:var(--ink);
+    margin:0 0 .5em 0;
+    line-height:1.14;
+  }
+  p{margin:0 0 1em 0;}
+  a{color:var(--teal-deep);text-underline-offset:2px;}
+  a:hover{color:var(--teal);}
+
+  /* ===== SMALL-CAPS LABEL (replaces all monospace tags) ===== */
+  .tag,.label{
+    font-family:'Open Sans',Helvetica,Arial,sans-serif;
+    font-size:.7rem;
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink);
+    display:block;
+    margin-bottom:10px;
+  }
+  .tag.accent,.label.accent{color:var(--teal-deep);}
+  .tag.inline{display:inline;margin:0;}
+
+  /* ===== SCOTCH RULE PAIR ===== */
+  .scotch{
+    height:4px;
+    border-top:3px solid var(--ink);
+    border-bottom:1px solid var(--ink);
+    box-sizing:content-box;
+    margin:0;
+  }
+  .band .scotch{border-color:var(--on-dark);}
+  hr.rule{border:none;border-top:1px solid var(--rule);margin:34px 0;}
+
+  /* ===== NAV ===== */
+  nav.topnav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,0.97);
+    border-bottom:1px solid var(--ink);
+    display:flex;align-items:center;
+    padding:0 clamp(18px,4vw,44px);
+    overflow-x:auto;white-space:nowrap;
+    height:50px;
+  }
+  nav.topnav .brandmark{
+    font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ink);
+    padding-right:20px;margin-right:16px;
+    border-right:1px solid var(--rule);
+    flex:0 0 auto;
+  }
+  nav.topnav a{
+    font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;
+    padding:0 14px;height:50px;display:flex;align-items:center;
+    flex:0 0 auto;
+  }
+  nav.topnav a:hover{color:var(--teal-deep);}
+
+  /* ===== SECTION SCAFFOLD ===== */
+  .section{padding:78px 0 84px 0;scroll-margin-top:56px;}
+  .inner{max-width:var(--measure);margin:0 auto;padding:0 clamp(22px,5vw,52px);}
+  .band{background:var(--ink-deep);color:var(--on-dark);}
+  .band h1,.band h2,.band h3,.band h4{color:var(--cream);}
+  .band a{color:var(--teal-light);}
+  .band .tag,.band .label{color:var(--on-dark-soft);}
+  .band .tag.accent,.band .label.accent{color:var(--teal-light);}
+
+  .sec-head{margin-bottom:34px;}
+  .sec-head-line{
+    display:flex;align-items:baseline;gap:.45em;
+    margin-bottom:16px;flex-wrap:wrap;
+  }
+  .sec-mark{
+    font-family:'EB Garamond',Garamond,serif;
+    font-size:3.2rem;line-height:1;font-weight:400;
+    color:var(--teal);
+    flex:0 0 auto;
+  }
+  .band .sec-mark{color:var(--teal-light);}
+  .sec-head h2{
+    font-size:2.2rem;line-height:1;margin:0;
+    color:var(--ink);font-weight:500;
+  }
+  .band .sec-head h2{color:var(--cream);}
+
+  .subhead{
+    font-size:1.6rem;margin:0 0 8px 0;
+  }
+  .subhead-wrap{margin-top:62px;margin-bottom:26px;}
+  .subhead-wrap .thinrule{border-top:1px solid var(--ink);height:0;}
+
+  .section-note{
+    font-family:'EB Garamond',Garamond,serif;
+    font-style:italic;font-size:1.1rem;line-height:1.55;
+    color:var(--ink-soft);
+    margin:-8px 0 30px 0;
+    max-width:none;width:100%;
+  }
+  .band .section-note{color:var(--on-dark-soft);}
+
+  /* ===== HERO MASTHEAD ===== */
+  .cover{
+    text-align:center;
+    padding:74px clamp(22px,5vw,52px) 78px;
+    background:var(--paper);
+  }
+  .cover .kicker{
+    font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:34px;
+  }
+  .bookplate{
+    display:inline-block;
+    background:var(--cream);
+    border:1px solid var(--ink);
+    padding:16px;
+    margin-bottom:40px;
+  }
+  .bookplate img{
+    display:block;width:186px;height:auto;
+    border:1px solid rgba(26,46,92,0.22);
+  }
+  .cover h1{
+    font-size:clamp(2.4rem,5.2vw,4.1rem);
+    font-weight:500;line-height:1.04;
+    color:var(--ink);
+    margin:0 auto 30px auto;
+  }
+  .cover h1 .hl{border-bottom:none;}
+  .cover .scotch{max-width:620px;margin:0 auto;}
+  .cover .meta-line{
+    font-size:.74rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink);margin-top:22px;
+  }
+  .hl{
+    border-bottom:2px solid var(--teal);
+  }
+  .band .hl{border-bottom-color:var(--teal-light);}
+
+  /* ===== GRIDS ===== */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:38px;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+  @media(max-width:900px){.grid2,.grid3,.grid4{grid-template-columns:1fr;}}
+
+  /* ===== DOCUMENT ROWS ===== */
+  .doc-row{
+    display:grid;grid-template-columns:132px 1fr;gap:26px;
+    padding:18px 0;border-top:1px solid var(--rule);
+  }
+  .doc-row:last-child{border-bottom:1px solid var(--rule);}
+  .doc-row .tag{margin-bottom:0;padding-top:3px;}
+  @media(max-width:700px){.doc-row{grid-template-columns:1fr;gap:6px;}}
+
+  /* ===== PANELS + CARDS ===== */
+  .card{background:var(--paper);border:1px solid var(--rule);padding:26px 28px;}
+  .card h4{font-size:1.12rem;margin-bottom:9px;}
+  .card p:last-child{margin-bottom:0;}
+  .panel{background:var(--wash);padding:26px 28px;}
+  .panel h4{font-size:1.12rem;margin-bottom:9px;}
+  .panel p:last-child{margin-bottom:0;}
+  .panel.marked{border-left:3px solid var(--teal);}
+  .card.on-ink{background:var(--ink-deep);border-color:var(--ink-deep);color:var(--on-dark);}
+  .card.on-ink h4{color:var(--cream);}
+  .card.on-ink .tag{color:var(--teal-light);}
+
+  ul.clean{margin:0;padding-left:18px;}
+  ul.clean li{margin-bottom:9px;}
+
+  /* ===== NUMBERED SEQUENCES (Garamond figures) ===== */
+  .steps{list-style:none;margin:0;padding:0;}
+  .steps li{
+    display:grid;grid-template-columns:52px 1fr;gap:16px;align-items:baseline;
+    padding:13px 0;border-top:1px solid var(--rule);
+  }
+  .steps li:last-child{border-bottom:1px solid var(--rule);}
+  .steps li .n{
+    font-family:'EB Garamond',Garamond,serif;
+    font-size:1.5rem;line-height:1;color:var(--teal);
+  }
+
+  /* ===== PULL QUOTE ===== */
+  .quote-block{
+    font-family:'EB Garamond',Garamond,serif;
+    font-size:1.5rem;line-height:1.36;font-weight:400;font-style:normal;
+    color:var(--ink);
+    border-left:2px solid var(--teal);
+    padding:2px 0 2px 26px;
+  }
+  .band .quote-block{color:var(--cream);border-left-color:var(--teal-light);}
+  .quote-block{
+    transition:transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease, background-color .22s ease;
+    padding:20px 0 20px 26px;
+  }
+  .quote-block:hover{
+    transform:translateY(-6px) scale(1.03);
+    background:var(--cream);
+    box-shadow:0 14px 34px rgba(16,32,63,.16);
+    border-left-color:var(--teal-deep);
+  }
+  .band .quote-block:hover{background:rgba(255,255,255,.07);box-shadow:0 14px 34px rgba(0,0,0,.4);}
+
+  /* ===== OPEN ITEM NOTICES ===== */
+  .stamp{
+    background:rgba(255,255,255,0.045);
+    border-left:3px solid var(--teal-light);
+    padding:24px 28px;
+    margin-bottom:16px;
+  }
+  .stamp .stamp-label{
+    font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--teal-light);display:block;margin-bottom:9px;
+  }
+  .stamp h4{font-size:1.24rem;margin-bottom:8px;color:var(--cream);}
+  .stamp p{margin-bottom:0;color:var(--on-dark);}
+
+  /* ===== TABLES ===== */
+  table.dist{width:100%;border-collapse:collapse;}
+  table.dist td{padding:13px 0;border-top:1px solid var(--rule);font-size:.94rem;vertical-align:top;}
+  table.dist tr:first-child td{border-top:none;}
+  table.dist td.lvl{
+    font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    white-space:nowrap;width:104px;color:var(--ink);padding-top:16px;
+  }
+
+  /* ===== TSO OPTIONS ===== */
+  .tso-option{
+    display:grid;grid-template-columns:48px 1fr;gap:14px;align-items:baseline;
+    padding:14px 0;border-top:1px solid var(--rule);
+  }
+  .tso-option:last-child{border-bottom:1px solid var(--rule);}
+  .tso-num{
+    font-family:'EB Garamond',Garamond,serif;
+    font-size:1.4rem;line-height:1;color:var(--ink-soft);
+  }
+  .tso-option.recommended .tso-num{color:var(--teal);}
+  .tso-title{font-family:'EB Garamond',Garamond,serif;font-size:1.34rem;line-height:1.2;color:var(--ink);}
+  .adlink{
+    font-size:.8rem;color:var(--teal-deep);
+    border-top:1px solid var(--rule);padding-top:12px;
+  }
+  .rec-note{
+    font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--teal-deep);margin-left:12px;white-space:nowrap;
+  }
+
+  /* ===== THUMBNAILS ===== */
+  .thumb-card{border:1px solid var(--rule);background:var(--paper);}
+  .thumb-card img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;background:var(--wash);}
+  .thumb-card .meta{padding:13px 16px;border-top:1px solid var(--rule);}
+  .thumb-card .meta .name{font-family:'EB Garamond',Garamond,serif;font-size:1.16rem;line-height:1.2;color:var(--ink);margin-bottom:4px;}
+  .thumb-card .meta .views{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-deep);}
+
+  .concept-card{border:1px solid var(--rule);padding:20px;background:var(--paper);}
+  .concept-card img{
+    display:block;width:100%;aspect-ratio:16/9;object-fit:cover;
+    background:var(--wash);border:1px solid var(--rule);
+    margin-bottom:15px;
+  }
+  .concept-card h4{font-size:1.2rem;}
+
+  /* Concept thumbnails, large hover enlarge for showing a client on a call */
+  .concept-grid{position:relative;align-items:start;}
+  .concept-grid .concept-card{
+    transition:transform .28s cubic-bezier(.2,.7,.3,1), box-shadow .28s ease, border-color .28s ease;
+  }
+  .concept-grid .concept-card:hover{
+    transform:scale(2.55);
+    z-index:80;
+    box-shadow:0 34px 80px rgba(16,32,63,.5);
+    border-color:var(--teal);
+    background:var(--paper);
+  }
+  .concept-grid .concept-card:first-child:hover{transform:scale(2.55) translateX(19%);}
+  .concept-grid .concept-card:last-child:hover{transform:scale(2.55) translateX(-19%);}
+  .concept-grid .concept-card:hover h4,
+  .concept-grid .concept-card:hover p{font-size:.5rem;line-height:1.5;}
+  .concept-grid .concept-card:hover h4{margin-bottom:3px;}
+
+  /* ===== LANES ===== */
+  .lane-card{border:1px solid var(--rule);padding:26px 28px;background:var(--paper);}
+  .lane-card h3{font-size:1.42rem;margin-bottom:12px;}
+
+  /* ===== HEADSHOT ===== */
+  .headshot-wrap{display:flex;gap:30px;align-items:center;flex-wrap:wrap;margin-bottom:36px;}
+  .headshot-wrap img{width:152px;height:152px;object-fit:cover;border:1px solid var(--ink);}
+
+  /* ===== EPISODE SEQUENCE ===== */
+  .sequence{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);}
+  .sequence .cell{padding:24px 16px;text-align:center;border-left:1px solid var(--rule);}
+  .sequence .cell:first-child{border-left:none;}
+  .sequence .cell.accent{background:var(--wash);}
+  .sequence .cell .n{
+    font-family:'EB Garamond',Garamond,serif;font-size:1.9rem;line-height:1;
+    color:var(--teal);display:block;margin-bottom:8px;
+  }
+  .sequence .cell .nm{font-family:'EB Garamond',Garamond,serif;font-size:1.16rem;color:var(--ink);}
+  @media(max-width:800px){.sequence{grid-template-columns:1fr;}.sequence .cell{border-left:none;border-top:1px solid var(--rule);}.sequence .cell:first-child{border-top:none;}}
+
+  /* ===== DIFFERENTIATOR ===== */
+  .diff-table{
+    display:grid;grid-template-columns:1fr 1fr;
+    border-top:1px solid rgba(255,255,255,0.28);
+    border-bottom:1px solid rgba(255,255,255,0.28);
+  }
+  .diff-col{padding:30px 34px;}
+  .diff-col + .diff-col{border-left:1px solid rgba(255,255,255,0.28);}
+  .diff-col ul{margin:0;padding-left:18px;}
+  .diff-col li{margin-bottom:10px;}
+  .diff-col.no li{color:var(--on-dark-soft);}
+  @media(max-width:800px){
+    .diff-table{grid-template-columns:1fr;}
+    .diff-col + .diff-col{border-left:none;border-top:1px solid rgba(255,255,255,0.28);}
+  }
+
+  /* ===== VIDEO CARD ===== */
+  .video-card{
+    display:flex;gap:20px;align-items:center;
+    border:1px solid var(--rule);padding:18px;
+    text-decoration:none;color:var(--ink);
+  }
+  .video-card:hover{background:var(--wash);}
+  .video-card img{width:168px;aspect-ratio:16/9;object-fit:cover;flex:0 0 auto;}
+  .video-card .play{
+    font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--teal-deep);margin-bottom:4px;
+  }
+  .video-card .vt{font-family:'EB Garamond',Garamond,serif;font-size:1.3rem;line-height:1.2;color:var(--ink);}
+  .video-card .vs{font-size:.84rem;color:var(--ink-soft);}
+
+  /* ===== HOVER INTERACTIONS ===== */
+  .panel,.card,.lane-card,.concept-card,.stamp,.thumb-card,.tso-option,.steps li,.sequence .cell,.doc-row,.diff-col li,.video-card{
+    transition:transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease, background-color .22s ease, border-color .22s ease;
+  }
+  .panel:hover,.card:hover,.lane-card:hover,.concept-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 14px 34px rgba(16,32,63,.16);
+    border-color:var(--teal);
+  }
+  .card.on-ink:hover{box-shadow:0 14px 34px rgba(0,0,0,.4);border-color:var(--teal-light);}
+  .panel:hover{background:var(--cream);}
+  .stamp:hover{transform:translateX(5px);background:rgba(255,255,255,.09);}
+  .steps li:hover{background:var(--wash);transform:translateX(6px);}
+  .steps li:hover .n{color:var(--teal-deep);}
+  .doc-row:hover{background:var(--wash);}
+  .band .doc-row:hover{background:rgba(255,255,255,.05);}
+  .tso-option:hover{background:var(--wash);transform:translateX(6px);}
+  .tso-option:hover .tso-title{color:var(--teal-deep);}
+  .diff-col li:hover{color:var(--cream);transform:translateX(4px);}
+  .video-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(16,32,63,.16);border-color:var(--teal);}
+  .sequence .cell:hover{background:var(--teal);}
+  .sequence .cell:hover .n,.sequence .cell:hover .nm{color:#fff;}
+
+  /* ===== THUMBNAIL ENLARGE ON HOVER ===== */
+  .grid4,.grid3,.grid2{position:relative;}
+  .thumb-card{position:relative;text-decoration:none;display:block;color:inherit;}
+  .thumb-card:hover{
+    transform:scale(1.85);
+    z-index:60;
+    box-shadow:0 26px 60px rgba(16,32,63,.42);
+    border-color:var(--teal);
+  }
+  .thumb-card:first-child:hover{transform:scale(1.85) translateX(6%);}
+  .thumb-card:last-child:hover{transform:scale(1.85) translateX(-6%);}
+  .thumb-card .meta .name{transition:color .22s ease;}
+  .thumb-card:hover .meta .name{color:var(--teal-deep);}
+  .thumb-card .watch{
+    font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--teal-deep);margin-top:5px;opacity:0;transition:opacity .22s ease;
+  }
+  .thumb-card:hover .watch{opacity:1;}
+
+  /* ===== EDITABLE FIELDS ===== */
+  .editable{
+    display:block;
+    border-bottom:1px dashed var(--teal-light);
+    padding:4px 8px;
+    min-height:1.6em;
+    outline:none;
+    transition:background-color .18s ease, border-color .18s ease;
+    cursor:text;
+  }
+  .editable:hover{background:var(--wash);border-bottom-color:var(--teal);}
+  .editable:focus{background:var(--cream);border-bottom:1px solid var(--teal);}
+  .editable.placeholder{color:var(--ink-soft);font-style:italic;}
+  .editable.multiline{white-space:pre-line;line-height:1.9;padding:8px;}
+  .save-btn{
+    font-family:'Open Sans',Helvetica,Arial,sans-serif;
+    font-size:.66rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    color:#fff;background:var(--teal-deep);
+    border:1px solid var(--teal-deep);
+    padding:10px 22px;cursor:pointer;
+    transition:background-color .2s ease, transform .2s ease;
+  }
+  .save-btn:hover{background:var(--teal);transform:translateY(-2px);}
+  .save-btn.saved{background:var(--ink);border-color:var(--ink);}
+  .save-row{display:flex;align-items:center;gap:16px;margin-top:26px;}
+  .save-note{font-size:.72rem;color:var(--ink-soft);letter-spacing:.04em;}
+
+  /* ===== EPISODE STRUCTURE, STANDALONE ===== */
+  #structure{
+    min-height:100vh;
+    display:flex;align-items:center;
+    padding:120px 0;
+    background:var(--wash);
+  }
+  #structure .inner{width:100%;}
+  #structure .sequence{
+    border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+    background:var(--paper);margin-top:54px;
+  }
+  #structure .sequence .cell{padding:56px 20px;}
+  #structure .sequence .cell .n{font-size:3.4rem;margin-bottom:16px;}
+  #structure .sequence .cell .nm{font-size:1.6rem;}
+  #structure .struct-note{
+    text-align:center;font-family:'EB Garamond',Garamond,serif;font-style:italic;
+    font-size:1.15rem;color:var(--ink-soft);margin-top:46px;
+  }
+
+  /* ===== CHECKLIST ===== */
+  .steps.checklist li{grid-template-columns:52px 1fr 34px;}
+  .tickbox{
+    width:26px;height:26px;padding:0;
+    border:2px solid var(--ink-soft);background:transparent;
+    cursor:pointer;flex:0 0 auto;align-self:center;
+    position:relative;
+    transition:background-color .18s ease, border-color .18s ease, transform .18s ease;
+  }
+  .tickbox:hover{border-color:var(--teal);transform:scale(1.12);}
+  .tickbox::after{
+    content:'';position:absolute;left:7px;top:2px;
+    width:7px;height:13px;
+    border:solid #fff;border-width:0 3px 3px 0;
+    transform:rotate(45deg) scale(0);
+    transition:transform .18s cubic-bezier(.2,.8,.3,1.4);
+  }
+  .tickbox.done{background:var(--teal-deep);border-color:var(--teal-deep);}
+  .tickbox.done::after{transform:rotate(45deg) scale(1);}
+  .steps.checklist li.done div{text-decoration:line-through;color:var(--ink-soft);}
+  .steps.checklist li.done .n{color:var(--ink-soft);}
+  .steps.checklist li.done{background:var(--wash);}
+
+  /* ===== BRAND SWATCHES ===== */
+  .swatch-row{
+    display:grid;grid-template-columns:64px 1fr;gap:18px;align-items:center;
+    padding:14px 0;border-top:1px solid var(--rule);
+    transition:background-color .2s ease;
+  }
+  .swatch-row:last-child{border-bottom:1px solid var(--rule);}
+  .swatch-row:hover{background:var(--wash);}
+  .swatch{
+    display:block;width:64px;height:44px;
+    border:1px solid rgba(26,46,92,.18);
+  }
+  .mono{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:.82rem;color:var(--ink-soft);
+  }
+
+  /* ===== PROMPT TOGGLE ===== */
+  details.prompt-box{
+    margin-top:18px;border-top:1px solid var(--rule);padding-top:14px;
+  }
+  details.prompt-box summary{
+    font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--teal-deep);cursor:pointer;list-style:none;
+    display:flex;align-items:center;gap:8px;
+  }
+  details.prompt-box summary::-webkit-details-marker{display:none;}
+  details.prompt-box summary::before{content:'+';font-size:1rem;line-height:1;}
+  details.prompt-box[open] summary::before{content:'\2212';}
+  details.prompt-box summary:hover{color:var(--teal);}
+  details.prompt-box .prompt-body{
+    margin-top:12px;padding:16px 18px;
+    background:var(--ink-deep);color:var(--on-dark);
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:.78rem;line-height:1.6;
+    white-space:pre-wrap;
+    border-left:3px solid var(--teal-light);
+    max-height:340px;overflow-y:auto;
+  }
+
+  /* ===== KEYBOARD NAV HINT ===== */
+  .keyhint{
+    position:fixed;right:20px;bottom:20px;z-index:70;
+    background:var(--ink-deep);color:var(--on-dark-soft);
+    font-size:.63rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+    padding:10px 15px;border:1px solid var(--teal-deep);
+    transition:opacity .5s ease;pointer-events:none;
+  }
+  .keyhint.gone{opacity:0;}
+
+  /* ===== FOOTER ===== */
+  .footer-bar{
+    text-align:center;padding:44px clamp(22px,5vw,52px);
+    background:var(--ink-deep);color:var(--on-dark-soft);
+    font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <span class="brandmark">S&amp;S / Guide</span>
+  <a href="#getting-started">Start</a>
+  <a href="#client-info">Client</a>
+  <a href="#podcast-info">Podcast</a>
+  <a href="#branding">Branding</a>
+  <a href="#goals">Goals</a>
+  <a href="#audience">Audience</a>
+  <a href="#publishing">Publishing</a>
+  <a href="#seo">SEO</a>
+  <a href="#thumbnails">Thumbnails</a>
+  <a href="#structure">Structure</a>
+  <a href="#differentiator">Differentiator</a>
+  <a href="#lanes">Lanes</a>
+  <a href="#lanes-next">Lanes Next</a>
+  <a href="#features">Features</a>
+  <a href="#scripts">Scripts</a>
+  <a href="#dates">Details</a>
+  <a href="#workflow">Workflow</a>
+</nav>
+
+<!-- COVER -->
+<header class="cover">
+  <div class="kicker">APG Podcast Guide &middot; APG Brand Builder</div>
+  <div class="bookplate"><img src="logo.png" alt="Statutes &amp; Stethoscopes logo"></div>
+  <h1>Statutes <span class="hl">&amp; Stethoscopes</span></h1>
+  <div class="scotch"></div>
+  <div class="meta-line">Med Legal Pro &middot; Monthly &middot; August 2026</div>
+</header>
+
+<!-- GETTING STARTED -->
+<section class="section" id="getting-started">
+  <div class="inner">
+    <header class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">&sect;1</span><h2>Getting Started / Account Access</h2></div>
+      <div class="scotch"></div>
+    </header>
+    <div class="grid2">
+      <div>
+        <ol class="steps checklist">
+          <li><span class="n">01</span><div>Riverside Settings Optimization</div><button class="tickbox" data-tick="gs1" aria-label="Mark complete"></button></li>
+          <li><span class="n">02</span><div>YouTube Access</div><button class="tickbox" data-tick="gs2" aria-label="Mark complete"></button></li>
+          <li><span class="n">03</span><div>Podcast Re&#8209;Direct, hosting platform to be confirmed</div><button class="tickbox" data-tick="gs3" aria-label="Mark complete"></button></li>
+          <li><span class="n">04</span><div>Buzzsprout Access, new hosting set up during onboarding</div><button class="tickbox" data-tick="gs4" aria-label="Mark complete"></button></li>
+          <li><span class="n">05</span><div><a href="https://medlegalpro.com" target="_blank">Website Access</a></div><button class="tickbox" data-tick="gs5" aria-label="Mark complete"></button></li>
+          <li><span class="n">06</span><div>Social Media Access (3 channels)</div><button class="tickbox" data-tick="gs6" aria-label="Mark complete"></button></li>
+          <li><span class="n">07</span><div>Onboarding your first episode</div><button class="tickbox" data-tick="gs7" aria-label="Mark complete"></button></li>
+        </ol>
+      </div>
+      <div class="card on-ink">
+        <span class="tag">Where this show already stands</span>
+        <p>Statutes &amp; Stethoscopes published its first episode on October 31, 2025. Seven episodes are live, running 33 to 55 minutes.</p>
+        <p>First priority: the referral episode with guest Jamie Anzalone, onboarded live on the design call.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENT INFO -->
+<section class="section" id="client-info">
+  <div class="inner">
+    <header class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">&sect;2</span><h2>Client Information</h2></div>
+      <div class="scotch"></div>
+    </header>
+    <div class="headshot-wrap">
+      <img src="headshot.png" alt="Tracy Liberatore">
+      <div>
+        <h3 style="margin-bottom:6px;font-size:1.7rem;">Tracy Liberatore, Esq., PA&#8209;Emeritus</h3>
+        <p style="margin-bottom:0;max-width:520px;color:var(--ink-soft);">Physician assistant turned trial attorney, and founder of Med Legal Pro. Host of Statutes &amp; Stethoscopes.</p>
+      </div>
+    </div>
+    <div class="grid2">
+      <div>
+        <div class="doc-row"><div class="tag">Business</div><div>Med Legal Pro LLC</div></div>
+        <div class="doc-row"><div class="tag">Website</div><div><a href="https://medlegalpro.com" target="_blank">medlegalpro.com</a></div></div>
+        <div class="doc-row"><div class="tag">Primary CTA</div><div><a href="https://medlegalpro.com/submit-a-case/" target="_blank">medlegalpro.com/submit-a-case</a></div></div>
+        <div class="doc-row"><div class="tag">Secondary CTA</div><div><a href="https://medlegalpro.com/quiz/" target="_blank">medlegalpro.com/quiz</a></div></div>
+        <div class="doc-row"><div class="tag">Newsletter</div><div><a href="https://medlegalpro.com/subscribe/" target="_blank">medlegalpro.com/subscribe</a></div></div>
+        <div class="doc-row"><div class="tag">Podcast Booking Link</div><div><a href="https://api.leadconnectorhq.com/widget/booking/U11RDalhGlNeX94awG9k" target="_blank">Book a guest slot</a></div></div>
+      </div>
+      <div>
+        <div class="doc-row"><div class="tag">LinkedIn</div><div><a href="https://www.linkedin.com/company/med-legal-pro" target="_blank">linkedin.com/company/med-legal-pro</a></div></div>
+        <div class="doc-row"><div class="tag">Facebook</div><div><a href="https://www.facebook.com/medlegalpro" target="_blank">facebook.com/medlegalpro</a></div></div>
+        <div class="doc-row"><div class="tag">Instagram</div><div><a href="https://www.instagram.com/med.legal.pro/" target="_blank">instagram.com/med.legal.pro</a></div></div>
+        <div class="doc-row"><div class="tag">YouTube</div><div><a href="https://www.youtube.com/channel/UC3C-MPpPED7A0iBaQqoEXeg" target="_blank">Statutes &amp; Stethoscopes</a></div></div>
+      </div>
+    </div>
+    <div style="margin-top:44px;"></div>
+    <div class="doc-row"><div class="tag">Description</div><div>Medical-legal consulting: turns complex medical records into court-ready work product and matches attorneys with rigorously vetted medical experts.</div></div>
+    <div class="doc-row"><div class="tag">Competitors</div><div>Med League Support Services, MedQuest Legal Nurse Consulting, SEAK Expert Witness Directory, JurisPro, Round Table Group, and on the software side, OrganizeMED / AccidentMATE.</div></div>
+  </div>
+</section>
+
+<!-- PODCAST INFO -->
+<section class="section" id="podcast-info">
+  <div class="inner">
+    <header class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">&sect;3</span><h2>Podcast Information</h2></div>
+      <div class="scotch"></div>
+    </header>
+    <div class="grid2">
+      <div>
+        <div class="doc-row"><div class="tag">We believe</div><div>Cases are won on the medical evidence, and a clear record beats a loud argument.</div></div>
+        <div class="doc-row"><div class="tag">We focus on</div><div>Attorneys who want to understand the medicine in their own files well enough to value and try the case with confidence.</div></div>
+        <div class="doc-row"><div class="tag">You will learn</div><div>To read the medicine faster, spot the issues that decide merit, causation and damages, and stop losing cases to a weak or late expert report.</div></div>
+      </div>
+      <div>
+        <div class="quote-block">
+          &ldquo;We want to make sure no attorney is left out of real medical insight. Through candid conversations between attorneys and practicing clinicians, we help litigators in medically complex cases evaluate merit, causation and damages early, turning attorneys from outsiders in the medical record into fluent readers of it.&rdquo;
+        </div>
+        <div style="margin-top:26px;">
+          <div class="doc-row"><div class="tag">Tone</div><div>Professional, plain-spoken and warm. Two credible colleagues talking shop, never stuffy or academic.</div></div>
+          <div class="doc-row"><div class="tag">Energy</div><div>Thoughtful but upbeat. Grounded and briskly paced. Deep rather than wide, no hype.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PODCAST BRANDING -->
+<section class="section" id="branding">
+  <div class="inner">
+    <header class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">&sect;4</span><h2>Podcast Branding</h2></div>
+      <div class="scotch"></div>
+    </header>
+    <p class="section-note">Everything the production team needs in one place, taken from the Med Legal Pro brand guidelines and your asset folder.</p>
+
+    <div class="grid2">
+      <div>
+        <span class="tag accent">Colour Palette</span>
+        <div class="swatch-row"><span class="swatch" style="background:#1A2E5C;"></span><div><b>Navy Blue</b>, primary<br><span class="mono">#1A2E5C</span> &middot; rgb(26, 46, 92)</div></div>
+        <div class="swatch-row"><span class="swatch" style="background:#008080;"></span><div><b>Teal</b>, secondary<br><span class="mono">#008080</span> &middot; rgb(0, 128, 128)</div></div>
+        <div class="swatch-row"><span class="swatch" style="background:#D3D3D3;"></span><div><b>Light Gray</b><br><span class="mono">#D3D3D3</span> &middot; rgb(211, 211, 211)</div></div>
+        <div class="swatch-row"><span class="swatch" style="background:#FFFFFF;border:1px solid var(--rule);"></span><div><b>White</b><br><span class="mono">#FFFFFF</span> &middot; rgb(255, 255, 255)</div></div>
+      </div>
+      <div>
+        <span class="tag accent">Typography</span>
+        <div class="doc-row"><div class="tag">Primary</div><div>Garamond. Serif, used for headings and formal documents.</div></div>
+        <div class="doc-row"><div class="tag">Secondary</div><div>Helvetica. Sans-serif, for digital and presentations.</div></div>
+        <div class="doc-row"><div class="tag">Web</div><div>Open Sans. Screen readability, used across the site.</div></div>
+      </div>
+    </div>
+
+    <div class="subhead-wrap">
+      <h2 class="subhead">Assets</h2>
+      <div class="thinrule"></div>
+    </div>
+    <div class="grid3">
+      <div class="card">
+        <span class="tag accent">Identity</span>
+        <ul class="clean" style="margin-bottom:0;">
+          <li><a href="https://drive.google.com/drive/folders/1BEMJfZZG6TgczizW15tmKJwtf0Es8X9_" target="_blank">Logo folder</a></li>
+          <li><a href="https://drive.google.com/file/d/13CkTBySXg_0aN6HvH5_RnEaHKgrFGN9j/view" target="_blank">Logo, PNG</a></li>
+          <li><a href="https://drive.google.com/file/d/1XRPd7o1N0gkwTHsoFaD0472iLvkS-uCz/view" target="_blank">Logo, vector AI</a></li>
+          <li><a href="https://drive.google.com/file/d/1cQC8tHrS4wrvHDip0JtC8UJkKuuZlGY2/view" target="_blank">Brand guidelines PDF</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag accent">Host Images</span>
+        <ul class="clean" style="margin-bottom:0;">
+          <li><a href="https://drive.google.com/drive/folders/1B6xs3C9jK6KS1ftbDvkc1BlNGqK48xo9" target="_blank">Host images folder (19 files)</a></li>
+          <li><a href="https://drive.google.com/file/d/1cL0wn_5vPROVNKlmnFhcfAA0VcSqn9ho/view" target="_blank">Tracy, arms crossed, cut-out PNG</a></li>
+          <li><a href="https://drive.google.com/file/d/1TC56ZbV2lCFRfTEZtU4WHW1frvXv5uXI/view" target="_blank">Favourite 1</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag accent">Video &amp; Audio</span>
+        <ul class="clean" style="margin-bottom:0;">
+          <li><a href="https://drive.google.com/drive/folders/1fsLTVEEABE4Hg_sSjg9XCNJwRmos2n1o" target="_blank">B-roll assets folder</a></li>
+          <li><a href="https://drive.google.com/file/d/1f4-R7KSstFIgeUv6QM-sSvmNsxiWkCB7/view" target="_blank">Ad (b-roll video)</a></li>
+          <li><a href="https://drive.google.com/file/d/18lIQ4w1WHKIHAZfkxZAq6d8B4mlhe-1D/view" target="_blank">Intro video</a></li>
+          <li><a href="https://drive.google.com/file/d/1qGhIj5fJ7t-IinoYtV2hdvkvjOFBXSkO/view" target="_blank">Outro video</a></li>
+          <li><a href="https://drive.google.com/file/d/1F2akH3Lo0MTXQWOkuylhPzGUxtCWTHEJ/view" target="_blank">Theme music, MP3</a></li>
+          <li><a href="https://drive.google.com/file/d/15fvKYZ1MW1rEGlEQyZpCux7OE5eVTYZx/view" target="_blank">Music licence</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid3" style="margin-top:22px;">
+      <div class="card">
+        <span class="tag accent">Motion Elements</span>
+        <ul class="clean" style="margin-bottom:0;">
+          <li><a href="https://drive.google.com/file/d/1aXbSsRowEZDWRCGqgJR5oJbamzqWgbzZ/view" target="_blank">Short Form Clip, Title Banner</a></li>
+          <li><a href="https://drive.google.com/file/d/10HrIpEj1YaWGPMZD9YlY4BOFUIAHcsFh/view" target="_blank">Short Form Clip, Text Animation Background</a></li>
+          <li><a href="https://drive.google.com/file/d/1YEZ4yTnpQ661WkBl_q_NcbcequFo7GXD/view" target="_blank">Guest Intro, Text Animation Background</a></li>
+          <li><a href="https://drive.google.com/file/d/1S1mYjIlG7fYdyA4z1r6TxeWFxZFkM5R8/view?usp=drive_link" target="_blank">Transition SFX (in and out of ads, and text animations)</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag accent">QR Codes</span>
+        <ul class="clean" style="margin-bottom:0;">
+          <li><a href="https://drive.google.com/file/d/14c5TzCSDmZVP8jZSRm5qzM67Wy0R0AhR/view" target="_blank">Submit A Case QR</a></li>
+          <li><a href="https://drive.google.com/file/d/1LP_uR-bCb7jhDRTwmiwaLD0h1Gc3E1TO/view" target="_blank">Quiz QR</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag accent">Reference</span>
+        <ul class="clean" style="margin-bottom:0;">
+          <li><a href="https://drive.google.com/drive/folders/1U56DLyEQMNobAVRo4cOq2w9tocIjb1j8" target="_blank">Full branding folder</a></li>
+          <li><a href="https://drive.google.com/drive/folders/12SR1MGGRMXjceol5eLl1VbqnUugivqHd" target="_blank">Existing short-form examples</a></li>
+          <li><a href="https://drive.google.com/file/d/1RKwWKoahd_FGE1Q5SxffAsmPcnOWIdfG/view" target="_blank">Intro and outro script doc</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GOALS -->
+<section class="section" id="goals">
+  <div class="inner">
+    <header class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">&sect;5</span><h2>Podcast Goals</h2></div>
+      <div class="scotch"></div>
+    </header>
+    <div class="grid3">
+      <div class="panel"><span class="tag accent">Priority 01</span><h4>Generate Case Referrals</h4><p>Turn listening attorneys into case submissions. This is the goal that pays for the podcast.</p></div>
+      <div class="panel"><span class="tag accent">Priority 02</span><h4>Be the Name in This Space</h4><p>Thought leadership, with a specific job. Being known as the person who reads the medicine is what makes the referral feel obvious.</p></div>
+      <div class="panel"><span class="tag accent">Priority 03</span><h4>Attract Better Guests</h4><p>You mentioned needing more guests. A visible, well-produced show makes attorneys want to come on it, and every guest brings their own audience.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section class="section" id="audience">
+  <div class="inner">
+    <header class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">&sect;6</span><h2>Your Audience</h2></div>
+      <div class="scotch"></div>
+    </header>
+    <div class="grid2">
+      <div>
+        <div class="doc-row"><div class="tag">Age</div><div>35 to 65</div></div>
+        <div class="doc-row"><div class="tag">Gender</div><div>All, slight male skew among trial attorneys</div></div>
+        <div class="doc-row"><div class="tag">Location</div><div>US nationwide, concentrated in PA, NY, NJ, TX, FL</div></div>
+        <div class="doc-row"><div class="tag">Occupation</div><div>Plaintiff, defense and insurance attorneys, plus paralegals and case managers handling med mal, PI, nursing home negligence and wrongful death</div></div>
+        <div class="doc-row"><div class="tag">Income</div><div>$150K to $500K+, higher for firm owners</div></div>
+        <div class="doc-row"><div class="tag">Outcomes</div><div>Read the medicine faster, spot the issues that decide merit, causation and damages, stop losing cases to a weak expert.</div></div>
+      </div>
+      <div>
+        <div class="panel marked" style="margin-bottom:14px;"><span class="tag">Pain Point 01</span>&ldquo;I have thousands of pages of medical records, no clinical training, and no time to find what actually matters.&rdquo;</div>
+        <div class="panel marked" style="margin-bottom:14px;"><span class="tag">Pain Point 02</span>&ldquo;I retained an expert and the report came back thin, late, or fell apart under cross.&rdquo;</div>
+        <div class="panel marked"><span class="tag">Pain Point 03</span>&ldquo;I can't tell early whether the case has real medical merit, so I risk spending money on a loser.&rdquo;</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLISHING -->
+<section class="section" id="publishing">
+  <div class="inner">
+    <header class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">&sect;7</span><h2>Publishing</h2></div>
+      <div class="scotch"></div>
+    </header>
+    <div class="grid2">
+      <div>
+        <div class="doc-row"><div class="tag">Cadence</div><div>Monthly, 1 episode per month</div></div>
+        <div class="doc-row"><div class="tag">Schedule</div><div class="editable" data-key="pub-schedule" contenteditable="true">First Friday of every month</div></div>
+        <div class="doc-row"><div class="tag">Releases</div><div class="editable multiline" data-key="pub-releases" contenteditable="true">Episode 1
+Episode 2
+Episode 3
+Episode 4
+Episode 5
+Episode 6</div></div>
+        <div class="doc-row"><div class="tag">CTA</div><div>Primary: <a href="https://itl.ink/MLPsubmit-a-case" target="_blank">itl.ink/MLPsubmit-a-case</a><br>Secondary: <a href="https://itl.ink/MLPquiz" target="_blank">itl.ink/MLPquiz</a></div></div>
+        <div class="save-row">
+          <button class="save-btn" data-save="publishing">Save Schedule &amp; Platforms</button>
+          <span class="save-note">Saves in this browser.</span>
+        </div>
+      </div>
+      <div class="panel">
+        <span class="tag">Platform Distribution</span>
+        <table class="dist">
+          <tr><td class="lvl">Primary</td><td>YouTube (Long-form). Full video episodes, growth engine.<br><br>All audio publishing platforms, including Apple Podcasts, Spotify, iHeart, Amazon Music and Pocket Casts. Live once the Buzzsprout hosting setup is complete.</td></tr>
+          <tr><td class="lvl">Secondary (1)</td><td><span class="editable" data-key="pub-sec1" contenteditable="true">LinkedIn. Clips and episode promotion, where trial attorneys spend time.</span></td></tr>
+          <tr><td class="lvl">Secondary (2)</td><td><span class="editable" data-key="pub-sec2" contenteditable="true">To be agreed on the call</span></td></tr>
+          <tr><td class="lvl">Secondary (3)</td><td><span class="editable" data-key="pub-sec3" contenteditable="true">To be agreed on the call</span></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEO + TSO -->
+<section class="section" id="seo">
+  <div class="inner">
+    <header class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">&sect;8</span><h2>SEO + TSO</h2></div>
+      <div class="scotch"></div>
+    </header>
+    <div class="grid2">
+      <div>
+        <div class="doc-row"><div class="tag">Primary Keywords</div><div>expert witness deposition, medical expert witness, medical malpractice podcast, medical record review services for attorneys</div></div>
+      </div>
+      <div>
+        <div class="doc-row"><div class="tag">Secondary Keywords</div><div>cross examination of a medical expert witness, how to find a medical expert witness, standard of care medical malpractice, trial lawyer podcast</div></div>
+      </div>
+    </div>
+
+    <div class="subhead-wrap">
+      <h2 class="subhead">Tactical Specific Outcome</h2>
+      <div class="thinrule"></div>
+    </div>
+    <p class="section-note">A tactical specific outcome is the short line beside the show name that tells a stranger scrolling a podcast app who this show is for and what they get from it, because the title alone cannot tell them whether Statutes &amp; Stethoscopes is a medical show or a legal one.</p>
+
+    <div class="grid2">
+      <div>
+        <div class="tso-option recommended">
+          <div class="tso-num">01</div>
+          <div><span class="tso-title">Medical Evidence for Trial Attorneys</span><span class="rec-note">Recommended</span></div>
+        </div>
+        <div class="tso-option"><div class="tso-num">02</div><div><span class="tso-title">Medical Record Review for Trial Lawyers</span></div></div>
+        <div class="tso-option"><div class="tso-num">03</div><div><span class="tso-title">The Expert Witness Podcast for Litigators</span></div></div>
+        <div class="tso-option"><div class="tso-num">04</div><div><span class="tso-title">Read the Medicine, Win the Case</span></div></div>
+        <div class="tso-option"><div class="tso-num">05</div><div><span class="tso-title">Medical Malpractice, Read From the Record</span></div></div>
+      </div>
+      <div>
+        <div class="tso-option"><div class="tso-num">06</div><div><span class="tso-title">Where Medical Evidence Meets Litigation</span></div></div>
+        <div class="tso-option"><div class="tso-num">07</div><div><span class="tso-title">Medical Legal Consulting for Injury Firms</span></div></div>
+        <div class="tso-option"><div class="tso-num">08</div><div><span class="tso-title">Turning Medical Records Into Court-Ready Cases</span></div></div>
+        <div class="tso-option"><div class="tso-num">09</div><div><span class="tso-title">Nursing Home Cases, Decided by the Chart</span></div></div>
+        <div class="tso-option"><div class="tso-num">10</div><div><span class="tso-title">The Chart Never Lies</span></div></div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:58px;">
+      <span class="tag accent" style="text-align:center;">Agreed on the call</span>
+      <p style="font-family:'EB Garamond',Garamond,serif;font-size:2rem;line-height:1.2;color:var(--ink);margin:0 0 6px 0;">Statutes &amp; Stethoscopes |
+        <span class="editable" data-key="tso-final" style="display:inline-block;min-width:340px;text-align:left;" contenteditable="true">Medical Evidence for Trial Attorneys</span>
+      </p>
+      <div class="save-row" style="justify-content:center;">
+        <button class="save-btn" data-save="tso-final">Save TSO</button>
+        <span class="save-note">Saves in this browser and stays until you edit and save again.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THUMBNAILS -->
+<section class="section" id="thumbnails">
+  <div class="inner">
+    <header class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">&sect;9</span><h2>Thumbnails: Competitor Analysis</h2></div>
+      <div class="scotch"></div>
+    </header>
+    <div class="grid3">
+      <a class="thumb-card" href="https://www.youtube.com/watch?v=AJDPP6TH-L4" target="_blank">
+        <img src="https://i.ytimg.com/vi/AJDPP6TH-L4/hqdefault.jpg" alt="Nick Rowley, Brutal Honesty">
+        <div class="meta"><div class="name">Nick Rowley, Brutal Honesty</div><div class="views">8,200 views &middot; Trial Lawyer Nation, 1,410 subscribers</div><div class="watch">&#9654; Watch</div></div>
+      </a>
+      <a class="thumb-card" href="https://www.youtube.com/watch?v=Q1m2dLJ2GRM" target="_blank">
+        <img src="https://i.ytimg.com/vi/Q1m2dLJ2GRM/hqdefault.jpg" alt="Keith Mitnik, Deeper Cuts">
+        <div class="meta"><div class="name">Keith Mitnik, Deeper Cuts</div><div class="views">4,049 views &middot; Trial Lawyer Nation, 1,410 subscribers</div><div class="watch">&#9654; Watch</div></div>
+      </a>
+      <a class="thumb-card" href="https://www.youtube.com/watch?v=Wxg0r9SIZLw" target="_blank">
+        <img src="https://i.ytimg.com/vi/Wxg0r9SIZLw/hqdefault.jpg" alt="Nursing Home Abuse Podcast, What is Sepsis and Septic Shock">
+        <div class="meta"><div class="name">What is Sepsis &amp; Septic Shock?</div><div class="views">8,045 views &middot; Schenk Nursing Home Abuse Law, 1,320 subscribers</div><div class="watch">&#9654; Watch</div></div>
+      </a>
+    </div>
+
+    <div class="subhead-wrap">
+      <h2 class="subhead">Thumbnails: Our Vision</h2>
+      <div class="thinrule"></div>
+    </div>
+    <div class="grid3" style="margin-bottom:30px;">
+      <div class="panel marked"><span class="tag accent">Element 01</span><h4>Background</h4><p style="margin-bottom:0;">Your palette, so the channel reads as one body of work.</p></div>
+      <div class="panel marked"><span class="tag accent">Element 02</span><h4>Face</h4><p style="margin-bottom:0;">A real still from the conversation, with an expression that matches the promise in the text.</p></div>
+      <div class="panel marked"><span class="tag accent">Element 03</span><h4>Text</h4><p style="margin-bottom:0;">Three to five words, one of them highlighted, written to open a question rather than answer it.</p></div>
+    </div>
+    <div class="doc-row">
+      <div class="tag">The North Star</div>
+      <div>Before anything gets designed, we decide the single most compelling idea in the episode. That idea becomes the North Star, and then the whole package points at it: the thumbnail, the title, the clips, the show notes. When the packaging pulls in one direction instead of four, the click rate moves.</div>
+    </div>
+    <div class="doc-row">
+      <div class="tag">Curiosity, not clickbait</div>
+      <div>The distinction we hold to is simple. Curiosity means the thumbnail makes you want to know the answer and the episode actually delivers it. Clickbait means the thumbnail promises something the episode never pays off. The second one buys a click and costs you a subscriber, so we only ever write to what is genuinely in the conversation.</div>
+    </div>
+    <div class="doc-row">
+      <div class="tag">Where the room is</div>
+      <div>The strongest performers in this niche are still running plain designs. That is an opening. A conservative audience does not mean conservative packaging has to win, it means nobody has tested properly yet.</div>
+    </div>
+    <p class="section-note" style="margin-top:34px;">Three concepts for the first episodes. Hover any of them to enlarge.</p>
+    <div class="grid3 concept-grid">
+      <div class="concept-card">
+        <img src="concept-1.png" alt="Concept 1, Where Are The Other Pages?">
+        <h4>Concept 1</h4>
+        <p style="margin-bottom:0;">The question a listener already has, made visual. Two faces, and the thin file sitting beside the one that should have arrived.</p>
+      </div>
+      <div class="concept-card">
+        <img src="concept-2.png" alt="Concept 2, What Did They Leave Out?">
+        <h4>Concept 2</h4>
+        <p style="margin-bottom:0;">The redacted record carries the curiosity and the expression finishes it. The guest sits inset so the chart stays the hero.</p>
+      </div>
+      <div class="concept-card">
+        <img src="concept-3.png" alt="Concept 3, The Records Aren't Complete">
+        <h4>Concept 3</h4>
+        <p style="margin-bottom:0;">A statement rather than a question, staged as an exhibit. The torn hole in the chart is the whole idea in one image.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRUCTURE -->
+<section class="section" id="structure">
+  <div class="inner">
+    <header class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">&sect;10</span><h2>Episode Structure</h2></div>
+      <div class="scotch"></div>
+    </header>
+    <div class="sequence">
+      <div class="cell"><span class="n">01</span><span class="nm">Guest Intro</span></div>
+      <div class="cell"><span class="n">02</span><span class="nm">Podcast Pt. 1</span></div>
+      <div class="cell accent"><span class="n">03</span><span class="nm">Ad</span></div>
+      <div class="cell"><span class="n">04</span><span class="nm">Podcast Pt. 2</span></div>
+      <div class="cell"><span class="n">05</span><span class="nm">Outro</span></div>
+    </div>
+    <p class="struct-note">This is the shape of every episode. The guest intro and the outro are pre-produced from your recorded scripts, so you go straight into the first question when you sit down with a guest.</p>
+  </div>
+</section>
+
+<!-- DIFFERENTIATOR -->
+<section class="section band" id="differentiator">
+  <div class="inner">
+    <header class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">&sect;11</span><h2>Your Differentiator</h2></div>
+      <div class="scotch"></div>
+    </header>
+    <div class="quote-block" style="margin-bottom:38px;">
+      &ldquo;The medical-legal podcast hosted by someone who has actually sat on <span class="hl">both sides of the chart</span>, as a clinician and as a trial attorney.&rdquo;
+    </div>
+    <p class="section-note">We checked 21 podcasts in your space before writing this, and every claim below points at a named show you can go and listen to.</p>
+    <div class="diff-table">
+      <div class="diff-col no">
+        <span class="tag">What Competitors Do</span>
+        <ul>
+          <li><b>Lawyers talking to lawyers.</b> <a href="https://podcasts.apple.com/us/podcast/trial-lawyer-nation/id1341983666" target="_blank">Trial Lawyer Nation</a>, <a href="https://podcasts.apple.com/us/podcast/the-jury-is-out/id1496632463" target="_blank">The Jury Is Out</a> and <a href="https://podcasts.apple.com/us/podcast/just-verdicts/id1696181757" target="_blank">Just Verdicts</a> are all hosted by trial attorneys. They teach trial craft well, and none of them has ever written in a medical chart.</li>
+          <li><b>Clinicians talking to clinicians.</b> <a href="https://podcast.legalnursebusiness.com/" target="_blank">Legal Nurse Podcast</a> and <a href="https://podcasts.apple.com/us/podcast/doctors-and-litigation-the-l-word/id1469155084" target="_blank">Doctors and Litigation</a> know the medicine, but they are speaking to other medical professionals rather than to the attorneys who hire them.</li>
+          <li><b>The one direct competitor with a podcast points it at the expert.</b> Round Table Group places expert witnesses, the same as you do, and their show <a href="https://www.roundtablegroup.com/engagingexperts/" target="_blank">Engaging Experts</a> interviews those experts. After 186 episodes it has one rating on Apple.</li>
+        </ul>
+      </div>
+      <div class="diff-col yes">
+        <span class="tag accent">What Statutes &amp; Stethoscopes Does</span>
+        <ul>
+          <li>Points the microphone at the attorney rather than the expert, so the listener leaves with something they can use</li>
+          <li>Can put a medical record in front of the audience and explain what it means, because the host has written in one. No other show in this space can do that</li>
+          <li>Puts a guest attorney and a clinical perspective in the same conversation, hosted by somebody who has worked both jobs</li>
+          <li>Gives the audience somewhere to go, which turns listening into case submissions</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LANES -->
+<section class="section" id="lanes">
+  <div class="inner">
+    <header class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">&sect;12</span><h2>Interview Lanes: Where You Are Now</h2></div>
+      <div class="scotch"></div>
+    </header>
+    <p class="section-note">These are the lanes the show is already running, taken from your own questions across the seven episodes.</p>
+
+    <div class="panel marked" style="margin-bottom:30px;">
+      <span class="tag accent">The spine you have already found</span>
+      <h4>You ask every guest how they hire a medical expert.</h4>
+      <ul class="clean">
+        <li>Ep 2, Josh Perry: &ldquo;What is it that you as a medical attorney look for in a medical expert when you're hiring someone?&rdquo;</li>
+        <li>Ep 4, Mark Tolles II: &ldquo;When you're looking for a medical expert, what are some red flags that would keep you from hiring one?&rdquo;</li>
+        <li>Ep 6, Kila Baldwin: &ldquo;What is the most important thing for you when you're looking to hire a medical expert?&rdquo;</li>
+      </ul>
+      <p style="font-family:'EB Garamond',Garamond,serif;font-size:1.7rem;line-height:1.25;color:var(--teal-deep);margin:22px 0 0 0;">This is your ignition question. Ask it in every episode.</p>
+      <p style="margin:8px 0 0 0;">The answer is a live description of the problem Med Legal Pro solves, said out loud by the exact person who buys it. That is what makes the ask at the end feel like a natural next step rather than a pitch.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="lane-card">
+        <h3>Hiring and evaluating experts</h3>
+        <ul class="clean" style="margin-bottom:0;">
+          <li>&ldquo;What are some red flags that would keep you from hiring one?&rdquo;</li>
+          <li>&ldquo;Does the expert have to practise in the same specialty?&rdquo;</li>
+        </ul>
+      </div>
+      <div class="lane-card">
+        <h3>How the guest got here</h3>
+        <ul class="clean" style="margin-bottom:0;">
+          <li>&ldquo;What made you decide to transition from medicine to law?&rdquo;</li>
+          <li>&ldquo;What first drew you to this kind of work?&rdquo;</li>
+        </ul>
+      </div>
+      <div class="lane-card">
+        <h3>Getting to know them</h3>
+        <ul class="clean" style="margin-bottom:0;">
+          <li>&ldquo;Tell us where you grew up. Life as a child.&rdquo;</li>
+          <li>&ldquo;Tell us one thing about you that people might not know.&rdquo;</li>
+        </ul>
+      </div>
+      <div class="lane-card">
+        <h3>Taking a case, and what it is worth</h3>
+        <ul class="clean" style="margin-bottom:0;">
+          <li>&ldquo;How do you decide whether or not to take a case?&rdquo;</li>
+          <li>&ldquo;How do you calculate those damages when your folks are nearing the end of their life?&rdquo;</li>
+        </ul>
+      </div>
+      <div class="lane-card">
+        <h3>Advice for clinicians who want expert work</h3>
+        <ul class="clean" style="margin-bottom:0;">
+          <li>&ldquo;Any tips for clinicians looking to become an expert when dealing with trial attorneys?&rdquo;</li>
+          <li>&ldquo;What kind of advice might you have for medical people getting into legal work?&rdquo;</li>
+        </ul>
+      </div>
+      <div class="lane-card">
+        <h3>What is wrong with the system</h3>
+        <ul class="clean" style="margin-bottom:0;">
+          <li>&ldquo;What do you think about the state of the health care system?&rdquo;</li>
+          <li>&ldquo;What has corporate medicine done to patient care?&rdquo;</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LANES PROPOSED -->
+<section class="section band" id="lanes-next">
+  <div class="inner">
+    <header class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">&sect;13</span><h2>Interview Lanes: Where We Would Take It</h2></div>
+      <div class="scotch"></div>
+    </header>
+    <p class="section-note">Four lanes to pull from in any episode rather than a running order, with two or three of them usually landing in a single conversation.</p>
+    <div class="grid2">
+      <div class="lane-card" style="background:transparent;border-color:rgba(255,255,255,.28);">
+        <span class="tag accent">Lane 01</span>
+        <h3>The Expert Who Did Not Work Out</h3>
+        <p style="color:var(--on-dark-soft);">Your question, asked from the other end. Ask what a good expert looks like and you get a list. Ask about one that went wrong and you get a story.</p>
+        <ul class="clean">
+          <li>Tell me about an expert you hired who did not work out. What did you miss?</li>
+          <li>What does an expert do on the stand that makes your heart sink?</li>
+          <li>Have you ever dropped an expert in the middle of a case?</li>
+          <li>What do you ask every expert now that you never used to ask?</li>
+        </ul>
+      </div>
+      <div class="lane-card" style="background:transparent;border-color:rgba(255,255,255,.28);">
+        <span class="tag accent">Lane 02</span>
+        <h3>Inside the Record</h3>
+        <p style="color:var(--on-dark-soft);">Nobody else can host this. You have written in a chart and you have cross-examined one.</p>
+        <ul class="clean">
+          <li>You open a nursing home chart. What do you look at first?</li>
+          <li>What gets written in a chart that means the opposite of what it says?</li>
+          <li>Where do you usually find the thing the other side hoped nobody would spot?</li>
+          <li>How can you tell when a record has been tidied up after the fact?</li>
+        </ul>
+      </div>
+      <div class="lane-card" style="background:transparent;border-color:rgba(255,255,255,.28);">
+        <span class="tag accent">Lane 03</span>
+        <h3>What the Case Was Worth</h3>
+        <p style="color:var(--on-dark-soft);">One of your guests turned a five thousand dollar offer into forty thousand. It got one line at the very end of a 53 minute episode. That is an episode on its own.</p>
+        <ul class="clean">
+          <li>Tell me about a case another firm nearly gave away. What did they miss?</li>
+          <li>What in the medical records moved the number the most?</li>
+          <li>When you turn a case down, what is the real reason?</li>
+          <li>How do you value a case when the client has outlived their prognosis?</li>
+        </ul>
+      </div>
+      <div class="lane-card" style="background:transparent;border-color:rgba(255,255,255,.28);">
+        <span class="tag accent">Lane 04</span>
+        <h3>How It Got This Way</h3>
+        <p style="color:var(--on-dark-soft);">You went here once in seven episodes and it is the most distinctive material on the channel. It also travels furthest beyond your current audience.</p>
+        <ul class="clean">
+          <li>What has corporate ownership changed about care in these facilities?</li>
+          <li>Electronic records were supposed to make things clearer. What did they make worse?</li>
+          <li>What does staffing actually look like on the days these injuries happen?</li>
+          <li>If you could change one rule about how records are kept, what would it be?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOW FEATURE IDEAS -->
+<section class="section" id="features">
+  <div class="inner">
+    <header class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">&sect;14</span><h2>Show Feature Ideas</h2></div>
+      <div class="scotch"></div>
+    </header>
+    <p class="section-note">We looked at what is already running in your space first, and across the 21 shows we checked, only two of them run a named recurring feature.</p>
+
+    <div class="subhead-wrap" style="margin-top:0;">
+      <h2 class="subhead">Part One: What Your Competitors Are Doing</h2>
+      <div class="thinrule"></div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <span class="tag accent">Works, and it is the best example</span>
+        <h4>Trial Lawyer Nation, &ldquo;Ask Michael &amp; Malorie Anything&rdquo;</h4>
+        <p>A named listener question feature. People email their questions in and the hosts answer a batch in the episode.</p>
+        <p style="margin-bottom:0;"><b>Signal:</b> the biggest attorney show we found. 210 episodes, running nine years, 4.8 stars from around 192 ratings, and it charts at number 84 in Apple US Business and Careers.</p>
+      </div>
+      <div class="card">
+        <span class="tag accent">Worked, then stopped</span>
+        <h4>Physicians Helping Attorneys, listener Q&amp;A</h4>
+        <p>Two physicians selling medical-legal consulting to injury attorneys, running a listener question episode roughly every six months. Structurally the closest thing to your business that exists.</p>
+        <p style="margin-bottom:0;"><b>Signal:</b> 74 episodes, then nothing since July 2024. The format worked. The publishing schedule is what beat them.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Format discipline, not a segment</span>
+        <h4>The Great Trials Podcast</h4>
+        <p>No listener feature, but every single episode title carries the verdict amount: &ldquo;Hernandez v. Colony Capital LLC, $110.2 Million Verdict.&rdquo;</p>
+        <p style="margin-bottom:0;"><b>Signal:</b> 4.7 stars from 133 ratings across eight years. The number in the title tells you the payoff before you press play.</p>
+      </div>
+      <div class="card">
+        <span class="tag">The cautionary one</span>
+        <h4>Engaging Experts</h4>
+        <p>Round Table Group's show. Every episode is an expert being introduced, with a title that reads like a directory entry.</p>
+        <p style="margin-bottom:0;"><b>Signal:</b> 186 episodes and one rating on Apple. Interviewing the expert instead of teaching the attorney is a real risk, and this is what it looks like at scale.</p>
+      </div>
+    </div>
+
+    <div class="subhead-wrap">
+      <h2 class="subhead">Part Two: Ideas We Can Implement</h2>
+      <div class="thinrule"></div>
+    </div>
+    <p class="section-note">Two of these borrow from something already proven, and two go where nobody in this space has gone yet.</p>
+    <div class="grid2">
+      <div class="panel marked">
+        <span class="tag accent">Borrowed, and it doubles as lead generation</span>
+        <h4>The Chart Question</h4>
+        <p>A short segment where you take one question about reading a medical record and answer it in the episode. Trial Lawyer Nation has already proven listeners engage with this format.</p>
+        <p><b>How we run it safely.</b> We write the questions in-house rather than inviting attorneys to send in live case material, because a lawyer who posts details of an active matter can breach their own client's confidentiality. You get the same segment with none of that risk, and the questions are better because we write them to match what people are actually searching for.</p>
+        <p style="margin-bottom:0;">Once the show has an audience, we can open it to genuine listener questions with a properly worded submission form.</p>
+        <details class="prompt-box">
+          <summary>Prompt to generate chart questions</summary>
+          <div class="prompt-body">You are helping write a recurring podcast segment called "The Chart Question" for a US medical-legal podcast hosted by a physician assistant turned trial attorney. The audience is plaintiff and defence trial attorneys handling medical malpractice, personal injury, nursing home negligence and wrongful death.
+
+Generate 10 questions an attorney would genuinely ask about reading and using medical records in litigation.
+
+Rules:
+- Every question must be GENERIC. No real case, no real person, no real facility, no dates, no jurisdictions.
+- Written from the attorney's point of view, in the words an attorney would actually use.
+- Each must be answerable in 2 to 3 minutes in an episode.
+- Focus on practical mechanics: what to look for, what a document means, how to spot a gap, when to bring in an expert.
+- Prioritise topics attorneys search for: expert witness depositions, standard of care, causation, record chronologies, cross examination of a medical expert.
+- Avoid anything requiring state-specific legal advice.
+
+For each question give: the question itself, the one clinical or procedural point the answer should land, and a suggested episode title under 60 characters.</div>
+        </details>
+      </div>
+      <div class="panel marked">
+        <span class="tag accent">Open opportunity, nobody does this</span>
+        <h4>Red Flag Round</h4>
+        <p>A fictional record excerpt goes in front of the guest and they call the red flag inside 60 seconds. No show in this space reads a record out to its audience, it needs both of your credentials to host, and it clips beautifully.</p>
+        <p style="margin-bottom:0;"><b>How we run it safely.</b> The records are written from scratch, so there is no real patient and no real case anywhere near it. That removes the privacy and confidentiality question entirely, and it is cleaner than trying to strip identifiers out of a real chart. You say in the episode that the record is fictional, which also makes the segment easier to follow.</p>
+        <details class="prompt-box">
+          <summary>Prompt to generate a synthetic record excerpt</summary>
+          <div class="prompt-body">Write a FICTIONAL medical record excerpt for a podcast segment called "Red Flag Round". Nothing in it may correspond to a real patient, clinician, facility or case.
+
+Setting: a US skilled nursing facility. [Swap for hospital, ED or home health as needed.]
+
+Produce a 150 to 250 word excerpt containing:
+- Nursing notes across 3 to 4 shifts, written in realistic clinical shorthand and abbreviations
+- A vital signs table with plausible values
+- At least one medication administration entry
+- ONE clear clinical red flag that a trained clinician spots and a layperson misses. Options: a deteriorating trend documented but never escalated, a missing reassessment after a fall, a pressure injury staged inconsistently between entries, a held medication with no reason recorded, or a note timed after the event it describes.
+- One or two harmless details that look alarming but are not, so the guest has to discriminate.
+
+Use obviously invented names (Resident A, Nurse B) or clearly fictional ones. No real dates, use Day 1, Day 2. No real facilities or towns.
+
+Then, separately and labelled "PRODUCER NOTES, DO NOT READ OUT": state the red flag, why it matters in litigation, and the two decoys.
+
+Everything must be clinically plausible enough that a nurse or physician would find it credible.</div>
+        </details>
+      </div>
+      <div class="panel marked">
+        <span class="tag accent">Open opportunity</span>
+        <h4>Your Signature Last Question</h4>
+        <p>One question you ask every guest, right at the end, forever.</p>
+        <p><b>&ldquo;What's the one thing in a medical record that attorneys keep missing?&rdquo;</b></p>
+        <p style="margin-bottom:0;">None of the 21 shows we checked has a signature closing question. It builds a library that gets more valuable the longer the show runs, and after a year you have a compilation episode that costs nothing to make.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCRIPTS -->
+<section class="section" id="scripts">
+  <div class="inner">
+    <header class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">&sect;15</span><h2>Scripts</h2></div>
+      <div class="scotch"></div>
+    </header>
+
+    <div class="grid2">
+      <div class="card">
+        <span class="tag accent">Intro</span>
+        <p><b>(Audio)</b> Welcome to Statutes &amp; Stethoscopes, the show for attorneys who know that winning a case is <b>only part</b> of the job, and that reading the medical record right matters <b>just as much</b> as what happens in the courtroom. In each episode, I sit down with trial attorneys, forensic pathologists and expert witnesses who have lived the work of turning a chart into a case. We move past the theory to examine how a record actually gets built, tested and defended, because the chart never lies.</p>
+        <p><b>(Video)</b> I'm your host, Tracy Liberatore. Let's get into today's conversation.</p>
+      </div>
+      <div class="card">
+        <span class="tag accent">Outro</span>
+        <p><b>(Audio)</b> If today's episode changed how you'll read your next medical record, consider sharing it with a colleague and follow the show so you don't miss future conversations with the trial attorneys and clinicians shaping this space.</p>
+        <p>Statutes &amp; Stethoscopes is brought to you by Med Legal Pro, where I match attorneys with rigorously vetted medical experts and turn complex records into court-ready work product. If you're sitting on a case where the medical evidence isn't adding up, consider submitting it for review.</p>
+        <p>I'm Tracy Liberatore, and I'll see you in the next episode.</p>
+      </div>
+    </div>
+
+    <div class="subhead-wrap">
+      <h2 class="subhead">Ad Reads (x3)</h2>
+      <div class="thinrule"></div>
+    </div>
+    <p class="section-note">These rotate, one per episode.</p>
+    <div class="grid3">
+      <div class="card">
+        <span class="tag accent">Ad 01</span>
+        <p><b>(Video)</b> Hey, quick pause. Let me ask you something.</p>
+        <p><b>(Audio)</b> If you're staring down a few thousand pages of medical records with no clinical training and a deadline that isn't moving, that's exactly why I built Med Legal Pro. We take the record review and the chronology off your desk, and we match you with medical experts who've been properly vetted, so the chart comes back to you in a form you can actually try a case from. Send it over and you'll hear from us within 12 business hours. Scan the QR code on screen or click the link in the show notes.</p>
+        <p><b>(Video)</b> Now, back to today's conversation.</p>
+        <p class="adlink" style="margin-top:16px;margin-bottom:0;">QR Code: <a href="https://drive.google.com/file/d/14c5TzCSDmZVP8jZSRm5qzM67Wy0R0AhR/view?usp=drive_link" target="_blank">Download QR</a><br>Short Link: <a href="https://itl.ink/MLPsubmit-a-case" target="_blank">itl.ink/MLPsubmit-a-case</a></p>
+      </div>
+      <div class="card">
+        <span class="tag accent">Ad 02</span>
+        <p><b>(Video)</b> Hey, real quick before we continue.</p>
+        <p><b>(Audio)</b> Finding the right medical expert usually comes down to a directory listing and a hopeful phone call, and you don't really know what you've got until they're being cross-examined. At Med Legal Pro I place experts who've been vetted for exactly that, whether the opinion holds when somebody tests it. Tell me about the case and I'll tell you what it needs, with no obligation either way. You'll hear back within 12 business hours. Scan the QR code on screen or click the link in the show notes.</p>
+        <p><b>(Video)</b> Now, back to the show.</p>
+        <p class="adlink" style="margin-top:16px;margin-bottom:0;">QR Code: <a href="https://drive.google.com/file/d/14c5TzCSDmZVP8jZSRm5qzM67Wy0R0AhR/view?usp=drive_link" target="_blank">Download QR</a><br>Short Link: <a href="https://itl.ink/MLPsubmit-a-case" target="_blank">itl.ink/MLPsubmit-a-case</a></p>
+      </div>
+      <div class="card">
+        <span class="tag accent">Ad 03</span>
+        <p><b>(Video)</b> Hey, quick question for you.</p>
+        <p><b>(Audio)</b> How much is your firm leaving on the table on the medical side of your cases? I put together a short quiz that answers it. Five questions, about two minutes, and you get a score at the end that shows you where the gaps are in how your files are being worked up. It's free, and there's nothing to book at the end of it. If you want to see where you land, scan the QR code on screen or click the link in the show notes.</p>
+        <p><b>(Video)</b> Now, back to today's conversation.</p>
+        <p class="adlink" style="margin-top:16px;margin-bottom:0;">QR Code: <a href="https://drive.google.com/file/d/1LP_uR-bCb7jhDRTwmiwaLD0h1Gc3E1TO/view?usp=drive_link" target="_blank">Download QR</a><br>Short Link: <a href="https://itl.ink/MLPquiz" target="_blank">itl.ink/MLPquiz</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OTHER DETAILS -->
+<section class="section" id="dates">
+  <div class="inner">
+    <header class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">&sect;16</span><h2>Other Details</h2></div>
+      <div class="scotch"></div>
+    </header>
+    <p class="section-note">Every field here is editable. Type the agreed date straight in, then hit Save at the bottom.</p>
+    <div class="grid2">
+      <div>
+        <div class="doc-row"><div class="tag">Publishing</div><div class="editable" data-key="od-publishing" contenteditable="true">First Friday of every month</div></div>
+        <div class="doc-row"><div class="tag">Script Recordings Deadline</div><div class="editable" data-key="od-scripts" contenteditable="true">Monday, August 24, 2026 (5 business days after this call). Covers intro, outro and ads.</div></div>
+        <div class="doc-row"><div class="tag">Deliveries</div><div class="editable" data-key="od-deliveries" contenteditable="true">10 business days (consecutively) after episode submission &amp; onboarding</div></div>
+      </div>
+      <div>
+        <div class="doc-row"><div class="tag">Consultation 1</div><div class="editable" data-key="od-consult1" contenteditable="true">November 2026</div></div>
+        <div class="doc-row"><div class="tag">Consultation 2</div><div class="editable" data-key="od-consult2" contenteditable="true">February 2027</div></div>
+      </div>
+    </div>
+    <div class="save-row">
+      <button class="save-btn" data-save="other-details">Save Other Details</button>
+      <span class="save-note">Saves in this browser and stays until you edit and save again.</span>
+    </div>
+  </div>
+</section>
+
+<!-- WORKFLOW -->
+<section class="section" id="workflow">
+  <div class="inner">
+    <header class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">&sect;17</span><h2>Workflow</h2></div>
+      <div class="scotch"></div>
+    </header>
+    <ol class="steps">
+      <li><span class="n">01</span><div>You submit an episode</div></li>
+      <li><span class="n">02</span><div>APG scripts the guest intro and sends it to you for recording</div></li>
+      <li><span class="n">03</span><div>You record the guest intro and send it to us</div></li>
+      <li><span class="n">04</span><div>APG receives the intro, post-produces the full episode and delivers all assets</div></li>
+      <li><span class="n">05</span><div>Feedback window, up to 5 business days before the episode goes live</div></li>
+      <li><span class="n">06</span><div>APG publishes to YouTube and the audio host</div></li>
+      <li><span class="n">07</span><div>Monthly report sent (video, audio and ads stats)</div></li>
+    </ol>
+
+    <div class="subhead-wrap">
+      <h2 class="subhead">APG Portal Tutorial</h2>
+      <div class="thinrule"></div>
+    </div>
+    <a class="video-card" href="https://www.youtube.com/watch?v=fNL0efBcyaw" target="_blank">
+      <img src="https://i.ytimg.com/vi/fNL0efBcyaw/hqdefault.jpg" alt="APG Portal Tutorial thumbnail">
+      <div>
+        <div class="play">&#9654; Watch on YouTube</div>
+        <div class="vt">APG Portal Tutorial</div>
+        <div class="vs">Opens in a new tab</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<div class="footer-bar">APG Podcast Guide &middot; Statutes &amp; Stethoscopes &middot; Prepared by APodcastGeek</div>
+
+<div class="keyhint" id="keyhint">&darr; &uarr; to move between sections</div>
+
+<script>
+(function(){
+  /* ---------- SLIDE NAVIGATION ---------- */
+  var panels = Array.prototype.slice.call(
+    document.querySelectorAll('header.cover, section.section')
+  );
+  var NAV = 50;
+  var current = 0;
+
+  function targetTop(el){
+    var rect = el.getBoundingClientRect();
+    var top = rect.top + window.pageYOffset;
+    var h = rect.height;
+    var vh = window.innerHeight;
+    if (h < vh - NAV) return top - ((vh - NAV - h) / 2) - NAV;
+    return top - NAV;
+  }
+
+  function goTo(i){
+    if (i < 0 || i >= panels.length) return;
+    current = i;
+    var t = targetTop(panels[i]);
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    window.scrollTo({top: Math.max(0, Math.min(t, max)), behavior: 'smooth'});
+  }
+
+  function nearest(){
+    var best = 0, bestD = Infinity;
+    for (var i = 0; i < panels.length; i++){
+      var d = Math.abs(targetTop(panels[i]) - window.pageYOffset);
+      if (d < bestD){ bestD = d; best = i; }
+    }
+    return best;
+  }
+
+  function isTyping(e){
+    var t = e.target;
+    if (!t) return false;
+    return t.isContentEditable ||
+           /^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(t.tagName);
+  }
+
+  document.addEventListener('keydown', function(e){
+    if (isTyping(e) || e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = e.key;
+    if (k === 'ArrowDown' || k === 'PageDown'){
+      e.preventDefault(); goTo(nearest() + 1);
+    } else if (k === 'ArrowUp' || k === 'PageUp'){
+      e.preventDefault(); goTo(nearest() - 1);
+    } else if (k === 'Home'){
+      e.preventDefault(); goTo(0);
+    } else if (k === 'End'){
+      e.preventDefault(); goTo(panels.length - 1);
+    }
+  });
+
+  document.querySelectorAll('nav.topnav a').forEach(function(a){
+    a.addEventListener('click', function(ev){
+      var el = document.querySelector(a.getAttribute('href'));
+      if (!el) return;
+      ev.preventDefault();
+      var i = panels.indexOf(el);
+      if (i > -1) goTo(i); else el.scrollIntoView({behavior:'smooth'});
+    });
+  });
+
+  var hint = document.getElementById('keyhint');
+  setTimeout(function(){ if (hint) hint.classList.add('gone'); }, 6000);
+
+  /* ---------- EDITABLE FIELDS + SAVE ---------- */
+  var GROUPS = {
+    'tso-final': ['tso-final'],
+    'publishing': ['pub-schedule','pub-releases','pub-sec1','pub-sec2','pub-sec3'],
+    'other-details': ['od-publishing','od-scripts','od-deliveries','od-consult1','od-consult2']
+  };
+
+  /* ---------- GETTING STARTED CHECKLIST ---------- */
+  document.querySelectorAll('.tickbox').forEach(function(box){
+    var key = 'ss-guide:tick:' + box.getAttribute('data-tick');
+    var row = box.closest('li');
+    function paint(on){
+      box.classList.toggle('done', on);
+      if (row) row.classList.toggle('done', on);
+    }
+    var saved = null;
+    try { saved = localStorage.getItem(key); } catch(err){}
+    paint(saved === '1');
+    box.addEventListener('click', function(){
+      var on = !box.classList.contains('done');
+      paint(on);
+      try { localStorage.setItem(key, on ? '1' : '0'); } catch(err){}
+    });
+  });
+
+  function field(key){ return document.querySelector('[data-key="'+key+'"]'); }
+
+  Object.keys(GROUPS).forEach(function(group){
+    GROUPS[group].forEach(function(key){
+      var saved = null;
+      try { saved = localStorage.getItem('ss-guide:'+key); } catch(err){}
+      if (saved !== null){
+        var el = field(key);
+        if (el) el.textContent = saved;
+      }
+    });
+  });
+
+  document.querySelectorAll('.save-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var group = btn.getAttribute('data-save');
+      var keys = GROUPS[group] || [];
+      var ok = true;
+      keys.forEach(function(key){
+        var el = field(key);
+        if (!el) return;
+        var val = (el.innerText !== undefined ? el.innerText : el.textContent);
+        try { localStorage.setItem('ss-guide:'+key, val.replace(/\s+$/,'')); }
+        catch(err){ ok = false; }
+      });
+      var label = btn.textContent;
+      btn.textContent = ok ? 'Saved' : 'Could not save';
+      btn.classList.add('saved');
+      setTimeout(function(){
+        btn.textContent = label;
+        btn.classList.remove('saved');
+      }, 1900);
+    });
+  });
+
+  document.querySelectorAll('.editable').forEach(function(el){
+    el.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' && !el.classList.contains('multiline')){
+        e.preventDefault(); el.blur();
+      }
+    });
+    el.addEventListener('paste', function(e){
+      e.preventDefault();
+      var text = (e.clipboardData || window.clipboardData).getData('text');
+      document.execCommand('insertText', false, text);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
