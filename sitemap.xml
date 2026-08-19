@@ -2,22 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://apodcastgeek.com/</loc>
-    <lastmod>2026-06-07</lastmod>
+    <lastmod>2026-08-19</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://apodcastgeek.com/services.html</loc>
-    <lastmod>2026-06-07</lastmod>
+    <lastmod>2026-08-19</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://apodcastgeek.com/blog.html</loc>
-    <lastmod>2026-06-07</lastmod>
+    <loc>https://apodcastgeek.com/audit/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://apodcastgeek.com/our-work/</loc>
+    <lastmod>2026-08-19</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://apodcastgeek.com/blog.html</loc>
+    <lastmod>2026-08-19</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://apodcastgeek.com/roi-calculator.html</loc>
+    <lastmod>2026-08-19</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://apodcastgeek.com/checklist.html</loc>
-    <lastmod>2026-03-30</lastmod>
+    <lastmod>2026-08-19</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://apodcastgeek.com/downloads/b2b-podcast-launch-checklist.html</loc>
+    <lastmod>2026-08-19</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://apodcastgeek.com/blog/scorecard/b2b-podcast-lead-score.html</loc>
+    <lastmod>2026-08-19</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://apodcastgeek.com/privacy.html</loc>
+    <lastmod>2026-08-19</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://apodcastgeek.com/terms.html</loc>
+    <lastmod>2026-08-19</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://apodcastgeek.com/blog/b2b-founders-close-deals-podcasting.html</loc>
+    <lastmod>2026-06-03</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
@@ -51,11 +91,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://apodcastgeek.com/blog/irish-podcast-landscape-b2b.html</loc>
-    <lastmod>2026-04-15</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://apodcastgeek.com/blog/podcast-production-ireland-b2b.html</loc>
     <lastmod>2026-04-14</lastmod>
     <priority>0.7</priority>
@@ -86,13 +121,8 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://apodcastgeek.com/privacy.html</loc>
+    <loc>https://apodcastgeek.com/blog/what-does-podcast-production-agency-do.html</loc>
     <lastmod>2026-03-30</lastmod>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://apodcastgeek.com/terms.html</loc>
-    <lastmod>2026-03-30</lastmod>
-    <priority>0.3</priority>
+    <priority>0.7</priority>
   </url>
 </urlset>

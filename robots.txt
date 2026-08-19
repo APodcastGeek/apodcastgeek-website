@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
 
+# Shared nav fragment, not a real page
+Disallow: /_nav-snippet.html
+
 # AI / Answer engines — explicitly allowed
 User-agent: GPTBot
 Allow: /

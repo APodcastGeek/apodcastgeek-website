@@ -478,6 +478,33 @@ function declineCookies(){localStorage.setItem('cookie_consent','declined');docu
 </html>`;
 }
 
+const MIN_BODY_WORDS = 300;
+
+const RETIRED_SLUGS = new Set([
+  'done-for-you-podcast-production',
+  'guest-recruitment-sales-engine',
+  'why-b2b-founders-need-a-podcast',
+  'irish-podcast-landscape-b2b',
+]);
+
+// Every non-blog public page on the site. Keep this list in sync when a new
+// public page ships, otherwise it never reaches the sitemap and Google will not
+// find it. Private pages (reports, decks, VSL demos) belong here NEVER -- they
+// carry a noindex tag instead.
+const STATIC_PAGES = [
+  { loc: '/',                                          priority: '1.0' },
+  { loc: '/services.html',                             priority: '0.9' },
+  { loc: '/audit/',                                    priority: '0.9' },
+  { loc: '/our-work/',                                 priority: '0.8' },
+  { loc: '/blog.html',                                 priority: '0.8' },
+  { loc: '/roi-calculator.html',                       priority: '0.7' },
+  { loc: '/checklist.html',                            priority: '0.7' },
+  { loc: '/downloads/b2b-podcast-launch-checklist.html', priority: '0.6' },
+  { loc: '/blog/scorecard/b2b-podcast-lead-score.html',  priority: '0.6' },
+  { loc: '/privacy.html',                              priority: '0.3' },
+  { loc: '/terms.html',                                priority: '0.3' },
+];
+
 async function main() {
   const data = await notionFetch(`https://api.notion.com/v1/databases/${NOTION_DB_ID}/query`, {
     filter: { property: 'Status', select: { equals: 'Published' } }
@@ -512,6 +539,13 @@ async function main() {
 
     if (!title || !slug) continue;
 
+    // Retired posts: deleted for thin/duplicate content and 301'd to a stronger
+    // article. Never rebuild these, they now live as redirect stubs.
+    if (RETIRED_SLUGS.has(slug)) {
+      console.log('Skipping (retired, redirected): ' + slug);
+      continue;
+    }
+
     const today = new Date().toISOString().split('T')[0];
     if (publishDate > today) {
       console.log('Skipping (future date): ' + title + ' (scheduled for ' + publishDate + ')');
@@ -520,6 +554,15 @@ async function main() {
 
     const blocks = await getBlocks(page.id);
     let rawContent = blocksToHtml(blocks);
+
+    // Guard: never publish an empty shell. Google will not index a page with no
+    // article body, and three of these shipped silently in April 2026.
+    const bodyWords = rawContent.replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
+    if (bodyWords < MIN_BODY_WORDS) {
+      console.warn('SKIPPING (body too thin: ' + bodyWords + ' words, minimum ' +
+        MIN_BODY_WORDS + '): ' + slug + ' -- check the Notion page has content.');
+      continue;
+    }
 
     const { html: contentWithIds, tocItems } = injectHeadingIdsAndExtractToc(rawContent);
     const contentWithMidCta = injectMidCta(contentWithIds, tocItems);
@@ -621,52 +664,28 @@ async function main() {
   console.log(`Updated blog.html with ${cards.length} posts`);
 
   // Update sitemap.xml
+  // Built from STATIC_PAGES + every published blog post, so a new page can never
+  // be silently missing from the sitemap again.
   const sitemapPath = path.join(__dirname, '..', 'sitemap.xml');
   const today = new Date().toISOString().split('T')[0];
-  let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://apodcastgeek.com/</loc>
-    <lastmod>${today}</lastmod>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://apodcastgeek.com/services.html</loc>
-    <lastmod>${today}</lastmod>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://apodcastgeek.com/blog.html</loc>
-    <lastmod>${today}</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://apodcastgeek.com/checklist.html</loc>
-    <lastmod>2026-03-30</lastmod>
-    <priority>0.7</priority>
-  </url>
-`;
-  for (const post of cards) {
-    sitemap += `  <url>
-    <loc>https://apodcastgeek.com/blog/${post.slug}.html</loc>
-    <lastmod>${post.publishDate}</lastmod>
-    <priority>0.7</priority>
-  </url>
-`;
+
+  const urlEntry = (loc, lastmod, priority) =>
+    `  <url>\n    <loc>https://apodcastgeek.com${loc}</loc>\n` +
+    `    <lastmod>${lastmod}</lastmod>\n    <priority>${priority}</priority>\n  </url>\n`;
+
+  let sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n` +
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+
+  for (const page of STATIC_PAGES) {
+    sitemap += urlEntry(page.loc, today, page.priority);
   }
-  sitemap += `  <url>
-    <loc>https://apodcastgeek.com/privacy.html</loc>
-    <lastmod>2026-03-30</lastmod>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://apodcastgeek.com/terms.html</loc>
-    <lastmod>2026-03-30</lastmod>
-    <priority>0.3</priority>
-  </url>
-</urlset>`;
+  for (const post of cards) {
+    sitemap += urlEntry(`/blog/${post.slug}.html`, post.publishDate, '0.7');
+  }
+  sitemap += `</urlset>\n`;
+
   fs.writeFileSync(sitemapPath, sitemap);
-  console.log(`Updated sitemap.xml with ${cards.length} blog posts`);
+  console.log(`Updated sitemap.xml with ${STATIC_PAGES.length} static pages and ${cards.length} blog posts`);
 
   const { appendFileSync } = require('fs');
   appendFileSync(process.env.GITHUB_ENV || '/dev/null', 'HAS_POSTS=true\n');

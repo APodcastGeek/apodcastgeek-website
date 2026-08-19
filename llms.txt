@@ -23,10 +23,18 @@ Average guest-to-client conversion rate observed across APG's client portfolio: 
 
 - [Homepage](https://apodcastgeek.com): Overview, services, process, testimonials, FAQ
 - [Services](https://apodcastgeek.com/services.html): Detailed APG Brand Builder breakdown
+- [Free Podcast Audit](https://apodcastgeek.com/audit/): Four-minute B2B podcast audit, personally reviewed, showing where a show leaks leads
+- [Our Work](https://apodcastgeek.com/our-work/): Real episodes produced for B2B founders and brands worldwide
 - [Blog](https://apodcastgeek.com/blog.html): Articles on B2B podcasting strategy, ROI, guest recruitment, production quality
+- [ROI Calculator](https://apodcastgeek.com/roi-calculator.html): Estimate monthly pipeline value from episode volume, guest conversion rate and deal size
 - [Free Checklist](https://apodcastgeek.com/checklist.html): The B2B Podcast Launch Checklist (lead magnet)
+- [Launch Checklist (full)](https://apodcastgeek.com/downloads/b2b-podcast-launch-checklist.html): The seven-point launch checklist in full
+- [Lead Score Scorecard](https://apodcastgeek.com/blog/scorecard/b2b-podcast-lead-score.html): Ten-question scorecard grading whether a show generates clients or downloads
 - [Privacy Policy](https://apodcastgeek.com/privacy.html)
 - [Terms of Service](https://apodcastgeek.com/terms.html)
+
+Client monthly reports (/reports/) and prospect proposals (/decks/) are private
+working documents. They carry a noindex tag and are not part of the public site.
 
 ## The APG Engine™
 
