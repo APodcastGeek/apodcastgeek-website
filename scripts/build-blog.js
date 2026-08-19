@@ -485,6 +485,7 @@ const RETIRED_SLUGS = new Set([
   'guest-recruitment-sales-engine',
   'why-b2b-founders-need-a-podcast',
   'irish-podcast-landscape-b2b',
+  'april-2026-client-results-real-data',
 ]);
 
 // Every non-blog public page on the site. Keep this list in sync when a new
