@@ -36,6 +36,9 @@ const SKIP_DIRS = new Set(["node_modules", ".git", ".firebase", "functions"]);
 
 const IMG_WARN_KB = 400;
 const IMG_ERROR_KB = 1024;
+// Client decks and design reviews trade weight for fidelity on purpose.
+const PRIVATE_IMG_WARN_KB = 2048;
+const PRIVATE_IMG_ERROR_KB = 5120;
 const DESC_MIN = 110;
 const DESC_MAX = 165;
 const TITLE_MAX = 70;
@@ -346,13 +349,37 @@ rules.placeholders = () => {
   }
 };
 
-/** Page weight is a conversion problem on mobile, not a nicety. */
+/**
+ * Page weight is a conversion problem on mobile, not a nicety. It is only a
+ * conversion problem on pages prospects actually land on, though. Client design
+ * reviews and decks are shown on a call and fidelity is the deliverable there,
+ * so they get a much looser ceiling that still catches an absurd upload.
+ */
 rules.assets = () => {
-  const images = allFiles.filter((f) => /\.(png|jpe?g|gif|webp)$/i.test(f));
-  for (const img of images) {
+  // Images reachable from a page we want ranking are held to the tight budget.
+  const publicAssets = new Set();
+  for (const { file, html } of indexable) {
+    for (const m of html.matchAll(/(?:href|src|content)=(["'])([^"']+)\1/gi)) {
+      const ref = m[2];
+      if (!/\.(png|jpe?g|gif|webp)$/i.test(ref)) continue;
+      const local = ref.startsWith(SITE)
+        ? ref.slice(SITE.length).replace(/^\//, "")
+        : ref.startsWith("/")
+          ? ref.replace(/^\//, "")
+          : path.posix.join(path.posix.dirname(file), ref);
+      publicAssets.add(local.split("?")[0].split("#")[0]);
+    }
+  }
+
+  for (const img of allFiles.filter((f) => /\.(png|jpe?g|gif|webp)$/i.test(f))) {
     const kb = Math.round(fs.statSync(path.join(ROOT, img)).size / 1024);
-    if (kb >= IMG_ERROR_KB) error("assets", img, `${kb}KB image, over the ${IMG_ERROR_KB}KB hard limit`);
-    else if (kb >= IMG_WARN_KB) warn("assets", img, `${kb}KB image, over the ${IMG_WARN_KB}KB budget`);
+    const onPublicPage = publicAssets.has(img);
+    const warnAt = onPublicPage ? IMG_WARN_KB : PRIVATE_IMG_WARN_KB;
+    const errorAt = onPublicPage ? IMG_ERROR_KB : PRIVATE_IMG_ERROR_KB;
+    const surface = onPublicPage ? "public page" : "private page";
+
+    if (kb >= errorAt) error("assets", img, `${kb}KB image on a ${surface}, over the ${errorAt}KB limit`);
+    else if (kb >= warnAt) warn("assets", img, `${kb}KB image on a ${surface}, over the ${warnAt}KB budget`);
   }
 };
 
