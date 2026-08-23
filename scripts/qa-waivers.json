@@ -8,22 +8,6 @@
       "reason": "Awaiting an anonymised sample audit screenshot. The page hides the image via onerror and shows a placeholder, so there is no visible breakage.",
       "owner": "dave@apodcastgeek.com",
       "expires": "2026-11-01"
-    },
-    {
-      "rule": "seo",
-      "file": "statutes-and-stethoscopes.html",
-      "match": "missing meta description",
-      "reason": "Client media kit at the site root. It is currently indexable but unlinked and absent from the sitemap, so it is neither properly public nor properly private. Needs a decision: if it is a press and sponsor asset, give it a description, canonical and sitemap entry; if it is client-confidential, add noindex and move it under a private prefix. Waived only until that decision is made.",
-      "owner": "dave@apodcastgeek.com",
-      "expires": "2026-09-22"
-    },
-    {
-      "rule": "seo",
-      "file": "statutes-and-stethoscopes.html",
-      "match": "missing canonical link",
-      "reason": "Same decision as above. See the meta description waiver on this file.",
-      "owner": "dave@apodcastgeek.com",
-      "expires": "2026-09-22"
     }
   ]
 }

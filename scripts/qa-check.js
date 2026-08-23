@@ -29,6 +29,12 @@ const PRIVATE_PREFIXES = [
   "podcast-design/",
 ];
 
+// Individually private pages that do not sit under a private prefix.
+// Client and internal use only: these must stay noindex and out of the sitemap.
+const PRIVATE_FILES = [
+  "statutes-and-stethoscopes.html",
+];
+
 // Files that are fragments or error pages, not real pages.
 const NOT_A_PAGE = ["_nav-snippet.html", "404.html"];
 
@@ -124,7 +130,8 @@ const isRedirectStub = (html) =>
   /<meta[^>]+http-equiv=(["'])refresh\1/i.test(html) ||
   /window\.location\.replace/i.test(html);
 
-const isPrivate = (file) => PRIVATE_PREFIXES.some((p) => file.startsWith(p));
+const isPrivate = (file) =>
+  PRIVATE_PREFIXES.some((p) => file.startsWith(p)) || PRIVATE_FILES.includes(file);
 const isNoindex = (html) => /<meta[^>]+name=["']robots["'][^>]*noindex/i.test(html);
 
 /** Canonical public URL for a file path, matching Firebase Hosting's behaviour. */
