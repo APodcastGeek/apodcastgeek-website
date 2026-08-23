@@ -1,0 +1,13 @@
+{
+  "_comment": "Known, accepted exceptions to the QA gate. Every waiver needs an owner, a reason and an expiry date. An expired waiver fails the build: that is the point. Waivers without expiry dates become permanent debt and quietly kill the gate.",
+  "waivers": [
+    {
+      "rule": "links",
+      "file": "audit/index.html",
+      "match": "sample-audit.jpg",
+      "reason": "Awaiting an anonymised sample audit screenshot. The page hides the image via onerror and shows a placeholder, so there is no visible breakage.",
+      "owner": "dave@apodcastgeek.com",
+      "expires": "2026-11-01"
+    }
+  ]
+}
