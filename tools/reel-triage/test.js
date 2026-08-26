@@ -50,6 +50,14 @@ check('clamp handles null', t.clampRating(null), 1);
 check('textProp truncates', t.textProp(long).rich_text[0].text.content.length, 1900);
 check('textProp handles empty', t.textProp('').rich_text, []);
 
+// the URL property key is not guaranteed to be exactly "URL"
+check('findUrl prefers URL', t.findUrl({ URL: { type: 'url', url: 'https://a' } }), 'https://a');
+check('findUrl falls back to any url property',
+  t.findUrl({ 'userDefined:URL': { type: 'url', url: 'https://b' } }), 'https://b');
+check('findUrl ignores empty url values',
+  t.findUrl({ URL: { type: 'url', url: null }, Other: { type: 'url', url: 'https://c' } }), 'https://c');
+check('findUrl returns null when absent', t.findUrl({ Name: { type: 'title' } }), null);
+
 // schema sanity: every required field is declared
 check('schema required fields all declared',
   t.ANALYSIS_SCHEMA.required.filter(function (r) { return !(r in t.ANALYSIS_SCHEMA.properties); }), []);

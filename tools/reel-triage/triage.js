@@ -83,10 +83,23 @@ async function fetchQueue() {
     const props = page.properties || {};
     return {
       pageId: page.id,
-      url: props.URL && props.URL.url,
+      url: findUrl(props),
       note: plainText(props['My Note'])
     };
   });
+}
+
+/**
+ * Prefer the "URL" property, but fall back to any url-typed property. Notion
+ * namespaces a user property that collides with a built-in field name, so the
+ * key is not guaranteed to be exactly "URL".
+ */
+function findUrl(props) {
+  if (props.URL && props.URL.url) return props.URL.url;
+  const key = Object.keys(props).find(function (k) {
+    return props[k] && props[k].type === 'url' && props[k].url;
+  });
+  return key ? props[key].url : null;
 }
 
 function plainText(prop) {
@@ -384,4 +397,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { truncate, chunk, multiSelect, clampRating, textProp, ANALYSIS_SCHEMA };
+module.exports = { truncate, chunk, multiSelect, clampRating, textProp, findUrl, ANALYSIS_SCHEMA };
