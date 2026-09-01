@@ -114,7 +114,7 @@ loss of judgement quality in the ratings.
 
 ## How ratings work
 
-The model reads `scripts/apg-facts.md`, so "what could we use this for" is grounded
+The model reads `scripts/_apg-facts.md` (falling back to the pre-rename `scripts/apg-facts.md`), so "what could we use this for" is grounded
 in what APG actually sells rather than generic advice. It's told most saved content
 is a 4–6 and that a well-argued Skip beats an inflated score — if everything comes
 back an 8, that prompt in `triage.js` is the thing to tune.

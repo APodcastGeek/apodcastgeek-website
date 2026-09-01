@@ -23,7 +23,13 @@ const NOTION_API_KEY = process.env.NOTION_API_KEY;
 const NOTION_TRIAGE_DB_ID = process.env.NOTION_TRIAGE_DB_ID;
 const MODEL = process.env.TRIAGE_MODEL || 'claude-opus-5';
 const MAX_ITEMS = parseInt(process.env.TRIAGE_MAX_ITEMS || '10', 10);
-const FACTS_PATH = path.join(__dirname, '..', '..', 'scripts', 'apg-facts.md');
+// The fact sheet was renamed to _apg-facts.md when it became the blog engine's
+// single source of truth; keep the old name as a fallback so this works on
+// either revision rather than silently rating without business context.
+const FACTS_PATHS = [
+  path.join(__dirname, '..', '..', 'scripts', '_apg-facts.md'),
+  path.join(__dirname, '..', '..', 'scripts', 'apg-facts.md')
+];
 
 // Notion caps a single rich_text object at 2000 characters.
 const NOTION_TEXT_LIMIT = 1900;
@@ -225,13 +231,18 @@ async function transcribe(audioPath) {
 
 // ---------------------------------------------------------------- Claude
 
-function loadFacts() {
-  try {
-    return fs.readFileSync(FACTS_PATH, 'utf8');
-  } catch (e) {
-    console.warn('APG facts unavailable (' + e.message + '); rating without business context.');
-    return '(No business context file available.)';
+function loadFacts(paths) {
+  for (const candidate of (paths || FACTS_PATHS)) {
+    try {
+      return fs.readFileSync(candidate, 'utf8');
+    } catch (e) {
+      if (e.code !== 'ENOENT') throw e;
+    }
   }
+  // Loud, because ratings grounded in APG's real offer are the point of this.
+  console.warn('APG facts not found at ' + (paths || FACTS_PATHS).join(' or ') +
+    '; rating without business context.');
+  return '(No business context file available.)';
 }
 
 async function analyze(client, facts, meta, transcript, note) {
@@ -397,4 +408,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { truncate, chunk, multiSelect, clampRating, textProp, findUrl, ANALYSIS_SCHEMA };
+module.exports = { truncate, chunk, multiSelect, clampRating, textProp, findUrl, loadFacts, FACTS_PATHS, ANALYSIS_SCHEMA };

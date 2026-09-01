@@ -58,6 +58,32 @@ check('findUrl ignores empty url values',
   t.findUrl({ URL: { type: 'url', url: null }, Other: { type: 'url', url: 'https://c' } }), 'https://c');
 check('findUrl returns null when absent', t.findUrl({ Name: { type: 'title' } }), null);
 
+// the fact sheet was renamed to _apg-facts.md on main; both names must resolve
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'facts-'));
+const newName = path.join(tmp, '_apg-facts.md');
+const oldName = path.join(tmp, 'apg-facts.md');
+
+fs.writeFileSync(newName, 'NEW FACTS');
+check('loadFacts finds the renamed file', t.loadFacts([newName, oldName]), 'NEW FACTS');
+
+fs.unlinkSync(newName);
+fs.writeFileSync(oldName, 'OLD FACTS');
+check('loadFacts falls back to the old name', t.loadFacts([newName, oldName]), 'OLD FACTS');
+
+fs.writeFileSync(newName, 'NEW FACTS');
+check('loadFacts prefers the new name', t.loadFacts([newName, oldName]), 'NEW FACTS');
+
+check('loadFacts degrades gracefully when absent',
+  t.loadFacts([path.join(tmp, 'nope.md')]), '(No business context file available.)');
+fs.rmSync(tmp, { recursive: true, force: true });
+
+// the real tree must resolve to actual content, not the placeholder
+const real = t.loadFacts();
+check('loadFacts resolves in this checkout', real.includes('APG APPROVED FACTS'), true);
+
 // schema sanity: every required field is declared
 check('schema required fields all declared',
   t.ANALYSIS_SCHEMA.required.filter(function (r) { return !(r in t.ANALYSIS_SCHEMA.properties); }), []);
