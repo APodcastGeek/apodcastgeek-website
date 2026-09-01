@@ -217,7 +217,7 @@ async function main() {
 
   var todayDate = new Date().toISOString().split('T')[0];
   var currentYear = String(new Date().getFullYear());
-  var approvedFacts = fs.readFileSync('scripts/apg-facts.md', 'utf-8');
+  var approvedFacts = fs.readFileSync('scripts/_apg-facts.md', 'utf-8');
 
   var prompt = 'CURRENT DATE CONTEXT: Today is ' + todayDate + '. The current year is ' + currentYear + '. Write the article as if it is being published this week. When you need to reference "this year" or use a year in the title or any forward-looking statement, use ' + currentYear + '. Do NOT use 2024, 2023, or any earlier year as "current" or "this year" - those are in the past.\n\n' +
     '=== APG APPROVED FACTS (SINGLE SOURCE OF TRUTH) ===\n' +
