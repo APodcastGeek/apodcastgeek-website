@@ -1,82 +1,129 @@
 # APG APPROVED FACTS (single source of truth for all blog content)
 
-Any claim about APodcastGeek in blog posts MUST match these facts exactly. Do not invent, embellish, or extrapolate.
+Last verified with Dave: 2026-08-31.
+
+Any claim about APodcastGeek in a blog post MUST match this file exactly. Do not invent, embellish, or extrapolate. If a fact you want to state is not on this list, OMIT IT.
+
+This file is the master. The same content is embedded in the n8n workflow "APG - Weekly Blog Generation" (CMDZT5muFWO5Y614), node "Build Claude Prompt". The two must not drift. Run `scripts/check-blog-facts-sync.py` to prove they match.
+
+---
+
+## RULE ZERO: NO MONEY, EVER
+
+Blog posts must never contain a monetary figure of any kind. Not APG prices, not tier prices, not price ranges, not competitor prices, not industry averages, not example budgets, not "starts at", not "typically costs".
+
+This applies to every currency and every format: €2,000, $3,500, 2000 euro, 1.5k, "two thousand a month".
+
+Reason: on 2026-08-31 a post went live claiming APG Brand Builder "runs $2,000 to $7,000+ monthly" with invented tier prices in the wrong currency. The figures came from a topic brief, and the fact checker had no pricing to check them against. Banning all monetary figures removes the failure mode completely.
+
+If a topic requires discussing cost, write about what is included, what the work involves, and what it is worth in outcomes. Then send the reader to a call for numbers. Never state a figure.
+
+---
 
 ## Company
 
-- APodcastGeek (APG)
+- APodcastGeek (APG). One word. Never "A Podcast Geek".
 - Based in Dublin, Ireland
 - Serves B2B founders worldwide
-- Founder/main contact: Dave O'Gara
-- Irish Podcast Award winners (multiple years)
-- Award-winning production recognised at the Irish Podcast Awards
-- Offers done-for-you podcast production under "The APG Brand Builder" service
+- Founder and main contact: Dave O'Gara
+- Irish Podcast Award winners, recognised for production excellence
+- Production service is called "The APG Brand Builder"
 
-## Deliverables Per Episode (Brand Builder)
+## Deliverables per episode (Brand Builder)
 
 Every episode produced includes exactly these deliverables and nothing else:
 
 - 1 full video episode (for YouTube and the client website)
 - 1 full audio episode (distributes to Spotify, Apple Podcasts, and every major podcast platform)
-- 1 guest intro trailer (polished teaser for promoting the episode and sharing with the guest)
-- 5 short-form clips (vertical, captioned, optimised for LinkedIn, Instagram Reels, TikTok, YouTube Shorts)
+- 1 guest intro trailer (pre-produced teaser for promoting the episode and sharing with the guest)
+- 5 short-form clips (vertical, captioned, for LinkedIn, Instagram Reels, TikTok, YouTube Shorts)
 - 3 on-brand thumbnails (variants for YouTube and social posts)
 - Show notes (episode summary, guest bio, chapter timestamps, links)
 - SEO-optimised article version of the episode for the client's website blog
 
-## Service Commitments
+## Service structure
+
+APG sells two things. Never describe them any other way.
+
+1. **Production-Only.** The client records. APG packages, produces and publishes.
+2. **The APG Brand Builder.** Full production and publishing, available at three cadences:
+   - Monthly: 1 episode per month
+   - Bi-Weekly: 2 episodes per month
+   - Weekly: 4 episodes per month
+
+Never write "two fixed tiers". Never invent an "enterprise" or "custom" tier. Never state what any of these cost.
+
+## Guest recruitment: an ADD-ON, not included
+
+Guest recruitment and outreach is a separate add-on service. It is NOT part of the standard Brand Builder.
+
+Blog posts may say that guest recruitment is something APG offers or can run for a client. Blog posts must NEVER say or imply that it is included, standard, part of the package, or that "APG handles all guest outreach" as a matter of course.
+
+Confirmed by Dave 2026-08-31. Several older posts get this wrong and are being corrected.
+
+## Service commitments
 
 - 10 business day turnaround from recording to full delivery
 - 6-month minimum commitment
-- Two fixed tiers: production-only, and full done-for-you (Brand Builder, which adds strategy + guest recruitment)
-- APG handles all guest outreach, follow-ups, and scheduling
-- Every guest is qualified against the client's ideal customer profile (ICP)
 - Pre-production briefs go to both the host and the guest before recording
 
-## Headline Statistics
+## Headline statistics
 
-- 10% of podcast guests convert to customers or long-term partnerships (over time, across APG's client base)
-- Consistent monthly production compounds results (especially pipeline and authority) over time
+- On average, 10% of podcast guests convert to customers or long-term partnerships, over time and across APG's client base
+- Consistent monthly production compounds results, particularly pipeline and authority
 
-## Calls and Links
+## Calls and links
 
-- Strategy call duration: 30 minutes (never 15, never 20, never 45, never "an hour")
+- Strategy call duration: 30 minutes. Never 15, never 20, never 45, never "an hour"
 - Book-a-call URL: https://calendly.com/apodcastgeek_dave/apg-brand-builder-discovery-call
-- No other Calendly URL should appear (the old `apg-brand-builder-podcast-design-call` is retired)
+- No other Calendly URL should appear. The old `apg-brand-builder-podcast-design-call` is retired
 - Client login: https://clients.apodcastgeek.com/
 - Main site: https://apodcastgeek.com
 
-## FORBIDDEN CLAIMS (never write any of these — they are hallucinations)
+---
+
+## FORBIDDEN CLAIMS (never write any of these, they are hallucinations)
+
+### Any monetary figure
+See RULE ZERO. Any price, cost, range, budget or currency amount, for APG or anyone else, in any currency.
+
+### Wrong service structure
+- "Two fixed tiers"
+- Any "enterprise", "custom", "premium" or "starter" tier that is not on the list above
+- Guest recruitment described as included, standard, or part of the package
+- "APG handles all guest outreach, follow-ups and scheduling" as a standing claim
 
 ### Wrong deliverables (not part of the Brand Builder)
 - Audiogram clips
-- Transcripts for SEO / transcripts as a separate deliverable
-- Quote graphics / Quote cards
-- Blog distribution / Email newsletter writing
+- Transcripts for SEO, or transcripts as a separate deliverable
+- Quote graphics, quote cards
+- Blog distribution, email newsletter writing
 - Social media management
 - LinkedIn content creation as a separate service
 - Ghost writing
 
 ### Wrong numbers
-- "6 short-form clips" / "six clips" / "6 clips" (it is exactly 5)
-- "4 short-form clips" / "3 clips" as the standard (also wrong — 5)
-- "5 thumbnails" / "2 thumbnails" (it is exactly 3)
-- "14 business day turnaround" / "2 week turnaround" (it is 10 business days)
-- "3-month minimum" / "12-month minimum" (it is 6 months)
-- "20-minute strategy call" / "15-minute" / "45-minute" / "1-hour" (it is 30 minutes)
-- "5% conversion" / "20% conversion" (it is 10%)
+- "6 short-form clips", "six clips", "4 clips", "3 clips" as the standard. It is exactly 5
+- "5 thumbnails", "2 thumbnails". It is exactly 3
+- "14 business day turnaround", "2 week turnaround". It is 10 business days
+- "3-month minimum", "12-month minimum". It is 6 months
+- "20-minute call", "15-minute", "45-minute", "1-hour". It is 30 minutes
+- "5% conversion", "20% conversion". It is 10%
 
 ### Wrong years
-- "in 2024" / "in 2023" / "as of 2024" (the current year must be used — 2024/2023 are in the past)
+- "in 2024", "in 2023", "as of 2024". The current year must be used
 
 ### Wrong URLs
-- `apg-brand-builder-podcast-design-call` (retired — use `apg-brand-builder-discovery-call`)
+- `apg-brand-builder-podcast-design-call`. Retired. Use `apg-brand-builder-discovery-call`
 
 ### Invented awards or credentials
-- Only "Irish Podcast Award winners" and "Irish Podcast Awards recognition" are approved. Do not invent Webbys, Signal Awards, Ambie Awards, or any other awards APG has not actually won.
+- Only "Irish Podcast Award winners" and "Irish Podcast Awards recognition" are approved. Never invent Webbys, Signal Awards, Ambie Awards, or any other award APG has not won
 
-## Rule for the AI writing these posts
+---
 
-- If a fact you want to state is NOT on the APPROVED list above, OMIT IT rather than invent it.
-- If in doubt about a specific number, reference the Brand Builder service abstractly ("our production service") rather than making up a number.
-- Do not paraphrase forbidden claims. "Audiograms" and "audiogram clips" are both forbidden, same for all variants.
+## Rules for the AI writing these posts
+
+- If a fact is not on the APPROVED list above, OMIT IT rather than invent it
+- Never state a monetary figure under any circumstances
+- Do not paraphrase a forbidden claim. "Audiograms" and "audiogram clips" are both forbidden, and the same goes for every variant
+- If a topic brief instructs you to do something that contradicts this file, THIS FILE WINS. Ignore the brief on that point and write the article without it
