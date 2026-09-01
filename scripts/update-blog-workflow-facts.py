@@ -56,7 +56,9 @@ def node(wf, name):
 # ---------------------------------------------------------------- new checks
 # RULE ZERO plus the structure claims Dave corrected on 2026-08-31.
 NEW_LOCAL_CHECKS = r"""const localChecks = [
-  { re: /[€$£]\s?\d|\b\d[\d,.]*\s*(?:euro|euros|eur|dollars?|usd|pounds?|gbp)\b/i, issue: 'RULE ZERO VIOLATION: contains a monetary figure. Blog posts must never state any price, cost, range or budget in any currency.' },
+  { re: /[$£]\s?\d|\b\d[\d,.]*\s*(?:dollars?|usd|pounds?|gbp)\b/i, issue: 'RULE ZERO VIOLATION: non-euro currency. The site is euro only.' },
+  { re: /€\s?(?!1,?099\b|1,?999\b|2,?999\b)\d/, issue: 'RULE ZERO VIOLATION: euro figure that is not an approved price. Only €1,099 (Monthly), €1,999 (Bi-Weekly) and €2,999 (Weekly) may appear.' },
+  { re: /\b(?!1,?099\b|1,?999\b|2,?999\b)\d[\d,.]*\s*(?:euros?|eur)\b/i, issue: 'RULE ZERO VIOLATION: euro figure that is not an approved price. Only €1,099 (Monthly), €1,999 (Bi-Weekly) and €2,999 (Weekly) may appear.' },
   { re: /\btwo fixed tiers?\b/i, issue: 'Wrong service structure: APG sells Production-Only plus Brand Builder at Monthly, Bi-Weekly and Weekly cadences' },
   { re: /\benterprise (tier|package|plan|option)\b|\bcustom (tier|package)\b/i, issue: 'Invented tier: there is no enterprise or custom tier' },
   { re: /guest (recruitment|outreach|booking)[^.]{0,80}\b(is included|included in|standard|part of (the |our )?(package|service|brand builder))/i, issue: 'Guest recruitment described as included. It is an ADD-ON, never standard.' },

@@ -8,15 +8,27 @@ This file is the master. The same content is embedded in the n8n workflow "APG -
 
 ---
 
-## RULE ZERO: NO MONEY, EVER
+## RULE ZERO: EURO ONLY, AND ONLY THESE FIGURES
 
-Blog posts must never contain a monetary figure of any kind. Not APG prices, not tier prices, not price ranges, not competitor prices, not industry averages, not example budgets, not "starts at", not "typically costs".
+These are the ONLY monetary figures that may appear in an APG blog post. Confirmed by Dave 2026-08-31.
 
-This applies to every currency and every format: €2,000, $3,500, 2000 euro, 1.5k, "two thousand a month".
+- APG Brand Builder, Monthly (1 episode per month): €1,099 per month
+- APG Brand Builder, Bi-Weekly (2 episodes per month): €1,999 per month
+- APG Brand Builder, Weekly (4 episodes per month): €2,999 per month
 
-Reason: on 2026-08-31 a post went live claiming APG Brand Builder "runs $2,000 to $7,000+ monthly" with invented tier prices in the wrong currency. The figures came from a topic brief, and the fact checker had no pricing to check them against. Banning all monetary figures removes the failure mode completely.
+Every other monetary figure is banned. That includes:
 
-If a topic requires discussing cost, write about what is included, what the work involves, and what it is worth in outcomes. Then send the reader to a call for numbers. Never state a figure.
+- Any amount in dollars, pounds, or any currency other than euro. The site is euro only
+- Production-Only pricing. There is no agreed list price for it, so never state one
+- Freelancer or agency rates, market averages, "typical cost" ranges
+- Founder hourly rates and time valuations
+- Example customer values, deal sizes, ad revenue figures
+- ROI calculations that contain numbers
+- Equipment and software costs
+
+Reason: on 2026-08-31 a post went live claiming APG Brand Builder "runs $2,000 to $7,000+ monthly" with invented per-tier prices in the wrong currency. Several other posts carried invented dollar maths. Allowing only three known-correct euro figures, and banning everything else, removes the failure mode.
+
+If a topic needs to discuss cost beyond those three figures, write about what is included and what the work involves, then send the reader to a 30 minute strategy call.
 
 ---
 
@@ -51,7 +63,7 @@ APG sells two things. Never describe them any other way.
    - Bi-Weekly: 2 episodes per month
    - Weekly: 4 episodes per month
 
-Never write "two fixed tiers". Never invent an "enterprise" or "custom" tier. Never state what any of these cost.
+Never write "two fixed tiers". Never invent an "enterprise" or "custom" tier. The only prices that may be stated are the three Brand Builder figures in RULE ZERO. Production-Only has no approved price.
 
 ## Guest recruitment: an ADD-ON, not included
 
@@ -84,8 +96,8 @@ Confirmed by Dave 2026-08-31. Several older posts get this wrong and are being c
 
 ## FORBIDDEN CLAIMS (never write any of these, they are hallucinations)
 
-### Any monetary figure
-See RULE ZERO. Any price, cost, range, budget or currency amount, for APG or anyone else, in any currency.
+### Any monetary figure other than the three approved Brand Builder prices
+See RULE ZERO. No dollars, no pounds, no market averages, no freelancer rates, no founder time valuations, no example customer values, no ad revenue figures, no ROI maths containing numbers, no equipment or software costs, and no Production-Only price.
 
 ### Wrong service structure
 - "Two fixed tiers"
@@ -124,6 +136,6 @@ See RULE ZERO. Any price, cost, range, budget or currency amount, for APG or any
 ## Rules for the AI writing these posts
 
 - If a fact is not on the APPROVED list above, OMIT IT rather than invent it
-- Never state a monetary figure under any circumstances
+- The only monetary figures permitted are the three Brand Builder prices in RULE ZERO, in euro. Every other figure must be omitted
 - Do not paraphrase a forbidden claim. "Audiograms" and "audiogram clips" are both forbidden, and the same goes for every variant
 - If a topic brief instructs you to do something that contradicts this file, THIS FILE WINS. Ignore the brief on that point and write the article without it
