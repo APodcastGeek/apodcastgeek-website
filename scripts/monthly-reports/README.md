@@ -45,48 +45,62 @@ number typed in by hand would be overwritten on the next regeneration anyway.
 1. `n8n-aggregate-analytics-country-names.patch.js` — Aggregate Analytics node.
    Full ISO country table + `Intl.DisplayNames` fallback, and the city label fix.
 2. `n8n-build-apg-report.patch.js` — Build APG Report node. Empty-geography
-   message, honest top-episode fallback, and a data check that names an
-   all-time figure that is lower than this month's total or last month's
-   published figure.
-3. `clip-repost-engine.patch` — Mac Mini engine. `report-figures.js` writes
-   `ytLifetimeEpisodeViews` / `ytLifetimeEpisodeWatchHours` into the figures
-   blob and refuses to write a month whose lifetime figure is below the one
-   published the month before (the same rule `hovercode.js` and
-   `buzzsprout.js` already apply). `build-report-row.js` makes the two fields
-   required. Apply from `APG WEBSITE/` with `patch -p1 < clip-repost-engine.patch`,
-   then run `node test/run.js`.
+   message, and the top-episode card falls back to the all-time top episode
+   by lifetime downloads (`mi.topEpisodeAllTimeTitle`) when nothing published
+   this month, instead of a placeholder.
+3. Episode classification and the "a lifetime figure cannot fall" guard are
+   **done, not a patch here.** Pushed straight to `claude-workspace` (it's a
+   real git repo with push access, unlike the n8n workflow) — see below.
 
 After the n8n patches: re-run the lifetime Geography export for Bobby
 (`node export-data.js --channel bobby-owsinski --breakdown Geography`), upload
 the resulting `youtube-geography` row for `2026-08`, and retrigger the six
 reports so the published copies are regenerated rather than hand-patched.
 
-## Open decision: what counts as a podcast episode on YouTube
+## What counts as a podcast episode on YouTube — resolved
 
-Lifetime episode views under each rule, from the 29 Aug exports:
+Dave's call: playlist membership, not a duration cutoff. Confirmed after a
+real misunderstanding worth recording, because it's an easy one to make again:
+YouTube's own "views from playlist" analytics only counts plays that happened
+while someone was browsing through the playlist itself, a small fraction of a
+video's real audience, and Dave was right to rule that out. What actually
+shipped never reads a play count from the playlist at all — it uses the
+playlist purely as a membership list (which video IDs are episodes), then
+sums each of those videos' own full view and watch-time totals from the same
+Studio export as before.
 
-| Client | Studio Total row | ≥ 15 min (current) | ≥ 3 min | July report (Podcast tab) |
-|---|---|---|---|---|
-| Socially Awkward | 5,976 | 338 | 411 | 376 (449 on 2 Sep per Krisha) |
-| The Surveying Shift | 11,415 | 1,172 | 1,247 | 1,417 |
-| Bobby Owsinski | 2,599,170 | 175,961 | 2,144,532 | 354,494 |
-| High Stakes | 3,256,943 | 3,220,695 | 3,223,001 | 3,143,848 |
-| Trial Lawyer View | 29,323 | 10,445 | 10,510 | 9,638 |
-| Support Your Local Tattooer | 123,045 | 7,595 | 7,595 | 6,779 |
+Built, tested, and pushed to `claude-workspace` (`APG WEBSITE/clip-repost-engine`),
+commits `e87034c` and `a30cb29`, full writeup in
+`ops-decision-system/youtube-episode-by-playlist-20260902.md`:
 
-No duration rule reproduces the Podcast tab: Bobby's channel carries years of
-long non-podcast videos, so 3 minutes overshoots by six times and 15 minutes
-undershoots by half. The only definition that matches what a client sees in
-YouTube Studio is playlist membership (the videos assigned to the show's
-podcast). Two ways to get it:
+- `src/youtube-playlist.js` (new) — resolves a channel's Podcasts playlist
+  (`status.podcastStatus == "enabled"`, a public read, API key only, no
+  OAuth) and every video id in it.
+- `report-figures.js` and `bot-csvs.js` classify every video by membership in
+  that set instead of a 15-minute cutoff, so the figures blob and the summary
+  tables the report reads beside it can never disagree on what counts as an
+  episode.
+- The lifetime figures are now archived and refuse to report a fall below
+  what was already published for that client, the same rule `hovercode.js`
+  and `buzzsprout.js` already had. This is the actual root-cause fix for the
+  regression that started this review: Socially Awkward's 376 -> 339, The
+  Surveying Shift's 1,417 -> 1,173, and Bobby Owsinski's 354,494 -> 195,656
+  would each have been refused rather than shipped.
+- 65 passing in `test/run.js`, including against a mocked YouTube API.
 
-- Pull the lifetime `Podcast` breakdown as an eighth export pass and take its
-  Total row for the all-time headline (one extra pass, matches July and
-  Krisha's check exactly, but per-video figures such as the top episode still
-  have to use a duration rule).
-- Read the podcast playlist's video IDs through the YouTube Data API (needs an
-  API key and each show's playlist id in `config.json`) and classify every
-  video by membership. Consistent everywhere, one-off setup.
+**Still needed before it runs for real:** `YOUTUBE_API_KEY` on the Mac Mini
+(enable "YouTube Data API v3" on the existing Google Cloud project, create a
+plain API key — no OAuth consent screen, no Google review, unlike the
+Analytics scopes in `youtube-api-verification/`). Once that's in place every
+report from the next unpublished month builds correctly with no further
+action.
 
-The monthly "YouTube Episode Views" row and the top episode use the same
-15-minute rule, so whichever definition is chosen should apply to both.
+**August 2026 itself is not fixed and will not fix itself.** `build-report-row.js`
+refuses to rebuild a month already marked published, on purpose — the exact
+protection this whole review exists to argue for. Correcting August is a
+deliberate, manual override (delete that month's entries from the archive and
+from the n8n data table, then rebuild), spelled out in the ops-decision-system
+writeup. Nothing in this session can do that step: it runs on the Mac Mini,
+which this environment has no access to, and it is not something to script
+blindly against a live client-facing data store without being able to test it
+first.

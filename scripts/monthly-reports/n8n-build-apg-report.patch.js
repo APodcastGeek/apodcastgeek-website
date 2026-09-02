@@ -2,10 +2,18 @@
 // PATCH — n8n "Build APG Report" Code node
 // Workflow: APG Brand Builder — Monthly Client Analytics (JrySKVsBmCgWWGND)
 //
-// Three find/replace edits. Anchors are quoted from the node as it stood on
+// Two find/replace edits. Anchors are quoted from the node as it stood on
 // 1 September 2026 (the text that reached the published August reports).
 // The live node has drifted from every saved copy in claude-workspace, so
 // search for the anchor text rather than trusting line numbers.
+//
+// A third edit that used to live here (refusing an all-time YouTube figure
+// that fell) is no longer needed at this layer. That refusal now happens
+// upstream, in the clip-repost-engine itself: report-figures.js refuses to
+// write ytLifetimeEpisodeViews/WatchHours if either comes back below what
+// was published last month, so a client-month like that never reaches this
+// node's input at all. See claude-workspace, commit a30cb29 and
+// ops-decision-system/youtube-episode-by-playlist-20260902.md.
 // ═══════════════════════════════════════════════════════════════════
 
 
@@ -30,12 +38,16 @@
 // ────────────────────────────────────────────────────────────────────────────────────────
 
 
-// ───────────────────────── EDIT 2: honest top-episode fallback ─────────────────────────
+// ───────────────────────── EDIT 2: all-time top episode as the fallback ─────────────────────────
 // WHY: The Surveying Shift published nothing in August 2026, so the audio
 // episode table was (correctly) not built and the card fell through to
 // "Per-episode audio breakdown / Episode-level detail will populate in future
-// monthly runs". That reads as a system gap. The two situations, "no release
-// this month" and "table missing", need different sentences.
+// monthly runs". Dave's call: a quiet month should show the most-downloaded
+// episode of all time instead of an empty card. buzzsprout.js's figuresFor()
+// now writes that as topEpisodeAllTimeTitle / topEpisodeAllTimePlays into the
+// figures blob (claude-workspace, clip-repost-engine, commit e87034c), which
+// this node reads as mi.topEpisodeAllTimeTitle / mi.topEpisodeAllTimePlays,
+// the same way it already reads every other manual-inputs field.
 //
 // FIND the fallback branch of the Top Episode card:
 //   : '    <div class="ep-card">\n'
@@ -44,46 +56,20 @@
 //   + '      <div class="ep-meta">Episode-level detail will populate in future monthly runs</div>\n'
 //   + '    </div>\n')
 // REPLACE WITH:
-  : (Number(bzEpisodesThisMonth) === 0
+  : (mi.topEpisodeAllTimeTitle
     ? '    <div class="ep-card">\n'
-    + '      <div class="ep-label">Top Episode — ' + safe(thisMonthLabel) + '</div>\n'
-    + '      <div class="ep-title">No new episodes were published in ' + safe(thisMonthLabel) + '</div>\n'
-    + '      <div class="ep-meta"><strong>' + fmt(bzDownloadsThisMonth) + ' downloads</strong> &middot; All ' + safe(thisMonthLabel.split(' ')[0]) + ' listening came from the back catalogue. A top episode is shown in months with a new release.</div>\n'
+    + '      <div class="ep-label">Top Performing Episode (All-Time)</div>\n'
+    + '      <div class="ep-title">' + safe(mi.topEpisodeAllTimeTitle) + '</div>\n'
+    + '      <div class="ep-meta"><strong>' + fmt(mi.topEpisodeAllTimePlays) + ' downloads</strong> &middot; No new episode was published in ' + safe(thisMonthLabel) + ', so this is the most-downloaded episode of all time.</div>\n'
     + '    </div>\n'
     : '    <div class="ep-card">\n'
     + '      <div class="ep-label">Top Episode — ' + safe(thisMonthLabel) + '</div>\n'
-    + '      <div class="ep-title">Top episode not available for this report</div>\n'
-    + '      <div class="ep-meta">' + fmt(bzEpisodesThisMonth) + ' episode(s) were published but the per-episode download table was not supplied for this month.</div>\n'
+    + '      <div class="ep-title">No new episodes were published in ' + safe(thisMonthLabel) + '</div>\n'
+    + '      <div class="ep-meta">' + fmt(bzDownloadsThisMonth) + ' downloads this month came from the back catalogue.</div>\n'
     + '    </div>\n'))
+// NOTE: the second, inner fallback (no all-time figure either) covers a client
+// whose manual-inputs predates this field, or whose Buzzsprout episode list
+// came back empty. It should stop firing once every active client has had one
+// report built under the new clip-repost-engine code.
 // ────────────────────────────────────────────────────────────────────────────────────────
 
-
-// ───────────────────────── EDIT 3: refuse impossible all-time figures ─────────────────────────
-// WHY: the "All-Time Overview" Views and Watch Time (and the "YouTube Views"
-// line inside the all-time Downloads / Plays card) come from the youtube-alltime
-// CSV. In August 2026 that figure FELL month on month for three clients
-// (Socially Awkward 376 -> 339, Surveying Shift 1,417 -> 1,173, Bobby Owsinski
-// 354,494 -> 195,656) because the new export engine counts only videos of 15
-// minutes or more as episodes. A lifetime total that is lower than this month's
-// total views, or lower than the figure the client was told last month, is a
-// data fault and must be named in the notify payload rather than shipped.
-//
-// FIND the DATA COMPLETENESS CHECK block, which begins:
-//   var missingData = [];
-//   if (!bot || !bot.youtubeAlltime) missingData.push('youtube-alltime CSV');
-// APPEND these lines at the END of that block (after the last missingData.push(...)):
-if (Number(ytAllTimeViews) > 0 && Number(ytViewsThisMonth) > Number(ytAllTimeViews)) {
-  missingData.push('YouTube all-time views (' + fmt(ytAllTimeViews) + ') are below this month\'s total views (' + fmt(ytViewsThisMonth) + '). The lifetime export is wrong or too narrow.');
-}
-if (mi.prevMonthYtAllTimeViews != null && Number(mi.prevMonthYtAllTimeViews) > Number(ytAllTimeViews)) {
-  missingData.push('YouTube all-time views fell from ' + fmt(mi.prevMonthYtAllTimeViews) + ' (last report) to ' + fmt(ytAllTimeViews) + '. A lifetime figure cannot fall; check the youtube-alltime export before sending.');
-}
-if (!bot || !bot.youtubeGeography || bot.youtubeGeography.length === 0) {
-  if (missingData.indexOf('youtube-geography CSV') === -1) missingData.push('youtube-geography CSV');
-}
-// NOTE: prevMonthYtAllTimeViews is a new field. The engine patch in this folder
-// (clip-repost-engine.patch) writes ytLifetimeEpisodeViews into the figures blob
-// from September onwards; carry it forward as prevMonthYtAllTimeViews in the
-// same place the other prevMonth* fields are carried, and this check becomes live.
-// Until then the second `if` simply never fires.
-// ────────────────────────────────────────────────────────────────────────────────────────
