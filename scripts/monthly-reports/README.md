@@ -96,11 +96,18 @@ report from the next unpublished month builds correctly with no further
 action.
 
 **August 2026 itself is not fixed and will not fix itself.** `build-report-row.js`
-refuses to rebuild a month already marked published, on purpose — the exact
-protection this whole review exists to argue for. Correcting August is a
-deliberate, manual override (delete that month's entries from the archive and
-from the n8n data table, then rebuild), spelled out in the ops-decision-system
-writeup. Nothing in this session can do that step: it runs on the Mac Mini,
-which this environment has no access to, and it is not something to script
-blindly against a live client-facing data store without being able to test it
-first.
+still refuses to rebuild a month already marked published by default — the
+exact protection this whole review exists to argue for. Dave asked for a way
+to override that on purpose, which now exists: `--revise` (gated behind a
+second explicit flag), backs up the existing rows before touching anything,
+deletes each by its own id, and writes fresh ones through the same verified
+path as a normal report. Commit `2bbbeee` in claude-workspace; full writeup
+in `ops-decision-system/youtube-episode-by-playlist-20260902.md`.
+
+That code has real test coverage against a mocked table, but has never run
+against the live n8n API — this environment has no `N8N_CLOUD_API_KEY` and
+`docs.n8n.io` is blocked by its own egress policy, so the delete request
+shape came from n8n's public docs and community examples, not a call I could
+verify here. Nothing in this session can run it for real either way: it
+executes on the Mac Mini, which this environment has no access to. The first
+real `--revise` should be watched, not fired and trusted blind.
