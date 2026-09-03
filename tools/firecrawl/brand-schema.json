@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "properties": {
+    "company_name": { "type": "string" },
+    "tagline": { "type": "string", "description": "The main headline claim, verbatim" },
+    "one_line_description": { "type": "string" },
+    "positioning": { "type": "string", "description": "Who they serve and the problem they claim to solve" },
+    "services": { "type": "array", "items": { "type": "string" } },
+    "target_audience": { "type": "string" },
+    "tone_of_voice": { "type": "string", "description": "e.g. formal, playful, technical" },
+    "proof_points": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Stats, awards, named clients, years in business - verbatim, do not infer"
+    },
+    "brand_colors": { "type": "array", "items": { "type": "string" }, "description": "Hex codes if discoverable" },
+    "logo_url": { "type": "string" },
+    "social_links": {
+      "type": "object",
+      "properties": {
+        "linkedin": { "type": "string" },
+        "instagram": { "type": "string" },
+        "x": { "type": "string" },
+        "youtube": { "type": "string" },
+        "tiktok": { "type": "string" }
+      }
+    },
+    "has_podcast": { "type": "boolean" },
+    "podcast_name": { "type": "string" },
+    "contact_email": { "type": "string" }
+  },
+  "required": ["company_name", "one_line_description", "positioning"]
+}
