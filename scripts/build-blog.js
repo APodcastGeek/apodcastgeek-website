@@ -626,6 +626,15 @@ async function main() {
   // Manual posts — built outside Notion, always prepended so they survive automated runs
   const manualCards = [
     {
+      slug: 'why-podcast-not-getting-views-youtube',
+      postImage: 'posts/bobby-owsinski-elliot-easton-thumbnail.png',
+      tag: 'YouTube',
+      title: "Why your podcast isn't getting views on YouTube (and what 66,000 views taught us in August)",
+      description: 'A podcast episode did very little for 80 days, then did 66,829 views with no ad spend. What the title, thumbnail and first 30 seconds did, with the YouTube Studio screenshots.',
+      publishDate: '2026-09-15',
+      reading: 9
+    },
+    {
       slug: 'b2b-founders-close-deals-podcasting',
       postImage: 'posts/why-b2b-founders-need-a-podcast.jpg',
       tag: 'B2B Strategy',
@@ -680,7 +689,8 @@ async function main() {
   for (const page of STATIC_PAGES) {
     sitemap += urlEntry(page.loc, today, page.priority);
   }
-  for (const post of cards) {
+  // allCards, not cards: manual posts must not vanish from the sitemap on the next Notion build
+  for (const post of allCards) {
     sitemap += urlEntry(`/blog/${post.slug}.html`, post.publishDate, '0.7');
   }
   sitemap += `</urlset>\n`;
