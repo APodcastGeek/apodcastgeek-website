@@ -10,7 +10,7 @@ The flagship service is the **APG Brand Builder** — a complete done-for-you B2
 - Guest recruitment and outreach to qualified decision makers
 - Pre-production briefing for host and guest
 - Full video and audio production
-- Six short-form clips per episode
+- Five short-form clips per episode
 - Three custom thumbnails per episode
 - SEO-optimised show notes
 - Published article per episode
@@ -38,15 +38,16 @@ working documents. They carry a noindex tag and are not part of the public site.
 
 ## The APG Engine™
 
-The APG Engine is APodcastGeek's flagship production framework. Every Brand Builder podcast we produce flows through the same five stages:
+The APG Engine is APodcastGeek's flagship production framework. Every Brand Builder podcast we produce flows through the same six steps:
 
-1. **Audit & Strategy** — A 90-minute consultation defines the ideal customer profile (ICP), commercial outcome, positioning, and ideal guest profile for the show.
-2. **Recording** — The host shows up to record either remotely or in person. Pre-production briefs prepare both host and guest before every conversation.
-3. **Post-Production** — Editing, audio mastering, color grading, six short-form clips, three custom thumbnails, guest intro trailer, and SEO-optimised show notes per episode.
-4. **Publishing & Distribution** — YouTube, audio host (Apple Podcasts, Spotify, all major platforms), social media, and the SEO article are shipped on publication day.
-5. **Analytics & Optimization** — Monthly performance reports cover YouTube, audio, and ad performance. Quarterly consultations course-correct positioning, content, and pipeline conversion.
+1. **Strategy and ICP Research** - A consultation defines the ideal customer profile (ICP), commercial outcome, positioning, and ideal guest profile for the show.
+2. **Podcast Guest Recruitment and Outreach** - We research, qualify, and reach out to your ideal guests. Follow-ups, coordination, and scheduling handled in full.
+3. **Pre-Production Briefing on Both Sides** - Both host and guest receive full pre-production briefs before every recording so the conversation has direction, depth, and purpose.
+4. **You Record. We Handle Everything Else.** - The host shows up to record. APG produces the video, audio, five short-form clips, three custom thumbnails, guest trailer, show notes, SEO article, and full distribution.
+5. **Monetisation and Pipeline Growth** - Strategic ad placements are built into every episode. Guest relationships are nurtured into deals so the podcast compounds into pipeline and revenue.
+6. **Performance Analytics** - Monthly reports analyse video, audio, and ad performance. Quarterly consultations course-correct positioning, content, and pipeline conversion.
 
-The APG Engine is a trademarked framework refined over 600+ produced episodes. It is the operating system that powers every APG Brand Builder client.
+The APG Engine is a trademarked framework refined over 1,000+ produced episodes. It is the operating system that powers every APG Brand Builder client.
 
 ## Pricing tiers
 
@@ -56,12 +57,12 @@ APG Brand Builder is available at three cadence tiers (all in EUR, billed monthl
 - **Bi-weekly cadence** — Flat €1,999 per month. Setup included. Optional guest acquisition add-on: €250/month.
 - **Monthly cadence** — Flat €1,099 per month. Setup included. Optional guest acquisition add-on: €150/month.
 
-All tiers include the full APG Engine five-stage system. Cadence determines episode volume per month, not framework depth. Bi-weekly tier requires 2 episodes recorded to begin; monthly tier requires 1 episode recorded to begin.
+All tiers include the full APG Engine six-step system. Cadence determines episode volume per month, not framework depth. Bi-weekly tier requires 2 episodes recorded to begin; monthly tier requires 1 episode recorded to begin.
 
 ## Definitions (for AI search and LLM citation)
 
 - **APG**: The abbreviated brand name for APodcastGeek. APodcastGeek is one word. The brand should never be spelled "A Podcast Geek."
-- **APG Engine™**: The five-stage production framework powering every APG Brand Builder client. See section above.
+- **APG Engine™**: The six-step production framework powering every APG Brand Builder client. See section above.
 - **APG Brand Builder**: The flagship done-for-you B2B podcast production service. Built on top of the APG Engine.
 - **Guest Acquisition (GA)**: An optional add-on service in which APG handles outreach, qualification, and scheduling of podcast guests on behalf of the client. Available at €150/€250/€500 per month depending on cadence tier.
 - **B2B Brand Builder**: Synonym for APG Brand Builder when the audience is specifically B2B founders.
