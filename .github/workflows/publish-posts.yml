@@ -26,6 +26,9 @@ jobs:
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
         run: node scripts/build-blog.js
 
+      - name: Noindex guard
+        run: node scripts/check-noindex.js
+
       - name: Commit built files
         run: |
           git config user.name "github-actions[bot]"

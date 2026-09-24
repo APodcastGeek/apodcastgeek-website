@@ -498,9 +498,11 @@ const STATIC_PAGES = [
   { loc: '/audit/',                                    priority: '0.9' },
   { loc: '/our-work/',                                 priority: '0.8' },
   { loc: '/blog.html',                                 priority: '0.8' },
+  { loc: '/contact.html',                              priority: '0.7' },
   { loc: '/roi-calculator.html',                       priority: '0.7' },
   { loc: '/checklist.html',                            priority: '0.7' },
-  { loc: '/downloads/b2b-podcast-launch-checklist.html', priority: '0.6' },
+  // Ungated duplicate of the checklist. It carries noindex so it does not
+  // compete with /checklist.html. Do not add it back to this list.
   { loc: '/blog/scorecard/b2b-podcast-lead-score.html',  priority: '0.6' },
   { loc: '/privacy.html',                              priority: '0.3' },
   { loc: '/terms.html',                                priority: '0.3' },
@@ -702,7 +704,11 @@ async function main() {
   appendFileSync(process.env.GITHUB_ENV || '/dev/null', 'HAS_POSTS=true\n');
 }
 
-main().catch(err => {
-  console.error(err);
-  process.exit(1);
-});
+module.exports = { STATIC_PAGES };
+
+if (require.main === module) {
+  main().catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
+}
