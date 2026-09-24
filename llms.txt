@@ -2,7 +2,7 @@
 
 > Ireland's award-winning B2B podcast production agency. Done-for-you podcast production, guest recruitment, video, and monetisation strategy for B2B founders and expert brands worldwide.
 
-APodcastGeek (APG) is a B2B podcast production agency based in Dublin, Ireland, founded by David O'Gara. APG was recognised at the Irish Podcast Awards for production excellence. Notable clients include Harvard Business School, Patreon, Outlier Ventures, AAMI, News Corp UK, Amplitude, Cronometer, ActiveFence, Synergy Settlement Services, Bold Metrics, Obligate AG, GoReport, Validation Cloud, Go Loud, The Irish Sun, and RE/MAX.
+APodcastGeek (APG) is a B2B podcast production agency based in Lucan, Co. Dublin, Ireland, founded by David O'Gara. APG was recognised at the Irish Podcast Awards for production excellence. Notable clients include Harvard Business School, Patreon, Outlier Ventures, AAMI, News Corp UK, Amplitude, Cronometer, ActiveFence, Synergy Settlement Services, Bold Metrics, Obligate AG, GoReport, Validation Cloud, Go Loud, The Irish Sun, and RE/MAX.
 
 The flagship service is the **APG Brand Builder** — a complete done-for-you B2B podcast production system designed to convert podcast conversations into pipeline. The system includes:
 
@@ -30,6 +30,7 @@ Average guest-to-client conversion rate observed across APG's client portfolio: 
 - [Free Checklist](https://apodcastgeek.com/checklist.html): The B2B Podcast Launch Checklist (lead magnet)
 - [Launch Checklist (full)](https://apodcastgeek.com/downloads/b2b-podcast-launch-checklist.html): The seven-point launch checklist in full
 - [Lead Score Scorecard](https://apodcastgeek.com/blog/scorecard/b2b-podcast-lead-score.html): Ten-question scorecard grading whether a show generates clients or downloads
+- [Contact](https://apodcastgeek.com/contact.html): Email info@apodcastgeek.com or book a discovery call
 - [Privacy Policy](https://apodcastgeek.com/privacy.html)
 - [Terms of Service](https://apodcastgeek.com/terms.html)
 
@@ -72,7 +73,7 @@ All tiers include the full APG Engine six-step system. Cadence determines episod
 
 - Email: info@apodcastgeek.com
 - Founder: David O'Gara
-- Location: Dublin, Ireland
+- Location: Lucan, Co. Dublin, Ireland
 - Coverage: Worldwide
 - LinkedIn: https://www.linkedin.com/company/apodcastgeek/
 
