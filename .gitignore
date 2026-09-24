@@ -3,3 +3,11 @@ functions/node_modules/
 .firebase/
 firebase-debug.log
 .DS_Store
+
+# local env / secrets
+.env
+.env.local
+
+# python bytecode
+__pycache__/
+*.pyc
