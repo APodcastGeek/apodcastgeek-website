@@ -1,0 +1,20 @@
+name: Noindex guard
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Fail if a non-public HTML page is indexable
+        run: node scripts/check-noindex.js

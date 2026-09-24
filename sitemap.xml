@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://apodcastgeek.com/</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-21</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
@@ -17,13 +17,18 @@
   </url>
   <url>
     <loc>https://apodcastgeek.com/our-work/</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-21</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://apodcastgeek.com/blog.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-21</lastmod>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://apodcastgeek.com/contact.html</loc>
+    <lastmod>2026-09-21</lastmod>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://apodcastgeek.com/roi-calculator.html</loc>
@@ -36,9 +41,9 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://apodcastgeek.com/downloads/b2b-podcast-launch-checklist.html</loc>
-    <lastmod>2026-08-19</lastmod>
-    <priority>0.6</priority>
+    <loc>https://apodcastgeek.com/blog/why-podcast-not-getting-views-youtube.html</loc>
+    <lastmod>2026-09-15</lastmod>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://apodcastgeek.com/blog/scorecard/b2b-podcast-lead-score.html</loc>

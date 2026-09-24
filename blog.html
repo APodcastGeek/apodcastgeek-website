@@ -32,6 +32,9 @@
 .blog-hero{background:#0a0e1a;padding:5rem 5rem 3rem;text-align:center}
 .blog-hero h1{font-size:clamp(2rem,4vw,3rem);font-weight:800;color:#fff;margin-bottom:1rem}
 .blog-hero p{font-size:1.05rem;color:#8899aa;max-width:580px;margin:0 auto;line-height:1.8}
+.blog-start{max-width:1140px;margin:0 auto;padding:0 5rem 1.5rem;text-align:center}
+.blog-start p{font-size:.9rem;color:#8899aa;line-height:1.8}
+.blog-start a{color:#85B7EB;text-decoration:none;border-bottom:0.5px solid rgba(55,138,221,0.3)}.blog-start a:hover{color:#fff}
 .blog-grid{max-width:1140px;margin:0 auto;padding:3rem 5rem 5rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
 .blog-card{background:#111827;border:0.5px solid rgba(55,138,221,0.2);border-radius:12px;overflow:hidden;transition:border-color .3s ease;text-decoration:none;display:block}
 .blog-card:hover{border-color:rgba(55,138,221,0.5)}
@@ -46,7 +49,7 @@
 .footer-simple{background:#040608;border-top:0.5px solid rgba(55,138,221,0.1);padding:2rem 5rem;text-align:center}
 .footer-simple p{font-size:13px;color:#334455}
 .footer-simple a{color:#445566;text-decoration:none}.footer-simple a:hover{color:#85B7EB}
-@media(max-width:1024px){.nav{padding:1rem 2rem;position:relative}.nav-links{display:none}.hamburger{display:block}.nav-logo{height:34px}.nav-cta{display:none}.blog-hero{padding:4rem 2rem 2rem}.blog-grid{padding:2rem;grid-template-columns:repeat(2,1fr)}.footer-simple{padding:2rem}}
+@media(max-width:1024px){.nav{padding:1rem 2rem;position:relative}.nav-links{display:none}.hamburger{display:block}.nav-logo{height:34px}.nav-cta{display:none}.blog-hero{padding:4rem 2rem 2rem}.blog-start{padding:0 2rem 1rem}.blog-grid{padding:2rem;grid-template-columns:repeat(2,1fr)}.footer-simple{padding:2rem}}
 @media(max-width:640px){.blog-grid{grid-template-columns:1fr}}
 </style>
 </head>
@@ -63,6 +66,7 @@
     <a href="/#testimonials-heading">Results</a>
     <a href="/#faq-heading">FAQ</a>
     <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact</a>
     <a href="/roi-calculator.html" style="color:#378ADD;font-weight:600">ROI Calculator</a>
     <a target="_blank" rel="noopener" href="https://clients.apodcastgeek.com/">Client Login</a>
   </div>
@@ -74,7 +78,12 @@
   <p>B2B podcast production insights, strategy, and industry expertise. Everything you need to turn your podcast into a revenue engine.</p>
 </section>
 
+<div class="blog-start">
+  <p>Start here: <a href="blog/podcast-for-law-firms-trust-building.html">podcasting for law firms</a> &middot; <a href="blog/podcast-guest-recruitment-strategy-b2b-sales.html">guest recruitment as a sales strategy</a> &middot; <a href="blog/podcast-guests-into-clients-conversion.html">turning guests into clients</a></p>
+</div>
+
 <div class="blog-grid" id="blog-posts">
+  <a href="blog/why-podcast-not-getting-views-youtube.html" class="blog-card"><div class="blog-card-img" style="background-image:url('blog/images/posts/bobby-owsinski-elliot-easton-thumbnail.png');background-size:cover;background-position:center"></div><div class="blog-card-body"><span class="blog-card-tag">YouTube</span><h2>Why your podcast isn't getting views on YouTube (and what 66,000 views taught us in August)</h2><p>A podcast episode did very little for 80 days, then did 66,829 views with no ad spend. What the title, thumbnail and first 30 seconds did, with the YouTube Studio screenshots.</p><span class="blog-card-meta">2026-09-15 &middot; 9 min read</span></div></a>
   <a href="blog/what-does-podcast-production-agency-do.html" class="blog-card"><div class="blog-card-img" style="background-image:url('blog/images/default.jpg');background-size:cover;background-position:center"></div><div class="blog-card-body"><span class="blog-card-tag">Podcast Production</span><h2>What Does a Podcast Production Agency Do? The Complete APG Breakdown</h2><p>Discover exactly what a full-service podcast production agency handles, from pre-production briefing through to distribution, clips and monetisation.</p><span class="blog-card-meta">2026-06-04 &middot; 7 min read</span></div></a>
   <a href="blog/b2b-founders-close-deals-podcasting.html" class="blog-card"><div class="blog-card-img" style="background-image:url('blog/images/posts/why-b2b-founders-need-a-podcast.jpg');background-size:cover;background-position:center"></div><div class="blog-card-body"><span class="blog-card-tag">B2B Strategy</span><h2>How B2B Founders Close High-Ticket Deals Through Podcasting (Without Cold Outreach)</h2><p>Cold outreach response rates have collapsed. Here is how B2B founders are using their podcast to close high-ticket deals without a single cold email.</p><span class="blog-card-meta">2026-06-03 &middot; 9 min read</span></div></a>
   <a href="blog/repurpose-podcast-content-linkedin.html" class="blog-card"><div class="blog-card-img" style="background-image:url('blog/images/posts/repurpose-podcast-content-linkedin.jpg');background-size:cover;background-position:center"></div><div class="blog-card-body"><span class="blog-card-tag">B2B Strategy</span><h2>How to Repurpose Podcast Content on LinkedIn: A B2B Strategy Guide</h2><p>Turn one podcast episode into multiple LinkedIn assets. Learn the exact repurposing framework APG uses to amplify B2B podcast reach and drive conversions.</p><span class="blog-card-meta">2026-05-19 &middot; 11 min read</span></div></a>
@@ -95,7 +104,7 @@
 </div>
 
 <footer class="footer-simple">
-  <p>&copy; 2026 APodcastGeek Limited. <a href="privacy.html">Privacy Policy</a> &middot; <a href="terms.html">Terms of Service</a> &middot; <a href="/">Home</a></p>
+  <p>&copy; 2026 APodcastGeek Limited. <a href="privacy.html">Privacy Policy</a> &middot; <a href="terms.html">Terms of Service</a> &middot; <a href="contact.html">Contact</a> &middot; <a href="/">Home</a></p>
 </footer>
 
 <div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#0a0e1a;border-top:0.5px solid rgba(55,138,221,0.2);padding:1rem 2rem;z-index:200">
@@ -129,6 +138,12 @@ function declineCookies() {
   document.getElementById('cookie-banner').style.display = 'none';
   window['ga-disable-G-FMQX2BE32H'] = true;
 }
+</script>
+<script>
+(function(){var s=document.createElement('script');
+s.src='https://videocore.uk/t.js';
+s.dataset.siteId='vc_d81ea557974f';
+s.async=true;document.head.appendChild(s);})();
 </script>
 </body>
 </html>
