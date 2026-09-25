@@ -26,6 +26,7 @@ Average guest-to-client conversion rate observed across APG's client portfolio: 
 - [Free Podcast Audit](https://apodcastgeek.com/audit/): Four-minute B2B podcast audit, personally reviewed, showing where a show leaks leads
 - [Our Work](https://apodcastgeek.com/our-work/): Real episodes produced for B2B founders and brands worldwide
 - [Blog](https://apodcastgeek.com/blog.html): Articles on B2B podcasting strategy, ROI, guest recruitment, production quality
+- [How to choose a podcast host for a B2B show in 2026](https://apodcastgeek.com/blog/how-to-choose-podcast-host-b2b-2026.html): What a B2B podcast host does, what to check before you pick one, when Buzzsprout is enough, and when hosting is only one part of the stack
 - [ROI Calculator](https://apodcastgeek.com/roi-calculator.html): Estimate monthly pipeline value from episode volume, guest conversion rate and deal size
 - [Free Checklist](https://apodcastgeek.com/checklist.html): The B2B Podcast Launch Checklist (lead magnet)
 - [Launch Checklist (full)](https://apodcastgeek.com/downloads/b2b-podcast-launch-checklist.html): The seven-point launch checklist in full
