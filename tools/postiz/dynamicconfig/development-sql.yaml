@@ -1,0 +1,7 @@
+# Temporal dynamic config. Empty defaults are fine for a single-tenant install.
+limit.maxIDLength:
+  - value: 255
+    constraints: {}
+system.forceSearchAttributesCacheRefreshOnRead:
+  - value: true
+    constraints: {}

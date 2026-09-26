@@ -3,3 +3,6 @@ functions/node_modules/
 .firebase/
 firebase-debug.log
 .DS_Store
+
+# Postiz local secrets
+tools/postiz/.env
