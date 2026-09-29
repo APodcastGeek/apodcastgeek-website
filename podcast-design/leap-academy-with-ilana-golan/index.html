@@ -327,6 +327,30 @@
   table.sched small{display:block;color:var(--on-dark-soft);font-size:.76rem;}
   @media(max-width:600px){table.sched{font-size:.86rem;}}
 
+  /* SFX */
+  .sfx-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+  .choice.sfx{display:flex;flex-direction:column;align-items:center;padding:18px 10px 4px;}
+  .choice.sfx .body{flex-direction:column;gap:4px;padding:10px 4px 12px;text-align:center;}
+  .sfx-n{font-size:.62rem;font-weight:700;letter-spacing:.14em;color:var(--gold-deep);}
+  .play{width:46px;height:46px;border-radius:50%;border:2px solid var(--gold-deep);background:var(--black);cursor:pointer;position:relative;flex:0 0 auto;}
+  .play::after{content:"";position:absolute;left:17px;top:13px;border-style:solid;border-width:9px 0 9px 14px;border-color:transparent transparent transparent var(--gold-bright);}
+  .play.on::after{left:14px;top:14px;width:5px;height:16px;border:none;border-left:5px solid var(--gold-bright);border-right:5px solid var(--gold-bright);box-sizing:content-box;}
+  @media(max-width:800px){.sfx-grid{grid-template-columns:repeat(2,1fr);}}
+  /* LEAD MAGNET */
+  .lm{align-items:center;}
+  .lm-shot img{display:block;width:100%;border:1px solid var(--rule);box-shadow:0 10px 30px rgba(0,0,0,.08);}
+  .lm-btn{display:inline-block;margin-top:8px;padding:13px 22px;background:var(--black);color:var(--gold-bright);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;}
+  .lm-btn:hover{color:var(--gold-pale);}
+  /* TSO */
+  .tso-preview{font-size:1.25rem;font-weight:700;color:var(--ink);margin:0 0 20px;}
+  .tso-preview span{color:var(--gold);}
+  .tso-preview em{font-style:normal;color:var(--gold-deep);}
+  .tso-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;}
+  .choice.tso .body{justify-content:flex-start;gap:16px;padding:15px 18px;}
+  .choice.tso .tnum{font-size:1.2rem;font-weight:800;color:var(--gold);min-width:28px;}
+  .choice.tso .opt{flex:1;font-size:.98rem;letter-spacing:0;text-transform:none;font-weight:600;}
+  @media(max-width:700px){.tso-grid{grid-template-columns:1fr;}}
+
   /* SELECTIONS + SAVE */
   .choice{cursor:pointer;}
   .choice.chosen .state::before{content:"\2713  ";}
@@ -833,18 +857,18 @@
     </ol>
     <p style="margin-top:22px;">Because the intro handles the credibility, you never read a bio on mic. After it plays, you go straight into your first question.</p>
     <p>Elements inside it: text animations, generated footage where it helps tell the story, and motion graphics that animate what is being said.</p>
-    <h4 style="margin-top:30px;font-size:1.05rem;">Guest intro background</h4>
-    <div class="grid3" data-group="Guest intro background">
-      <div class="choice"><div class="slot"><span>Option one</span></div><div class="body"><span class="opt">Option one</span><span class="state">Not selected</span></div></div>
-      <div class="choice"><div class="slot"><span>Option two</span></div><div class="body"><span class="opt">Option two</span><span class="state">Not selected</span></div></div>
-      <div class="choice"><div class="slot"><span>Option three</span></div><div class="body"><span class="opt">Option three</span><span class="state">Not selected</span></div></div>
+    <h4 style="margin-top:30px;font-size:1.05rem;">Leap Listicle background</h4>
+    <div class="grid3" data-group="Leap Listicle background">
+      <div class="choice"><div class="slot"><img src="listicle-bg-02-leap-arc.jpg" alt="Leap arc background" loading="lazy"></div><div class="body"><span class="opt">Option one</span><span class="state">Not selected</span></div></div>
+      <div class="choice"><div class="slot"><img src="listicle-bg-03-contour-map.jpg" alt="Contour map background" loading="lazy"></div><div class="body"><span class="opt">Option two</span><span class="state">Not selected</span></div></div>
+      <div class="choice"><div class="slot"><img src="listicle-bg-05-framed-panels.jpg" alt="Framed panels background" loading="lazy"></div><div class="body"><span class="opt">Option three</span><span class="state">Not selected</span></div></div>
     </div>
 
     <div class="subhead-wrap"><div class="thinrule"></div></div>
     <h3 class="subhead">Motion graphics</h3>
     <div class="grid3">
       <div class="card on-ink"><span class="tag accent">Name titles</span><h4>Lower thirds</h4><p>Guest name and title, in Montserrat, on the gold and black system.</p></div>
-      <div class="card on-ink"><span class="tag accent">Subscribe</span><h4>YouTube icon</h4><p>Animated subscribe prompt, used once per episode at the subscribe beat.</p></div>
+      <div class="card on-ink"><span class="tag accent">Subscribe</span><h4>YouTube icon</h4><p>Animated subscribe prompt, used once per episode at the subscribe CTA.</p></div>
       <div class="card on-ink"><span class="tag accent">End card</span><h4>Outro</h4><p>Updated outro with the stag mark, the next episode and the subscribe prompt.</p></div>
     </div>
 
@@ -855,20 +879,21 @@
       <div class="card on-ink"><span class="tag accent">Secondary</span><h4>Montserrat Italic</h4><p>Supporting lines and attribution, sentence case.</p></div>
     </div>
     <p style="margin-top:22px;">Impact word colour: the brand gold, used on the one word in a sentence that carries the meaning. Never more than one per line.</p>
-    <h4 style="margin-top:30px;font-size:1.05rem;">Text animation background</h4>
-    <div class="grid3" data-group="Text animation background">
-      <div class="choice"><div class="slot"><span>Option one</span></div><div class="body"><span class="opt">Option one</span><span class="state">Not selected</span></div></div>
-      <div class="choice"><div class="slot"><span>Option two</span></div><div class="body"><span class="opt">Option two</span><span class="state">Not selected</span></div></div>
-      <div class="choice"><div class="slot"><span>Option three</span></div><div class="body"><span class="opt">Option three</span><span class="state">Not selected</span></div></div>
-    </div>
 
     <div class="subhead-wrap"><div class="thinrule"></div></div>
     <h3 class="subhead">Ad transitions</h3>
-    <p>A short sound effect in and out of every ad read, so the break is obvious and the episode does not feel interrupted. Pick one.</p>
-    <div class="grid3" data-group="Ad transitions">
-      <div class="choice"><div class="slot"><span>Option one</span></div><div class="body"><span class="opt">Option one</span><span class="state">Not selected</span></div></div>
-      <div class="choice"><div class="slot"><span>Option two</span></div><div class="body"><span class="opt">Option two</span><span class="state">Not selected</span></div></div>
-      <div class="choice"><div class="slot"><span>Option three</span></div><div class="body"><span class="opt">Option three</span><span class="state">Not selected</span></div></div>
+    <p>A short sound effect in and out of every ad read, so the break is obvious and the episode does not feel interrupted. Press play to hear each one, then pick one.</p>
+    <div class="sfx-grid" data-group="Ad transitions">
+      <div class="choice sfx"><button type="button" class="play" data-src="sfx/01-soft-whoosh.mp3" aria-label="Play Soft whoosh"></button><div class="body"><span class="sfx-n">01</span><span class="opt">Soft whoosh</span><span class="state">Not selected</span></div></div>
+      <div class="choice sfx"><button type="button" class="play" data-src="sfx/02-bright-chime.mp3" aria-label="Play Bright chime"></button><div class="body"><span class="sfx-n">02</span><span class="opt">Bright chime</span><span class="state">Not selected</span></div></div>
+      <div class="choice sfx"><button type="button" class="play" data-src="sfx/03-bass-swell.mp3" aria-label="Play Bass swell"></button><div class="body"><span class="sfx-n">03</span><span class="opt">Bass swell</span><span class="state">Not selected</span></div></div>
+      <div class="choice sfx"><button type="button" class="play" data-src="sfx/04-tape-rewind.mp3" aria-label="Play Tape rewind"></button><div class="body"><span class="sfx-n">04</span><span class="opt">Tape rewind</span><span class="state">Not selected</span></div></div>
+      <div class="choice sfx"><button type="button" class="play" data-src="sfx/05-glossy-swipe.mp3" aria-label="Play Glossy swipe"></button><div class="body"><span class="sfx-n">05</span><span class="opt">Glossy swipe</span><span class="state">Not selected</span></div></div>
+      <div class="choice sfx"><button type="button" class="play" data-src="sfx/06-riser-sparkle.mp3" aria-label="Play Riser sparkle"></button><div class="body"><span class="sfx-n">06</span><span class="opt">Riser sparkle</span><span class="state">Not selected</span></div></div>
+      <div class="choice sfx"><button type="button" class="play" data-src="sfx/07-piano-note.mp3" aria-label="Play Piano note"></button><div class="body"><span class="sfx-n">07</span><span class="opt">Piano note</span><span class="state">Not selected</span></div></div>
+      <div class="choice sfx"><button type="button" class="play" data-src="sfx/08-metal-ring.mp3" aria-label="Play Metal ring"></button><div class="body"><span class="sfx-n">08</span><span class="opt">Metal ring</span><span class="state">Not selected</span></div></div>
+      <div class="choice sfx"><button type="button" class="play" data-src="sfx/09-synth-sting.mp3" aria-label="Play Synth sting"></button><div class="body"><span class="sfx-n">09</span><span class="opt">Synth sting</span><span class="state">Not selected</span></div></div>
+      <div class="choice sfx"><button type="button" class="play" data-src="sfx/10-page-turn.mp3" aria-label="Play Page turn"></button><div class="body"><span class="sfx-n">10</span><span class="opt">Page turn</span><span class="state">Not selected</span></div></div>
     </div>
   </div>
 </section>
@@ -880,7 +905,16 @@
       <div class="goldrule"></div>
     </div>
     <p class="section-note">Every episode ends with something worth having, so the call to action is a gift rather than an ask.</p>
-    <div class="panel marked"><p><span class="ph">One worked example, built for your offer, drafted before the call.</span></p></div>
+    <div class="grid2 lm">
+      <a class="lm-shot" href="https://leap-scorecard-demo.vercel.app" target="_blank" rel="noopener"><img src="leadmagnet-scorecard.jpg" alt="The Leap Readiness Scorecard" loading="lazy"></a>
+      <div>
+        <span class="tag accent">Built from your Gary Vaynerchuk episode</span>
+        <h3 style="font-size:1.5rem;">The Leap Readiness Scorecard</h3>
+        <p>Listeners scan the QR code on the episode, answer eight questions in about 90 seconds, and get their Leap Readiness score plus the one trait to work on first.</p>
+        <p>To see their result, they give their email, so every listener who takes it becomes a lead.</p>
+        <a class="lm-btn" href="https://leap-scorecard-demo.vercel.app" target="_blank" rel="noopener">Try the scorecard</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -891,7 +925,26 @@
       <div class="goldrule"></div>
     </div>
     <p class="section-note">How the show gets found, by people searching and by the AI tools they increasingly ask instead.</p>
-    <div class="panel marked"><p><span class="ph">Built from your questionnaire answers and the keyword work.</span></p></div>
+    <div class="doc-row"><span class="tag">Primary keywords</span><div>midlife career change (about 20,100 searches a month, low competition and growing), career change after 50 (about 7,600), how to become a fractional executive (about 5,200, low competition), portfolio career (about 4,800)</div></div>
+    <div class="doc-row"><span class="tag">Secondary keywords</span><div>career coaching (about 31,200), should I quit my job (about 18,300), multiple income streams (about 12,700), what to do after being laid off (about 4,600)</div></div>
+    <p class="yt-m" style="margin-top:14px;color:var(--ink-soft);font-size:.78rem;">vidIQ estimates of monthly YouTube searches, pulled 28 September 2026.</p>
+
+    <div class="subhead-wrap"><div class="thinrule"></div></div>
+    <h3 class="subhead">Tactical specific outcome</h3>
+    <p class="section-note" style="margin-top:6px;">The short line beside the show name in podcast apps and on YouTube. It tells a stranger who the show is for and what they get from it. Pick one.</p>
+    <p class="tso-preview">Leap Academy with Ilana Golan <span>|</span> <em id="tso-live">your pick appears here</em></p>
+    <div class="tso-grid" data-group="Tactical specific outcome">
+      <div class="choice tso"><div class="body"><span class="tnum">01</span><span class="opt">Make Your Midlife Career Change</span><span class="state">Not selected</span></div></div>
+      <div class="choice tso"><div class="body"><span class="tnum">02</span><span class="opt">Career Change Stories from People Who Made the Leap</span><span class="state">Not selected</span></div></div>
+      <div class="choice tso"><div class="body"><span class="tnum">03</span><span class="opt">How Professionals Build Portfolio Careers</span><span class="state">Not selected</span></div></div>
+      <div class="choice tso"><div class="body"><span class="tnum">04</span><span class="opt">Real Career Leaps, and How to Make Yours</span><span class="state">Not selected</span></div></div>
+      <div class="choice tso"><div class="body"><span class="tnum">05</span><span class="opt">Reinvent Your Career in Your 40s and Beyond</span><span class="state">Not selected</span></div></div>
+      <div class="choice tso"><div class="body"><span class="tnum">06</span><span class="opt">Career Advice from CEOs Who Made the Leap</span><span class="state">Not selected</span></div></div>
+      <div class="choice tso"><div class="body"><span class="tnum">07</span><span class="opt">From Stuck to Your Next Career Move</span><span class="state">Not selected</span></div></div>
+      <div class="choice tso"><div class="body"><span class="tnum">08</span><span class="opt">Build a Portfolio Career on Your Own Terms</span><span class="state">Not selected</span></div></div>
+      <div class="choice tso"><div class="body"><span class="tnum">09</span><span class="opt">Midlife Reinvention for Ambitious Professionals</span><span class="state">Not selected</span></div></div>
+      <div class="choice tso"><div class="body"><span class="tnum">10</span><span class="opt">How to Leave the Ladder and Leap</span><span class="state">Not selected</span></div></div>
+    </div>
   </div>
 </section>
 
@@ -906,11 +959,11 @@
       <p>Your current outro runs about 35 seconds. This version keeps your mission and the ask to share, and it points the people who stayed to your free training. About 22 seconds.</p>
       <div class="script"><span class="sl">Outro, for approval</span><p>Hey, I hope you enjoyed this conversation. If someone in your life needs to hear it today, please share it with them. We're on a mission to help 10 million people leap their careers and build the life they want. So if you're ready to make your own leap, my free training is in the show notes. See you next week.</p></div>
     </div></div>
-    <div class="doc-row"><span class="tag">Subscribe beat</span><div>
-      <p>Recorded separately and inserted after question one in every episode. Your current version runs about 25 seconds and opens by saying there are no ads on the show, which will change once your ad reads run. Each of these is 10 to 15 seconds. Pick one.</p>
-      <div class="script"><span class="sl">Option one</span><p>Hey, I have a favour to ask. If this conversation is helping you, hit subscribe and like. It's how we keep bringing you guests like this one, and it means more to us than you think.</p></div>
-      <div class="script"><span class="sl">Option two</span><p>Quick favour before we dive in. We're on a mission to help 10 million people leap their careers, and you can help us reach them. Just hit subscribe, so the next conversation finds you too.</p></div>
-      <div class="script"><span class="sl">Option three</span><p>If you've ever felt stuck in your career, this show is for you. Every week I sit down with someone who took the leap. Subscribe so you don't miss the next one. Now, let's dive in.</p></div>
+    <div class="doc-row"><span class="tag">Subscribe CTA</span><div>
+      <p>Recorded separately and inserted at the same point in every episode, after the first part of the conversation. Your current version runs about 25 seconds and opens by saying there are no ads on the show, which will change once your ad reads run. Each of these is 10 to 15 seconds. Pick one.</p>
+      <div class="script"><span class="sl">Option one</span><p>Hey, I have a favour to ask. If this conversation is helping you, hit subscribe. It's how we keep bringing you guests like this one. Now, back to the show.</p></div>
+      <div class="script"><span class="sl">Option two</span><p>Quick favour. We're on a mission to help 10 million people leap their careers, and you can help us reach them. Just hit subscribe. Now, back to today's episode.</p></div>
+      <div class="script"><span class="sl">Option three</span><p>If you've ever felt stuck in your career, this show is for you. Every week I sit down with someone who took the leap. Subscribe so you don't miss the next one. Now, back to the conversation.</p></div>
     </div></div>
     <div class="doc-row"><span class="tag">Ad reads</span><div>
       <p>Three ads for your free training, one per episode on rotation. (Video) is said to camera and (Audio) is voiceover.</p>
@@ -1026,8 +1079,20 @@
     feats.forEach(function(f){markFeat(f,(d.features||[]).indexOf(f.dataset.feature)>-1);});
     ticks.forEach(function(t){t.checked=(d.access||[]).indexOf(t.nextElementSibling.textContent)>-1;});
   }
+  var cur=null;
+  [].slice.call(document.querySelectorAll('.play')).forEach(function(b){
+    b.addEventListener('click',function(e){e.stopPropagation();
+      if(cur&&cur.btn===b&&!cur.a.paused){cur.a.pause();b.classList.remove('on');return;}
+      if(cur){cur.a.pause();cur.btn.classList.remove('on');}
+      var a=new Audio(b.dataset.src);cur={a:a,btn:b};b.classList.add('on');a.onended=function(){b.classList.remove('on');};a.play();
+    });
+  });
+  var tg=document.querySelector('[data-group="Tactical specific outcome"]'),tl=document.getElementById('tso-live');
+  function tso(){var c=tg&&tg.querySelector('.choice.chosen');if(tl)tl.textContent=c?c.querySelector('.opt').textContent:'your pick appears here';}
+  if(tg)tg.addEventListener('click',function(){setTimeout(tso,0);});
   var status=document.getElementById('save-status');
   try{var prev=JSON.parse(localStorage.getItem(KEY)||'null');if(prev){restore(prev);status.textContent='Last saved '+new Date(prev.saved).toLocaleString()+' on this device.';}}catch(e){}
+  tso();
   document.getElementById('save-btn').addEventListener('click',function(){
     var d=collect(),lines=['Leap Academy with Ilana Golan: podcast design choices','Saved '+new Date(d.saved).toLocaleString(),''];
     Object.keys(d.choices).forEach(function(k){lines.push(k+': '+(d.choices[k]||'not chosen'));});
