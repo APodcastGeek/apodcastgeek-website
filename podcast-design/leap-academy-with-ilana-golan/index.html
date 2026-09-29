@@ -988,15 +988,15 @@ Rules:
     </div>
     <p class="section-note">Everything you read on mic, written for you and recorded once.</p>
     <div class="doc-row"><span class="tag">Show outro</span><div>
-      <p>Your current outro runs about 35 seconds. This version keeps your mission and the ask to share, and it points the people who stayed to your free training. About 27 seconds. Your YouTube end card shows on screen after your outro.</p>
-      <div class="script"><span class="sl">Outro, for approval</span><p>Hey, I hope you enjoyed this conversation. If someone in your life needs to hear it today, please share it with them. We're on a mission to help 10 million people leap their careers and build the life they want. So if you're ready to make your own leap, scan the QR code on screen or click the link in the show notes for my free training. See you next week.</p></div>
+      <p>Your current outro runs about 35 seconds. This version makes one call to action, the free scorecard for the episode, and runs about 23 seconds. Your YouTube end card shows on screen after your outro.</p>
+      <div class="script"><span class="sl">Outro, approved</span><p>Hey, I hope you enjoyed today's conversation. If you want to see where you stand on the traits we talked about today, and get your next three moves to make your own leap, scan the QR code on screen or click the link in the show notes for my free scorecard. Thanks for being here. I'll see you next week.</p></div>
     </div></div>
     <div class="doc-row"><span class="tag">Subscribe CTA</span><div>
-      <p>Your current version runs about 25 seconds. These are shorter on purpose, so they never pull attention away from the conversation people came for, and they keep your audience engaged. Each one runs about 10 to 15 seconds. Pick one, and it will be added to your scripts when we get to recording.</p>
+      <p>Your current version runs about 25 seconds. These are shorter on purpose, so they never pull attention away from the conversation people came for, and they keep your audience engaged. Each one points people to the free scorecard for the episode, then asks them to subscribe, and runs about 18 to 20 seconds. Pick one, and it will be added to your scripts when we get to recording.</p>
       <div class="cta-group" data-group="Subscribe CTA">
-      <div class="choice script-choice"><div class="body"><span class="opt">Option one</span><span class="state">Not selected</span></div><p>Hey, I have a favour to ask. If this conversation is helping you, hit subscribe. It's how we keep bringing you guests like this one. Now, back to the show.</p></div>
-      <div class="choice script-choice"><div class="body"><span class="opt">Option two</span><span class="state">Not selected</span></div><p>Quick favour. We're on a mission to help 10 million people leap their careers, and you can help us reach them. Just hit subscribe. Now, back to today's episode.</p></div>
-      <div class="choice script-choice"><div class="body"><span class="opt">Option three</span><span class="state">Not selected</span></div><p>If you've ever felt stuck in your career, this show is for you. Every week I sit down with someone who took the leap. Subscribe so you don't miss the next one. Now, back to the conversation.</p></div>
+      <div class="choice script-choice"><div class="body"><span class="opt">Option one</span><span class="state">Not selected</span></div><p>Hey, quick pause. If today's conversation has you thinking about your own leap, take the free scorecard for this episode. Scan the QR code on screen or click the link in the show notes. And if you're getting value from this, hit subscribe. Now, back to the show.</p></div>
+      <div class="choice script-choice"><div class="body"><span class="opt">Option two</span><span class="state">Not selected</span></div><p>Before we keep going, there's a free scorecard built from today's conversation. It shows you where you stand and your next three moves. Scan the QR code on screen or click the link in the show notes, and hit subscribe so you don't miss the next one. Now, back to today's episode.</p></div>
+      <div class="choice script-choice"><div class="body"><span class="opt">Option three</span><span class="state">Not selected</span></div><p>Quick favour. Want to know how ready you are to make your own leap? Take the free scorecard for this episode. The QR code's on screen and the link's in the show notes. And if this show is helping you, subscribe. Now, back to the conversation.</p></div>
       </div>
     </div></div>
     <div class="doc-row"><span class="tag">Ad reads</span><div>
@@ -1146,17 +1146,20 @@ Rules:
   function tso(){var c=tg&&tg.querySelector('.choice.chosen');if(tl)tl.textContent=c?c.querySelector('.opt').textContent:'your pick appears here';}
   if(tg)tg.addEventListener('click',function(){setTimeout(tso,0);});
   var status=document.getElementById('save-status');
-  try{var prev=JSON.parse(localStorage.getItem(KEY)||'null');if(prev){restore(prev);status.textContent='Last saved '+new Date(prev.saved).toLocaleString()+' on this device.';}}catch(e){}
+  // Saves centrally (same store as the other podcast guides) so APodcastGeek sees the client's choices. The local copy is the offline fallback.
+  var API='https://apodcastgeek.app.n8n.cloud/webhook/podcast-design-state',SLUG='leap-academy-with-ilana-golan';
+  function when(iso){return new Date(iso).toLocaleString();}
+  try{var prev=JSON.parse(localStorage.getItem(KEY)||'null');if(prev){restore(prev);status.textContent='Last saved '+when(prev.saved)+'.';}}catch(e){}
   tso();
+  fetch(API+'?slug='+encodeURIComponent(SLUG)+'&t='+Date.now()).then(function(r){return r.json();}).then(function(res){
+    var d=res&&res.payload;if(d&&d.saved){restore(d);tso();status.textContent='Last saved '+when(d.saved)+'.';try{localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}}
+  }).catch(function(){});
   document.getElementById('save-btn').addEventListener('click',function(){
-    var d=collect(),lines=['Leap Academy with Ilana Golan: podcast design choices','Saved '+new Date(d.saved).toLocaleString(),''];
-    Object.keys(d.choices).forEach(function(k){lines.push(k+': '+(d.choices[k]||'not chosen'));});
-    lines.push('','Episode structure: '+d.structure.map(function(n,i){return (i+1)+'. '+n;}).join(', '));
-    lines.push('','Show features: '+(d.features.length?d.features.join(', '):'none selected'));
-    lines.push('','Access ticked: '+(d.access.length?d.access.join(', '):'none'));
-    var saved=false;try{localStorage.setItem(KEY,JSON.stringify(d));saved=true;}catch(e){}
-    var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/plain'}));a.download='leap-academy-podcast-design-choices.txt';document.body.appendChild(a);a.click();a.remove();
-    status.textContent=(saved?'Saved on this device':'Could not save in this browser')+' at '+new Date().toLocaleTimeString()+'. A copy has downloaded.';
+    var d=collect();try{localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}
+    status.textContent='Saving...';
+    fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({slug:SLUG,payload:d})})
+      .then(function(r){if(!r.ok)throw r.status;status.textContent='Saved at '+new Date().toLocaleTimeString()+'. APodcastGeek can now see your choices.';})
+      .catch(function(){status.textContent='Could not reach our server, so this is only saved on this device. Please try again in a moment.';});
   });
 })();
 </script>
