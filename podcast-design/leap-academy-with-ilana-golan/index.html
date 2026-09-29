@@ -325,6 +325,30 @@
   table.sched small{display:block;color:var(--on-dark-soft);font-size:.76rem;}
   @media(max-width:600px){table.sched{font-size:.86rem;}}
 
+  /* SELECTIONS + SAVE */
+  .choice{cursor:pointer;}
+  .choice.chosen .state::before{content:"\2713  ";}
+  .feature{display:flex;flex-direction:column;background:var(--off-black);color:var(--on-dark);border:1px solid #2A2A2A;border-top:3px solid var(--gold);padding:26px 26px 24px;transition:border-color .15s,box-shadow .15s;}
+  .feature h4{color:var(--paper);font-size:1.3rem;margin:14px 0 10px;}
+  .feature p{font-size:.93rem;color:var(--on-dark-soft);margin-bottom:12px;}
+  .feature .fhead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;}
+  .feature .fn{font-size:2.3rem;font-weight:800;line-height:1;color:var(--gold-bright);letter-spacing:-0.03em;}
+  .feature .fwhen{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--black);background:var(--gold-bright);padding:5px 9px;}
+  .feature .fquote{font-size:1.02rem;font-weight:600;font-style:italic;color:var(--gold-pale);line-height:1.45;}
+  .feature .fmeta{font-size:.72rem;font-weight:600;letter-spacing:.06em;color:var(--gold-bright);margin-top:auto;padding-top:6px;}
+  .feature .pick{width:100%;align-self:stretch;border-color:var(--gold-bright);color:var(--gold-bright);margin-top:18px;}
+  .feature:not(:has(.fmeta)) .pick{margin-top:auto;}
+  .feature.chosen{border-color:var(--gold-bright);border-width:2px;border-top-width:3px;box-shadow:0 0 0 1px var(--gold-bright);}
+  .lane.proposed{border-top:3px solid var(--gold);}
+  .feature .pick,#save-btn{font-family:inherit;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;padding:11px 16px;border:1px solid var(--gold-deep);background:transparent;color:var(--gold-deep);margin-top:16px;align-self:flex-start;}
+  .feature.chosen .pick{background:var(--gold-bright);color:var(--black);}
+  .savebar{background:var(--off-black);color:var(--on-dark);padding:44px 0;}
+  .savebar .inner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .savebar h3{color:var(--paper);margin:0 0 6px 0;font-size:1.3rem;}
+  .savebar p{margin:0;color:var(--on-dark-soft);font-size:.9rem;}
+  #save-btn{margin:0;background:var(--gold-bright);border-color:var(--gold-bright);color:var(--black);padding:15px 26px;font-size:.74rem;}
+  #save-btn:hover{background:var(--gold-pale);}
+
   .footer{background:var(--black);color:var(--on-dark-soft);padding:44px 0;font-size:.8rem;}
   .footer .inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;}
 </style>
@@ -481,6 +505,7 @@
       <div class="goldrule"></div>
     </div>
     <div class="doc-row"><span class="tag">Age</span><div>35 to 70</div></div>
+    <div class="doc-row"><span class="tag">YouTube audience</span><div>35 to 44. From your YouTube Studio: organic views on long-form episodes, last 28 days (to 29 September 2026)</div></div>
     <div class="doc-row"><span class="tag">Gender</span><div>Both</div></div>
     <div class="doc-row"><span class="tag">Location</span><div>United States, Middle East and Europe</div></div>
     <div class="doc-row"><span class="tag">Occupation</span><div>Business professionals</div></div>
@@ -656,7 +681,7 @@
         <span class="dn">03</span>
         <span class="tag accent">Targeted audience</span>
         <h4>Built for professionals ready for more</h4>
-        <p>The shows you named speak to everyone. Yours speaks to experienced professionals who want their next move to be bigger: board seats, advisory roles and portfolio careers.</p>
+        <p>The shows you named speak to everyone. Your organic YouTube audience is 35 to 44: experienced professionals who want their next move to be bigger, whether that is a board seat, an advisory role or a portfolio career.</p>
       </div>
     </div>
   </div>
@@ -668,17 +693,27 @@
       <div class="sec-head-line"><span class="sec-mark">03</span><h2>Interview lanes</h2></div>
       <div class="goldrule"></div>
     </div>
-    <div class="grid2">
-      <div class="card">
+    <div class="grid2 lanes">
+      <div class="card lane">
         <span class="tag accent">Where you are now</span>
         <h4>The current lane</h4>
-        <p><span class="ph">Drafted from your last twenty episodes</span></p>
+        <p>Your conversations follow each guest's life in order: childhood, the journey, the hard moments, then leadership and scale.</p>
+        <p>Of your last 30 guests, 18 are founders who built their own companies and 6 were hired into the top job.</p>
       </div>
-      <div class="card">
+      <div class="card lane proposed">
         <span class="tag accent">Where we would take it</span>
         <h4>The proposed lane</h4>
-        <p><span class="ph">Drafted against the demand above</span></p>
+        <p>Each episode is built around one leap your audience is searching for, such as a midlife career change, life after a layoff, a fractional role or a portfolio career.</p>
+        <p>The conversation shows what made the guest take that leap, why they took it and how they did it, so your viewers can do the same.</p>
       </div>
+    </div>
+    <div class="panel marked" style="margin-top:26px;">
+      <h4>How each episode gets its direction</h4>
+      <p style="margin-bottom:0;">Before every recording, you run the guest through our <a href="https://apodcastgeek.com/episode-brief-generator.html" target="_blank" rel="noopener">episode brief generator</a>. It reads this guide, researches the guest and gives you five directions for the episode, at least two of them built on the demand in Part B section 1. You pick one, and the brief it produces sets the questions.</p>
+    </div>
+    <div class="panel marked" style="margin-top:18px;">
+      <h4>Guest mix</h4>
+      <p style="margin-bottom:0;">Keep the founder stories that bring in your reach, and add one guest a month who has made the move your audience wants: from senior manager to the C-suite, onto a board, or into a portfolio career. These are the stories your viewers can copy, and the people most likely to want your training.</p>
     </div>
   </div>
 </section>
@@ -689,8 +724,30 @@
       <div class="sec-head-line"><span class="sec-mark">04</span><h2>Show features and content mix</h2></div>
       <div class="goldrule"></div>
     </div>
-    <p class="section-note">Ideas we would test on the show, and what we are borrowing from the channels that are already winning with them.</p>
-    <div class="panel marked"><p><span class="ph">Feature ideas drafted before the call, from the market research and your questionnaire answers.</span></p></div>
+    <p class="section-note">Recurring moments that give every episode a shape your audience comes back for. Click the ones you want.</p>
+    <div class="grid3 features">
+      <div class="feature" data-feature="Pivot Point">
+        <div class="fhead"><span class="fn">01</span><span class="fwhen">Mid-episode</span></div>
+        <h4>Pivot Point</h4>
+        <p>A listener sends in their career question and your guest answers it live, then you add your take.</p>
+        <div class="fmeta">Replaces the community question</div>
+        <button type="button" class="pick">Select</button>
+      </div>
+      <div class="feature" data-feature="Starting Over">
+        <div class="fhead"><span class="fn">02</span><span class="fwhen">Final question</span></div>
+        <h4>Starting Over</h4>
+        <p class="fquote">"If you lost your title tomorrow, what would you do first?"</p>
+        <p>The same last question every episode. The guest gives their real first steps, and every answer is a clip.</p>
+        <button type="button" class="pick">Select</button>
+      </div>
+      <div class="feature" data-feature="The Leap Question">
+        <div class="fhead"><span class="fn">03</span><span class="fwhen">Sign-off</span></div>
+        <h4>The Leap Question</h4>
+        <p>Each guest answers a question left by the guest before them, then leaves one for the next.</p>
+        <div class="fmeta">Borrowed from The Diary of a CEO</div>
+        <button type="button" class="pick">Select</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -729,7 +786,7 @@
     <div class="subhead-wrap"><div class="thinrule"></div></div>
     <h3 class="subhead">Title banner</h3>
     <p>Pick one. Whatever you choose is locked for every clip on the show.</p>
-    <div class="grid3">
+    <div class="grid3" data-group="Title banner">
       <div class="choice"><div class="slot"><span>Option one</span></div><div class="body"><span class="opt">Option one</span><span class="state">Not selected</span></div></div>
       <div class="choice"><div class="slot"><span>Option two</span></div><div class="body"><span class="opt">Option two</span><span class="state">Not selected</span></div></div>
       <div class="choice"><div class="slot"><span>Option three</span></div><div class="body"><span class="opt">Option three</span><span class="state">Not selected</span></div></div>
@@ -774,7 +831,7 @@
     <p style="margin-top:22px;">Because the intro handles the credibility, you never read a bio on mic. After it plays, you go straight into your first question.</p>
     <p>Elements inside it: text animations, generated footage where it helps tell the story, and motion graphics that animate what is being said.</p>
     <h4 style="margin-top:30px;font-size:1.05rem;">Guest intro background</h4>
-    <div class="grid3">
+    <div class="grid3" data-group="Guest intro background">
       <div class="choice"><div class="slot"><span>Option one</span></div><div class="body"><span class="opt">Option one</span><span class="state">Not selected</span></div></div>
       <div class="choice"><div class="slot"><span>Option two</span></div><div class="body"><span class="opt">Option two</span><span class="state">Not selected</span></div></div>
       <div class="choice"><div class="slot"><span>Option three</span></div><div class="body"><span class="opt">Option three</span><span class="state">Not selected</span></div></div>
@@ -796,7 +853,7 @@
     </div>
     <p style="margin-top:22px;">Impact word colour: the brand gold, used on the one word in a sentence that carries the meaning. Never more than one per line.</p>
     <h4 style="margin-top:30px;font-size:1.05rem;">Text animation background</h4>
-    <div class="grid3">
+    <div class="grid3" data-group="Text animation background">
       <div class="choice"><div class="slot"><span>Option one</span></div><div class="body"><span class="opt">Option one</span><span class="state">Not selected</span></div></div>
       <div class="choice"><div class="slot"><span>Option two</span></div><div class="body"><span class="opt">Option two</span><span class="state">Not selected</span></div></div>
       <div class="choice"><div class="slot"><span>Option three</span></div><div class="body"><span class="opt">Option three</span><span class="state">Not selected</span></div></div>
@@ -805,7 +862,7 @@
     <div class="subhead-wrap"><div class="thinrule"></div></div>
     <h3 class="subhead">Ad transitions</h3>
     <p>A short sound effect in and out of every ad read, so the break is obvious and the episode does not feel interrupted. Pick one.</p>
-    <div class="grid3">
+    <div class="grid3" data-group="Ad transitions">
       <div class="choice"><div class="slot"><span>Option one</span></div><div class="body"><span class="opt">Option one</span><span class="state">Not selected</span></div></div>
       <div class="choice"><div class="slot"><span>Option two</span></div><div class="body"><span class="opt">Option two</span><span class="state">Not selected</span></div></div>
       <div class="choice"><div class="slot"><span>Option three</span></div><div class="body"><span class="opt">Option three</span><span class="state">Not selected</span></div></div>
@@ -884,7 +941,7 @@
     </div>
     <p class="section-note">How an episode travels from your recording to published, and what happens after today.</p>
     <ol class="steps">
-      <li><span class="n">1</span><div>Each time you book a guest, make a copy of our <a href="https://docs.google.com/document/d/11kbOGaQmSsdkVguM19YpcOgDaj7Ryx3thrRZE00Dxuo/copy" target="_blank" rel="noopener">episode brief template</a> and fill it in using our episode brief prompt. Then adapt any of the questions to suit the guest and where you want the conversation to go. This is the most important step in pre production.</div></li>
+      <li><span class="n">1</span><div>Each time you book a guest, make a copy of our <a href="https://docs.google.com/document/d/11kbOGaQmSsdkVguM19YpcOgDaj7Ryx3thrRZE00Dxuo/copy" target="_blank" rel="noopener">episode brief template</a> and fill it in using our <a href="https://apodcastgeek.com/episode-brief-generator.html" target="_blank" rel="noopener">episode brief generator</a>. Then adapt any of the questions to suit the guest and where you want the conversation to go. This is the most important step in pre production.</div></li>
       <li><span class="n">2</span><div>You record. Nothing changes about how you do that.</div></li>
       <li><span class="n">3</span><div>Files reach us automatically through the portal.</div></li>
       <li><span class="n">4</span><div>We review and produce the episode.</div></li>
@@ -902,6 +959,16 @@
       <tr><td>176</td><td>Tue 13 Oct</td><td>Wed 14 Oct</td><td class="pub">Tue 20 Oct</td></tr>
       <tr><td>177</td><td>Tue 20 Oct</td><td>Wed 21 Oct</td><td class="pub">Tue 27 Oct</td></tr>
     </table>
+  </div>
+</section>
+
+<section class="savebar" id="save">
+  <div class="inner">
+    <div>
+      <h3>Save your choices</h3>
+      <p id="save-status">Nothing saved yet.</p>
+    </div>
+    <button type="button" id="save-btn">Save choices</button>
   </div>
 </section>
 
@@ -928,6 +995,44 @@
     if(!target) return;
     e.preventDefault();
     target.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+})();
+</script>
+<script>
+// Clickable choices and the Save button. Saves to this browser and downloads a copy.
+(function(){
+  var KEY='leap-academy-podcast-design-choices';
+  var groups=[].slice.call(document.querySelectorAll('[data-group]'));
+  var feats=[].slice.call(document.querySelectorAll('.feature'));
+  var ticks=[].slice.call(document.querySelectorAll('.ticks input'));
+  function mark(c,on){c.classList.toggle('chosen',on);var st=c.querySelector('.state');if(st)st.textContent=on?'Selected':'Not selected';}
+  function markFeat(f,on){f.classList.toggle('chosen',on);f.querySelector('.pick').textContent=on?'Selected':'Select';}
+  groups.forEach(function(g){[].slice.call(g.querySelectorAll('.choice')).forEach(function(c){
+    c.addEventListener('click',function(){var on=!c.classList.contains('chosen');[].slice.call(g.querySelectorAll('.choice')).forEach(function(o){mark(o,false);});mark(c,on);});
+  });});
+  feats.forEach(function(f){f.querySelector('.pick').addEventListener('click',function(){markFeat(f,!f.classList.contains('chosen'));});});
+  function collect(){
+    var d={saved:new Date().toISOString(),choices:{},features:[],access:[]};
+    groups.forEach(function(g){var c=g.querySelector('.choice.chosen');d.choices[g.dataset.group]=c?c.querySelector('.opt').textContent:null;});
+    feats.forEach(function(f){if(f.classList.contains('chosen'))d.features.push(f.dataset.feature);});
+    ticks.forEach(function(t){if(t.checked)d.access.push(t.nextElementSibling.textContent);});
+    return d;
+  }
+  function restore(d){
+    groups.forEach(function(g){var want=d.choices&&d.choices[g.dataset.group];[].slice.call(g.querySelectorAll('.choice')).forEach(function(c){mark(c,!!want&&c.querySelector('.opt').textContent===want);});});
+    feats.forEach(function(f){markFeat(f,(d.features||[]).indexOf(f.dataset.feature)>-1);});
+    ticks.forEach(function(t){t.checked=(d.access||[]).indexOf(t.nextElementSibling.textContent)>-1;});
+  }
+  var status=document.getElementById('save-status');
+  try{var prev=JSON.parse(localStorage.getItem(KEY)||'null');if(prev){restore(prev);status.textContent='Last saved '+new Date(prev.saved).toLocaleString()+' on this device.';}}catch(e){}
+  document.getElementById('save-btn').addEventListener('click',function(){
+    var d=collect(),lines=['Leap Academy with Ilana Golan: podcast design choices','Saved '+new Date(d.saved).toLocaleString(),''];
+    Object.keys(d.choices).forEach(function(k){lines.push(k+': '+(d.choices[k]||'not chosen'));});
+    lines.push('','Show features: '+(d.features.length?d.features.join(', '):'none selected'));
+    lines.push('','Access ticked: '+(d.access.length?d.access.join(', '):'none'));
+    var saved=false;try{localStorage.setItem(KEY,JSON.stringify(d));saved=true;}catch(e){}
+    var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/plain'}));a.download='leap-academy-podcast-design-choices.txt';document.body.appendChild(a);a.click();a.remove();
+    status.textContent=(saved?'Saved on this device':'Could not save in this browser')+' at '+new Date().toLocaleTimeString()+'. A copy has downloaded.';
   });
 })();
 </script>
