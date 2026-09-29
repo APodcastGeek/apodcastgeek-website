@@ -203,6 +203,11 @@
   .versus .side.win .sub{color:var(--on-dark-soft);}
   @media(max-width:760px){.versus{grid-template-columns:1fr;}}
 
+  /* DIFFERENTIATOR */
+  .diff-card{border-top:3px solid var(--gold);display:flex;flex-direction:column;}
+  .diff-card .dn{font-size:2.2rem;font-weight:800;line-height:1;color:var(--gold);letter-spacing:-0.03em;margin-bottom:14px;}
+  .diff-card h4{font-size:1.12rem;}
+
   /* OUTLIER CARDS */
   .out-card{border:1px solid var(--rule);background:var(--paper);padding:0;}
   .out-card .shot{width:100%;aspect-ratio:16/9;background:var(--wash);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--rule);}
@@ -248,6 +253,7 @@
   .scene:last-child{border-bottom:1px solid var(--rule);}
   .scene .sn{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);padding-top:3px;}
   .scene .ref{background:var(--wash);border:1px solid var(--rule);aspect-ratio:9/16;max-width:150px;display:flex;align-items:center;justify-content:center;}
+  .scene .ref img{width:100%;height:100%;object-fit:cover;display:block;}
   .scene .ref span{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;text-align:center;padding:0 10px;}
   @media(max-width:820px){.scene{grid-template-columns:1fr;gap:10px;}}
 
@@ -552,7 +558,6 @@
     <div class="pnum">B</div>
     <div>
       <h2>The design</h2>
-      <p>What we found, what we would change, and how every episode and clip will look.</p>
     </div>
   </div>
 </section>
@@ -628,10 +633,31 @@
       <span class="tag accent">Shows you named as the standard</span>
       <p>The Diary of a CEO, Jay Shetty and Mel Robbins. These are the packaging benchmarks, and they are where we studied what is working.</p>
     </div>
-    <div class="panel marked">
+    <div class="panel marked" style="margin-bottom:26px;">
       <h4>The gap we see</h4>
       <p>The Diary of a CEO and The Mel Robbins Podcast talk to a broad audience. Fewer than five of the last 50 episodes on each show are about work or careers. The rest cover health, relationships, AI, money and world events.</p>
-      <p style="margin-bottom:0;">Your show is about how a career actually gets built, told by the people who built it. Mike Fisher, CEO of MyFitnessPal, has applied for one job in his whole career and got every other role through people he knew. That is the gap, and it is where we would lean in.</p>
+      <p><strong>Your show is about how a career actually gets built, told by the people who built it.</strong></p>
+      <p style="margin-bottom:0;">That is the lane you are in: what made each guest take the leap, why they took it and how they did it, so your audience can learn from it and do the same for themselves.</p>
+    </div>
+    <div class="grid3 diff">
+      <div class="card diff-card">
+        <span class="dn">01</span>
+        <span class="tag accent">Credibility</span>
+        <h4>You have made the leap yourself</h4>
+        <p>You have built multiple seven and eight figure businesses, invested in more than 100 companies, sit as a board director and won Startup of the Year in 2023. So you interview your guests as someone who has made the same moves.</p>
+      </div>
+      <div class="card diff-card">
+        <span class="dn">02</span>
+        <span class="tag accent">The journey of the leap</span>
+        <h4>How a career actually gets built</h4>
+        <p>Your guests walk through how, why and when they built their careers. That educates and inspires the people who want to do the same for themselves.</p>
+      </div>
+      <div class="card diff-card">
+        <span class="dn">03</span>
+        <span class="tag accent">Targeted audience</span>
+        <h4>Built for professionals ready for more</h4>
+        <p>The shows you named speak to everyone. Yours speaks to experienced professionals who want their next move to be bigger: board seats, advisory roles and portfolio careers.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -682,12 +708,12 @@
     <div class="scene">
       <div class="sn">Scene 01 &middot; 0 to 3s</div>
       <div><strong>Split screen open.</strong> Both speakers on screen, title banner across the middle. The viewer knows in one second what this is and who is talking.</div>
-      <div class="ref"><span>Reference<br>to insert</span></div>
+      <div class="ref"><img src="scene-01-split.jpg" alt="Split screen open: Ilana and her guest, with the title banner across the middle" loading="lazy"></div>
     </div>
     <div class="scene">
       <div class="sn">Scene 02</div>
       <div><strong>Into the story.</strong> Full screen on the guest as the story starts. Captions carry the impact words.</div>
-      <div class="ref"><span>Reference<br>to insert</span></div>
+      <div class="ref"><img src="scene-02-full.jpg" alt="Full screen on the guest as the story starts" loading="lazy"></div>
     </div>
     <div class="scene">
       <div class="sn">Scene 03</div>
