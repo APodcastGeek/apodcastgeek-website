@@ -327,6 +327,16 @@
   table.sched small{display:block;color:var(--on-dark-soft);font-size:.76rem;}
   @media(max-width:600px){table.sched{font-size:.86rem;}}
 
+  /* DRAG + ZOOM */
+  .drag-hint{font-size:.78rem;color:var(--on-dark-soft);margin:0 0 12px;}
+  #structure .cell{cursor:grab;user-select:none;transition:transform .12s,opacity .12s;}
+  #structure .cell.dragging{opacity:.35;}
+  #structure .cell.over{transform:scale(1.04);box-shadow:0 0 0 2px var(--gold-pale);}
+  .choice .slot img,.scene .ref img,.lm-shot img{cursor:zoom-in;}
+  #zoom{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.72);opacity:0;pointer-events:none;transition:opacity .15s;}
+  #zoom.on{opacity:1;}
+  #zoom img{max-width:90vw;max-height:90vh;box-shadow:0 20px 60px rgba(0,0,0,.6);border:1px solid var(--gold-deep);}
+
   /* SFX */
   .sfx-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
   .choice.sfx{display:flex;flex-direction:column;align-items:center;padding:18px 10px 4px;}
@@ -835,14 +845,15 @@
 
     <div class="subhead-wrap"><div class="thinrule"></div></div>
     <h3 class="subhead">Episode structure</h3>
-    <div class="sequence">
-      <div class="cell accent"><span class="n">1</span><span class="nm">Guest intro</span></div>
-      <div class="cell"><span class="n">2</span><span class="nm">Main conversation</span></div>
-      <div class="cell accent"><span class="n">3</span><span class="nm">Subscribe CTA</span></div>
-      <div class="cell"><span class="n">4</span><span class="nm">Main conversation</span></div>
-      <div class="cell accent"><span class="n">5</span><span class="nm">Ad insert</span></div>
-      <div class="cell"><span class="n">6</span><span class="nm">Main conversation</span></div>
-      <div class="cell accent"><span class="n">7</span><span class="nm">Outro and end card</span></div>
+    <p class="drag-hint">Drag the boxes to change the order.</p>
+    <div class="sequence" id="structure">
+      <div draggable="true" class="cell accent"><span class="n">1</span><span class="nm">Guest intro</span></div>
+      <div draggable="true" class="cell"><span class="n">2</span><span class="nm">Main conversation</span></div>
+      <div draggable="true" class="cell accent"><span class="n">3</span><span class="nm">Subscribe CTA</span></div>
+      <div draggable="true" class="cell"><span class="n">4</span><span class="nm">Main conversation</span></div>
+      <div draggable="true" class="cell accent"><span class="n">5</span><span class="nm">Ad insert</span></div>
+      <div draggable="true" class="cell"><span class="n">6</span><span class="nm">Main conversation</span></div>
+      <div draggable="true" class="cell accent"><span class="n">7</span><span class="nm">Outro and end card</span></div>
     </div>
     <p style="margin-top:20px;">The subscribe CTA is recorded separately by you, in one sitting, and dropped in by our editors at the same point in every episode. You never have to remember to say it on the day.</p>
 
@@ -1028,6 +1039,8 @@
   </div>
 </section>
 
+<div id="zoom" aria-hidden="true"><img alt=""></div>
+
 <footer class="footer">
   <div class="inner">
     <span>APodcastGeek &middot; Podcast Design</span>
@@ -1068,7 +1081,7 @@
   });});
   feats.forEach(function(f){f.querySelector('.pick').addEventListener('click',function(){markFeat(f,!f.classList.contains('chosen'));});});
   function collect(){
-    var d={saved:new Date().toISOString(),choices:{},features:[],access:[]};
+    var d={saved:new Date().toISOString(),choices:{},features:[],access:[],structure:[].slice.call(document.querySelectorAll('#structure .cell .nm')).map(function(n){return n.textContent;})};
     groups.forEach(function(g){var c=g.querySelector('.choice.chosen');d.choices[g.dataset.group]=c?c.querySelector('.opt').textContent:null;});
     feats.forEach(function(f){if(f.classList.contains('chosen'))d.features.push(f.dataset.feature);});
     ticks.forEach(function(t){if(t.checked)d.access.push(t.nextElementSibling.textContent);});
@@ -1078,7 +1091,25 @@
     groups.forEach(function(g){var want=d.choices&&d.choices[g.dataset.group];[].slice.call(g.querySelectorAll('.choice')).forEach(function(c){mark(c,!!want&&c.querySelector('.opt').textContent===want);});});
     feats.forEach(function(f){markFeat(f,(d.features||[]).indexOf(f.dataset.feature)>-1);});
     ticks.forEach(function(t){t.checked=(d.access||[]).indexOf(t.nextElementSibling.textContent)>-1;});
+    if(d.structure&&d.structure.length){var pool=[].slice.call(seq.querySelectorAll('.cell'));d.structure.forEach(function(name){for(var i=0;i<pool.length;i++){if(pool[i].querySelector('.nm').textContent===name){seq.appendChild(pool[i]);pool.splice(i,1);break;}}});pool.forEach(function(c){seq.appendChild(c);});renum();}
   }
+  var seq=document.getElementById('structure'),dragEl=null;
+  function renum(){[].slice.call(seq.querySelectorAll('.cell')).forEach(function(c,i){c.querySelector('.n').textContent=i+1;});}
+  [].slice.call(seq.querySelectorAll('.cell')).forEach(function(c){
+    c.addEventListener('dragstart',function(e){dragEl=c;c.classList.add('dragging');e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain','');});
+    c.addEventListener('dragend',function(){c.classList.remove('dragging');[].slice.call(seq.querySelectorAll('.over')).forEach(function(o){o.classList.remove('over');});dragEl=null;renum();});
+    c.addEventListener('dragover',function(e){e.preventDefault();if(!dragEl||dragEl===c)return;c.classList.add('over');
+      var r=c.getBoundingClientRect(),vertical=getComputedStyle(seq).gridTemplateColumns.split(' ').length===1;
+      var after=vertical?(e.clientY>r.top+r.height/2):(e.clientX>r.left+r.width/2);
+      seq.insertBefore(dragEl,after?c.nextSibling:c);renum();});
+    c.addEventListener('dragleave',function(){c.classList.remove('over');});
+    c.addEventListener('drop',function(e){e.preventDefault();c.classList.remove('over');renum();});
+  });
+  var zoom=document.getElementById('zoom'),zimg=zoom.querySelector('img');
+  [].slice.call(document.querySelectorAll('.choice .slot img, .scene .ref img, .lm-shot img')).forEach(function(im){
+    im.addEventListener('mouseenter',function(){zimg.src=im.currentSrc||im.src;zimg.alt=im.alt;zoom.classList.add('on');});
+    im.addEventListener('mouseleave',function(){zoom.classList.remove('on');});
+  });
   var cur=null;
   [].slice.call(document.querySelectorAll('.play')).forEach(function(b){
     b.addEventListener('click',function(e){e.stopPropagation();
@@ -1096,6 +1127,7 @@
   document.getElementById('save-btn').addEventListener('click',function(){
     var d=collect(),lines=['Leap Academy with Ilana Golan: podcast design choices','Saved '+new Date(d.saved).toLocaleString(),''];
     Object.keys(d.choices).forEach(function(k){lines.push(k+': '+(d.choices[k]||'not chosen'));});
+    lines.push('','Episode structure: '+d.structure.map(function(n,i){return (i+1)+'. '+n;}).join(', '));
     lines.push('','Show features: '+(d.features.length?d.features.join(', '):'none selected'));
     lines.push('','Access ticked: '+(d.access.length?d.access.join(', '):'none'));
     var saved=false;try{localStorage.setItem(KEY,JSON.stringify(d));saved=true;}catch(e){}
