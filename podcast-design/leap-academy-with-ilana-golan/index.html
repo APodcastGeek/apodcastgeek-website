@@ -220,6 +220,8 @@
   /* CHOICE OF THREE */
   .choice{border:1px solid var(--rule);background:var(--paper);}
   .choice .slot{width:100%;aspect-ratio:16/9;background:var(--wash);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--rule);}
+  .choice .slot.tall{aspect-ratio:9/16;}
+  .choice .slot img{width:100%;height:100%;object-fit:cover;display:block;}
   .choice .slot span{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;}
   .choice .body{padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
   .choice .opt{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);}
@@ -228,7 +230,7 @@
   .choice.chosen .state{color:var(--gold-deep);}
 
   /* SEQUENCE */
-  .sequence{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);}
+  .sequence{display:grid;grid-template-columns:repeat(7,1fr);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);}
   .sequence .cell{padding:22px 14px;text-align:center;border-left:1px solid var(--rule);}
   .sequence .cell:first-child{border-left:none;}
   .sequence .cell.accent{background:var(--wash);}
@@ -775,21 +777,21 @@
     <div class="scene">
       <div class="sn">Scene 03</div>
       <div><strong>The turn.</strong> Cut on the moment the story changes. Text animation lands on the line that matters.</div>
-      <div class="ref"><span>Reference<br>to insert</span></div>
+      <div class="ref"><img src="scene-03-text.jpg" alt="Text animation on the line that matters" loading="lazy"></div>
     </div>
     <div class="scene">
       <div class="sn">Scene 04</div>
       <div><strong>The close.</strong> The payoff line, then the end card.</div>
-      <div class="ref"><span>Reference<br>to insert</span></div>
+      <div class="ref"><img src="scene-04-end.jpg" alt="End card: watch the full episode on YouTube" loading="lazy"></div>
     </div>
 
     <div class="subhead-wrap"><div class="thinrule"></div></div>
     <h3 class="subhead">Title banner</h3>
     <p>Pick one. Whatever you choose is locked for every clip on the show.</p>
     <div class="grid3" data-group="Title banner">
-      <div class="choice"><div class="slot"><span>Option one</span></div><div class="body"><span class="opt">Option one</span><span class="state">Not selected</span></div></div>
-      <div class="choice"><div class="slot"><span>Option two</span></div><div class="body"><span class="opt">Option two</span><span class="state">Not selected</span></div></div>
-      <div class="choice"><div class="slot"><span>Option three</span></div><div class="body"><span class="opt">Option three</span><span class="state">Not selected</span></div></div>
+      <div class="choice"><div class="slot tall"><img src="banner-01-medallion.jpg" alt="Title banner option one" loading="lazy"></div><div class="body"><span class="opt">Option one</span><span class="state">Not selected</span></div></div>
+      <div class="choice"><div class="slot tall"><img src="banner-02-gold-emphasis.jpg" alt="Title banner option two" loading="lazy"></div><div class="body"><span class="opt">Option two</span><span class="state">Not selected</span></div></div>
+      <div class="choice"><div class="slot tall"><img src="banner-03-rising-band.jpg" alt="Title banner option three" loading="lazy"></div><div class="body"><span class="opt">Option three</span><span class="state">Not selected</span></div></div>
     </div>
 
     <div class="subhead-wrap"><div class="thinrule"></div></div>
@@ -810,14 +812,15 @@
     <div class="subhead-wrap"><div class="thinrule"></div></div>
     <h3 class="subhead">Episode structure</h3>
     <div class="sequence">
-      <div class="cell accent"><span class="n">1</span><span class="nm">Cold open</span></div>
-      <div class="cell"><span class="n">2</span><span class="nm">Guest intro</span></div>
-      <div class="cell"><span class="n">3</span><span class="nm">Question one</span></div>
-      <div class="cell accent"><span class="n">4</span><span class="nm">Subscribe beat</span></div>
-      <div class="cell"><span class="n">5</span><span class="nm">Main conversation</span></div>
-      <div class="cell"><span class="n">6</span><span class="nm">Outro and end card</span></div>
+      <div class="cell accent"><span class="n">1</span><span class="nm">Guest intro</span></div>
+      <div class="cell"><span class="n">2</span><span class="nm">Main conversation</span></div>
+      <div class="cell accent"><span class="n">3</span><span class="nm">Subscribe CTA</span></div>
+      <div class="cell"><span class="n">4</span><span class="nm">Main conversation</span></div>
+      <div class="cell accent"><span class="n">5</span><span class="nm">Ad insert</span></div>
+      <div class="cell"><span class="n">6</span><span class="nm">Main conversation</span></div>
+      <div class="cell accent"><span class="n">7</span><span class="nm">Outro and end card</span></div>
     </div>
-    <p style="margin-top:20px;">The subscribe beat is recorded separately by you, in one sitting, and dropped in by our editors at the same point in every episode. You never have to remember to say it on the day.</p>
+    <p style="margin-top:20px;">The subscribe CTA is recorded separately by you, in one sitting, and dropped in by our editors at the same point in every episode. You never have to remember to say it on the day.</p>
 
     <div class="subhead-wrap"><div class="thinrule"></div></div>
     <h3 class="subhead">Guest intros</h3>
