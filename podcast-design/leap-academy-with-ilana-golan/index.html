@@ -332,10 +332,23 @@
   #structure .cell{cursor:grab;user-select:none;transition:transform .12s,opacity .12s;}
   #structure .cell.dragging{opacity:.35;}
   #structure .cell.over{transform:scale(1.04);box-shadow:0 0 0 2px var(--gold-pale);}
-  .choice .slot img,.scene .ref img,.lm-shot img{cursor:zoom-in;}
+  .choice .slot img,.scene .ref img,.lm-shot img,.out-card .shot img,.mg-shot img{cursor:zoom-in;}
   #zoom{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.72);opacity:0;pointer-events:none;transition:opacity .15s;}
   #zoom.on{opacity:1;}
   #zoom img{max-width:90vw;max-height:90vh;box-shadow:0 20px 60px rgba(0,0,0,.6);border:1px solid var(--gold-deep);}
+
+  /* ROUND 9 */
+  .mg-shot{margin:-24px -26px 18px;background:#1c1c1c;border-bottom:1px solid #2A2A2A;display:flex;align-items:center;justify-content:center;aspect-ratio:16/9;overflow:hidden;}
+  .mg-shot img{max-width:100%;max-height:100%;display:block;}
+  .band .out-card h4{color:var(--ink);margin:0;font-size:.95rem;}
+  .out-card .shot img{width:100%;height:100%;object-fit:cover;display:block;}
+  .pp-prompt{margin-top:22px;}
+  .pp-prompt pre{white-space:pre-wrap;font-family:inherit;font-size:.88rem;line-height:1.6;background:var(--wash);border-left:3px solid var(--gold);padding:16px 18px;margin:8px 0 14px;}
+  .copy-btn{font-family:inherit;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;padding:11px 18px;border:1px solid var(--gold-deep);background:var(--black);color:var(--gold-bright);}
+  .cta-group{display:grid;gap:12px;}
+  .choice.script-choice{background:var(--wash);border-left:3px solid var(--gold);}
+  .choice.script-choice .body{padding:12px 18px 4px;}
+  .choice.script-choice p{margin:0;padding:0 18px 14px;}
 
   /* SFX */
   .sfx-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
@@ -405,7 +418,7 @@
   <a href="#market">Market</a>
   <a href="#differentiator">Differentiator</a>
   <a href="#lanes">Lanes</a>
-  <a href="#mix">Content mix</a>
+  <a href="#mix">Show features</a>
   <a href="#look">How it looks</a>
   <a href="#leadmagnet">Lead magnet</a>
   <a href="#seo">SEO + AI</a>
@@ -632,7 +645,7 @@
     <p class="lead">Your guests are strong. What our research found is that people are not finding the episodes, and the packaging (the thumbnail and the title) is where that happens.</p>
 
     <div class="subhead-wrap"><div class="thinrule"></div></div>
-    <span class="tag accent">Example 01</span>
+    <span class="tag accent">Example</span>
     <div class="grid2">
       <a class="yt" href="https://www.youtube.com/watch?v=I3-9eSqpko0" target="_blank" rel="noopener">
         <img src="https://i.ytimg.com/vi/I3-9eSqpko0/maxresdefault.jpg" alt="Benchmark Partner, Bill Gurley: The Strategy That Makes You Stand Out in a Crowded Job Market thumbnail">
@@ -647,7 +660,8 @@
         <div class="yt-v">93,963<small>views</small></div>
       </a>
     </div>
-    <p class="yt-m" style="margin-top:18px;color:var(--on-dark-soft);font-size:.78rem;">Both are full-length videos about the job market. Views as of 29 September 2026. Click either thumbnail to open it on YouTube.</p>
+    <p class="yt-m" style="margin-top:18px;color:var(--on-dark-soft);font-size:.78rem;">Views as of 29 September 2026. Click either thumbnail to open it on YouTube.</p>
+    <p style="margin-top:20px;">Both are full-length videos about the job market. The winner is a talking-head video, and the point still stands: packaging wins when it deliberately opens a curiosity gap. That is what we are aiming for, to grow awareness of your show in the market.</p>
     <p style="margin-top:24px;">So we package every episode from its North Star, the one big thing the conversation delivers, and find the angle in it that creates curiosity.</p>
 
     <div class="subhead-wrap"><div class="thinrule"></div></div>
@@ -757,15 +771,15 @@
 <section class="section" id="mix">
   <div class="inner">
     <div class="sec-head">
-      <div class="sec-head-line"><span class="sec-mark">04</span><h2>Show features and content mix</h2></div>
+      <div class="sec-head-line"><span class="sec-mark">04</span><h2>Show features</h2></div>
       <div class="goldrule"></div>
     </div>
-    <p class="section-note">Recurring moments that give every episode a shape your audience comes back for. Click the ones you want.</p>
+    <p class="section-note">Three features we are proposing to break up the format, give your audience something to look forward to every week and put a unique stamp on your show. Select any you are willing to try, and we will test them in your next episode.</p>
     <div class="grid3 features">
       <div class="feature" data-feature="Pivot Point">
         <div class="fhead"><span class="fn">01</span><span class="fwhen">Mid-episode</span></div>
         <h4>Pivot Point</h4>
-        <p>A listener sends in their career question and your guest answers it live, then you add your take.</p>
+        <p>A listener sends in their career question. Your guest answers it first, then you chime in, so the listener gets two perspectives and double the value.</p>
         <div class="fmeta">Replaces the community question</div>
         <button type="button" class="pick">Select</button>
       </div>
@@ -779,11 +793,37 @@
       <div class="feature" data-feature="The Leap Question">
         <div class="fhead"><span class="fn">03</span><span class="fwhen">Sign-off</span></div>
         <h4>The Leap Question</h4>
-        <p>Each guest answers a question left by the guest before them, then leaves one for the next.</p>
+        <p>Each guest answers a question left by the guest before them, then leaves one for the next. It is always about making the leap: a mindset question, a catalyst question (what finally made you move) or a why question.</p>
         <div class="fmeta">Borrowed from The Diary of a CEO</div>
         <button type="button" class="pick">Select</button>
       </div>
     </div>
+    <details class="drop pp-prompt">
+      <summary>Prompt for generating a Pivot Point question</summary>
+      <div class="drop-body">
+        <p>Paste this into ChatGPT, Claude or Gemini, then add your guest's details and the listener questions you have received.</p>
+        <pre id="pp-text">You are helping me prepare the Pivot Point segment for my podcast, Leap Academy with Ilana Golan. In Pivot Point, a listener&#x27;s career question is put to my guest, who answers it first, and then I add my own take.
+
+I will give you:
+1. My guest&#x27;s name, role, and LinkedIn or website
+2. The listener questions I have received (emails, comments or DMs), pasted in full
+3. Optional: the episode brief for this guest
+
+My audience: professionals, mostly 35 to 44, who know they are capable of more and want their next move to be bigger, whether that is a C-suite role, a board seat, an advisory role, a fractional role or a portfolio career.
+
+Your job:
+1. Read the listener questions and pick the three this guest is best placed to answer from their own career. Give one line on why for each.
+2. Tidy each question so it can be read aloud in under 20 seconds. Keep the listener&#x27;s meaning and first name. Do not add details they did not give.
+3. For each question, suggest one follow-up I can ask the guest, and one angle I could add from my own experience.
+
+Rules:
+- Only use real listener questions I paste in. Never invent a listener or a question.
+- If I have not pasted any, tell me, and suggest three questions I could ask my audience on social media this week to collect them.
+- Every question must be about making a career leap: getting unstuck, changing direction, getting hired or promoted, going fractional or portfolio, or the mindset behind it.
+- Plain language, no jargon.</pre>
+        <button type="button" class="copy-btn" data-copy="pp-text">Copy prompt</button>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -829,22 +869,17 @@
     </div>
 
     <div class="subhead-wrap"><div class="thinrule"></div></div>
-    <h3 class="subhead">Thumbnails</h3>
-    <p>Six packaging outliers we studied. Three are the best packaging we found anywhere, three are from your own niche. Under each one is why it worked and what we would take from it.</p>
-    <div class="grid3" style="margin-bottom:24px;">
-      <div class="out-card"><div class="shot"><span>Screenshot<br>to insert</span></div><div class="body"><div class="mult">236x its channel median</div><h4>I'm 55 Years Old and I Can't Find a Job</h4><p>A confession with a specific number in it, and a designed thumbnail that confirms the claim at a glance.</p></div></div>
-      <div class="out-card"><div class="shot"><span>Screenshot<br>to insert</span></div><div class="body"><div class="mult">19.5x its channel median</div><h4>If you're ambitious but inconsistent, please watch this</h4><p>Names the viewer's identity so precisely they recognise themselves. The image is ordinary and it still worked, because the words did the job.</p></div></div>
-      <div class="out-card"><div class="shot"><span>Screenshot<br>to insert</span></div><div class="body"><div class="mult">108x its channel median</div><h4>She Became a Chartered Fellow at 23</h4><p>The title is insider jargon, but the thumbnail says one huge word anybody understands. Proof that a strong image can carry a weak title.</p></div></div>
-    </div>
+    <h3 class="subhead">Packaging outliers we studied</h3>
+    <p>These three are the best packaging we found, and the ones we would like to try on your first few weekly episodes. If one of them clearly outperforms the others, we will double down on it for future episodes.</p>
     <div class="grid3">
-      <div class="out-card"><div class="shot"><span>Screenshot<br>to insert</span></div><div class="body"><div class="mult">14.6x its channel median</div><h4>I'm 55 and Apparently I'm Overqualified</h4><p>The same idea winning twice on one channel, which makes it a pattern. One dominant word, and a face that matches it.</p></div></div>
-      <div class="out-card"><div class="shot"><span>Screenshot<br>to insert</span></div><div class="body"><div class="mult">14.8x its channel median</div><h4>What Nobody Tells the Woman Who Does Everything Herself</h4><p>Speaks to one person so directly she feels seen before she clicks. Guest name second.</p></div></div>
-      <div class="out-card"><div class="shot"><span>Screenshot<br>to insert</span></div><div class="body"><div class="mult">3.5x its channel median</div><h4>Thinking About a Career Change at 40+?</h4><p>Included as the warning. The thumbnail reads "Here's some good news", which tells you nothing, so the title had to carry it alone.</p></div></div>
+      <div class="out-card"><div class="shot"><img src="thumb-a1.jpg" alt="A1 - The Emotional Story of Carleigh Bodrug’s EXPLOSIVE PlantYou Success" loading="lazy"></div><div class="body"><h4>A1 - The Emotional Story of Carleigh Bodrug’s EXPLOSIVE PlantYou Success</h4></div></div>
+      <div class="out-card"><div class="shot"><img src="thumb-a2.jpg" alt="A2 - How Do You Keep Going When Life Gives You Every Reason to Stop_" loading="lazy"></div><div class="body"><h4>A2 - How Do You Keep Going When Life Gives You Every Reason to Stop_</h4></div></div>
+      <div class="out-card"><div class="shot"><img src="thumb-a3.jpg" alt="A3 - She Posted Recipes From Chemo Waiting Rooms While Building a NYT Bestseller" loading="lazy"></div><div class="body"><h4>A3 - She Posted Recipes From Chemo Waiting Rooms While Building a NYT Bestseller</h4></div></div>
     </div>
-    <p style="margin-top:22px;">We treat thumbnails as an experiment, not a guess. We package, we watch what happens, and we change what is not working.</p>
 
     <div class="subhead-wrap"><div class="thinrule"></div></div>
     <h3 class="subhead">Episode structure</h3>
+    <p>As part of Brand Builder, we structure every episode to give your audience the most value and your calls to action the most exposure. Depending on your priorities, drag the boxes to put each call to action where you want it. (We have found that getting into the conversation as soon as possible works best, so we strongly advise putting the main conversation straight after the guest intro and bringing in the calls to action after that.)</p>
     <p class="drag-hint">Drag the boxes to change the order.</p>
     <div class="sequence" id="structure">
       <div draggable="true" class="cell accent"><span class="n">1</span><span class="nm">Guest intro</span></div>
@@ -878,9 +913,9 @@
     <div class="subhead-wrap"><div class="thinrule"></div></div>
     <h3 class="subhead">Motion graphics</h3>
     <div class="grid3">
-      <div class="card on-ink"><span class="tag accent">Name titles</span><h4>Lower thirds</h4><p>Guest name and title, in Montserrat, on the gold and black system.</p></div>
+      <div class="card on-ink"><div class="mg-shot"><img src="mg-lower-third.png" alt="Ilana Golan host lower third" loading="lazy"></div><span class="tag accent">Name titles</span><h4>Lower thirds</h4><p>Guest name and title, on the Leap Academy gold.</p></div>
       <div class="card on-ink"><span class="tag accent">Subscribe</span><h4>YouTube icon</h4><p>Animated subscribe prompt, used once per episode at the subscribe CTA.</p></div>
-      <div class="card on-ink"><span class="tag accent">End card</span><h4>Outro</h4><p>Updated outro with the stag mark, the next episode and the subscribe prompt.</p></div>
+      <div class="card on-ink"><div class="mg-shot"><img src="mg-end-card.jpg" alt="End card with subscribe and watch next" loading="lazy"></div><span class="tag accent">End card</span><h4>Outro</h4><p>Updated outro with the stag mark, the next episode and the subscribe prompt.</p></div>
     </div>
 
     <div class="subhead-wrap"><div class="thinrule"></div></div>
@@ -891,21 +926,6 @@
     </div>
     <p style="margin-top:22px;">Impact word colour: the brand gold, used on the one word in a sentence that carries the meaning. Never more than one per line.</p>
 
-    <div class="subhead-wrap"><div class="thinrule"></div></div>
-    <h3 class="subhead">Ad transitions</h3>
-    <p>A short sound effect in and out of every ad read, so the break is obvious and the episode does not feel interrupted. Press play to hear each one, then pick one.</p>
-    <div class="sfx-grid" data-group="Ad transitions">
-      <div class="choice sfx"><button type="button" class="play" data-src="sfx/01-soft-whoosh.mp3" aria-label="Play Soft whoosh"></button><div class="body"><span class="sfx-n">01</span><span class="opt">Soft whoosh</span><span class="state">Not selected</span></div></div>
-      <div class="choice sfx"><button type="button" class="play" data-src="sfx/02-bright-chime.mp3" aria-label="Play Bright chime"></button><div class="body"><span class="sfx-n">02</span><span class="opt">Bright chime</span><span class="state">Not selected</span></div></div>
-      <div class="choice sfx"><button type="button" class="play" data-src="sfx/03-bass-swell.mp3" aria-label="Play Bass swell"></button><div class="body"><span class="sfx-n">03</span><span class="opt">Bass swell</span><span class="state">Not selected</span></div></div>
-      <div class="choice sfx"><button type="button" class="play" data-src="sfx/04-tape-rewind.mp3" aria-label="Play Tape rewind"></button><div class="body"><span class="sfx-n">04</span><span class="opt">Tape rewind</span><span class="state">Not selected</span></div></div>
-      <div class="choice sfx"><button type="button" class="play" data-src="sfx/05-glossy-swipe.mp3" aria-label="Play Glossy swipe"></button><div class="body"><span class="sfx-n">05</span><span class="opt">Glossy swipe</span><span class="state">Not selected</span></div></div>
-      <div class="choice sfx"><button type="button" class="play" data-src="sfx/06-riser-sparkle.mp3" aria-label="Play Riser sparkle"></button><div class="body"><span class="sfx-n">06</span><span class="opt">Riser sparkle</span><span class="state">Not selected</span></div></div>
-      <div class="choice sfx"><button type="button" class="play" data-src="sfx/07-piano-note.mp3" aria-label="Play Piano note"></button><div class="body"><span class="sfx-n">07</span><span class="opt">Piano note</span><span class="state">Not selected</span></div></div>
-      <div class="choice sfx"><button type="button" class="play" data-src="sfx/08-metal-ring.mp3" aria-label="Play Metal ring"></button><div class="body"><span class="sfx-n">08</span><span class="opt">Metal ring</span><span class="state">Not selected</span></div></div>
-      <div class="choice sfx"><button type="button" class="play" data-src="sfx/09-synth-sting.mp3" aria-label="Play Synth sting"></button><div class="body"><span class="sfx-n">09</span><span class="opt">Synth sting</span><span class="state">Not selected</span></div></div>
-      <div class="choice sfx"><button type="button" class="play" data-src="sfx/10-page-turn.mp3" aria-label="Play Page turn"></button><div class="body"><span class="sfx-n">10</span><span class="opt">Page turn</span><span class="state">Not selected</span></div></div>
-    </div>
   </div>
 </section>
 
@@ -967,14 +987,16 @@
     </div>
     <p class="section-note">Everything you read on mic, written for you and recorded once.</p>
     <div class="doc-row"><span class="tag">Show outro</span><div>
-      <p>Your current outro runs about 35 seconds. This version keeps your mission and the ask to share, and it points the people who stayed to your free training. About 22 seconds.</p>
-      <div class="script"><span class="sl">Outro, for approval</span><p>Hey, I hope you enjoyed this conversation. If someone in your life needs to hear it today, please share it with them. We're on a mission to help 10 million people leap their careers and build the life they want. So if you're ready to make your own leap, my free training is in the show notes. See you next week.</p></div>
+      <p>Your current outro runs about 35 seconds. This version keeps your mission and the ask to share, and it points the people who stayed to your free training. About 27 seconds. Your YouTube end card shows on screen after your outro.</p>
+      <div class="script"><span class="sl">Outro, for approval</span><p>Hey, I hope you enjoyed this conversation. If someone in your life needs to hear it today, please share it with them. We're on a mission to help 10 million people leap their careers and build the life they want. So if you're ready to make your own leap, scan the QR code on screen or click the link in the show notes for my free training. See you next week.</p></div>
     </div></div>
     <div class="doc-row"><span class="tag">Subscribe CTA</span><div>
-      <p>Recorded separately and inserted at the same point in every episode, after the first part of the conversation. Your current version runs about 25 seconds and opens by saying there are no ads on the show, which will change once your ad reads run. Each of these is 10 to 15 seconds. Pick one.</p>
-      <div class="script"><span class="sl">Option one</span><p>Hey, I have a favour to ask. If this conversation is helping you, hit subscribe. It's how we keep bringing you guests like this one. Now, back to the show.</p></div>
-      <div class="script"><span class="sl">Option two</span><p>Quick favour. We're on a mission to help 10 million people leap their careers, and you can help us reach them. Just hit subscribe. Now, back to today's episode.</p></div>
-      <div class="script"><span class="sl">Option three</span><p>If you've ever felt stuck in your career, this show is for you. Every week I sit down with someone who took the leap. Subscribe so you don't miss the next one. Now, back to the conversation.</p></div>
+      <p>Your current version runs about 25 seconds. These are shorter on purpose, so they never pull attention away from the conversation people came for, and they keep your audience engaged. Each one runs about 10 to 15 seconds. Pick one, and it will be added to your scripts when we get to recording.</p>
+      <div class="cta-group" data-group="Subscribe CTA">
+      <div class="choice script-choice"><div class="body"><span class="opt">Option one</span><span class="state">Not selected</span></div><p>Hey, I have a favour to ask. If this conversation is helping you, hit subscribe. It's how we keep bringing you guests like this one. Now, back to the show.</p></div>
+      <div class="choice script-choice"><div class="body"><span class="opt">Option two</span><span class="state">Not selected</span></div><p>Quick favour. We're on a mission to help 10 million people leap their careers, and you can help us reach them. Just hit subscribe. Now, back to today's episode.</p></div>
+      <div class="choice script-choice"><div class="body"><span class="opt">Option three</span><span class="state">Not selected</span></div><p>If you've ever felt stuck in your career, this show is for you. Every week I sit down with someone who took the leap. Subscribe so you don't miss the next one. Now, back to the conversation.</p></div>
+      </div>
     </div></div>
     <div class="doc-row"><span class="tag">Ad reads</span><div>
       <p>Three ads for your free training, one per episode on rotation. (Video) is said to camera and (Audio) is voiceover.</p>
@@ -991,7 +1013,7 @@
         <p class="cue">Ad link: leapacademy.com/training</p>
       </div>
       <div class="script"><span class="sl">Ad script 3</span>
-        <p>(Video) Hey, quick pause.</p>
+        <p>(Video) Hey, quick pause in today's episode.</p>
         <p>(Audio) If you've built your whole identity around a title and a company, the question "who am I without it?" can keep you stuck for years. I put together a free training for senior managers, executives and founders on how to plan your next leap, whether that's a C-suite role, a board seat or a portfolio career you build on your own terms. If that's a question you're sitting with right now, scan the QR code on screen or click the link in the show notes.</p>
         <p>(Video) Now, back to today's conversation.</p>
         <p class="cue">Ad link: leapacademy.com/training</p>
@@ -1106,10 +1128,11 @@
     c.addEventListener('drop',function(e){e.preventDefault();c.classList.remove('over');renum();});
   });
   var zoom=document.getElementById('zoom'),zimg=zoom.querySelector('img');
-  [].slice.call(document.querySelectorAll('.choice .slot img, .scene .ref img, .lm-shot img')).forEach(function(im){
+  [].slice.call(document.querySelectorAll('.choice .slot img, .scene .ref img, .lm-shot img, .out-card .shot img, .mg-shot img')).forEach(function(im){
     im.addEventListener('mouseenter',function(){zimg.src=im.currentSrc||im.src;zimg.alt=im.alt;zoom.classList.add('on');});
     im.addEventListener('mouseleave',function(){zoom.classList.remove('on');});
   });
+  [].slice.call(document.querySelectorAll('.copy-btn')).forEach(function(b){b.addEventListener('click',function(){var t=document.getElementById(b.dataset.copy).textContent;var done=function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy prompt';},1800);};if(navigator.clipboard)navigator.clipboard.writeText(t).then(done,function(){});else{var r=document.createRange();r.selectNodeContents(document.getElementById(b.dataset.copy));getSelection().removeAllRanges();getSelection().addRange(r);document.execCommand('copy');done();}});});
   var cur=null;
   [].slice.call(document.querySelectorAll('.play')).forEach(function(b){
     b.addEventListener('click',function(e){e.stopPropagation();
