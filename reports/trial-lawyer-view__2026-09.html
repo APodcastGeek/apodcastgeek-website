@@ -749,14 +749,14 @@ body {
         <tr>
           <td>YouTube Episode Views</td>
           <td>573</td>
-          <td>573</td>
-          <td><span style="color:var(--grn);">0.0%</span></td>
+          <td>886</td>
+          <td><span style="color:var(--grn);">&#8593; +54.6%</span></td>
         </tr>
         <tr>
           <td>YouTube Watch Time</td>
           <td>67.2 hrs</td>
-          <td>67.2 hrs</td>
-          <td><span style="color:var(--grn);">0.0%</span></td>
+          <td>145.4 hrs</td>
+          <td><span style="color:var(--grn);">&#8593; +116.4%</span></td>
         </tr>
         <tr>
           <td>Audio Plays</td>
@@ -766,9 +766,9 @@ body {
         </tr>
         <tr>
           <td>Audio Consumption Hours</td>
-          <td>237.84 hrs</td>
+          <td>240.51 hrs</td>
           <td>109.87 hrs</td>
-          <td><span style="color:var(--red);">&#8595; -53.8%</span></td>
+          <td><span style="color:var(--red);">&#8595; -54.3%</span></td>
         </tr>
       </tbody>
     </table>
@@ -814,8 +814,8 @@ body {
 
     <div class="ep-card">
       <div class="ep-label">Top Performing Episode (by Watch Time)</div>
-      <div class="ep-title"><a href="https://www.youtube.com/watch?v=eVNGTgSyd28" target="_blank" rel="noopener noreferrer" onclick="return apgOpenLink(this.href, event)" style="color:var(--acc);text-decoration:underline;cursor:pointer;" onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1">The Cash Trap Killing Boutique PI Firms Before They Scale Up ft. Austin Kurtz and Brian Riley <span style="font-size:0.75em;opacity:0.7;">↗</span></a></div>
-      <div class="ep-meta">223 views · 34 watch hours</div>
+      <div class="ep-title"><a href="https://www.youtube.com/watch?v=DChHvo2JHNQ" target="_blank" rel="noopener noreferrer" onclick="return apgOpenLink(this.href, event)" style="color:var(--acc);text-decoration:underline;cursor:pointer;" onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1">The Pre-Suit Evidence Chain That Forced a $5.7 Million Policy Limit ft. Kyle Wright <span style="font-size:0.75em;opacity:0.7;">↗</span></a></div>
+      <div class="ep-meta">252 views · 110.5 watch hours</div>
     </div>
 
     <div class="pdf-break" style="margin-top:32px;">
@@ -853,21 +853,21 @@ body {
       <div class="sc">
         <div class="sc-tip">Shorts, Videos, and Live stream combined</div>
         <div class="sc-lbl">Total Views</div>
-        <div class="sc-val counter" data-t="5621">5,621</div>
+        <div class="sc-val counter" data-t="16414">16,414</div>
         <div class="sc-note">All content types</div>
       </div>
 
       <div class="sc">
-        <div class="sc-tip"><strong>86.4 hours</strong> across all content</div>
+        <div class="sc-tip"><strong>178.7 hours</strong> across all content</div>
         <div class="sc-lbl">Watch Time</div>
-        <div class="sc-val counter" data-t="86" data-suf=".4h">86.4h</div>
+        <div class="sc-val counter" data-t="178" data-suf=".7h">178.7h</div>
         <div class="sc-note">All watch time</div>
       </div>
 
       <div class="sc">
-        <div class="sc-tip"><strong>2,531</strong> Shorts views this month</div>
+        <div class="sc-tip"><strong>3,239</strong> Shorts views this month</div>
         <div class="sc-lbl">Shorts Views</div>
-        <div class="sc-val counter" data-t="2531">2,531</div>
+        <div class="sc-val counter" data-t="3239">3,239</div>
         <div class="sc-note">Short-form content</div>
       </div>
     </div>
@@ -984,8 +984,8 @@ var D = {
 
 var M = {
   labels: ['July 2026','August 2026','September 2026'],
-  vw:   [1551,5621,5621],
-  wh:   [69.0,86.4,86.4],
+  vw:   [1551,5621,16414],
+  wh:   [69.0,86.4,178.7],
 };
 
 function animateCounter(el, target, dur, pre, suf) {
@@ -1184,7 +1184,7 @@ function initReveal() {
       animateFills(el);
 
       if (el.querySelector('#garc')) {
-        setTimeout(function() { animateGauge(6.2); }, 400);
+        setTimeout(function() { animateGauge(7.2); }, 400);
       }
 
       if (el.querySelector('#trendChart')) {
