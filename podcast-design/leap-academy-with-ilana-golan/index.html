@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Leap Academy with Ilana Golan | APodcastGeek Podcast Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0A0A0A;
+    --off-black:#141414;
+    --paper:#FFFFFF;
+    --wash:#F4F2ED;
+    --rule:#DCD8CF;
+    --ink:#1C1A17;
+    --ink-soft:#6B665D;
+    --gold:#B8994F;
+    --gold-bright:#D8BE72;
+    --gold-pale:#E4D884;
+    --gold-deep:#8A6A28;
+    --purple:#30229B;
+    --on-dark:#EDEAE3;
+    --on-dark-soft:#A9A398;
+    --measure:1080px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Montserrat',Helvetica,Arial,sans-serif;
+    font-size:15.5px;
+    line-height:1.7;
+    font-weight:400;
+    color:var(--ink);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Montserrat',Helvetica,Arial,sans-serif;
+    font-weight:700;
+    color:var(--ink);
+    margin:0 0 .5em 0;
+    line-height:1.16;
+    letter-spacing:-0.01em;
+  }
+  p{margin:0 0 1em 0;}
+  a{color:var(--gold-deep);text-underline-offset:2px;}
+  a:hover{color:var(--gold);}
+
+  .tag,.label{
+    font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ink);display:block;margin-bottom:10px;
+  }
+  .tag.accent{color:var(--gold-deep);}
+  .band .tag,.band .label{color:var(--on-dark-soft);}
+  .band .tag.accent{color:var(--gold-bright);}
+
+  .goldrule{height:3px;background:linear-gradient(90deg,var(--gold-deep),var(--gold-pale),var(--gold));border:none;margin:0;}
+  hr.rule{border:none;border-top:1px solid var(--rule);margin:34px 0;}
+
+  /* NAV */
+  nav.topnav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(10,10,10,.97);
+    border-bottom:1px solid var(--gold-deep);
+    display:flex;align-items:center;
+    padding:0 clamp(18px,4vw,44px);
+    overflow-x:auto;white-space:nowrap;height:52px;
+  }
+  nav.topnav .brandmark{
+    font-size:.68rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--gold-bright);padding-right:20px;margin-right:16px;
+    border-right:1px solid rgba(255,255,255,.18);flex:0 0 auto;
+  }
+  nav.topnav a{
+    font-size:.66rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--on-dark-soft);text-decoration:none;
+    padding:0 13px;height:52px;display:flex;align-items:center;flex:0 0 auto;
+  }
+  nav.topnav a:hover{color:var(--gold-bright);}
+  nav.topnav a.partmark{color:var(--on-dark);font-weight:800;}
+
+  /* SECTION SCAFFOLD */
+  .section{padding:74px 0 80px 0;scroll-margin-top:58px;}
+  .inner{max-width:var(--measure);margin:0 auto;padding:0 clamp(22px,5vw,52px);}
+  .band{background:var(--black);color:var(--on-dark);}
+  .band h1,.band h2,.band h3,.band h4{color:var(--paper);}
+  .band a{color:var(--gold-bright);}
+  .wash{background:var(--wash);}
+
+  .sec-head{margin-bottom:32px;}
+  .sec-head-line{display:flex;align-items:baseline;gap:.5em;margin-bottom:14px;flex-wrap:wrap;}
+  .sec-mark{
+    font-size:2.6rem;line-height:1;font-weight:800;
+    color:var(--gold);flex:0 0 auto;letter-spacing:-0.03em;
+  }
+  .band .sec-mark{color:var(--gold-bright);}
+  .sec-head h2{font-size:2.05rem;line-height:1.05;margin:0;font-weight:800;}
+  .subhead{font-size:1.45rem;margin:0 0 8px 0;font-weight:700;}
+  .subhead-wrap{margin-top:58px;margin-bottom:24px;}
+  .subhead-wrap .thinrule{border-top:1px solid var(--ink);height:0;}
+  .band .subhead-wrap .thinrule{border-top-color:rgba(255,255,255,.28);}
+  .section-note{
+    font-style:italic;font-size:1.04rem;line-height:1.6;font-weight:400;
+    color:var(--ink-soft);margin:-4px 0 28px 0;
+  }
+  .band .section-note{color:var(--on-dark-soft);}
+
+  /* COVER */
+  .cover{
+    text-align:center;background:var(--black);color:var(--on-dark);
+    padding:70px clamp(22px,5vw,52px) 76px;
+  }
+  .cover .kicker{
+    font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--on-dark-soft);margin-bottom:34px;
+  }
+  .cover .artwrap{display:inline-block;margin-bottom:34px;border:1px solid var(--gold-deep);padding:10px;background:#000;}
+  .cover .artwrap img{display:block;width:190px;height:190px;object-fit:cover;}
+  .cover h1{
+    font-size:clamp(2.1rem,5vw,3.6rem);font-weight:800;line-height:1.05;
+    color:var(--paper);margin:0 auto 26px auto;max-width:900px;letter-spacing:-0.02em;
+  }
+  .cover .goldrule{max-width:600px;margin:0 auto;}
+  .cover .meta-line{
+    font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--gold-bright);margin-top:22px;
+  }
+  .cover .logo-strip{margin-top:38px;}
+  .cover .logo-strip img{width:260px;height:auto;display:inline-block;}
+
+  /* PART DIVIDER */
+  .partbreak{background:var(--off-black);color:var(--on-dark);padding:56px 0;scroll-margin-top:58px;}
+  .partbreak .inner{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;}
+  .partbreak .pnum{
+    font-size:3.4rem;font-weight:800;line-height:1;color:var(--gold);letter-spacing:-0.04em;
+  }
+  .partbreak h2{font-size:2rem;margin:0;color:var(--paper);font-weight:800;}
+  .partbreak p{margin:12px 0 0 0;color:var(--on-dark-soft);max-width:660px;}
+
+  /* GRIDS */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:34px;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  @media(max-width:900px){.grid2,.grid3{grid-template-columns:1fr;}}
+
+  /* DOC ROWS */
+  .doc-row{display:grid;grid-template-columns:150px 1fr;gap:26px;padding:17px 0;border-top:1px solid var(--rule);}
+  .doc-row:last-child{border-bottom:1px solid var(--rule);}
+  .doc-row .tag{margin-bottom:0;padding-top:3px;}
+  @media(max-width:700px){.doc-row{grid-template-columns:1fr;gap:5px;}}
+
+  /* PLACEHOLDER */
+  .ph{
+    color:var(--ink-soft);font-style:italic;
+    background:var(--wash);border-left:2px solid var(--gold);
+    padding:3px 10px;display:inline-block;font-size:.92rem;
+  }
+
+  /* CARDS + PANELS */
+  .card{background:var(--paper);border:1px solid var(--rule);padding:24px 26px;}
+  .card h4{font-size:1.08rem;margin-bottom:9px;}
+  .card p:last-child{margin-bottom:0;}
+  .panel{background:var(--wash);padding:24px 26px;}
+  .panel.marked{border-left:3px solid var(--gold);}
+  .panel h4{font-size:1.08rem;margin-bottom:9px;}
+  .panel p:last-child{margin-bottom:0;}
+  .card.on-ink{background:var(--off-black);border-color:#2A2A2A;color:var(--on-dark);}
+  .card.on-ink h4{color:var(--paper);}
+  ul.clean{margin:0;padding-left:18px;}
+  ul.clean li{margin-bottom:9px;}
+
+  /* STEPS */
+  .steps{list-style:none;margin:0;padding:0;}
+  .steps li{display:grid;grid-template-columns:48px 1fr;gap:16px;align-items:baseline;padding:13px 0;border-top:1px solid var(--rule);}
+  .steps li:last-child{border-bottom:1px solid var(--rule);}
+  .steps li .n{font-size:1.35rem;line-height:1;color:var(--gold);font-weight:800;}
+  .band .steps li{border-top-color:rgba(255,255,255,.16);}
+  .band .steps li:last-child{border-bottom-color:rgba(255,255,255,.16);}
+  .band .steps li .n{color:var(--gold-bright);}
+
+  /* QUOTE */
+  .quote-block{
+    font-size:1.4rem;line-height:1.4;font-weight:600;color:var(--ink);
+    border-left:3px solid var(--gold);padding:18px 0 18px 26px;
+  }
+  .band .quote-block{color:var(--paper);border-left-color:var(--gold-bright);}
+
+  /* THE PROOF TABLE */
+  .versus{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule);margin:8px 0 26px 0;}
+  .versus .side{padding:26px 28px;}
+  .versus .side.lose{background:var(--wash);}
+  .versus .side.win{background:var(--off-black);color:var(--on-dark);}
+  .versus .side.win h4{color:var(--paper);}
+  .versus .side .vt{font-size:.66rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px;display:block;}
+  .versus .side.win .vt{color:var(--gold-bright);}
+  .versus .side h4{font-size:1.14rem;margin-bottom:16px;line-height:1.35;}
+  .versus .bignum{font-size:2.9rem;font-weight:800;line-height:1;letter-spacing:-0.03em;color:var(--ink);margin-bottom:4px;}
+  .versus .side.win .bignum{color:var(--gold-bright);}
+  .versus .sub{font-size:.8rem;color:var(--ink-soft);font-weight:600;letter-spacing:.04em;}
+  .versus .side.win .sub{color:var(--on-dark-soft);}
+  @media(max-width:760px){.versus{grid-template-columns:1fr;}}
+
+  /* DIFFERENTIATOR */
+  .diff-card{border-top:3px solid var(--gold);display:flex;flex-direction:column;}
+  .diff-card .dn{font-size:2.2rem;font-weight:800;line-height:1;color:var(--gold);letter-spacing:-0.03em;margin-bottom:14px;}
+  .diff-card h4{font-size:1.12rem;}
+
+  /* OUTLIER CARDS */
+  .out-card{border:1px solid var(--rule);background:var(--paper);padding:0;}
+  .out-card .shot{width:100%;aspect-ratio:16/9;background:var(--wash);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--rule);}
+  .out-card .shot span{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;text-align:center;padding:0 16px;}
+  .out-card .body{padding:18px 20px;}
+  .out-card .mult{font-size:.68rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:7px;}
+  .out-card h4{font-size:1.02rem;line-height:1.35;margin-bottom:9px;}
+  .out-card p{font-size:.9rem;margin-bottom:0;color:var(--ink-soft);}
+
+  /* CHOICE OF THREE */
+  .choice{border:1px solid var(--rule);background:var(--paper);}
+  .choice .slot{width:100%;aspect-ratio:16/9;background:var(--wash);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--rule);}
+  .choice .slot.tall{aspect-ratio:9/16;}
+  .choice .slot img{width:100%;height:100%;object-fit:cover;display:block;}
+  .choice .slot span{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;}
+  .choice .body{padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .choice .opt{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);}
+  .choice .state{font-size:.64rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);}
+  .choice.chosen{border-color:var(--gold);border-width:2px;}
+  .choice.chosen .state{color:var(--gold-deep);}
+
+  /* SEQUENCE */
+  .sequence{display:grid;grid-template-columns:repeat(7,1fr);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);}
+  .sequence .cell{padding:22px 14px;text-align:center;border-left:1px solid var(--rule);}
+  .sequence .cell:first-child{border-left:none;}
+  .sequence .cell.accent{background:var(--wash);}
+  .sequence .cell .n{font-size:1.6rem;line-height:1;color:var(--gold);display:block;margin-bottom:7px;font-weight:800;}
+  .sequence .cell .nm{font-size:.98rem;font-weight:600;line-height:1.3;}
+  @media(max-width:800px){.sequence{grid-template-columns:1fr;}.sequence .cell{border-left:none;border-top:1px solid var(--rule);}.sequence .cell:first-child{border-top:none;}}
+  .band .sequence{border:none;gap:10px;}
+  .band .sequence .cell,.band .sequence .cell:first-child{background:var(--off-black);border:1px solid var(--gold-deep);}
+  .band .sequence .cell.accent{border:2px solid var(--gold-bright);}
+  .band .sequence .cell .n,.band .sequence .cell .nm{color:var(--gold-bright);}
+
+  /* SCRIPTS */
+  .script{background:var(--wash);border-left:3px solid var(--gold);padding:14px 18px;margin:0 0 12px 0;}
+  .script:last-child{margin-bottom:0;}
+  .script .sl{font-size:.64rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);display:block;margin-bottom:6px;}
+  .script p{margin:0 0 6px 0;}
+  .script p:last-child{margin-bottom:0;}
+  .script .cue{font-size:.8rem;color:var(--ink-soft);}
+
+  /* SCENE ROWS */
+  .scene{display:grid;grid-template-columns:150px 1fr 1fr;gap:22px;padding:22px 0;border-top:1px solid var(--rule);align-items:start;}
+  .scene:last-child{border-bottom:1px solid var(--rule);}
+  .scene .sn{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);padding-top:3px;}
+  .scene .ref{background:var(--wash);border:1px solid var(--rule);aspect-ratio:9/16;max-width:150px;display:flex;align-items:center;justify-content:center;}
+  .scene .ref img{width:100%;height:100%;object-fit:cover;display:block;}
+  .scene .ref span{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;text-align:center;padding:0 10px;}
+  @media(max-width:820px){.scene{grid-template-columns:1fr;gap:10px;}}
+
+  /* HOST */
+  .headshot-wrap{display:flex;gap:30px;align-items:center;flex-wrap:wrap;margin-bottom:32px;}
+  .headshot-wrap img{width:150px;height:150px;object-fit:cover;object-position:center 18%;border:1px solid var(--gold-deep);}
+
+  /* FUNNEL */
+  .funnel{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:22px;}
+  .funnel .stage{width:100%;text-align:center;padding:24px 28px;border:1px solid var(--gold-deep);background:var(--off-black);}
+  .funnel .stage.s1{width:100%;}
+  .funnel .stage.s2{width:84%;}
+  .funnel .stage.s3{width:68%;border:2px solid var(--gold-bright);}
+  .funnel .stage .sl{font-size:.66rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-bright);margin-bottom:8px;display:block;}
+  .funnel .stage h4{font-size:1.2rem;margin-bottom:8px;}
+  .funnel .stage p{font-size:.92rem;margin:0 auto;max-width:560px;color:var(--on-dark-soft);}
+  @media(max-width:700px){.funnel .stage.s2{width:92%;}.funnel .stage.s3{width:84%;}}
+
+  /* DROPDOWN */
+  details.drop{border:1px solid var(--rule);background:var(--paper);margin:14px 0 4px 0;}
+  details.drop summary{
+    cursor:pointer;list-style:none;padding:14px 18px;
+    font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold-deep);display:flex;align-items:center;justify-content:space-between;gap:12px;
+  }
+  details.drop summary::-webkit-details-marker{display:none;}
+  details.drop summary::after{content:"+";font-size:1.15rem;line-height:1;color:var(--gold-deep);font-weight:700;}
+  details.drop[open] summary::after{content:"\2013";}
+  details.drop summary:hover{background:var(--wash);}
+  details.drop .drop-body{padding:4px 22px 24px 22px;border-top:1px solid var(--rule);}
+  details.drop .drop-body h4{font-size:1.02rem;margin:20px 0 8px 0;}
+  details.drop .drop-body h4:first-child{margin-top:18px;}
+  details.drop .drop-body p{font-size:.94rem;}
+  details.drop .drop-body ol{margin:0 0 14px 0;padding-left:20px;}
+  details.drop .drop-body ol li{margin-bottom:9px;font-size:.94rem;}
+  details.drop .sendbox{background:var(--wash);border-left:3px solid var(--gold);padding:16px 18px;margin:6px 0 4px 0;font-size:.92rem;}
+
+  /* ACCESS CHECKLIST */
+  .ticks{display:grid;grid-template-columns:1fr 1fr;gap:0 34px;}
+  .ticks label{display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid var(--rule);cursor:pointer;font-weight:600;}
+  .ticks input{width:22px;height:22px;accent-color:var(--gold-deep);flex:0 0 auto;cursor:pointer;}
+  .ticks input:checked+span{color:var(--ink-soft);text-decoration:line-through;}
+  @media(max-width:700px){.ticks{grid-template-columns:1fr;}}
+
+  /* YOUTUBE CARDS */
+  .yt{display:block;text-decoration:none;color:inherit;}
+  .yt img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000;border:1px solid #2A2A2A;transition:transform .15s;}
+  .yt:hover img{transform:scale(1.015);}
+  .yt .yt-t{font-weight:700;line-height:1.35;margin:12px 0 4px 0;}
+  .yt .yt-m{font-size:.8rem;font-weight:600;letter-spacing:.04em;color:var(--ink-soft);}
+  .band .yt .yt-t{color:var(--paper);}
+  .band .yt .yt-m{color:var(--on-dark-soft);}
+  .yt .yt-v{font-size:2.6rem;font-weight:800;line-height:1;letter-spacing:-0.03em;color:var(--gold-bright);margin-top:14px;}
+  .yt .yt-v small{font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-left:8px;color:var(--on-dark-soft);}
+  .lead{font-size:1.3rem;line-height:1.45;font-weight:600;max-width:820px;}
+  .angle .yt img{border-color:var(--rule);}
+  .angle .yt .yt-t{font-size:.86rem;font-weight:600;margin-top:10px;}
+  .angles{row-gap:34px;}
+  .angles .angle{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:0;}
+  .angles .angle p{margin-bottom:16px;}
+  .yt .plays{color:var(--gold-bright);font-weight:700;white-space:nowrap;}
+
+  /* SCHEDULE */
+  table.sched{width:100%;border-collapse:collapse;margin-top:10px;}
+  table.sched th{font-size:.66rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-bright);text-align:left;padding:0 12px 12px 0;}
+  table.sched td{padding:14px 12px 14px 0;border-top:1px solid rgba(255,255,255,.16);}
+  table.sched td:first-child{font-weight:700;color:var(--paper);}
+  table.sched td.pub{color:var(--gold-bright);font-weight:700;}
+  table.sched small{display:block;color:var(--on-dark-soft);font-size:.76rem;}
+  @media(max-width:600px){table.sched{font-size:.86rem;}}
+
+  /* DRAG + ZOOM */
+  .drag-hint{font-size:.78rem;color:var(--on-dark-soft);margin:0 0 12px;}
+  #structure .cell{cursor:grab;user-select:none;transition:transform .12s,opacity .12s;}
+  #structure .cell.dragging{opacity:.35;}
+  #structure .cell.over{transform:scale(1.04);box-shadow:0 0 0 2px var(--gold-pale);}
+  .choice .slot img,.scene .ref img,.lm-shot img,.out-card .shot img,.mg-shot img{cursor:zoom-in;}
+  #zoom{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.72);opacity:0;pointer-events:none;transition:opacity .15s;}
+  #zoom.on{opacity:1;}
+  #zoom img{max-width:90vw;max-height:90vh;box-shadow:0 20px 60px rgba(0,0,0,.6);border:1px solid var(--gold-deep);}
+
+  /* ROUND 9 */
+  .mg-shot{margin:-24px -26px 18px;background:#1c1c1c;border-bottom:1px solid #2A2A2A;display:flex;align-items:center;justify-content:center;aspect-ratio:16/9;overflow:hidden;}
+  .scene-note{margin:12px 0 0;font-size:.86rem;color:var(--on-dark-soft);}
+  .mg-shot img{max-width:100%;max-height:100%;display:block;}
+  .band .out-card h4{color:var(--ink);margin:0;font-size:.95rem;}
+  .out-card .shot img{width:100%;height:100%;object-fit:cover;display:block;}
+  .pp-prompt{margin-top:22px;}
+  .pp-prompt pre{white-space:pre-wrap;font-family:inherit;font-size:.88rem;line-height:1.6;background:var(--wash);border-left:3px solid var(--gold);padding:16px 18px;margin:8px 0 14px;}
+  .copy-btn{font-family:inherit;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;padding:11px 18px;border:1px solid var(--gold-deep);background:var(--black);color:var(--gold-bright);}
+  .cta-group{display:grid;gap:12px;}
+  .choice.script-choice{background:var(--wash);border-left:3px solid var(--gold);}
+  .choice.script-choice .body{padding:12px 18px 4px;}
+  .choice.script-choice p{margin:0;padding:0 18px 14px;}
+
+  /* SFX */
+  .sfx-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+  .choice.sfx{display:flex;flex-direction:column;align-items:center;padding:18px 10px 4px;}
+  .choice.sfx .body{flex-direction:column;gap:4px;padding:10px 4px 12px;text-align:center;}
+  .sfx-n{font-size:.62rem;font-weight:700;letter-spacing:.14em;color:var(--gold-deep);}
+  .play{width:46px;height:46px;border-radius:50%;border:2px solid var(--gold-deep);background:var(--black);cursor:pointer;position:relative;flex:0 0 auto;}
+  .play::after{content:"";position:absolute;left:17px;top:13px;border-style:solid;border-width:9px 0 9px 14px;border-color:transparent transparent transparent var(--gold-bright);}
+  .play.on::after{left:14px;top:14px;width:5px;height:16px;border:none;border-left:5px solid var(--gold-bright);border-right:5px solid var(--gold-bright);box-sizing:content-box;}
+  @media(max-width:800px){.sfx-grid{grid-template-columns:repeat(2,1fr);}}
+  /* LEAD MAGNET */
+  .lm{align-items:center;}
+  .lm-shot img{display:block;width:100%;border:1px solid var(--rule);box-shadow:0 10px 30px rgba(0,0,0,.08);}
+  .lm-btn{display:inline-block;margin-top:8px;padding:13px 22px;background:var(--black);color:var(--gold-bright);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;}
+  .lm-btn:hover{color:var(--gold-pale);}
+  /* TSO */
+  .tso-preview{font-size:1.25rem;font-weight:700;color:var(--ink);margin:0 0 20px;}
+  .tso-preview span{color:var(--gold);}
+  .tso-preview em{font-style:normal;color:var(--gold-deep);}
+  .tso-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;}
+  .choice.tso .body{justify-content:flex-start;gap:16px;padding:15px 18px;}
+  .choice.tso .tnum{font-size:1.2rem;font-weight:800;color:var(--gold);min-width:28px;}
+  .choice.tso .opt{flex:1;font-size:.98rem;letter-spacing:0;text-transform:none;font-weight:600;}
+  @media(max-width:700px){.tso-grid{grid-template-columns:1fr;}}
+
+  /* SELECTIONS + SAVE */
+  .choice{cursor:pointer;}
+  .choice.chosen .state::before{content:"\2713  ";}
+  .feature{display:flex;flex-direction:column;background:var(--off-black);color:var(--on-dark);border:1px solid #2A2A2A;border-top:3px solid var(--gold);padding:26px 26px 24px;transition:border-color .15s,box-shadow .15s;}
+  .feature h4{color:var(--paper);font-size:1.3rem;margin:14px 0 10px;}
+  .feature p{font-size:.93rem;color:var(--on-dark-soft);margin-bottom:12px;}
+  .feature .fhead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;}
+  .feature .fn{font-size:2.3rem;font-weight:800;line-height:1;color:var(--gold-bright);letter-spacing:-0.03em;}
+  .feature .fwhen{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--black);background:var(--gold-bright);padding:5px 9px;}
+  .feature .fquote{font-size:1.02rem;font-weight:600;font-style:italic;color:var(--gold-pale);line-height:1.45;}
+  .feature .fmeta{font-size:.72rem;font-weight:600;letter-spacing:.06em;color:var(--gold-bright);margin-top:auto;padding-top:6px;}
+  .feature .pick{width:100%;align-self:stretch;border-color:var(--gold-bright);color:var(--gold-bright);margin-top:18px;}
+  .feature:not(:has(.fmeta)) .pick{margin-top:auto;}
+  .feature.chosen{border-color:var(--gold-bright);border-width:2px;border-top-width:3px;box-shadow:0 0 0 1px var(--gold-bright);}
+  .lane.proposed{border-top:3px solid var(--gold);}
+  .feature .pick,#save-btn{font-family:inherit;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;padding:11px 16px;border:1px solid var(--gold-deep);background:transparent;color:var(--gold-deep);margin-top:16px;align-self:flex-start;}
+  .feature.chosen .pick{background:var(--gold-bright);color:var(--black);}
+  .savebar{background:var(--off-black);color:var(--on-dark);padding:44px 0;}
+  .savebar .inner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .savebar h3{color:var(--paper);margin:0 0 6px 0;font-size:1.3rem;}
+  .savebar p{margin:0;color:var(--on-dark-soft);font-size:.9rem;}
+  #save-btn{margin:0;background:var(--gold-bright);border-color:var(--gold-bright);color:var(--black);padding:15px 26px;font-size:.74rem;}
+  #save-btn:hover{background:var(--gold-pale);}
+
+  .footer{background:var(--black);color:var(--on-dark-soft);padding:44px 0;font-size:.8rem;}
+  .footer .inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <span class="brandmark">Leap Academy</span>
+  <a href="#part-a" class="partmark">Part A</a>
+  <a href="#client">Your details</a>
+  <a href="#show">The show</a>
+  <a href="#branding">Branding</a>
+  <a href="#goals">Goals</a>
+  <a href="#audience">Audience</a>
+  <a href="#publishing">Publishing</a>
+  <a href="#access">Access</a>
+  <a href="#part-b" class="partmark">Part B</a>
+  <a href="#market">Market</a>
+  <a href="#differentiator">Differentiator</a>
+  <a href="#lanes">Lanes</a>
+  <a href="#mix">Show features</a>
+  <a href="#look">How it looks</a>
+  <a href="#leadmagnet">Lead magnet</a>
+  <a href="#seo">SEO + AI</a>
+  <a href="#scripts">Scripts</a>
+  <a href="#workflow">Workflow</a>
+</nav>
+
+<header class="cover">
+  <div class="kicker">APodcastGeek &middot; Podcast Design</div>
+  <div class="artwrap"><img src="podcast-art.jpg" alt="Leap Academy with Ilana Golan podcast artwork"></div>
+  <h1>The Podcast Guide for<br>Leap Academy with Ilana Golan</h1>
+  <div class="goldrule"></div>
+  <div class="meta-line">Prepared for Ilana Golan &middot; September 2026</div>
+  <div class="logo-strip"><img src="logo.png" alt="Leap Academy"></div>
+</header>
+
+<!-- ============ PART A ============ -->
+<section class="partbreak" id="part-a">
+  <div class="inner">
+    <div class="pnum">A</div>
+    <div>
+      <h2>Your information</h2>
+      <p>Everything in this part comes from the answers you give us in your podcast guide questionnaire. We will walk past it quickly on the call. It is here so the whole show, and everyone who works on it, runs from one source.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="client">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">01</span><h2>Client information</h2></div>
+      <div class="goldrule"></div>
+    </div>
+    <div class="headshot-wrap">
+      <img src="host.jpg" alt="Ilana Golan">
+      <div>
+        <h3 style="margin-bottom:4px;">Ilana Golan</h3>
+        <p style="margin-bottom:0;color:var(--ink-soft);">Host, Leap Academy with Ilana Golan</p>
+      </div>
+    </div>
+    <div class="doc-row"><span class="tag">Business</span><div>Leap Academy</div></div>
+    <div class="doc-row"><span class="tag">What you do</span><div>Leap Academy helps ambitious professionals build portfolio careers, combining multiple income streams, skills, and opportunities to accelerate their careers, increase their income, and create more freedom.</div></div>
+    <div class="doc-row"><span class="tag">Website</span><div><a href="https://leapacademy.com">leapacademy.com</a></div></div>
+    <div class="doc-row"><span class="tag">Main offer</span><div><a href="https://leapacademy.com/training">leapacademy.com/training</a></div></div>
+    <div class="doc-row"><span class="tag">Second call to action</span><div>Like and subscribe</div></div>
+    <div class="doc-row"><span class="tag">Newsletter</span><div>None at present</div></div>
+  </div>
+</section>
+
+<section class="section wash" id="show">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">02</span><h2>Podcast information</h2></div>
+      <div class="goldrule"></div>
+    </div>
+    <div class="doc-row"><span class="tag">Show name</span><div>Leap Academy with Ilana Golan</div></div>
+    <div class="doc-row"><span class="tag">Channel</span><div><a href="https://www.youtube.com/@ilanagolan-leap-academy">youtube.com/@ilanagolan-leap-academy</a> &middot; 12,600 subscribers &middot; 490 videos</div></div>
+    <div class="doc-row"><span class="tag">Status</span><div>Established show, already running</div></div>
+    <div class="doc-row"><span class="tag">Recording setup</span><div>Riverside, settings confirmed</div></div>
+    <div class="doc-row"><span class="tag">Podcast hosting</span><div>Megaphone (due to migrate to Buzzsprout). Publishing weekly</div></div>
+    <div class="doc-row"><span class="tag">Website platform</span><div>Wix, access provided</div></div>
+  </div>
+</section>
+
+<section class="section" id="branding">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">03</span><h2>Podcast branding</h2></div>
+      <div class="goldrule"></div>
+    </div>
+    <p class="section-note">Everything our editors build will sit inside these rules, so every episode, clip and thumbnail looks like it came from the same show.</p>
+    <div class="grid3">
+      <div class="card">
+        <span class="tag accent">Colour</span>
+        <h4>Black and gold</h4>
+        <p>Taken from your podcast artwork. Black ground, gold gradient running from deep bronze to pale champagne, white type.</p>
+      </div>
+      <div class="card">
+        <span class="tag accent">Typeface</span>
+        <h4>Montserrat</h4>
+        <p>Your preferred typeface. Used for titles, captions and every on screen element.</p>
+      </div>
+      <div class="card">
+        <span class="tag accent">Mark</span>
+        <h4>The gold stag</h4>
+        <p>The leaping stag and wordmark. Used on end cards, title banners and clip framing.</p>
+      </div>
+    </div>
+    <div class="subhead-wrap"><div class="thinrule"></div></div>
+    <h3 class="subhead">Assets we hold</h3>
+    <div class="doc-row"><span class="tag">Logo</span><div>Gold stag and wordmark, transparent background</div></div>
+    <div class="doc-row"><span class="tag">Podcast artwork</span><div>Held</div></div>
+    <div class="doc-row"><span class="tag">Host photography</span><div>Held</div></div>
+    <div class="doc-row"><span class="tag">B roll</span><div>Supplied</div></div>
+    <div class="doc-row"><span class="tag">Brand guide</span><div>None exists. The colour, type and motif rules above become the reference for the show</div></div>
+    <div class="doc-row"><span class="tag">Music</span><div>None supplied. We source it</div></div>
+  </div>
+</section>
+
+<section class="section wash" id="goals">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">04</span><h2>Podcast goals</h2></div>
+      <div class="goldrule"></div>
+    </div>
+    <p class="section-note">Your words, from the questionnaire. These are what every episode gets measured against.</p>
+    <div class="panel marked" style="margin-bottom:26px;">
+      <h4>The core promise</h4>
+      <p>We want to make sure no one feels stuck following a career path that no longer serves them. By sharing honest conversations with people who have taken bold leaps, overcome setbacks, and built extraordinary careers, we help ambitious professionals see what is possible and learn how to create more opportunities for themselves.</p>
+      <p style="margin-bottom:0;">We change career growth from waiting for the next promotion or opportunity to intentionally building your own path, and turn ambitious professionals from feeling stuck or limited into creating more income, impact, and freedom on their own terms.</p>
+    </div>
+    <div class="grid3">
+      <div class="card">
+        <span class="tag accent">We believe</span>
+        <p>Your career does not have to follow one traditional path, and you can use your experience, skills and network to create multiple opportunities, income streams, and a career on your own terms.</p>
+      </div>
+      <div class="card">
+        <span class="tag accent">We focus on</span>
+        <p>People who want to accelerate their careers, increase their income, and create more opportunities by thinking beyond the traditional career path.</p>
+      </div>
+      <div class="card">
+        <span class="tag accent">You will learn</span>
+        <p>To think bigger about what is possible, learn from people who have taken bold leaps, and walk away with actionable insights to accelerate your career and build success on your own terms.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="audience">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">05</span><h2>Your audience</h2></div>
+      <div class="goldrule"></div>
+    </div>
+    <div class="doc-row"><span class="tag">Age</span><div>35 to 70</div></div>
+    <div class="doc-row"><span class="tag">YouTube audience</span><div>35 to 44. From your YouTube Studio: organic views on long-form episodes, last 28 days (to 29 September 2026)</div></div>
+    <div class="doc-row"><span class="tag">Gender</span><div>Both</div></div>
+    <div class="doc-row"><span class="tag">Location</span><div>United States, Middle East and Europe</div></div>
+    <div class="doc-row"><span class="tag">Occupation</span><div>Business professionals</div></div>
+
+    <div class="subhead-wrap"><div class="thinrule"></div></div>
+    <h3 class="subhead">What they are stuck on</h3>
+    <div class="grid3">
+      <div class="card"><span class="tag accent">One</span><p>I know I am capable of more, but I do not know what my next move should be.</p></div>
+      <div class="card"><span class="tag accent">Two</span><p>I see other people landing advisory roles, consulting work, speaking opportunities and board positions, but I do not know how they are getting them.</p></div>
+      <div class="card"><span class="tag accent">Three</span><p>I know I need to build my personal brand, but I do not know how to position myself.</p></div>
+    </div>
+
+    <div class="subhead-wrap"><div class="thinrule"></div></div>
+    <h3 class="subhead">What drives them</h3>
+    <div class="grid2">
+      <div class="card">
+        <span class="tag accent">What they believe</span>
+        <p>Career success does not have to mean climbing one corporate ladder for 30 years.</p>
+      </div>
+      <div class="card">
+        <span class="tag accent">What they fear</span>
+        <p>I have built my entire identity around my title and company. Who am I without it?</p>
+      </div>
+    </div>
+    <div class="panel marked" style="margin-top:24px;">
+      <h4>Who they want to become</h4>
+      <p style="margin-bottom:0;">The person others see as ambitious, connected, confident and in control of their career. Instead of being defined by a job title or company, they are known for their expertise, their network, and their ability to create opportunities for themselves and others.</p>
+    </div>
+
+    <div class="subhead-wrap"><div class="thinrule"></div></div>
+    <h3 class="subhead">How they listen</h3>
+    <p>Commuting, working out, walking, travelling, or getting ready for the day. Ambitious professionals using their downtime to learn. Some find a specific episode while searching for advice on career growth, leadership, entrepreneurship, AI or making a change, and then the show becomes something they keep coming back to.</p>
+
+    <div class="subhead-wrap"><div class="thinrule"></div></div>
+    <h3 class="subhead">Who they already trust</h3>
+    <p>Gary Vaynerchuk, Alex Hormozi, Mel Robbins, Adam Grant, Simon Sinek, Amy Porterfield, Tim Ferriss, Seth Godin, Jay Shetty, Marie Forleo and Reid Hoffman.</p>
+    <p>This list is useful to us. It tells us the tone your audience is already used to, and it tells us which shows we should be studying for what is working.</p>
+  </div>
+</section>
+
+<section class="section wash" id="publishing">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">06</span><h2>Publishing</h2></div>
+      <div class="goldrule"></div>
+    </div>
+    <div class="doc-row"><span class="tag">Package</span><div>Brand Builder, weekly</div></div>
+    <div class="doc-row"><span class="tag">Publish day</span><div>Tuesdays. Episode 174 goes out Tuesday 6 October, then Episode 175, the first full Brand Builder episode, on Tuesday 13 October</div></div>
+    <div class="doc-row"><span class="tag">Revision notes</span><div>Due 1 business day after each delivery</div></div>
+    <div class="doc-row"><span class="tag">Website</span><div>Wix. The blog, the transcript and the YouTube backlink are posted at the release day and time of each Brand Builder episode</div></div>
+  </div>
+</section>
+
+<section class="section" id="access">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">07</span><h2>Getting started and account access</h2></div>
+      <div class="goldrule"></div>
+    </div>
+    <p class="section-note">What we need access to before the first episode goes out. We tick these off together on the call.</p>
+    <div class="ticks">
+      <label><input type="checkbox"><span>YouTube access (main + API)</span></label>
+      <label><input type="checkbox"><span>Riverside settings (optimised)</span></label>
+      <label><input type="checkbox"><span>Audio host (Megaphone/Buzzsprout)</span></label>
+      <label><input type="checkbox"><span>Website (Wix)</span></label>
+      <label><input type="checkbox"><span>Social accounts (Upload Post)</span></label>
+      <label><input type="checkbox"><span>Client portal</span></label>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PART B ============ -->
+<section class="partbreak" id="part-b">
+  <div class="inner">
+    <div class="pnum">B</div>
+    <div>
+      <h2>The design</h2>
+    </div>
+  </div>
+</section>
+
+<section class="section band" id="market">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">01</span><h2>The leak is awareness, through your packaging</h2></div>
+      <div class="goldrule"></div>
+    </div>
+    <p class="lead">Your guests are strong. What our research found is that people are not finding the episodes, and the packaging (the thumbnail and the title) is where that happens.</p>
+
+    <div class="subhead-wrap"><div class="thinrule"></div></div>
+    <span class="tag accent">Example</span>
+    <div class="grid2">
+      <a class="yt" href="https://www.youtube.com/watch?v=I3-9eSqpko0" target="_blank" rel="noopener">
+        <img src="https://i.ytimg.com/vi/I3-9eSqpko0/maxresdefault.jpg" alt="Benchmark Partner, Bill Gurley: The Strategy That Makes You Stand Out in a Crowded Job Market thumbnail">
+        <div class="yt-t">Benchmark Partner, Bill Gurley: The Strategy That Makes You Stand Out in a Crowded Job Market</div>
+        <div class="yt-m">Ilana Golan, Leap Academy &middot; 12,600 subscribers</div>
+        <div class="yt-v">288<small>views</small></div>
+      </a>
+      <a class="yt" href="https://www.youtube.com/watch?v=mTxaiARH2h4" target="_blank" rel="noopener">
+        <img src="https://i.ytimg.com/vi/mTxaiARH2h4/maxresdefault.jpg" alt="I'm 55 Years Old and I Can't Find a Job thumbnail">
+        <div class="yt-t">I'm 55 Years Old and I Can't Find a Job</div>
+        <div class="yt-m">Man Over Fifty &middot; 2,510 subscribers</div>
+        <div class="yt-v">93,963<small>views</small></div>
+      </a>
+    </div>
+    <p class="yt-m" style="margin-top:18px;color:var(--on-dark-soft);font-size:.78rem;">Views as of 29 September 2026. Click either thumbnail to open it on YouTube.</p>
+    <p style="margin-top:20px;">Both are full-length videos about the job market. The winner is a talking-head video, and the point still stands: packaging wins when it deliberately opens a curiosity gap. That is what we are aiming for, to grow awareness of your show in the market.</p>
+    <p style="margin-top:24px;">So we package every episode from its North Star, the one big thing the conversation delivers, and find the angle in it that creates curiosity.</p>
+
+    <div class="subhead-wrap"><div class="thinrule"></div></div>
+    <h3 class="subhead">Where the demand is right now</h3>
+    <div class="grid2" style="margin-top:20px;">
+      <div class="card on-ink"><span class="tag accent">Midlife career change</span><p>About 20,000 YouTube searches a month, and vidIQ marks it as growing. The videos ranking for it sit between 5,000 and 13,000 views, so the demand is there and nobody owns it yet.</p></div>
+      <div class="card on-ink"><span class="tag accent">After a layoff</span><p>"Laid off" gets about 44,700 YouTube searches a month. Mel Robbins' episode on what to do next has 360,754 views.</p></div>
+      <div class="card on-ink"><span class="tag accent">Portfolio careers</span><p>About 4,800 searches a month. Small, but every video ranking for it is on topic, and it is exactly what Leap Academy teaches.</p></div>
+      <div class="card on-ink"><span class="tag accent">Fractional roles</span><p>"How to become a fractional executive" gets about 5,200 searches a month with very little competition. No video on it has passed 10,000 views yet.</p></div>
+    </div>
+    <p style="margin-top:18px;color:var(--on-dark-soft);font-size:.78rem;">Search numbers are vidIQ's estimates of monthly YouTube searches. View counts are from YouTube. Both pulled 28 September 2026.</p>
+
+    <div class="subhead-wrap"><div class="thinrule"></div></div>
+    <h3 class="subhead">How the content earns its way</h3>
+    <p>Every episode moves people down the same funnel.</p>
+    <div class="funnel">
+      <div class="stage s1">
+        <span class="sl">Top of funnel</span>
+        <h4>Entertain</h4>
+        <p>The guest intro and the story behind it. This earns the click and holds the first minute.</p>
+      </div>
+      <div class="stage s2">
+        <span class="sl">Mid funnel</span>
+        <h4>Educate</h4>
+        <p>The lessons inside the story: the catalyst, the why and the mindset. Viewers take these away to move their own careers forward.</p>
+      </div>
+      <div class="stage s3">
+        <span class="sl">Bottom of funnel</span>
+        <h4>Sell</h4>
+        <p>For the people who stay. They believe in the Leap Academy message and want the same for themselves, but need help. That is where your offer comes in.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="differentiator">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">02</span><h2>Your differentiator</h2></div>
+      <div class="goldrule"></div>
+    </div>
+    <p class="section-note">What your show has that the others in the market do not.</p>
+    <div class="card" style="margin-bottom:26px;">
+      <span class="tag accent">Shows you named as the standard</span>
+      <p>The Diary of a CEO, Jay Shetty and Mel Robbins. These are the packaging benchmarks, and they are where we studied what is working.</p>
+    </div>
+    <div class="panel marked" style="margin-bottom:26px;">
+      <h4>The gap we see</h4>
+      <p>The Diary of a CEO and The Mel Robbins Podcast talk to a broad audience. Fewer than five of the last 50 episodes on each show are about work or careers. The rest cover health, relationships, AI, money and world events.</p>
+      <p><strong>Your show is about how a career actually gets built, told by the people who built it.</strong></p>
+      <p style="margin-bottom:0;">That is the lane you are in: what made each guest take the leap, why they took it and how they did it, so your audience can learn from it and do the same for themselves.</p>
+    </div>
+    <div class="grid3 diff">
+      <div class="card diff-card">
+        <span class="dn">01</span>
+        <span class="tag accent">Credibility</span>
+        <h4>You have made the leap yourself</h4>
+        <p>You have built multiple seven and eight figure businesses, invested in more than 100 companies, sit as a board director and won Startup of the Year in 2023. So you interview your guests as someone who has made the same moves.</p>
+      </div>
+      <div class="card diff-card">
+        <span class="dn">02</span>
+        <span class="tag accent">The journey of the leap</span>
+        <h4>How a career actually gets built</h4>
+        <p>Your guests walk through how, why and when they built their careers. That educates and inspires the people who want to do the same for themselves.</p>
+      </div>
+      <div class="card diff-card">
+        <span class="dn">03</span>
+        <span class="tag accent">Targeted audience</span>
+        <h4>Built for professionals ready for more</h4>
+        <p>The shows you named speak to everyone. Your organic YouTube audience is 35 to 44: experienced professionals who want their next move to be bigger, whether that is a board seat, an advisory role or a portfolio career.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section wash" id="lanes">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">03</span><h2>Interview lanes</h2></div>
+      <div class="goldrule"></div>
+    </div>
+    <div class="grid2 lanes">
+      <div class="card lane">
+        <span class="tag accent">Where you are now</span>
+        <h4>The current lane</h4>
+        <p>Your conversations follow each guest's life in order: childhood, the journey, the hard moments, then leadership and scale.</p>
+        <p>Of your last 30 guests, 18 are founders who built their own companies and 6 were hired into the top job.</p>
+      </div>
+      <div class="card lane proposed">
+        <span class="tag accent">Where we would take it</span>
+        <h4>The proposed lane</h4>
+        <p>Each episode is built around one leap your audience is searching for, such as a midlife career change, life after a layoff, a fractional role or a portfolio career.</p>
+        <p>The conversation shows what made the guest take that leap, why they took it and how they did it, so your viewers can do the same.</p>
+      </div>
+    </div>
+    <div class="panel marked" style="margin-top:26px;">
+      <h4>How each episode gets its direction</h4>
+      <p style="margin-bottom:0;">Before every recording, you run the guest through our <a href="https://apodcastgeek.com/episode-brief-generator.html" target="_blank" rel="noopener">episode brief generator</a>. It reads this guide, researches the guest and gives you five directions for the episode, at least two of them built on the demand in Part B section 1. You pick one, and the brief it produces sets the questions.</p>
+    </div>
+    <div class="panel marked" style="margin-top:18px;">
+      <h4>Guest mix</h4>
+      <p style="margin-bottom:0;">Keep the founder stories that bring in your reach, and add one guest a month who has made the move your audience wants: from senior manager to the C-suite, onto a board, or into a portfolio career. These are the stories your viewers can copy, and the people most likely to want your training.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="mix">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">04</span><h2>Show features</h2></div>
+      <div class="goldrule"></div>
+    </div>
+    <p class="section-note">Three features we are proposing to break up the format, give your audience something to look forward to every week and put a unique stamp on your show. Select any you are willing to try, and we will test them in your next episode.</p>
+    <div class="grid3 features">
+      <div class="feature" data-feature="Pivot Point">
+        <div class="fhead"><span class="fn">01</span><span class="fwhen">Mid-episode</span></div>
+        <h4>Pivot Point</h4>
+        <p>A listener sends in their career question. Your guest answers it first, then you chime in, so the listener gets two perspectives and double the value.</p>
+        <div class="fmeta">Replaces the community question</div>
+        <button type="button" class="pick">Select</button>
+      </div>
+      <div class="feature" data-feature="Starting Over">
+        <div class="fhead"><span class="fn">02</span><span class="fwhen">Final question</span></div>
+        <h4>Starting Over</h4>
+        <p class="fquote">"If you lost your title tomorrow, what would you do first?"</p>
+        <p>The same last question every episode. The guest gives their real first steps, and every answer is a clip.</p>
+        <button type="button" class="pick">Select</button>
+      </div>
+      <div class="feature" data-feature="The Leap Question">
+        <div class="fhead"><span class="fn">03</span><span class="fwhen">Sign-off</span></div>
+        <h4>The Leap Question</h4>
+        <p>Each guest answers a question left by the guest before them, then leaves one for the next. It is always about making the leap: a mindset question, a catalyst question (what finally made you move) or a why question.</p>
+        <div class="fmeta">Borrowed from The Diary of a CEO</div>
+        <button type="button" class="pick">Select</button>
+      </div>
+    </div>
+    <details class="drop pp-prompt">
+      <summary>Prompt for generating a Pivot Point question</summary>
+      <div class="drop-body">
+        <p>Paste this into ChatGPT, Claude or Gemini, then add your guest's details and the listener questions you have received.</p>
+        <pre id="pp-text">You are helping me prepare the Pivot Point segment for my podcast, Leap Academy with Ilana Golan. In Pivot Point, a listener&#x27;s career question is put to my guest, who answers it first, and then I add my own take.
+
+I will give you:
+1. My guest&#x27;s name, role, and LinkedIn or website
+2. The listener questions I have received (emails, comments or DMs), pasted in full
+3. Optional: the episode brief for this guest
+
+My audience: professionals, mostly 35 to 44, who know they are capable of more and want their next move to be bigger, whether that is a C-suite role, a board seat, an advisory role, a fractional role or a portfolio career.
+
+Your job:
+1. Read the listener questions and pick the three this guest is best placed to answer from their own career. Give one line on why for each.
+2. Tidy each question so it can be read aloud in under 20 seconds. Keep the listener&#x27;s meaning and first name. Do not add details they did not give.
+3. For each question, suggest one follow-up I can ask the guest, and one angle I could add from my own experience.
+
+Rules:
+- Only use real listener questions I paste in. Never invent a listener or a question.
+- If I have not pasted any, tell me, and suggest three questions I could ask my audience on social media this week to collect them.
+- Every question must be about making a career leap: getting unstuck, changing direction, getting hired or promoted, going fractional or portfolio, or the mindset behind it.
+- Plain language, no jargon.</pre>
+        <button type="button" class="copy-btn" data-copy="pp-text">Copy prompt</button>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- SECTION 5: HOW IT WILL LOOK -->
+<section class="section band" id="look">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">05</span><h2>How it will look</h2></div>
+      <div class="goldrule"></div>
+    </div>
+    <p class="section-note">Every visual decision on the show, in one place. This is what you are approving, and what our editors build from.</p>
+
+    <h3 class="subhead">Shorts, scene by scene</h3>
+    <p>Each clip is built to the same shape, so the show becomes recognisable in a feed.</p>
+    <div class="scene">
+      <div class="sn">Scene 01 &middot; 0 to 3s</div>
+      <div><strong>Split screen open.</strong> Both speakers on screen, title banner across the middle. The viewer knows in one second what this is and who is talking.</div>
+      <div class="ref"><img src="scene-01-split.jpg" alt="Split screen open: Ilana and her guest, with the title banner across the middle" loading="lazy"></div>
+    </div>
+    <div class="scene">
+      <div class="sn">Scene 02</div>
+      <div><strong>Into the story.</strong> Full screen on the guest as the story starts. Captions carry the impact words.</div>
+      <div class="ref"><img src="scene-02-full.jpg" alt="Full screen on the guest as the story starts" loading="lazy"></div>
+    </div>
+    <div class="scene">
+      <div class="sn">Scene 03</div>
+      <div><strong>The turn.</strong> Cut on the moment the story changes. Personalised B-roll lands on the lines that matter. If the guest has a useful online presence, we gather personalised B-roll from it to strengthen the storytelling.<p class="scene-note">We are retiring the text animations used in your clips so far, and using personalised B-roll as cutaways in clips where it fits.</p></div>
+      <div class="ref"><img src="scene-03-broll.jpg" alt="Personalised B-roll cutaway" loading="lazy"></div>
+    </div>
+    <div class="scene">
+      <div class="sn">Scene 04</div>
+      <div><strong>The close.</strong> The payoff line, then the end card.</div>
+      <div class="ref"><img src="scene-04-end.jpg" alt="End card: watch the full episode on YouTube" loading="lazy"></div>
+    </div>
+
+    <div class="subhead-wrap"><div class="thinrule"></div></div>
+    <h3 class="subhead">Title banner</h3>
+    <p>Pick one. Whatever you choose is locked for every clip on the show.</p>
+    <div class="grid3" data-group="Title banner">
+      <div class="choice"><div class="slot tall"><img src="banner-01-medallion.jpg" alt="Title banner option one" loading="lazy"></div><div class="body"><span class="opt">Option one</span><span class="state">Not selected</span></div></div>
+      <div class="choice"><div class="slot tall"><img src="banner-02-gold-emphasis.jpg" alt="Title banner option two" loading="lazy"></div><div class="body"><span class="opt">Option two</span><span class="state">Not selected</span></div></div>
+      <div class="choice"><div class="slot tall"><img src="banner-03-rising-band.jpg" alt="Title banner option three" loading="lazy"></div><div class="body"><span class="opt">Option three</span><span class="state">Not selected</span></div></div>
+    </div>
+
+    <div class="subhead-wrap"><div class="thinrule"></div></div>
+    <h3 class="subhead">Packaging outliers we studied</h3>
+    <p>These three are the best packaging we found, and the ones we would like to try on your first few weekly episodes. If one of them clearly outperforms the others, we will double down on it for future episodes.</p>
+    <div class="grid3">
+      <div class="out-card"><div class="shot"><img src="thumb-a1.jpg" alt="A1 - The Emotional Story of Carleigh Bodrug’s EXPLOSIVE PlantYou Success" loading="lazy"></div><div class="body"><h4>A1 - The Emotional Story of Carleigh Bodrug’s EXPLOSIVE PlantYou Success</h4></div></div>
+      <div class="out-card"><div class="shot"><img src="thumb-a2.jpg" alt="A2 - How Do You Keep Going When Life Gives You Every Reason to Stop_" loading="lazy"></div><div class="body"><h4>A2 - How Do You Keep Going When Life Gives You Every Reason to Stop_</h4></div></div>
+      <div class="out-card"><div class="shot"><img src="thumb-a3.jpg" alt="A3 - She Posted Recipes From Chemo Waiting Rooms While Building a NYT Bestseller" loading="lazy"></div><div class="body"><h4>A3 - She Posted Recipes From Chemo Waiting Rooms While Building a NYT Bestseller</h4></div></div>
+    </div>
+
+    <div class="subhead-wrap"><div class="thinrule"></div></div>
+    <h3 class="subhead">Episode structure</h3>
+    <p>As part of Brand Builder, we structure every episode to give your audience the most value and your calls to action the most exposure. Depending on your priorities, drag the boxes to put each call to action where you want it. (We have found that getting into the conversation as soon as possible works best, so we strongly advise putting the main conversation straight after the guest intro and bringing in the calls to action after that.)</p>
+    <p class="drag-hint">Drag the boxes to change the order.</p>
+    <div class="sequence" id="structure">
+      <div draggable="true" class="cell accent"><span class="n">1</span><span class="nm">Guest intro</span></div>
+      <div draggable="true" class="cell"><span class="n">2</span><span class="nm">Main conversation</span></div>
+      <div draggable="true" class="cell accent"><span class="n">3</span><span class="nm">Subscribe CTA</span></div>
+      <div draggable="true" class="cell"><span class="n">4</span><span class="nm">Main conversation</span></div>
+      <div draggable="true" class="cell accent"><span class="n">5</span><span class="nm">Ad insert</span></div>
+      <div draggable="true" class="cell"><span class="n">6</span><span class="nm">Main conversation</span></div>
+      <div draggable="true" class="cell accent"><span class="n">7</span><span class="nm">Outro CTA and YT end card</span></div>
+    </div>
+    <p style="margin-top:20px;">The subscribe CTA is recorded separately by you, in one sitting, and dropped in by our editors at the same point in every episode. You never have to remember to say it on the day.</p>
+
+    <div class="subhead-wrap"><div class="thinrule"></div></div>
+    <h3 class="subhead">Guest intros</h3>
+    <p>Sixty seconds, narration over clips, at the top of every episode. It does four things in order.</p>
+    <ol class="steps">
+      <li><span class="n">1</span><div>Confirms what the title and thumbnail promised, so the viewer knows straight away they are in the right place.</div></li>
+      <li><span class="n">2</span><div>Establishes who the guest is and why they are worth an hour.</div></li>
+      <li><span class="n">3</span><div>Says what gets discussed and why it matters, without turning it into a lecture.</div></li>
+      <li><span class="n">4</span><div>Gets into the conversation fast.</div></li>
+    </ol>
+    <p style="margin-top:22px;">Because the intro handles the credibility, you never read a bio on mic. After it plays, you go straight into your first question.</p>
+    <p>Elements inside it: text animations, generated footage where it helps tell the story, and motion graphics that animate what is being said.</p>
+    <h4 style="margin-top:30px;font-size:1.05rem;">Leap Listicle background</h4>
+    <div class="grid3" data-group="Leap Listicle background">
+      <div class="choice"><div class="slot"><img src="listicle-bg-02-leap-arc.jpg" alt="Leap arc background" loading="lazy"></div><div class="body"><span class="opt">Option one</span><span class="state">Not selected</span></div></div>
+      <div class="choice"><div class="slot"><img src="listicle-bg-03-contour-map.jpg" alt="Contour map background" loading="lazy"></div><div class="body"><span class="opt">Option two</span><span class="state">Not selected</span></div></div>
+      <div class="choice"><div class="slot"><img src="listicle-bg-05-framed-panels.jpg" alt="Framed panels background" loading="lazy"></div><div class="body"><span class="opt">Option three</span><span class="state">Not selected</span></div></div>
+    </div>
+
+    <div class="subhead-wrap"><div class="thinrule"></div></div>
+    <h3 class="subhead">Motion graphics</h3>
+    <div class="grid3">
+      <div class="card on-ink"><div class="mg-shot"><img src="mg-lower-third.png" alt="Ilana Golan host lower third" loading="lazy"></div><span class="tag accent">Name titles</span><h4>Lower thirds</h4><p>Guest name and title, on the Leap Academy gold.</p></div>
+      <div class="card on-ink"><div class="mg-shot"><img src="mg-subscribe.png" alt="YouTube subscribe button" loading="lazy"></div><span class="tag accent">Subscribe</span><h4>YouTube icon</h4><p>Animated subscribe prompt, used once per episode at the subscribe CTA.</p></div>
+      <div class="card on-ink"><div class="mg-shot"><img src="mg-end-card.jpg" alt="End card with subscribe and watch next" loading="lazy"></div><span class="tag accent">End card</span><h4>Outro</h4><p>Updated outro with the stag mark, the next episode and the subscribe prompt.</p></div>
+    </div>
+
+    <div class="subhead-wrap"><div class="thinrule"></div></div>
+    <h3 class="subhead">Fonts and text animation</h3>
+    <div class="grid2">
+      <div class="card on-ink"><span class="tag accent">Primary</span><h4>Montserrat Bold</h4><p>Impact words in clips and guest intros. All caps, tight tracking.</p></div>
+      <div class="card on-ink"><span class="tag accent">Secondary</span><h4>Montserrat Italic</h4><p>Supporting lines and attribution, sentence case.</p></div>
+    </div>
+    <p style="margin-top:22px;">Impact word colour: the brand gold, used on the one word in a sentence that carries the meaning. Never more than one per line.</p>
+
+  </div>
+</section>
+
+<section class="section" id="leadmagnet">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">06</span><h2>Lead magnet</h2></div>
+      <div class="goldrule"></div>
+    </div>
+    <p class="section-note">Every episode ends with something worth having, so the call to action is a gift rather than an ask.</p>
+    <div class="grid2 lm">
+      <a class="lm-shot" href="https://leap-scorecard-demo.vercel.app" target="_blank" rel="noopener"><img src="leadmagnet-scorecard.jpg" alt="The Leap Readiness Scorecard" loading="lazy"></a>
+      <div>
+        <span class="tag accent">Built from your Gary Vaynerchuk episode</span>
+        <h3 style="font-size:1.5rem;">The Leap Readiness Scorecard</h3>
+        <p>Listeners scan the QR code on the episode, answer eight questions in about 90 seconds, and get their Leap Readiness score plus the one trait to work on first.</p>
+        <p>To see their result, they give their email, so every listener who takes it becomes a lead.</p>
+        <a class="lm-btn" href="https://leap-scorecard-demo.vercel.app" target="_blank" rel="noopener">Try the scorecard</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section wash" id="seo">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">07</span><h2>Search and AI readiness</h2></div>
+      <div class="goldrule"></div>
+    </div>
+    <p class="section-note">How the show gets found, by people searching and by the AI tools they increasingly ask instead.</p>
+    <div class="doc-row"><span class="tag">Primary keywords</span><div>midlife career change (about 20,100 searches a month, low competition and growing), career change after 50 (about 7,600), how to become a fractional executive (about 5,200, low competition), portfolio career (about 4,800)</div></div>
+    <div class="doc-row"><span class="tag">Secondary keywords</span><div>career coaching (about 31,200), should I quit my job (about 18,300), multiple income streams (about 12,700), what to do after being laid off (about 4,600)</div></div>
+    <p class="yt-m" style="margin-top:14px;color:var(--ink-soft);font-size:.78rem;">vidIQ estimates of monthly YouTube searches, pulled 28 September 2026.</p>
+
+    <div class="subhead-wrap"><div class="thinrule"></div></div>
+    <h3 class="subhead">Tactical specific outcome</h3>
+    <p class="section-note" style="margin-top:6px;">The short line beside the show name in podcast apps and on YouTube. It tells a stranger who the show is for and what they get from it. Pick one.</p>
+    <p class="tso-preview">Leap Academy with Ilana Golan <span>|</span> <em id="tso-live">your pick appears here</em></p>
+    <div class="tso-grid" data-group="Tactical specific outcome">
+      <div class="choice tso"><div class="body"><span class="tnum">01</span><span class="opt">Make Your Midlife Career Change</span><span class="state">Not selected</span></div></div>
+      <div class="choice tso"><div class="body"><span class="tnum">02</span><span class="opt">Career Change Stories from People Who Made the Leap</span><span class="state">Not selected</span></div></div>
+      <div class="choice tso"><div class="body"><span class="tnum">03</span><span class="opt">How Professionals Build Portfolio Careers</span><span class="state">Not selected</span></div></div>
+      <div class="choice tso"><div class="body"><span class="tnum">04</span><span class="opt">Real Career Leaps, and How to Make Yours</span><span class="state">Not selected</span></div></div>
+      <div class="choice tso"><div class="body"><span class="tnum">05</span><span class="opt">Reinvent Your Career in Your 40s and Beyond</span><span class="state">Not selected</span></div></div>
+      <div class="choice tso"><div class="body"><span class="tnum">06</span><span class="opt">Career Advice from CEOs Who Made the Leap</span><span class="state">Not selected</span></div></div>
+      <div class="choice tso"><div class="body"><span class="tnum">07</span><span class="opt">From Stuck to Your Next Career Move</span><span class="state">Not selected</span></div></div>
+      <div class="choice tso"><div class="body"><span class="tnum">08</span><span class="opt">Build a Portfolio Career on Your Own Terms</span><span class="state">Not selected</span></div></div>
+      <div class="choice tso"><div class="body"><span class="tnum">09</span><span class="opt">Midlife Reinvention for Ambitious Professionals</span><span class="state">Not selected</span></div></div>
+      <div class="choice tso"><div class="body"><span class="tnum">10</span><span class="opt">How to Leave the Ladder and Leap</span><span class="state">Not selected</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="scripts">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">08</span><h2>Scripts</h2></div>
+      <div class="goldrule"></div>
+    </div>
+    <p class="section-note">Everything you read on mic, written for you and recorded once.</p>
+    <div class="doc-row"><span class="tag">Show outro</span><div>
+      <p>Your current outro runs about 35 seconds. This version makes one call to action, the free scorecard for the episode, and runs about 23 seconds. Your YouTube end card shows on screen after your outro.</p>
+      <div class="script"><span class="sl">Outro, approved</span><p>Hey, I hope you enjoyed today's conversation. If you want to see where you stand on the traits we talked about today, and get your next three moves to make your own leap, scan the QR code on screen or click the link in the show notes for my free scorecard. Thanks for being here. I'll see you next week.</p></div>
+    </div></div>
+    <div class="doc-row"><span class="tag">Subscribe CTA</span><div>
+      <p>Your current version runs about 25 seconds. These are shorter on purpose, so they never pull attention away from the conversation people came for, and they keep your audience engaged. Each one points people to the free scorecard for the episode, then asks them to subscribe, and runs about 18 to 20 seconds. Pick one, and it will be added to your scripts when we get to recording.</p>
+      <div class="cta-group" data-group="Subscribe CTA">
+      <div class="choice script-choice"><div class="body"><span class="opt">Option one</span><span class="state">Not selected</span></div><p>Hey, quick pause. If today's conversation has you thinking about your own leap, take the free scorecard for this episode. Scan the QR code on screen or click the link in the show notes. And if you're getting value from this, hit subscribe. Now, back to the show.</p></div>
+      <div class="choice script-choice"><div class="body"><span class="opt">Option two</span><span class="state">Not selected</span></div><p>Before we keep going, there's a free scorecard built from today's conversation. It shows you where you stand and your next three moves. Scan the QR code on screen or click the link in the show notes, and hit subscribe so you don't miss the next one. Now, back to today's episode.</p></div>
+      <div class="choice script-choice"><div class="body"><span class="opt">Option three</span><span class="state">Not selected</span></div><p>Quick favour. Want to know how ready you are to make your own leap? Take the free scorecard for this episode. The QR code's on screen and the link's in the show notes. And if this show is helping you, subscribe. Now, back to the conversation.</p></div>
+      </div>
+    </div></div>
+    <div class="doc-row"><span class="tag">Ad reads</span><div>
+      <p>Three ads for your free training, one per episode on rotation. (Video) is said to camera and (Audio) is voiceover.</p>
+      <div class="script"><span class="sl">Ad script 1</span>
+        <p>(Video) Hey, quick question for you. Do you know you're capable of more, but you're not sure what your next move should be?</p>
+        <p>(Audio) That's exactly why I built a free training for senior managers, executives and founders. I walk you through the step by step strategy thousands of professionals have used to leap into board seats, C-suite roles and portfolio careers, even if you've felt stuck for years. If that sounds like where you are right now, scan the QR code on screen or click the link in the show notes.</p>
+        <p>(Video) Now, back to the conversation.</p>
+        <p class="cue">Ad link: leapacademy.com/training</p>
+      </div>
+      <div class="script"><span class="sl">Ad script 2</span>
+        <p>(Video) Hey, here's something I hear a lot. "I see other people landing advisory roles and board seats, and I don't know how they're getting them."</p>
+        <p>(Audio) In my free training, I show you why grinding harder and paying for a polished r&eacute;sum&eacute; keeps even top performers invisible, and how leaders build an executive reputation that pulls those roles toward them. If you want to be the person those opportunities come to, scan the QR code on screen or click the link in the show notes.</p>
+        <p>(Video) Now, back to the show.</p>
+        <p class="cue">Ad link: leapacademy.com/training</p>
+      </div>
+      <div class="script"><span class="sl">Ad script 3</span>
+        <p>(Video) Hey, quick pause in today's episode.</p>
+        <p>(Audio) If you've built your whole identity around a title and a company, the question "who am I without it?" can keep you stuck for years. I put together a free training for senior managers, executives and founders on how to plan your next leap, whether that's a C-suite role, a board seat or a portfolio career you build on your own terms. If that's a question you're sitting with right now, scan the QR code on screen or click the link in the show notes.</p>
+        <p>(Video) Now, back to today's conversation.</p>
+        <p class="cue">Ad link: leapacademy.com/training</p>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<section class="section band" id="workflow">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-head-line"><span class="sec-mark">09</span><h2>Workflow and next steps</h2></div>
+      <div class="goldrule"></div>
+    </div>
+    <p class="section-note">How an episode travels from your recording to published, and what happens after today.</p>
+    <ol class="steps">
+      <li><span class="n">1</span><div>Each time you book a guest, make a copy of our <a href="https://docs.google.com/document/d/11kbOGaQmSsdkVguM19YpcOgDaj7Ryx3thrRZE00Dxuo/copy" target="_blank" rel="noopener">episode brief template</a> and fill it in using our <a href="https://apodcastgeek.com/episode-brief-generator.html" target="_blank" rel="noopener">episode brief generator</a>. Then adapt any of the questions to suit the guest and where you want the conversation to go. This is the most important step in pre production.</div></li>
+      <li><span class="n">2</span><div>You record. Nothing changes about how you do that.</div></li>
+      <li><span class="n">3</span><div>Files reach us automatically through the portal.</div></li>
+      <li><span class="n">4</span><div>We review and produce the episode.</div></li>
+      <li><span class="n">5</span><div>Our editors build the episode, the guest intro and the clips to everything agreed above.</div></li>
+      <li><span class="n">6</span><div>You review in the portal and send any revision notes within 1 business day.</div></li>
+      <li><span class="n">7</span><div>We publish, and send you a monthly report on how the video, the audio and the ads are doing.</div></li>
+    </ol>
+
+    <div class="subhead-wrap"><div class="thinrule"></div></div>
+    <h3 class="subhead">Your delivery schedule</h3>
+    <table class="sched">
+      <tr><th>Episode</th><th>Delivered</th><th>Revision notes due</th><th>Published</th></tr>
+      <tr><td>174</td><td>Tue 29 Sep</td><td>Wed 30 Sep</td><td class="pub">Tue 6 Oct</td></tr>
+      <tr><td>175<small>First full Brand Builder episode</small></td><td>Tue 6 Oct</td><td>Wed 7 Oct</td><td class="pub">Tue 13 Oct</td></tr>
+      <tr><td>176</td><td>Tue 13 Oct</td><td>Wed 14 Oct</td><td class="pub">Tue 20 Oct</td></tr>
+      <tr><td>177</td><td>Tue 20 Oct</td><td>Wed 21 Oct</td><td class="pub">Tue 27 Oct</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="savebar" id="save">
+  <div class="inner">
+    <div>
+      <h3>Save your choices</h3>
+      <p id="save-status">Nothing saved yet.</p>
+    </div>
+    <button type="button" id="save-btn">Save choices</button>
+  </div>
+</section>
+
+<div id="zoom" aria-hidden="true"><img alt=""></div>
+
+<footer class="footer">
+  <div class="inner">
+    <span>APodcastGeek &middot; Podcast Design</span>
+    <span>Leap Academy with Ilana Golan</span>
+  </div>
+</footer>
+
+<script>
+// Down / Up arrow (and Page Down / Page Up) jump a whole section, for presenting on the call
+(function(){
+  var nav=document.querySelector('nav.topnav');
+  var slides=[].slice.call(document.querySelectorAll('header.cover, section'));
+  document.addEventListener('keydown',function(e){
+    var fwd=e.key==='ArrowDown'||e.key==='PageDown', back=e.key==='ArrowUp'||e.key==='PageUp';
+    var t=e.target;
+    if(!(fwd||back)||e.altKey||e.ctrlKey||e.metaKey||e.shiftKey) return;
+    if(t.isContentEditable||/^(TEXTAREA|SELECT)$/.test(t.tagName)||(t.tagName==='INPUT'&&t.type!=='checkbox')) return;
+    var line=nav.offsetHeight+8, target=null, i, top;
+    if(fwd){for(i=0;i<slides.length;i++){if(slides[i].getBoundingClientRect().top>line){target=slides[i];break;}}}
+    else{for(i=slides.length-1;i>=0;i--){top=slides[i].getBoundingClientRect().top;if(top<line-16){target=slides[i];break;}}}
+    if(!target) return;
+    e.preventDefault();
+    target.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+})();
+</script>
+<script>
+// Clickable choices and the Save button. Saves to this browser and downloads a copy.
+(function(){
+  var KEY='leap-academy-podcast-design-choices';
+  var groups=[].slice.call(document.querySelectorAll('[data-group]'));
+  var feats=[].slice.call(document.querySelectorAll('.feature'));
+  var ticks=[].slice.call(document.querySelectorAll('.ticks input'));
+  function mark(c,on){c.classList.toggle('chosen',on);var st=c.querySelector('.state');if(st)st.textContent=on?'Selected':'Not selected';}
+  function markFeat(f,on){f.classList.toggle('chosen',on);f.querySelector('.pick').textContent=on?'Selected':'Select';}
+  groups.forEach(function(g){[].slice.call(g.querySelectorAll('.choice')).forEach(function(c){
+    c.addEventListener('click',function(){var on=!c.classList.contains('chosen');[].slice.call(g.querySelectorAll('.choice')).forEach(function(o){mark(o,false);});mark(c,on);});
+  });});
+  feats.forEach(function(f){f.querySelector('.pick').addEventListener('click',function(){markFeat(f,!f.classList.contains('chosen'));});});
+  function collect(){
+    var d={saved:new Date().toISOString(),choices:{},features:[],access:[],structure:[].slice.call(document.querySelectorAll('#structure .cell .nm')).map(function(n){return n.textContent;})};
+    groups.forEach(function(g){var c=g.querySelector('.choice.chosen');d.choices[g.dataset.group]=c?c.querySelector('.opt').textContent:null;});
+    feats.forEach(function(f){if(f.classList.contains('chosen'))d.features.push(f.dataset.feature);});
+    ticks.forEach(function(t){if(t.checked)d.access.push(t.nextElementSibling.textContent);});
+    return d;
+  }
+  function restore(d){
+    groups.forEach(function(g){var want=d.choices&&d.choices[g.dataset.group];[].slice.call(g.querySelectorAll('.choice')).forEach(function(c){mark(c,!!want&&c.querySelector('.opt').textContent===want);});});
+    feats.forEach(function(f){markFeat(f,(d.features||[]).indexOf(f.dataset.feature)>-1);});
+    ticks.forEach(function(t){t.checked=(d.access||[]).indexOf(t.nextElementSibling.textContent)>-1;});
+    if(d.structure&&d.structure.length){var pool=[].slice.call(seq.querySelectorAll('.cell'));d.structure.forEach(function(name){for(var i=0;i<pool.length;i++){if(pool[i].querySelector('.nm').textContent===name){seq.appendChild(pool[i]);pool.splice(i,1);break;}}});pool.forEach(function(c){seq.appendChild(c);});renum();}
+  }
+  var seq=document.getElementById('structure'),dragEl=null;
+  function renum(){[].slice.call(seq.querySelectorAll('.cell')).forEach(function(c,i){c.querySelector('.n').textContent=i+1;});}
+  [].slice.call(seq.querySelectorAll('.cell')).forEach(function(c){
+    c.addEventListener('dragstart',function(e){dragEl=c;c.classList.add('dragging');e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain','');});
+    c.addEventListener('dragend',function(){c.classList.remove('dragging');[].slice.call(seq.querySelectorAll('.over')).forEach(function(o){o.classList.remove('over');});dragEl=null;renum();});
+    c.addEventListener('dragover',function(e){e.preventDefault();if(!dragEl||dragEl===c)return;c.classList.add('over');
+      var r=c.getBoundingClientRect(),vertical=getComputedStyle(seq).gridTemplateColumns.split(' ').length===1;
+      var after=vertical?(e.clientY>r.top+r.height/2):(e.clientX>r.left+r.width/2);
+      seq.insertBefore(dragEl,after?c.nextSibling:c);renum();});
+    c.addEventListener('dragleave',function(){c.classList.remove('over');});
+    c.addEventListener('drop',function(e){e.preventDefault();c.classList.remove('over');renum();});
+  });
+  var zoom=document.getElementById('zoom'),zimg=zoom.querySelector('img');
+  [].slice.call(document.querySelectorAll('.choice .slot img, .scene .ref img, .lm-shot img, .out-card .shot img, .mg-shot img')).forEach(function(im){
+    im.addEventListener('mouseenter',function(){zimg.src=im.currentSrc||im.src;zimg.alt=im.alt;zoom.classList.add('on');});
+    im.addEventListener('mouseleave',function(){zoom.classList.remove('on');});
+  });
+  [].slice.call(document.querySelectorAll('.copy-btn')).forEach(function(b){b.addEventListener('click',function(){var t=document.getElementById(b.dataset.copy).textContent;var done=function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy prompt';},1800);};if(navigator.clipboard)navigator.clipboard.writeText(t).then(done,function(){});else{var r=document.createRange();r.selectNodeContents(document.getElementById(b.dataset.copy));getSelection().removeAllRanges();getSelection().addRange(r);document.execCommand('copy');done();}});});
+  var cur=null;
+  [].slice.call(document.querySelectorAll('.play')).forEach(function(b){
+    b.addEventListener('click',function(e){e.stopPropagation();
+      if(cur&&cur.btn===b&&!cur.a.paused){cur.a.pause();b.classList.remove('on');return;}
+      if(cur){cur.a.pause();cur.btn.classList.remove('on');}
+      var a=new Audio(b.dataset.src);cur={a:a,btn:b};b.classList.add('on');a.onended=function(){b.classList.remove('on');};a.play();
+    });
+  });
+  var tg=document.querySelector('[data-group="Tactical specific outcome"]'),tl=document.getElementById('tso-live');
+  function tso(){var c=tg&&tg.querySelector('.choice.chosen');if(tl)tl.textContent=c?c.querySelector('.opt').textContent:'your pick appears here';}
+  if(tg)tg.addEventListener('click',function(){setTimeout(tso,0);});
+  var status=document.getElementById('save-status');
+  // Saves centrally (same store as the other podcast guides) so APodcastGeek sees the client's choices. The local copy is the offline fallback.
+  var API='https://apodcastgeek.app.n8n.cloud/webhook/podcast-design-state',SLUG='leap-academy-with-ilana-golan';
+  function when(iso){return new Date(iso).toLocaleString();}
+  try{var prev=JSON.parse(localStorage.getItem(KEY)||'null');if(prev){restore(prev);status.textContent='Last saved '+when(prev.saved)+'.';}}catch(e){}
+  tso();
+  fetch(API+'?slug='+encodeURIComponent(SLUG)+'&t='+Date.now()).then(function(r){return r.json();}).then(function(res){
+    var d=res&&res.payload;if(d&&d.saved){restore(d);tso();status.textContent='Last saved '+when(d.saved)+'.';try{localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}}
+  }).catch(function(){});
+  document.getElementById('save-btn').addEventListener('click',function(){
+    var d=collect();try{localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}
+    status.textContent='Saving...';
+    fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({slug:SLUG,payload:d})})
+      .then(function(r){if(!r.ok)throw r.status;status.textContent='Saved at '+new Date().toLocaleTimeString()+'. APodcastGeek can now see your choices.';})
+      .catch(function(){status.textContent='Could not reach our server, so this is only saved on this device. Please try again in a moment.';});
+  });
+})();
+</script>
+</body>
+</html>

@@ -628,6 +628,15 @@ async function main() {
   // Manual posts — built outside Notion, always prepended so they survive automated runs
   const manualCards = [
     {
+      slug: 'how-to-choose-podcast-host-b2b-2026',
+      postImage: 'default.jpg',
+      tag: 'B2B Strategy',
+      title: 'How to choose a podcast host for a B2B show in 2026',
+      description: 'Pick a podcast host that keeps your B2B show reliable on Apple, Spotify and YouTube. What matters, when Buzzsprout is enough, and when you need more than hosting.',
+      publishDate: '2026-09-25',
+      reading: 5
+    },
+    {
       slug: 'why-podcast-not-getting-views-youtube',
       postImage: 'posts/bobby-owsinski-elliot-easton-thumbnail.png',
       tag: 'YouTube',
@@ -647,7 +656,8 @@ async function main() {
     }
   ];
 
-  const allCards = [...manualCards, ...cards];
+  const allCards = [...manualCards, ...cards]
+    .sort((a, b) => b.publishDate.localeCompare(a.publishDate));
 
   const cardsHtml = allCards.map(p =>
     `<a href="blog/${p.slug}.html" class="blog-card">` +

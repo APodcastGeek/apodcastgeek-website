@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>APG Music Library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600;700&family=Rajdhani:wght@600;700&display=swap">
+<style>
+/* Layout: APG brand, dark only (Dave 2026-09-30). Logo on dark takes the exact CLAUDE.md glow: drop-shadow(0 0 1px white).
+   Header with logo and slider-dot divider, tabs per use, mood/length chips, track rows with a fader-style progress bar. */
+:root{
+  color-scheme: dark;
+  --blue-dark:#174488; --blue:#1D68A9; --blue-light:#4F98CE;
+  --bg:#060810; --card:#0C1628; --ink:#EEF4FC; --muted:#98ABC4; --line:#1C2C47; --chip:#132746; --hi:#8EC3F0;
+  --grad:linear-gradient(90deg,#174488 0%,#1D68A9 55%,#4F98CE 100%);
+  --head:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Open Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --label:"Rajdhani","Arial Narrow",system-ui,sans-serif;
+}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font-family:var(--body);font-size:15px;line-height:1.55}
+.wrap{max-width:960px;margin:0 auto;padding-inline:16px;padding-block:24px 72px}
+header{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px}
+header img{width:200px;height:auto;display:block;filter: drop-shadow(0 0 1px white);}
+.eyebrow{font-family:var(--label);font-weight:700;text-transform:uppercase;letter-spacing:5px;font-size:13px;color:var(--blue-light)}
+h1{font-family:var(--head);font-weight:800;font-size:clamp(28px,5vw,40px);letter-spacing:-.8px;margin:2px 0 4px;color:#FFFFFF;text-wrap:balance}
+.intro{margin:0;color:var(--muted);max-width:60ch}
+.fader{position:relative;height:5px;border-radius:5px;background:var(--grad);margin:22px 0 18px;box-shadow:0 0 16px rgba(31,104,169,.35)}
+.fader::after{content:"";position:absolute;top:50%;left:22%;width:16px;height:16px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 35% 30%,#4F98CE,#174488);box-shadow:0 0 14px rgba(79,152,206,.6)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tabs button{font-family:var(--head);font-weight:700;font-size:15px;border:1px solid var(--line);background:var(--card);color:var(--hi);border-radius:10px;padding:10px 18px;cursor:pointer}
+/* Solid, not the gradient: a gradient in a small pill read as a colour bug to Dave (2026-09-30). */
+.tabs button[aria-pressed="true"]{background:var(--blue);color:#fff;border-color:var(--blue)}
+.tabs button span{font-family:var(--label);font-weight:600;opacity:.8;margin-left:6px}
+.how b{color:#fff}
+.how{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:16px 0 12px}
+.how ol{margin:6px 0 0;padding-left:20px}
+.how li{margin:2px 0}
+.filters{display:flex;flex-direction:column;gap:8px;margin:12px 0 16px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chips .lbl{font-family:var(--label);font-weight:700;text-transform:uppercase;letter-spacing:3px;font-size:12px;color:var(--muted);min-width:64px}
+.chips button{font:600 13px var(--body);border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:4px 12px;cursor:pointer;text-transform:capitalize}
+.chips button[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+h2{font-family:var(--label);font-weight:700;text-transform:uppercase;letter-spacing:5px;font-size:14px;color:var(--blue-light);margin:22px 0 8px}
+.row{display:grid;grid-template-columns:46px minmax(0,1fr) auto;gap:6px 14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:8px}
+.row.on{border-color:var(--blue-light);box-shadow:0 0 0 3px rgba(79,152,206,.22),0 0 24px rgba(31,104,169,.25)}
+.play{width:44px;height:44px;border-radius:50%;border:none;background:radial-gradient(circle at 35% 30%,#4F98CE,#174488);color:#fff;cursor:pointer;display:grid;place-items:center}
+.play svg{width:16px;height:16px;fill:currentColor}
+button:focus-visible{outline:3px solid var(--blue-light);outline-offset:2px}
+.meta{min-width:0}
+.name{font-family:var(--head);font-weight:700;font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
+.tag{font-family:var(--label);font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:0 8px;border-radius:6px;background:var(--chip);color:var(--hi)}
+.sub{font-size:12px;color:var(--muted);overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.dl{text-decoration:none;font:700 14px var(--head);border:none;border-radius:10px;padding:10px 16px;background:var(--grad);color:#fff;cursor:pointer;display:flex;gap:8px;align-items:center;white-space:nowrap}
+.dl svg{width:16px;height:16px;fill:currentColor}
+.track{grid-column:2/4;position:relative;height:5px;border-radius:5px;background:var(--line);cursor:pointer;margin:6px 0 4px}
+.track i{position:absolute;inset:0 auto 0 0;width:0;border-radius:5px;background:var(--grad)}
+.track b{position:absolute;top:50%;left:0;width:13px;height:13px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 35% 30%,#4F98CE,#174488);opacity:0}
+.row.on .track b{opacity:1}
+.note{margin-top:28px;color:var(--muted);font-size:13px}
+@media (max-width:620px){header img{width:160px}.row{grid-template-columns:46px minmax(0,1fr)}.dl{grid-column:1/3;justify-content:center}.track{grid-column:1/3}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head><body>
+<div class="wrap">
+<header>
+<img src="logo.png" alt="APodcastGeek logo">
+<div>
+<div class="eyebrow">For APodcastGeek editors</div>
+<h1>APG Music Library</h1>
+<p class="intro">Every track here is made by APodcastGeek and cleared for client work. Use only this music, never Envato, YouTube or other sites. Press play to listen, then Download to save it.</p>
+</div>
+</header>
+<div class="fader" aria-hidden="true"></div>
+<div class="tabs" role="group" aria-label="What are you editing?">
+<button id="t-intro" data-s="intro" aria-pressed="true">Guest intros<span id="c-intro"></span></button>
+<button id="t-shorts" data-s="shorts" aria-pressed="false">Short-form clips<span id="c-shorts"></span></button>
+<button id="t-ad" data-s="ad" aria-pressed="false">Ad reads<span id="c-ad"></span></button>
+</div>
+<div class="how" id="how"></div>
+<div class="filters">
+<div class="chips" id="moods" role="group" aria-label="Mood"></div>
+<div class="chips" id="lens" role="group" aria-label="Length"></div>
+</div>
+<div id="list"></div>
+<p class="note">Downloads save as .mp4 audio files. Drag them straight onto your timeline. If you hear singing or a voice in a track, or YouTube shows a copyright claim, tell Dave straight away.</p>
+</div>
+<audio id="au" preload="none"></audio>
+<script>
+const TRACKS = [{"s": "ad", "mood": "acoustic", "len": 20, "climax": null, "name": "Acoustic 20s 01", "file": "ad-acoustic-20s-01.mp4", "sec": 20}, {"s": "ad", "mood": "acoustic", "len": 20, "climax": null, "name": "Acoustic 20s 02", "file": "ad-acoustic-20s-02.mp4", "sec": 20}, {"s": "ad", "mood": "acoustic", "len": 25, "climax": null, "name": "Acoustic 25s 01", "file": "ad-acoustic-25s-01.mp4", "sec": 25}, {"s": "ad", "mood": "acoustic", "len": 25, "climax": null, "name": "Acoustic 25s 02", "file": "ad-acoustic-25s-02.mp4", "sec": 25}, {"s": "ad", "mood": "acoustic", "len": 30, "climax": null, "name": "Acoustic 30s 01", "file": "ad-acoustic-30s-01.mp4", "sec": 30}, {"s": "ad", "mood": "acoustic", "len": 30, "climax": null, "name": "Acoustic 30s 02", "file": "ad-acoustic-30s-02.mp4", "sec": 30}, {"s": "ad", "mood": "corporate", "len": 20, "climax": null, "name": "Corporate 20s 01", "file": "ad-corporate-20s-01.mp4", "sec": 20}, {"s": "ad", "mood": "corporate", "len": 20, "climax": null, "name": "Corporate 20s 02", "file": "ad-corporate-20s-02.mp4", "sec": 20}, {"s": "ad", "mood": "corporate", "len": 25, "climax": null, "name": "Corporate 25s 01", "file": "ad-corporate-25s-01.mp4", "sec": 25}, {"s": "ad", "mood": "corporate", "len": 25, "climax": null, "name": "Corporate 25s 02", "file": "ad-corporate-25s-02.mp4", "sec": 25}, {"s": "ad", "mood": "corporate", "len": 30, "climax": null, "name": "Corporate 30s 01", "file": "ad-corporate-30s-01.mp4", "sec": 30}, {"s": "ad", "mood": "electronic", "len": 20, "climax": null, "name": "Electronic 20s 01", "file": "ad-electronic-20s-01.mp4", "sec": 20}, {"s": "ad", "mood": "electronic", "len": 20, "climax": null, "name": "Electronic 20s 02", "file": "ad-electronic-20s-02.mp4", "sec": 20}, {"s": "ad", "mood": "electronic", "len": 30, "climax": null, "name": "Electronic 30s 01", "file": "ad-electronic-30s-01.mp4", "sec": 30}, {"s": "ad", "mood": "electronic", "len": 30, "climax": null, "name": "Electronic 30s 02", "file": "ad-electronic-30s-02.mp4", "sec": 30}, {"s": "intro", "mood": "corporate", "len": null, "climax": 49, "name": "Corporate 02", "file": "corporate-02-66s-climax49.mp4", "sec": 66}, {"s": "intro", "mood": "corporate", "len": null, "climax": 41, "name": "Corporate 04", "file": "corporate-04-66s-climax41.mp4", "sec": 66}, {"s": "intro", "mood": "corporate", "len": null, "climax": 59, "name": "Corporate 06", "file": "corporate-06-66s-climax59.mp4", "sec": 66}, {"s": "intro", "mood": "epic", "len": null, "climax": 58, "name": "Epic 01", "file": "epic-01-66s-climax58.mp4", "sec": 66}, {"s": "intro", "mood": "epic", "len": null, "climax": 57, "name": "Epic 02", "file": "epic-02-66s-climax57.mp4", "sec": 66}, {"s": "intro", "mood": "epic", "len": null, "climax": 62, "name": "Epic 03", "file": "epic-03-66s-climax62.mp4", "sec": 66}, {"s": "intro", "mood": "epic", "len": null, "climax": 42, "name": "Epic 04", "file": "epic-04-66s-climax42.mp4", "sec": 66}, {"s": "intro", "mood": "epic", "len": null, "climax": 56, "name": "Epic 05", "file": "epic-05-70s-climax56.mp4", "sec": 70}, {"s": "intro", "mood": "epic", "len": null, "climax": 57, "name": "Epic 06", "file": "epic-06-70s-climax57.mp4", "sec": 70}, {"s": "intro", "mood": "epic", "len": null, "climax": 66, "name": "Epic 07", "file": "epic-07-70s-climax66.mp4", "sec": 70}, {"s": "intro", "mood": "inspirational", "len": null, "climax": 50, "name": "Inspirational 01", "file": "inspirational-01-66s-climax50.mp4", "sec": 66}, {"s": "intro", "mood": "inspirational", "len": null, "climax": 62, "name": "Inspirational 02", "file": "inspirational-02-66s-climax62.mp4", "sec": 66}, {"s": "intro", "mood": "inspirational", "len": null, "climax": 53, "name": "Inspirational 03", "file": "inspirational-03-66s-climax53.mp4", "sec": 66}, {"s": "intro", "mood": "inspirational", "len": null, "climax": 50, "name": "Inspirational 04", "file": "inspirational-04-66s-climax50.mp4", "sec": 66}, {"s": "intro", "mood": "inspirational", "len": null, "climax": 58, "name": "Inspirational 05", "file": "inspirational-05-70s-climax58.mp4", "sec": 70}, {"s": "intro", "mood": "tension", "len": null, "climax": 49, "name": "Tension 01", "file": "tension-01-66s-climax49.mp4", "sec": 66}, {"s": "intro", "mood": "tension", "len": null, "climax": 59, "name": "Tension 02", "file": "tension-02-66s-climax59.mp4", "sec": 66}, {"s": "intro", "mood": "tension", "len": null, "climax": 50, "name": "Tension 03", "file": "tension-03-66s-climax50.mp4", "sec": 66}, {"s": "intro", "mood": "tension", "len": null, "climax": 55, "name": "Tension 04", "file": "tension-04-66s-climax55.mp4", "sec": 66}, {"s": "intro", "mood": "tension", "len": null, "climax": 52, "name": "Tension 05", "file": "tension-05-70s-climax52.mp4", "sec": 70}, {"s": "intro", "mood": "tension", "len": null, "climax": 64, "name": "Tension 06", "file": "tension-06-70s-climax64.mp4", "sec": 70}, {"s": "intro", "mood": "upbeat", "len": null, "climax": 49, "name": "Upbeat 01", "file": "upbeat-01-66s-climax49.mp4", "sec": 66}, {"s": "intro", "mood": "upbeat", "len": null, "climax": 55, "name": "Upbeat 02", "file": "upbeat-02-66s-climax55.mp4", "sec": 66}, {"s": "intro", "mood": "upbeat", "len": null, "climax": 58, "name": "Upbeat 03", "file": "upbeat-03-66s-climax58.mp4", "sec": 66}, {"s": "intro", "mood": "upbeat", "len": null, "climax": 52, "name": "Upbeat 04", "file": "upbeat-04-66s-climax52.mp4", "sec": 66}, {"s": "intro", "mood": "upbeat", "len": null, "climax": 68, "name": "Upbeat 05", "file": "upbeat-05-70s-climax68.mp4", "sec": 70}, {"s": "shorts", "mood": "corporate", "len": 30, "climax": null, "name": "Corporate 30s 01", "file": "corporate-30s-01.mp4", "sec": 31}, {"s": "shorts", "mood": "corporate", "len": 30, "climax": null, "name": "Corporate 30s 02", "file": "corporate-30s-02.mp4", "sec": 31}, {"s": "shorts", "mood": "corporate", "len": 30, "climax": null, "name": "Corporate 30s 03", "file": "corporate-30s-03.mp4", "sec": 36}, {"s": "shorts", "mood": "corporate", "len": 30, "climax": null, "name": "Corporate 30s 04", "file": "corporate-30s-04.mp4", "sec": 36}, {"s": "shorts", "mood": "corporate", "len": 30, "climax": null, "name": "Corporate 30s 05", "file": "corporate-30s-05.mp4", "sec": 36}, {"s": "shorts", "mood": "corporate", "len": 30, "climax": null, "name": "Corporate 30s 06", "file": "corporate-30s-06.mp4", "sec": 31}, {"s": "shorts", "mood": "corporate", "len": 30, "climax": null, "name": "Corporate 30s 07", "file": "corporate-30s-07.mp4", "sec": 31}, {"s": "shorts", "mood": "corporate", "len": 30, "climax": null, "name": "Corporate 30s 08", "file": "corporate-30s-08.mp4", "sec": 36}, {"s": "shorts", "mood": "corporate", "len": 30, "climax": null, "name": "Corporate 30s 09", "file": "corporate-30s-09.mp4", "sec": 36}, {"s": "shorts", "mood": "corporate", "len": 30, "climax": null, "name": "Corporate 30s 10", "file": "corporate-30s-10.mp4", "sec": 31}, {"s": "shorts", "mood": "corporate", "len": 30, "climax": null, "name": "Corporate 30s 11", "file": "corporate-30s-11.mp4", "sec": 31}, {"s": "shorts", "mood": "corporate", "len": 40, "climax": null, "name": "Corporate 40s 01", "file": "corporate-40s-01.mp4", "sec": 40}, {"s": "shorts", "mood": "corporate", "len": 40, "climax": null, "name": "Corporate 40s 02", "file": "corporate-40s-02.mp4", "sec": 40}, {"s": "shorts", "mood": "corporate", "len": 40, "climax": null, "name": "Corporate 40s 03", "file": "corporate-40s-03.mp4", "sec": 40}, {"s": "shorts", "mood": "corporate", "len": 40, "climax": null, "name": "Corporate 40s 04", "file": "corporate-40s-04.mp4", "sec": 42}, {"s": "shorts", "mood": "corporate", "len": 40, "climax": null, "name": "Corporate 40s 05", "file": "corporate-40s-05.mp4", "sec": 42}, {"s": "shorts", "mood": "corporate", "len": 50, "climax": null, "name": "Corporate 50s 01", "file": "corporate-50s-01.mp4", "sec": 50}, {"s": "shorts", "mood": "corporate", "len": 50, "climax": null, "name": "Corporate 50s 02", "file": "corporate-50s-02.mp4", "sec": 50}, {"s": "shorts", "mood": "corporate", "len": 50, "climax": null, "name": "Corporate 50s 03", "file": "corporate-50s-03.mp4", "sec": 50}, {"s": "shorts", "mood": "corporate", "len": 60, "climax": null, "name": "Corporate 60s 01", "file": "corporate-60s-01.mp4", "sec": 80}, {"s": "shorts", "mood": "corporate", "len": 60, "climax": null, "name": "Corporate 60s 02", "file": "corporate-60s-02.mp4", "sec": 80}, {"s": "shorts", "mood": "corporate", "len": 60, "climax": null, "name": "Corporate 60s 03", "file": "corporate-60s-03.mp4", "sec": 75}, {"s": "shorts", "mood": "corporate", "len": 60, "climax": null, "name": "Corporate 60s 04", "file": "corporate-60s-04.mp4", "sec": 75}, {"s": "shorts", "mood": "curious", "len": 30, "climax": null, "name": "Curious 30s 01", "file": "curious-30s-01.mp4", "sec": 30}, {"s": "shorts", "mood": "curious", "len": 40, "climax": null, "name": "Curious 40s 01", "file": "curious-40s-01.mp4", "sec": 40}, {"s": "shorts", "mood": "curious", "len": 50, "climax": null, "name": "Curious 50s 01", "file": "curious-50s-01.mp4", "sec": 50}, {"s": "shorts", "mood": "curious", "len": 60, "climax": null, "name": "Curious 60s 01", "file": "curious-60s-01.mp4", "sec": 60}, {"s": "shorts", "mood": "epic", "len": 30, "climax": null, "name": "Epic 30s 01", "file": "epic-30s-01.mp4", "sec": 30}, {"s": "shorts", "mood": "epic", "len": 30, "climax": null, "name": "Epic 30s 02", "file": "epic-30s-02.mp4", "sec": 30}, {"s": "shorts", "mood": "epic", "len": 30, "climax": null, "name": "Epic 30s 03", "file": "epic-30s-03.mp4", "sec": 30}, {"s": "shorts", "mood": "epic", "len": 40, "climax": null, "name": "Epic 40s 01", "file": "epic-40s-01.mp4", "sec": 40}, {"s": "shorts", "mood": "epic", "len": 40, "climax": null, "name": "Epic 40s 02", "file": "epic-40s-02.mp4", "sec": 40}, {"s": "shorts", "mood": "epic", "len": 40, "climax": null, "name": "Epic 40s 03", "file": "epic-40s-03.mp4", "sec": 40}, {"s": "shorts", "mood": "epic", "len": 40, "climax": null, "name": "Epic 40s 04", "file": "epic-40s-04.mp4", "sec": 40}, {"s": "shorts", "mood": "epic", "len": 40, "climax": null, "name": "Epic 40s 05", "file": "epic-40s-05.mp4", "sec": 40}, {"s": "shorts", "mood": "epic", "len": 40, "climax": null, "name": "Epic 40s 06", "file": "epic-40s-06.mp4", "sec": 40}, {"s": "shorts", "mood": "epic", "len": 50, "climax": null, "name": "Epic 50s 01", "file": "epic-50s-01.mp4", "sec": 50}, {"s": "shorts", "mood": "epic", "len": 50, "climax": null, "name": "Epic 50s 02", "file": "epic-50s-02.mp4", "sec": 50}, {"s": "shorts", "mood": "epic", "len": 50, "climax": null, "name": "Epic 50s 03", "file": "epic-50s-03.mp4", "sec": 50}, {"s": "shorts", "mood": "epic", "len": 60, "climax": null, "name": "Epic 60s 01", "file": "epic-60s-01.mp4", "sec": 90}, {"s": "shorts", "mood": "epic", "len": 60, "climax": null, "name": "Epic 60s 02", "file": "epic-60s-02.mp4", "sec": 60}, {"s": "shorts", "mood": "epic", "len": 60, "climax": null, "name": "Epic 60s 03", "file": "epic-60s-03.mp4", "sec": 60}, {"s": "shorts", "mood": "inspirational", "len": 30, "climax": null, "name": "Inspirational 30s 01", "file": "inspirational-30s-01.mp4", "sec": 30}, {"s": "shorts", "mood": "inspirational", "len": 30, "climax": null, "name": "Inspirational 30s 02", "file": "inspirational-30s-02.mp4", "sec": 30}, {"s": "shorts", "mood": "inspirational", "len": 30, "climax": null, "name": "Inspirational 30s 03", "file": "inspirational-30s-03.mp4", "sec": 30}, {"s": "shorts", "mood": "inspirational", "len": 40, "climax": null, "name": "Inspirational 40s 01", "file": "inspirational-40s-01.mp4", "sec": 40}, {"s": "shorts", "mood": "inspirational", "len": 40, "climax": null, "name": "Inspirational 40s 02", "file": "inspirational-40s-02.mp4", "sec": 40}, {"s": "shorts", "mood": "inspirational", "len": 40, "climax": null, "name": "Inspirational 40s 03", "file": "inspirational-40s-03.mp4", "sec": 40}, {"s": "shorts", "mood": "inspirational", "len": 40, "climax": null, "name": "Inspirational 40s 04", "file": "inspirational-40s-04.mp4", "sec": 40}, {"s": "shorts", "mood": "inspirational", "len": 40, "climax": null, "name": "Inspirational 40s 05", "file": "inspirational-40s-05.mp4", "sec": 40}, {"s": "shorts", "mood": "inspirational", "len": 40, "climax": null, "name": "Inspirational 40s 06", "file": "inspirational-40s-06.mp4", "sec": 40}, {"s": "shorts", "mood": "inspirational", "len": 40, "climax": null, "name": "Inspirational 40s 07", "file": "inspirational-40s-07.mp4", "sec": 40}, {"s": "shorts", "mood": "inspirational", "len": 40, "climax": null, "name": "Inspirational 40s 08", "file": "inspirational-40s-08.mp4", "sec": 40}, {"s": "shorts", "mood": "inspirational", "len": 40, "climax": null, "name": "Inspirational 40s 09", "file": "inspirational-40s-09.mp4", "sec": 40}, {"s": "shorts", "mood": "inspirational", "len": 40, "climax": null, "name": "Inspirational 40s 10", "file": "inspirational-40s-10.mp4", "sec": 40}, {"s": "shorts", "mood": "inspirational", "len": 40, "climax": null, "name": "Inspirational 40s 11", "file": "inspirational-40s-11.mp4", "sec": 40}, {"s": "shorts", "mood": "inspirational", "len": 40, "climax": null, "name": "Inspirational 40s 12", "file": "inspirational-40s-12.mp4", "sec": 40}, {"s": "shorts", "mood": "inspirational", "len": 50, "climax": null, "name": "Inspirational 50s 01", "file": "inspirational-50s-01.mp4", "sec": 50}, {"s": "shorts", "mood": "inspirational", "len": 50, "climax": null, "name": "Inspirational 50s 02", "file": "inspirational-50s-02.mp4", "sec": 50}, {"s": "shorts", "mood": "inspirational", "len": 50, "climax": null, "name": "Inspirational 50s 03", "file": "inspirational-50s-03.mp4", "sec": 50}, {"s": "shorts", "mood": "inspirational", "len": 60, "climax": null, "name": "Inspirational 60s 01", "file": "inspirational-60s-01.mp4", "sec": 60}, {"s": "shorts", "mood": "inspirational", "len": 60, "climax": null, "name": "Inspirational 60s 02", "file": "inspirational-60s-02.mp4", "sec": 60}, {"s": "shorts", "mood": "inspirational", "len": 60, "climax": null, "name": "Inspirational 60s 03", "file": "inspirational-60s-03.mp4", "sec": 60}, {"s": "shorts", "mood": "reflective", "len": 30, "climax": null, "name": "Reflective 30s 01", "file": "reflective-30s-01.mp4", "sec": 30}, {"s": "shorts", "mood": "reflective", "len": 40, "climax": null, "name": "Reflective 40s 01", "file": "reflective-40s-01.mp4", "sec": 40}, {"s": "shorts", "mood": "reflective", "len": 50, "climax": null, "name": "Reflective 50s 01", "file": "reflective-50s-01.mp4", "sec": 50}, {"s": "shorts", "mood": "reflective", "len": 60, "climax": null, "name": "Reflective 60s 01", "file": "reflective-60s-01.mp4", "sec": 60}, {"s": "shorts", "mood": "tension", "len": 30, "climax": null, "name": "Tension 30s 01", "file": "tension-30s-01.mp4", "sec": 30}, {"s": "shorts", "mood": "tension", "len": 30, "climax": null, "name": "Tension 30s 02", "file": "tension-30s-02.mp4", "sec": 30}, {"s": "shorts", "mood": "tension", "len": 30, "climax": null, "name": "Tension 30s 03", "file": "tension-30s-03.mp4", "sec": 30}, {"s": "shorts", "mood": "tension", "len": 40, "climax": null, "name": "Tension 40s 01", "file": "tension-40s-01.mp4", "sec": 40}, {"s": "shorts", "mood": "tension", "len": 40, "climax": null, "name": "Tension 40s 02", "file": "tension-40s-02.mp4", "sec": 40}, {"s": "shorts", "mood": "tension", "len": 40, "climax": null, "name": "Tension 40s 03", "file": "tension-40s-03.mp4", "sec": 40}, {"s": "shorts", "mood": "tension", "len": 40, "climax": null, "name": "Tension 40s 04", "file": "tension-40s-04.mp4", "sec": 40}, {"s": "shorts", "mood": "tension", "len": 40, "climax": null, "name": "Tension 40s 05", "file": "tension-40s-05.mp4", "sec": 40}, {"s": "shorts", "mood": "tension", "len": 40, "climax": null, "name": "Tension 40s 06", "file": "tension-40s-06.mp4", "sec": 40}, {"s": "shorts", "mood": "tension", "len": 50, "climax": null, "name": "Tension 50s 01", "file": "tension-50s-01.mp4", "sec": 50}, {"s": "shorts", "mood": "tension", "len": 50, "climax": null, "name": "Tension 50s 02", "file": "tension-50s-02.mp4", "sec": 50}, {"s": "shorts", "mood": "tension", "len": 50, "climax": null, "name": "Tension 50s 04", "file": "tension-50s-04.mp4", "sec": 50}, {"s": "shorts", "mood": "tension", "len": 60, "climax": null, "name": "Tension 60s 01", "file": "tension-60s-01.mp4", "sec": 60}, {"s": "shorts", "mood": "tension", "len": 60, "climax": null, "name": "Tension 60s 02", "file": "tension-60s-02.mp4", "sec": 60}, {"s": "shorts", "mood": "tension", "len": 60, "climax": null, "name": "Tension 60s 03", "file": "tension-60s-03.mp4", "sec": 60}, {"s": "shorts", "mood": "upbeat", "len": 30, "climax": null, "name": "Upbeat 30s 01", "file": "upbeat-30s-01.mp4", "sec": 30}, {"s": "shorts", "mood": "upbeat", "len": 30, "climax": null, "name": "Upbeat 30s 02", "file": "upbeat-30s-02.mp4", "sec": 30}, {"s": "shorts", "mood": "upbeat", "len": 30, "climax": null, "name": "Upbeat 30s 03", "file": "upbeat-30s-03.mp4", "sec": 30}, {"s": "shorts", "mood": "upbeat", "len": 40, "climax": null, "name": "Upbeat 40s 01", "file": "upbeat-40s-01.mp4", "sec": 40}, {"s": "shorts", "mood": "upbeat", "len": 40, "climax": null, "name": "Upbeat 40s 02", "file": "upbeat-40s-02.mp4", "sec": 40}, {"s": "shorts", "mood": "upbeat", "len": 40, "climax": null, "name": "Upbeat 40s 03", "file": "upbeat-40s-03.mp4", "sec": 40}, {"s": "shorts", "mood": "upbeat", "len": 40, "climax": null, "name": "Upbeat 40s 04", "file": "upbeat-40s-04.mp4", "sec": 40}, {"s": "shorts", "mood": "upbeat", "len": 40, "climax": null, "name": "Upbeat 40s 05", "file": "upbeat-40s-05.mp4", "sec": 40}, {"s": "shorts", "mood": "upbeat", "len": 40, "climax": null, "name": "Upbeat 40s 06", "file": "upbeat-40s-06.mp4", "sec": 40}, {"s": "shorts", "mood": "upbeat", "len": 50, "climax": null, "name": "Upbeat 50s 01", "file": "upbeat-50s-01.mp4", "sec": 50}, {"s": "shorts", "mood": "upbeat", "len": 50, "climax": null, "name": "Upbeat 50s 02", "file": "upbeat-50s-02.mp4", "sec": 50}, {"s": "shorts", "mood": "upbeat", "len": 50, "climax": null, "name": "Upbeat 50s 03", "file": "upbeat-50s-03.mp4", "sec": 50}, {"s": "shorts", "mood": "upbeat", "len": 60, "climax": null, "name": "Upbeat 60s 01", "file": "upbeat-60s-01.mp4", "sec": 60}, {"s": "shorts", "mood": "upbeat", "len": 60, "climax": null, "name": "Upbeat 60s 02", "file": "upbeat-60s-02.mp4", "sec": 60}, {"s": "shorts", "mood": "upbeat", "len": 60, "climax": null, "name": "Upbeat 60s 03", "file": "upbeat-60s-03.mp4", "sec": 60}];
+const S = {
+  intro: {moods:["epic","corporate","upbeat","inspirational","tension"], lens:null,
+    how:["Pick the mood that fits the guest.","The Peak tag shows the second the music is at its biggest. The guest intro should end at the climax.","Let the music finish on its own. Do not cut it off."]},
+  shorts: {moods:["epic","corporate","upbeat","inspirational","tension","reflective","curious"], lens:[30,40,50,60],
+    how:["Pick a mood. Reflective is for sad or serious stories, curious is for explaining something.","Pick the length that is the same as your clip or a little longer. A 43 second clip uses 50s.","Put the end of the music at the end of the clip, then cut off the extra at the start."]},
+  ad: {moods:["corporate","acoustic","electronic"], lens:[20,25,30],
+    how:["Pick a style and the length that is the same as the read or a little longer.","Put the end of the music at the end of the read, then cut off the extra at the start.","Keep it quiet. The sponsor's words must be easy to hear."]}
+};
+let sec = "intro", mood = "all", len = "all", playing = null;
+const au = document.getElementById("au");
+const PLAY = '<svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z"/></svg>';
+const PAUSE = '<svg viewBox="0 0 16 16"><path d="M3 2h4v12H3zM9 2h4v12H9z"/></svg>';
+const DL = '<svg viewBox="0 0 16 16"><path d="M7 1h2v8l3-3 1.4 1.4L8 12.8 2.6 7.4 4 6l3 3zM2 14h12v2H2z"/></svg>';
+const fmt = s => Math.floor(s/60)+":"+String(Math.floor(s%60)).padStart(2,"0");
+const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+TRACKS.forEach((t,i) => t.id = "k"+i);
+for (const k in S) document.getElementById("c-"+k).textContent = TRACKS.filter(t=>t.s===k).length;
+
+function chips(box, label, values, cur, set){
+  box.textContent = ""; box.hidden = !values; if (!values) return;
+  box.append(el("span","lbl",label));
+  ["all", ...values].forEach(v => { const b = el("button", null, v==="all" ? "All" : (typeof v==="number" ? v+"s" : v));
+    b.id = "f-"+label+"-"+v; b.setAttribute("aria-pressed", String(cur===v)); b.onclick = () => { set(v); render(); }; box.append(b); });
+}
+function render(){
+  const cfg = S[sec];
+  document.querySelectorAll(".tabs button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.s===sec)));
+  const how = document.getElementById("how"); how.innerHTML = '<div class="eyebrow">How to use</div><ol>'+cfg.how.map(x=>"<li>"+x+"</li>").join("")+"</ol>";
+  chips(document.getElementById("moods"), "Mood", cfg.moods, mood, v => mood = v);
+  chips(document.getElementById("lens"), "Length", cfg.lens, len, v => len = v);
+  const list = document.getElementById("list"); list.textContent = "";
+  for (const m of cfg.moods){
+    if (mood !== "all" && mood !== m) continue;
+    const rows = TRACKS.filter(t => t.s===sec && t.mood===m && (len==="all" || t.len===len));
+    if (!rows.length) continue;
+    list.append(el("h2", null, m));
+    rows.forEach(t => list.append(row(t)));
+  }
+}
+function row(t){
+  const d = el("div","row"+(playing===t.id?" on":"")); d.id = "r-"+t.id;
+  const p = el("button","play"); p.id = "p-"+t.id; p.setAttribute("aria-label","Play "+t.name);
+  p.innerHTML = (playing===t.id && !au.paused) ? PAUSE : PLAY; p.onclick = () => toggle(t);
+  const meta = el("div","meta"); const nm = el("div","name",t.name);
+  if (t.climax) nm.append(el("span","tag","Peak at "+t.climax+"s"));
+  if (t.len) nm.append(el("span","tag",t.len+"s"));
+  const sub = el("div","sub"); const tm = el("span",null,"0:00 / "+fmt(t.sec)); tm.id = "tm-"+t.id;
+  sub.append(tm, " · "+t.file); meta.append(nm, sub);
+  const b = el("a","dl"); b.id = "d-"+t.id; b.href = "a/"+t.file; b.download = t.file; b.innerHTML = DL+"<span>Download</span>";
+  const tr = el("div","track"); tr.innerHTML = '<i id="g-'+t.id+'"></i><b id="k-'+t.id+'"></b>';
+  tr.onclick = e => { const r = tr.getBoundingClientRect(), f = (e.clientX-r.left)/r.width;
+    if (playing !== t.id) toggle(t); const seek = () => au.currentTime = f*(au.duration||t.sec);
+    au.readyState > 0 ? seek() : au.addEventListener("loadedmetadata", seek, {once:true}); };
+  d.append(p, meta, b, tr); return d;
+}
+function toggle(t){
+  if (playing === t.id){ au.paused ? au.play() : au.pause(); return; }
+  const old = playing; playing = t.id;
+  if (old){ const r = document.getElementById("r-"+old); if (r) r.classList.remove("on"); const g = document.getElementById("g-"+old); if (g) g.style.width = "0"; }
+  const r = document.getElementById("r-"+t.id); if (r) r.classList.add("on");
+  au.src = "a/"+t.file; au.play().catch(()=>{});
+}
+function sync(){ document.querySelectorAll(".play").forEach(b => b.innerHTML = (b.id==="p-"+playing && !au.paused) ? PAUSE : PLAY); }
+au.addEventListener("play", sync); au.addEventListener("pause", sync); au.addEventListener("ended", sync);
+au.addEventListener("timeupdate", () => { if (!playing || !au.duration) return; const f = au.currentTime/au.duration*100;
+  const g = document.getElementById("g-"+playing), k = document.getElementById("k-"+playing), tm = document.getElementById("tm-"+playing);
+  if (g) g.style.width = f+"%"; if (k) k.style.left = f+"%"; if (tm) tm.textContent = fmt(au.currentTime)+" / "+fmt(au.duration); });
+document.querySelectorAll(".tabs button").forEach(b => b.onclick = () => { sec = b.dataset.s; mood = "all"; len = "all"; render(); });
+render();
+</script>
+</body></html>

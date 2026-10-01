@@ -3,6 +3,7 @@ functions/node_modules/
 .firebase/
 firebase-debug.log
 .DS_Store
+.vercel
 
 # local env / secrets
 .env
