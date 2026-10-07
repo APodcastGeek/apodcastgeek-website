@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>APG Guest Acquisition Service | APodcastGeek</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --apg-blue-dark:#174488;--apg-blue:#1D68A9;--apg-blue-light:#4F98CE;
+  --apg-navy-deep:#06101F;--apg-navy:#0A1A33;
+  --text:#FFFFFF;--muted:#9FB3C8;--soft:#C9D8E8;--line:rgba(79,152,206,0.22);
+  --ok:#4ade80;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Open Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--apg-navy-deep);color:var(--text);line-height:1.6;min-height:100vh}
+h1,h2,.num{font-family:'Montserrat',sans-serif}
+.eyebrow{font-family:'Rajdhani',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:4px;color:var(--apg-blue-light);font-size:.85rem}
+
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+.logo{height:80px;width:auto;display:block;margin:0 auto 1.75rem;filter: drop-shadow(0 0 1px white);}
+.bar{height:5px;border-radius:5px;background:linear-gradient(90deg,#174488,#1D68A9,#4F98CE);box-shadow:0 0 16px rgba(31,104,169,.5);max-width:160px;margin:0 auto 2rem}
+
+.hero{padding:3.5rem 0 2.25rem;text-align:center}
+.hero h1{font-size:clamp(1.9rem,4.5vw,2.8rem);font-weight:800;line-height:1.12;letter-spacing:-.5px;margin:.6rem 0 1rem}
+.hero p{color:var(--muted);font-size:1.02rem;max-width:560px;margin:0 auto}
+
+.card{background:var(--apg-navy);border:1px solid var(--line);border-radius:16px;padding:2rem 2.25rem;margin-bottom:1.75rem}
+.card h2{font-size:1.15rem;font-weight:700;margin-bottom:.35rem}
+.card .lead{color:var(--muted);font-size:.9rem;margin-bottom:1.5rem}
+
+.picker{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.picker label{font-weight:600;color:var(--soft);font-size:.95rem}
+.picker select{background:var(--apg-navy-deep);color:#fff;border:1px solid var(--apg-blue);border-radius:8px;padding:.6rem 2.2rem .6rem .9rem;font-size:1rem;font-family:inherit;font-weight:600;appearance:none;background-image:linear-gradient(45deg,transparent 50%,#4F98CE 50%),linear-gradient(135deg,#4F98CE 50%,transparent 50%);background-position:calc(100% - 16px) 50%,calc(100% - 11px) 50%;background-size:5px 5px;background-repeat:no-repeat;cursor:pointer}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.7rem 0;border-bottom:1px solid rgba(79,152,206,.12)}
+.row:last-of-type{border-bottom:none}
+.row span:first-child{color:var(--soft);font-size:.93rem}
+.row span:last-child{font-weight:700;white-space:nowrap}
+.row.big span:last-child{font-family:'Montserrat',sans-serif;font-size:1.25rem;color:var(--apg-blue-light)}
+.row .free{color:var(--ok)}
+.small{color:var(--muted);font-size:.82rem;margin-top:.9rem}
+
+.inc{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem 1.5rem}
+.inc-item{min-width:0;border-top:1px solid rgba(79,152,206,.18);padding-top:.9rem}
+.inc-item h3{font-family:'Montserrat',sans-serif;font-size:.98rem;font-weight:700;margin-bottom:.35rem;text-wrap:balance}
+.inc-item p{color:var(--muted);font-size:.88rem}
+@media(max-width:640px){.inc{grid-template-columns:1fr}}
+.included{list-style:none;margin-top:.25rem}
+.included li{position:relative;padding:.55rem 0 .55rem 1.6rem;color:var(--soft);font-size:.93rem}
+.included li::before{content:"";position:absolute;left:0;top:1.05rem;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#4F98CE,#174488);box-shadow:0 0 10px rgba(79,152,206,.6)}
+
+.steps{display:flex;flex-direction:column;gap:.85rem}
+.step{display:flex;gap:1.1rem;align-items:flex-start}
+.step .num{font-weight:800;color:var(--apg-blue-light);font-size:1.1rem;min-width:1.4rem}
+.step p{color:var(--soft);font-size:.93rem}
+
+.note{border-left:3px solid var(--apg-blue);padding:.2rem 0 .2rem 1rem;color:var(--soft);font-size:.9rem;margin-top:1.4rem}
+.guarantee{background:rgba(29,104,169,.12);border:1px solid rgba(79,152,206,.35)}
+.guarantee p{color:var(--soft);font-size:.95rem}
+
+.field{margin-bottom:1.35rem}
+.field label{display:block;font-size:.85rem;font-weight:600;color:var(--soft);margin-bottom:.45rem}
+.opt{color:#6B8199;font-weight:400}
+.field input,.field textarea{width:100%;background:var(--apg-navy-deep);border:1px solid var(--line);border-radius:8px;padding:.75rem 1rem;color:#fff;font-size:.95rem;font-family:inherit;outline:none;transition:border-color .2s}
+.sel{width:100%;background:var(--apg-navy-deep);border:1px solid var(--line);border-radius:8px;padding:.75rem 1rem;color:#fff;font-size:.95rem;font-family:inherit}
+[hidden]{display:none!important}
+.field input:focus,.field textarea:focus,.sel:focus{border-color:var(--apg-blue-light)}
+.field input[type=date]{color-scheme:dark}
+.field textarea{resize:vertical;min-height:96px}
+.hint{font-size:.78rem;color:#6B8199;margin-top:.35rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.btn{width:100%;background:linear-gradient(90deg,#174488,#1D68A9);color:#fff;border:none;padding:1rem 2rem;border-radius:8px;font-size:1rem;font-weight:700;font-family:'Montserrat',sans-serif;cursor:pointer;margin-top:.4rem;transition:filter .2s}
+.btn:hover{filter:brightness(1.15)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.error{display:none;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.4);border-radius:8px;padding:.85rem 1rem;margin-bottom:1rem;font-size:.88rem;color:#fca5a5}
+
+.terms{margin:1.5rem 0 1.25rem;border:1px solid var(--line);border-radius:10px;background:var(--apg-navy-deep)}
+.terms summary{cursor:pointer;padding:.85rem 1rem;font-weight:600;color:var(--soft);font-size:.9rem}
+.terms summary:focus-visible,.btn:focus-visible,select:focus-visible{outline:2px solid var(--apg-blue-light);outline-offset:2px}
+.terms ol{padding:0 1.25rem 1rem 2.4rem;color:var(--muted);font-size:.84rem}
+.terms li{margin:.45rem 0}
+.agree{display:flex;gap:.7rem;align-items:flex-start;margin-bottom:1.25rem;color:var(--soft);font-size:.9rem}
+.agree input{width:18px;height:18px;margin-top:.2rem;accent-color:#1D68A9;flex-shrink:0}
+.done{display:none;text-align:center;padding:5rem 16px;max-width:520px;margin:0 auto}
+.done h2{font-size:1.7rem;font-weight:800;margin:1rem 0 .75rem}
+.done p{color:var(--muted)}
+.tick{font-size:2.6rem;color:var(--ok)}
+footer{text-align:center;color:#4F6278;font-size:.78rem;padding:1rem 16px 3rem}
+
+@media(max-width:640px){
+  .hero{padding-top:2.5rem}
+  .card{padding:1.5rem 1.25rem}
+  .two{grid-template-columns:1fr}
+  .logo{height:64px}
+}
+</style>
+</head>
+<body>
+
+<main id="page">
+  <div class="wrap">
+    <header class="hero">
+      <img src="../../logo.png" alt="APodcastGeek" class="logo">
+      <div class="bar"></div>
+      <div class="eyebrow">APodcastGeek</div>
+      <h1>APG Guest Acquisition Service</h1>
+      <p>We find the right guests for your podcast and book them in. You approve every name before we reach out, and we look after each guest right up to the day they record.</p>
+    </header>
+
+    <section class="card" aria-labelledby="price-h">
+      <h2 id="price-h">Choose your guest pack</h2>
+      <p class="lead">Pick how many guests you want booked and the price updates. Your first guest is free, and every guest after that is €250.</p>
+      <div class="picker">
+        <label for="pack">Guests in your pack</label>
+        <select id="pack">
+          <option value="2">2 guests</option>
+          <option value="3" selected>3 guests</option>
+          <option value="4">4 guests</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="mode">How would you like your guests chosen?</label>
+        <select id="mode" class="sel">
+          <option value="auto" selected>Find and book suitable guests for me, no approval needed</option>
+          <option value="approve">Let me approve the guests you find</option>
+        </select>
+      </div>
+      <div class="row"><span>Guests booked</span><span id="p-guests">3</span></div>
+      <div class="row"><span>Your first guest</span><span class="free">Free</span></div>
+      <div class="row"><span>Each guest after that</span><span>€250</span></div>
+      <div class="row big"><span>Pack total</span><span id="p-total">€500</span></div>
+      <p class="small">Paid once, upfront, before we start booking. Packs run from 2 to 4 guests.</p>
+    </section>
+
+    <section class="card" aria-labelledby="inc-h">
+      <h2 id="inc-h">What's included</h2>
+      <p class="lead">Everything from the first email to launch day, done for you.</p>
+      <div class="inc">
+        <div class="inc-item"><h3 id="inc-guests">3 guests booked for you</h3><p><span id="inc-mode">Guests who fit your podcast, researched by us and approved by you.</span> We reach out on your behalf, follow up, and book them straight into your recording calendar.</p></div>
+        <div class="inc-item"><h3>An updated one-page media kit</h3><p>A fresh PDF about you and your podcast. We send it to every guest we invite, so they can see who you are and what the podcast covers before they say yes.</p></div>
+        <div class="inc-item"><h3>An episode brief for you</h3><p>Full pre-production for every episode. It sets out the purpose of the recording, the guest's bio, the conversation roadmap and the strategy behind each question, plus the change your listeners should go through from start to finish. You turn up and read the questions.</p></div>
+        <div class="inc-item"><h3>A prep pack for your guest</h3><p>Sent once they book. It has the date and the link to join, the goal of the episode and the topics you'll cover, so they know what to expect without seeing your exact questions. It also has simple tech, video and audio tips so they look and sound their best.</p></div>
+        <div class="inc-item"><h3>A signed guest release form</h3><p>Every guest signs it before the call. It gives you full rights to edit and publish the recording.</p></div>
+        <div class="inc-item"><h3>A launch-day thank you and promo pack</h3><p>On the day the episode goes live, we email the guest to thank them. We include the episode's media assets to share on social and links to your podcast, and we ask them to tag you, leave a review and suggest anyone else who'd make a good guest.</p></div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="how-h">
+      <h2 id="how-h">How it works</h2>
+      <p class="lead">There are two ways to work with us. You can approve every guest we find, or let us book suitable guests without approval. Choose your option in the pack box above.</p>
+      <div class="steps">
+        <div class="step"><span class="num">1</span><p>Choose your pack and fill in the short form below. It takes about five minutes.</p></div>
+        <div class="step"><span class="num">2</span><p>We're notified as soon as you submit, and we send you an invoice for your pack. We start as soon as it's paid.</p></div>
+        <div class="step"><span class="num">3</span><p id="step-3">We research guests who fit your podcast and send you a shortlist on a private web page. You approve the ones you want.</p></div>
+        <div class="step"><span class="num">4</span><p>We reach out and book them one after another. Your first guest can take up to two weeks to book, and each guest after that usually takes about a week.</p></div>
+        <div class="step"><span class="num">5</span><p>We look after every guest before and after recording. They arrive prepared, and afterwards they get everything they need to share their episode.</p></div>
+      </div>
+      <p class="note" id="list-note">If you name anyone, we go after them first. If they aren't available in time, we'll suggest other guests who suit your audience, and you still have the final say.</p>
+    </section>
+
+    <section class="card guarantee" aria-labelledby="g-h">
+      <h2 id="g-h">Our guarantee</h2>
+      <p>If we can't book a guest in time for their episode, we refund the €250 for that guest.</p>
+    </section>
+
+    <section class="card" aria-labelledby="form-h">
+      <h2 id="form-h">Tell us about your guests</h2>
+      <p class="lead">This is everything we need to start building your shortlist.</p>
+      <form id="intake" novalidate>
+        <div class="two">
+          <div class="field"><label for="name">Your name</label><input id="name" name="name" type="text" autocomplete="name" required></div>
+          <div class="field"><label for="email">Your email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+        </div>
+        <div class="field"><label for="podcast">Podcast name</label><input id="podcast" name="podcast" type="text" required></div>
+        <div class="field">
+          <label for="ideal_guest">What types of people would you like on your podcast? <span class="opt">(optional)</span></label>
+          <textarea id="ideal_guest" name="ideal_guest" placeholder="e.g. Operations directors at logistics companies with 50 to 500 staff"></textarea>
+          <div class="hint">Leave blank and we'll choose the best fit for your audience.</div>
+        </div>
+        <div class="field">
+          <label for="dreamlist">Anyone specific you'd love to have on? <span class="opt">(optional)</span></label>
+          <textarea id="dreamlist" name="dreamlist" placeholder="Names, companies or links. We'll go after these first."></textarea>
+        </div>
+        <div class="field">
+          <label for="avoid">Anyone we shouldn't contact? <span class="opt">(optional)</span></label>
+          <textarea id="avoid" name="avoid" placeholder="Competitors, past guests or anyone else to leave off the list"></textarea>
+        </div>
+        <div class="field">
+          <label for="booking_link">Link to book your podcast recordings</label>
+          <input id="booking_link" name="booking_link" type="url" placeholder="e.g. https://calendly.com/yourname/podcast" required>
+          <div class="hint">Calendly or whichever tool you use. We use it to see your availability and book guests into open slots.</div>
+        </div>
+        <div class="field">
+          <label for="next_recording">When do you need your next guest recorded by? <span class="opt">(optional)</span></label>
+          <input id="next_recording" name="next_recording" type="date">
+        </div>
+        <div class="field">
+          <label for="availability">What's your recording availability like over the next month or two?</label>
+          <textarea id="availability" name="availability" required placeholder="e.g. Free most Tuesdays and Thursdays, 2pm to 5pm Irish time. Away 20 to 27 November."></textarea>
+          <div class="hint">Your general availability, plus any specific days and times that suit you for recordings. If you keep your Calendly up to date, just write "I keep my Calendly up to date, check there".</div>
+        </div>
+        <details class="terms" id="terms">
+          <summary>Terms and conditions</summary>
+          <ol>
+            <li>Packs are 2, 3 or 4 guests. Your first guest is free, and each guest after that is €250. The free guest applies to your first pack only.</li>
+            <li>We send an invoice once you submit this form. Payment is due upfront, and we start work when it's paid.</li>
+            <li>Once work has started, paid guests are not refundable if you change your mind. The only refund is the guarantee in point 4.</li>
+            <li>If we can't book a guest in time for their episode, we refund the €250 for that guest. This needs your current, up-to-date recording availability, and it doesn't apply to the free guest.</li>
+            <li>We go after the guests on your list first. We can't promise any named person will say yes. When they don't, we find other guests who suit your audience. If you chose to approve guests, you approve every guest before we reach out.</li>
+            <li>If you chose to approve guests, please review your shortlist within 5 working days. Our booking times start from your approval.</li>
+            <li>If a booked guest cancels or doesn't show up, we find you a replacement at no extra cost. If you cancel or reschedule a recording, or don't reply to us about it for 10 working days, that guest counts as delivered.</li>
+            <li>You give us your recording booking link, or access to however you book recordings, so we can see your availability and book guests into open slots. Please keep it up to date.</li>
+            <li>Unused guests in a paid pack can be used for up to 3 months from payment.</li>
+            <li>We contact guests on your behalf using your podcast name, and every guest signs our guest release form before recording.</li>
+            <li>Prices are in Euro and exclude any VAT that may apply.</li>
+          </ol>
+        </details>
+        <label class="agree" for="agree"><input type="checkbox" id="agree" name="agree"> <span>I've read and agree to the terms and conditions.</span></label>
+        <div class="error" id="error" role="alert"></div>
+        <button type="submit" class="btn" id="submit">Send to APodcastGeek</button>
+      </form>
+    </section>
+  </div>
+  <footer>APodcastGeek</footer>
+</main>
+
+<div class="done" id="done">
+  <img src="../../logo.png" alt="APodcastGeek" class="logo">
+  <div class="tick">&#10003;</div>
+  <h2>Thanks, we've got your details</h2>
+  <p>We've been notified and will send you an invoice for your pack. We start as soon as it's paid.</p>
+</div>
+
+<script>
+var sel = document.getElementById('pack');
+function update(){
+  var n = parseInt(sel.value, 10);
+  document.getElementById('p-guests').textContent = n;
+  document.getElementById('p-total').textContent = '€' + ((n - 1) * 250);
+  document.getElementById('inc-guests').textContent = n + ' guests booked for you';
+}
+sel.addEventListener('change', update);
+var mode = document.getElementById('mode');
+function updateMode(){
+  var ok = mode.value === 'approve';
+  document.getElementById('inc-mode').textContent = ok
+    ? 'Guests who fit your podcast, researched by us and approved by you.'
+    : 'Guests who fit your podcast, researched and chosen by us.';
+  document.getElementById('step-3').textContent = ok
+    ? 'We research guests who fit your podcast and send you a shortlist on a private web page. You approve the ones you want.'
+    : 'We research guests who fit your podcast and choose the best fit for you. No approval needed.';
+  document.getElementById('list-note').textContent = ok
+    ? "If you name anyone, we go after them first. If they aren't available in time, we'll suggest other guests who suit your audience, and you still have the final say."
+    : "If you name anyone, we go after them first. If they aren't available in time, we'll book other guests who suit your audience.";
+}
+mode.addEventListener('change', updateMode);
+updateMode();
+update();
+
+document.getElementById('intake').addEventListener('submit', async function(e){
+  e.preventDefault();
+  var err = document.getElementById('error');
+  var btn = document.getElementById('submit');
+  err.style.display = 'none';
+  var val = function(id){ return document.getElementById(id).value.trim(); };
+  var req = ['name','email','podcast','booking_link','availability'];
+  var missing = req.filter(function(id){ return !val(id); });
+  if (missing.length || !document.getElementById('email').checkValidity()) {
+    err.textContent = 'Please fill in your name, a valid email, your podcast name, your recording booking link and your availability.';
+    err.style.display = 'block';
+    document.getElementById(missing[0] || 'email').focus();
+    return;
+  }
+  if (!document.getElementById('agree').checked) {
+    err.textContent = 'Please tick the box to agree to the terms and conditions.';
+    err.style.display = 'block';
+    document.getElementById('agree').focus();
+    return;
+  }
+  btn.disabled = true; btn.textContent = 'Sending...';
+  var data = {
+    name: val('name'), email: val('email'), podcast: val('podcast'),
+    pack_size: sel.value, terms_agreed: true, approval_mode: document.getElementById('mode').value, booking_link: val('booking_link'), availability: val('availability'),
+    ideal_guest: val('ideal_guest'), dreamlist: val('dreamlist'),
+    avoid: val('avoid'), next_recording: val('next_recording'),
+    submitted_at: new Date().toISOString()
+  };
+  try {
+    var res = await fetch('https://apodcastgeek.app.n8n.cloud/webhook/guest-booking-monthly', {
+      method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error('status ' + res.status);
+  } catch (x) {
+    err.textContent = 'Something went wrong sending your details. Please try again, and if it keeps failing email dave@apodcastgeek.com directly.';
+    err.style.display = 'block';
+    btn.disabled = false; btn.textContent = 'Send to APodcastGeek';
+    return;
+  }
+  document.getElementById('page').style.display = 'none';
+  document.getElementById('done').style.display = 'block';
+  window.scrollTo({top: 0});
+});
+</script>
+</body>
+</html>
