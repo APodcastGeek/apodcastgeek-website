@@ -1,0 +1,11 @@
+{
+  "name": "apodcastgeek-website",
+  "private": true,
+  "description": "APodcastGeek marketing site, client reports and blog automation.",
+  "scripts": {
+    "qa": "node scripts/qa-check.js",
+    "qa:warn": "node scripts/qa-check.js --warn-only",
+    "test": "node scripts/qa-check.js"
+  },
+  "engines": { "node": ">=22" }
+}
