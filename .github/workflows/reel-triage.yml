@@ -1,0 +1,53 @@
+name: Triage Saved Videos
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # every 6 hours
+  workflow_dispatch:
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      # Job-level so the cookie step's `if` can see it; secrets are not
+      # available in step-level `if` conditions.
+      YTDLP_COOKIES: ${{ secrets.YTDLP_COOKIES }}
+      WHISPER_MODEL: small
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Cache whisper model
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: whisper-small-v1
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install faster-whisper yt-dlp
+          npm ci --prefix tools/reel-triage --omit=dev
+
+      - name: Write yt-dlp cookies
+        if: env.YTDLP_COOKIES != ''
+        run: printf '%s' "$YTDLP_COOKIES" > "$RUNNER_TEMP/cookies.txt"
+
+      - name: Triage new videos
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_TRIAGE_DB_ID: ${{ secrets.NOTION_TRIAGE_DB_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          YTDLP_COOKIES_FILE: ${{ runner.temp }}/cookies.txt
+          TRIAGE_MAX_ITEMS: '10'
+        run: node tools/reel-triage/triage.js
