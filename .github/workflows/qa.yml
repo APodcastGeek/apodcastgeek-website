@@ -1,0 +1,38 @@
+name: QA Gate
+
+# Runs on every human push and, critically, on the commits the blog automation
+# makes on its own. Generated content is the content most likely to reach
+# production unread, so it needs the gate most.
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run QA gate
+        run: node scripts/qa-check.js
+
+      - name: Notify Slack on failure
+        if: failure() && github.ref == 'refs/heads/main'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK_URL" ]; then
+            echo "No SLACK_WEBHOOK_URL configured, skipping notification."
+            exit 0
+          fi
+          curl -sS -X POST "$SLACK_WEBHOOK_URL" \
+            -H 'Content-Type: application/json' \
+            -d "{\"text\":\"QA gate failed on main. Site may have shipped a defect. Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\"}"
