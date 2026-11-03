@@ -883,6 +883,36 @@ body {
     </div>
   </div>
 
+  <div class="slide reveal">
+    <div class="slabel">Media Buying (YouTube)</div>
+    <div class="stitle">October 2026</div>
+
+    <div class="sgrid sg2">
+      <div class="sc">
+        <div class="sc-tip">Subscribers earned by the paid campaign in October</div>
+        <div class="sc-lbl">Subscribers Gained</div>
+        <div class="sc-val counter" data-t="210">210</div>
+        <div class="sc-note">From paid YouTube ads</div>
+      </div>
+
+      <div class="sc">
+        <div class="sc-tip">Total ad spend in October</div>
+        <div class="sc-lbl">Ad Spend</div>
+        <div class="sc-val counter" data-pre="$" data-t="242" data-suf=".98">$242.98</div>
+        <div class="sc-note">October total</div>
+      </div>
+    </div>
+
+    <div class="pdf-break" style="margin-top:40px;">
+      <div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:20px;">3-Month Paid Subscriber Trend</div>
+      <div class="chart-wrap">
+        <canvas id="mediaChart"></canvas>
+      </div>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:32px 36px;margin-top:32px;"><div style="font-size:13px;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;">Campaign Summary</div><p style="font-size:16px;color:var(--text);line-height:1.7;">October was the first month of paid YouTube ads for the podcast. The campaign promoted the Tattoo Shop Survival episode to people who already watch the channel and to tattoo artists, and it ran from 12 to 21 October. Total spend was $242.98 and it brought in 210 new subscribers, about $1.16 per subscriber. We've kept optimising the campaign since then, and so far in November the cost is under $1 per subscriber (about $0.52). We're working to bring it down further.</p></div>
+  </div>
+
   <div class="section-divider reveal">
     <div>
       <div class="divider-title">Buzzsprout (Audio)</div>
@@ -905,7 +935,7 @@ body {
 
       <div class="sc">
         <div class="sc-lbl">Episodes Published</div>
-        <div class="sc-val counter" data-t="2">2</div>
+        <div class="sc-val counter" data-t="1">1</div>
         <div class="sc-note">Publishing cadence this month</div>
       </div>
     </div>
@@ -1148,6 +1178,28 @@ function initChart() {
 }
 
 
+var mediaChartInst = null;
+function initMediaChart() {
+  var ctx = document.getElementById('mediaChart');
+  if (!ctx || mediaChartInst) return;
+  var f = "'Plus Jakarta Sans', sans-serif";
+  mediaChartInst = new Chart(ctx, {
+    type: 'line',
+    data: { labels: M.labels, datasets: [{ label: 'Paid Subscribers Gained', data: [0, 0, 210], borderColor: '#00c896', backgroundColor: 'rgba(0,200,150,0.08)', borderWidth: 2.5, pointBackgroundColor: '#00c896', pointRadius: 6, pointHoverRadius: 8, tension: 0.35, fill: true }] },
+    options: {
+      responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'top', labels: { font: { family: f, size: 12, weight: '600' }, color: '#64748b', usePointStyle: true, padding: 24 } },
+        tooltip: { backgroundColor: '#151922', titleFont: { family: f, size: 13, weight: '700' }, bodyFont: { family: f, size: 12 }, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: 'rgba(255,255,255,0.08)', borderWidth: 1, padding: 14, cornerRadius: 10 }
+      },
+      scales: {
+        x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { font: { family: f, size: 11 }, color: '#64748b' } },
+        y: { min: 0, grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { font: { family: f, size: 11 }, color: '#00c896', precision: 0 }, title: { display: true, text: 'Subscribers', color: '#00c896', font: { family: f, size: 11, weight: '600' } } }
+      }
+    }
+  });
+}
+
 function apgOpenLink(url, ev) {
   if (ev) ev.preventDefault();
   var win = null;
@@ -1192,6 +1244,10 @@ function initReveal() {
 
       if (el.querySelector('#trendChart')) {
         setTimeout(initChart, 150);
+      }
+
+      if (el.querySelector('#mediaChart')) {
+        setTimeout(initMediaChart, 150);
       }
 
       obs.unobserve(el);
