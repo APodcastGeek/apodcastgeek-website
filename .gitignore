@@ -4,3 +4,11 @@ functions/node_modules/
 firebase-debug.log
 .DS_Store
 .vercel
+
+# local env / secrets
+.env
+.env.local
+
+# python bytecode
+__pycache__/
+*.pyc

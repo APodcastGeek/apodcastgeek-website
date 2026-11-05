@@ -1,0 +1,16 @@
+{
+  "name": "reel-triage",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Transcribes, summarises and rates saved Instagram/TikTok/YouTube videos into a Notion triage list",
+  "main": "triage.js",
+  "scripts": {
+    "triage": "node triage.js",
+    "test": "node test.js",
+    "setup-db": "node notion-setup.js"
+  },
+  "engines": { "node": "22" },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.80.0"
+  }
+}
