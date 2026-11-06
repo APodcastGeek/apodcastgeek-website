@@ -4,6 +4,12 @@ const path = require('path');
 const NOTION_API_KEY = process.env.NOTION_API_KEY;
 const NOTION_DB_ID = process.env.NOTION_DB_ID;
 const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
+const vm = require('node:vm');
+const contentChecks = vm.runInNewContext(fs.readFileSync(path.join(__dirname, '_apg-blog-checks.js'), 'utf8') + '\nlocalChecks;');
+function assertApprovedCopy(text) {
+  const plain = String(text).replace(/&(?:euro|#8364|#x20ac);/gi,'€').replace(/&(?:pound|#163);/gi,'£').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+  for (const check of contentChecks) if (check.re.test(plain)) throw new Error(check.issue);
+}
 
 async function notionFetch(url, body = null) {
   const opts = {
@@ -16,12 +22,44 @@ async function notionFetch(url, body = null) {
   };
   if (body) opts.body = JSON.stringify(body);
   const res = await fetch(url, opts);
-  return res.json();
+  if (!res.ok) throw new Error('Notion request failed: HTTP ' + res.status);
+  const data = await res.json();
+  if (!data || data.object === 'error') throw new Error('Notion returned an error response');
+  return data;
 }
 
+async function notionList(url, body = null) {
+  const results = [], cursors = new Set();
+  let cursor;
+  do {
+    const requestUrl = new URL(url);
+    if (!body && cursor) requestUrl.searchParams.set('start_cursor', cursor);
+    const data = await notionFetch(requestUrl.toString(), body ? {...body, ...(cursor ? {start_cursor: cursor} : {})} : null);
+    if (!Array.isArray(data.results)) throw new Error('Invalid Notion list response');
+    results.push(...data.results);
+    if (!data.has_more) break;
+    cursor = data.next_cursor;
+    if (!cursor || cursors.has(cursor)) throw new Error('Invalid or repeated Notion pagination cursor');
+    cursors.add(cursor);
+  } while (true);
+  return results;
+}
 async function getBlocks(blockId) {
-  const data = await notionFetch(`https://api.notion.com/v1/blocks/${blockId}/children?page_size=100`);
-  return data.results || [];
+  const blocks = await notionList(`https://api.notion.com/v1/blocks/${blockId}/children?page_size=100`);
+  if (blocks.some(b => b.has_children)) throw new Error('Nested Notion blocks require editorial export review');
+  return blocks;
+}
+function validateMetadata(pages) {
+  const slugs = new Set();
+  for (const page of pages) {
+    const p = page.properties || {};
+    const text = key => (p[key]?.rich_text || []).map(t => t.plain_text || '').join('');
+    const slug = text('Slug'), date = text('Publish Date');
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) || slugs.has(slug)) throw new Error('Invalid or duplicate slug: ' + slug);
+    slugs.add(slug);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !Number.isFinite(Date.parse(date)) || new Date(date).toISOString().slice(0,10) !== date) throw new Error('Missing or invalid publication date: ' + slug);
+    if (!(p.Name?.title || []).map(t=>t.plain_text || '').join('') || !text('Description')) throw new Error('Missing article metadata: ' + slug);
+  }
 }
 
 // ========= Helpers =========
@@ -110,6 +148,7 @@ async function ensurePostImage(slug, title, tag) {
   const query = searchKeywordFromTitle(title, tag);
   const ok = await fetchUnsplashImage(query, imagePath);
   if (ok) return `posts/${slug}.jpg`;
+  if (!fs.existsSync(path.join(__dirname, '..', 'blog', 'images', 'default.jpg'))) throw new Error('Missing article image: ' + slug);
   return 'default.jpg';
 }
 
@@ -238,9 +277,6 @@ function blocksToHtml(blocks) {
   html = html.replace(/\b20[- ]minute (strategy |discovery |)(call|chat)\b/gi, '30-minute $1$2');
   html = html.replace(/\b15[- ]minute (strategy |discovery |)(call|chat)\b/gi, '30-minute $1$2');
   html = html.replace(/\b45[- ]minute (strategy |discovery |)(call|chat)\b/gi, '30-minute $1$2');
-  html = html.replace(/\b14 business day[s]?\b/gi, '10 business days');
-  html = html.replace(/\b3[- ]month minimum\b/gi, '6-month minimum');
-  html = html.replace(/\b12[- ]month minimum\b/gi, '6-month minimum');
 
   // Process content markers
   html = processContentMarkers(html);
@@ -509,14 +545,13 @@ const STATIC_PAGES = [
 ];
 
 async function main() {
-  const data = await notionFetch(`https://api.notion.com/v1/databases/${NOTION_DB_ID}/query`, {
+  const results = await notionList(`https://api.notion.com/v1/databases/${NOTION_DB_ID}/query`, {
     filter: { property: 'Status', select: { equals: 'Published' } }
   });
 
-  const results = data.results || [];
+  validateMetadata(results);
   if (results.length === 0) {
-    console.log('No published posts to build');
-    return;
+    throw new Error('No published posts returned; preserving existing output');
   }
 
   const blogDir = path.join(__dirname, '..', 'blog');
@@ -525,20 +560,15 @@ async function main() {
   const template = getPostTemplate();
   const cards = [];
 
-  const currentYear = String(new Date().getFullYear());
-
   for (const page of results) {
     const props = page.properties;
-    let title = props.Name?.title?.[0]?.plain_text || '';
-    const slug = props.Slug?.rich_text?.[0]?.plain_text || '';
-    let description = props.Description?.rich_text?.[0]?.plain_text || '';
-    const tag = props.Tag?.rich_text?.[0]?.plain_text || 'B2B Strategy';
-    const publishDate = props['Publish Date']?.rich_text?.[0]?.plain_text || new Date().toISOString().split('T')[0];
+    let title = (props.Name?.title || []).map(t => t.plain_text || '').join('');
+    const slug = (props.Slug?.rich_text || []).map(t => t.plain_text || '').join('') || '';
+    let description = (props.Description?.rich_text || []).map(t => t.plain_text || '').join('') || '';
+    const tag = (props.Tag?.rich_text || []).map(t => t.plain_text || '').join('') || 'B2B Strategy';
+    const publishDate = (props['Publish Date']?.rich_text || []).map(t => t.plain_text || '').join('');
 
-    // Defensive: replace stale "in 2024"/"in 2023" in title/description with current year
-    // (Claude sometimes hallucinates past years in generated content)
-    title = title.replace(/\bin 202[0-4]\b/g, 'in ' + currentYear);
-    description = description.replace(/\bin 202[0-4]\b/g, 'in ' + currentYear);
+    // Preserve historical dates and wording; editorial review owns changes.
 
     if (!title || !slug) continue;
 
@@ -557,14 +587,13 @@ async function main() {
 
     const blocks = await getBlocks(page.id);
     let rawContent = blocksToHtml(blocks);
+    assertApprovedCopy([title, description, rawContent].join(' '));
 
     // Guard: never publish an empty shell. Google will not index a page with no
     // article body, and three of these shipped silently in April 2026.
     const bodyWords = rawContent.replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
     if (bodyWords < MIN_BODY_WORDS) {
-      console.warn('SKIPPING (body too thin: ' + bodyWords + ' words, minimum ' +
-        MIN_BODY_WORDS + '): ' + slug + ' -- check the Notion page has content.');
-      continue;
+      throw new Error('Article body too thin: ' + slug);
     }
 
     const { html: contentWithIds, tocItems } = injectHeadingIdsAndExtractToc(rawContent);
@@ -714,7 +743,7 @@ async function main() {
   appendFileSync(process.env.GITHUB_ENV || '/dev/null', 'HAS_POSTS=true\n');
 }
 
-module.exports = { STATIC_PAGES };
+module.exports = { STATIC_PAGES, notionFetch, notionList, getBlocks, validateMetadata, blocksToHtml, assertApprovedCopy };
 
 if (require.main === module) {
   main().catch(err => {

@@ -55,26 +55,7 @@ def node(wf, name):
 
 # ---------------------------------------------------------------- new checks
 # RULE ZERO plus the structure claims Dave corrected on 2026-08-31.
-NEW_LOCAL_CHECKS = r"""const localChecks = [
-  { re: /[$£]\s?\d|\b\d[\d,.]*\s*(?:dollars?|usd|pounds?|gbp)\b/i, issue: 'RULE ZERO VIOLATION: non-euro currency. The site is euro only.' },
-  { re: /€\s?(?!1,?099\b|1,?999\b|2,?999\b)\d/, issue: 'RULE ZERO VIOLATION: euro figure that is not an approved price. Only €1,099 (Monthly), €1,999 (Bi-Weekly) and €2,999 (Weekly) may appear.' },
-  { re: /\b(?!1,?099\b|1,?999\b|2,?999\b)\d[\d,.]*\s*(?:euros?|eur)\b/i, issue: 'RULE ZERO VIOLATION: euro figure that is not an approved price. Only €1,099 (Monthly), €1,999 (Bi-Weekly) and €2,999 (Weekly) may appear.' },
-  { re: /\btwo fixed tiers?\b/i, issue: 'Wrong service structure: APG sells Production-Only plus Brand Builder at Monthly, Bi-Weekly and Weekly cadences' },
-  { re: /\benterprise (tier|package|plan|option)\b|\bcustom (tier|package)\b/i, issue: 'Invented tier: there is no enterprise or custom tier' },
-  { re: /guest (recruitment|outreach|booking)[^.]{0,80}\b(is included|included in|standard|part of (the |our )?(package|service|brand builder))/i, issue: 'Guest recruitment described as included. It is an ADD-ON, never standard.' },
-  { re: /\b(we|apg) handles? all guest outreach\b|\bhandles all guest outreach, follow-ups\b/i, issue: 'Guest recruitment described as included. It is an ADD-ON, never standard.' },
-  { re: /\b6 short[- ]form clips?\b|\bsix clips\b|\b6 clips\b|\bfour clips\b|\b4 clips\b|\bthree clips\b/i, issue: 'Wrong clip count (spec is 5)' },
-  { re: /\b(2|5|two|five) (on-brand )?thumbnails\b/i, issue: 'Wrong thumbnail count (spec is 3)' },
-  { re: /\b20[- ]minute (strategy |discovery |)(call|chat)|\b15[- ]minute (strategy |discovery |)(call|chat)|\b45[- ]minute (strategy |discovery |)(call|chat)/i, issue: 'Wrong call duration (spec is 30 min)' },
-  { re: /\baudiogram(s| clips?)?\b/i, issue: 'Forbidden: Audiograms not in Brand Builder' },
-  { re: /\bquote (graphics|cards)\b/i, issue: 'Forbidden: Quote graphics not in Brand Builder' },
-  { re: /\btranscripts? for (seo|accessibility)\b|\b(?:asset pack|deliverables?|every episode includes|you (?:also )?(?:get|receive))[^.]{0,80}\btranscripts?\b/i, issue: 'Forbidden: Transcripts are not a Brand Builder deliverable' },
-  { re: /\b14 business day|\btwo[- ]week turnaround|\b2[- ]week turnaround\b/i, issue: 'Wrong turnaround (spec is 10 business days)' },
-  { re: /\b3[- ]month minimum|\b12[- ]month minimum\b/i, issue: 'Wrong minimum commitment (spec is 6 months)' },
-  { re: /\bwebby|ambie|signal award/i, issue: 'Invented award (only Irish Podcast Awards are approved)' },
-  { re: /\bapg-brand-builder-podcast-design-call\b/i, issue: 'Stale Calendly URL' },
-  { re: /\bas of 202[0-4]\b|\b(?:this year|currently|right now)[^.]{0,25}\b202[0-4]\b|\b202[0-4] (?:is|marks) the current year\b/i, issue: 'Stale year used as the present (referring to a past year as history is fine)' }
-];"""
+NEW_LOCAL_CHECKS = open(os.path.join(HERE, '_apg-blog-checks.js'), encoding='utf-8').read().strip()
 
 QUEUE_EMPTY_NODE = {
     'parameters': {

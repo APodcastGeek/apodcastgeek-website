@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Test export and content guards
+        run: node --test scripts/test-blog-export.js
+
       - name: Check for published posts and build
         env:
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
